@@ -20,7 +20,7 @@ import { listBackups, rollbackFromBackup, runUpdateFlow, UNKNOWN_VERSION } from 
 export const CHECK_INTERVAL_MS = 3 * 60 * 60 * 1000
 export const FIRST_CHECK_DELAY_MS = 5_000
 
-const electronFetch = ((input: string | URL | Request, init?: RequestInit) => net.fetch(input instanceof URL ? input.toString() : input, init)) as typeof fetch
+export const electronFetch = ((input: string | URL | Request, init?: RequestInit) => net.fetch(input instanceof URL ? input.toString() : input, init)) as typeof fetch
 
 function githubUpdatesOf(manifest: Manifest | null): GithubUpdates | null {
   return manifest?.updates.source === 'github-releases' ? manifest.updates : null

@@ -151,6 +151,15 @@ export interface RepoInspection {
   manifestId: string | null
 }
 
+/** Vitrine da página do jogo: descrição e screenshots do README do projeto. */
+export interface StoreDetails {
+  description: string | null
+  /** Imagens do README, só de origens do GitHub. */
+  screenshots: string[]
+  /** Página do projeto, para "ver mais no GitHub". */
+  readmeUrl: string | null
+}
+
 export interface ReleaseInfo {
   tag: string
   name: string

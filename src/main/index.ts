@@ -6,13 +6,15 @@ import { COVER_SCHEME } from '../shared/ipc'
 import { AppUpdater } from './appUpdater'
 import { AppContext } from './context'
 import { DevlogTracker } from './devlogState'
-import { FIRST_CHECK_DELAY_MS, GameUpdateService } from './gameUpdates'
+import { electronFetch, FIRST_CHECK_DELAY_MS, GameUpdateService } from './gameUpdates'
+import { GitHubClient } from './github'
 import { registerIpc } from './ipc'
 import { GameLauncher } from './launcher'
 import { migrateLegacyUserData } from './legacyData'
 import { LibraryService } from './library'
 import { ProfileService } from './profiles'
 import { setHashCache } from './requirements'
+import { StoreInfoService } from './storeInfo'
 
 const APP_SCHEME = 'app'
 const RENDERER_HOST = 'renderer'
@@ -150,7 +152,17 @@ async function bootstrap(): Promise<void> {
     return net.fetch(pathToFileURL(file).toString())
   })
 
-  registerIpc({ ctx, library, updates, appUpdater, devlog, profiles })
+  const store = new StoreInfoService(
+    new GitHubClient({
+      fetchImpl: electronFetch,
+      cache: ctx.store.httpCache(),
+      getToken: () => ctx.store.getGithubToken(),
+      onRateLimit: (info) => ctx.store.setRateLimit(info)
+    }),
+    (id) => ctx.getManifest(id)
+  )
+
+  registerIpc({ ctx, library, updates, appUpdater, devlog, profiles, store })
 
   ctx.window = createWindow(ctx)
   ctx.window.webContents.once('did-finish-load', () => {

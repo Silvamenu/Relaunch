@@ -13,6 +13,7 @@ import { errorMessage, formatDate, formatPlaytime, formatRelative, isApiError } 
 import { useAppState, type GameTab } from '../state/AppState'
 import { ChecklistTab } from './game/ChecklistTab'
 import { ConfigsTab } from './game/ConfigsTab'
+import { StoreSection } from './game/StoreSection'
 import { UpdatesTab } from './game/UpdatesTab'
 
 function MenuItem({ icon, children, onClick, danger }: { icon: ReactNode; children: ReactNode; onClick: () => void; danger?: boolean }) {
@@ -72,11 +73,6 @@ function AboutTab({ item }: { item: LibraryItem }) {
   ]
   return (
     <div className="max-w-[760px]">
-      {m.description && (
-        <p className="mb-6 text-[13.5px] leading-relaxed text-fg-3">
-          <GlossaryText>{m.description}</GlossaryText>
-        </p>
-      )}
       <Card className="divide-y divide-line overflow-hidden">
         {rows.map(([label, value]) => (
           <div key={label} className="grid gap-1 px-[18px] py-3 text-[13.5px] sm:grid-cols-[200px_1fr]">
@@ -366,7 +362,10 @@ export function GamePage({ id, tab }: { id: string; tab?: GameTab }) {
           ))}
         </div>
 
-        <div className="mt-7 flex min-w-0 items-center gap-2.5 text-[12.5px] text-subtle">
+        {/* Como numa loja: a descrição e as imagens do jogo vêm antes dos detalhes técnicos. */}
+        <StoreSection manifestId={item.manifest?.id} fallbackDescription={item.manifest?.description} />
+
+        <div className="mt-9 flex min-w-0 items-center gap-2.5 text-[12.5px] text-subtle">
           <span className="selectable min-w-0 truncate font-mono" title={item.entry.path}>
             {item.entry.path}
           </span>

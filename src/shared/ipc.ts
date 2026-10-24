@@ -15,6 +15,7 @@ import type {
   ReleaseInfo,
   RepoInspection,
   RequirementsReport,
+  StoreDetails,
   SettingsPatch,
   SettingsView,
   UpdateProgress
@@ -96,6 +97,10 @@ export interface RelaunchApi {
     import(): Promise<ProfilesState | null>
     /** Salva o perfil em uso num arquivo .relaunch (false se cancelar o diálogo). */
     export(): Promise<boolean>
+  }
+  store: {
+    /** Descrição e screenshots do jogo (do manifesto e do README do projeto). Nunca rejeita por falta de rede. */
+    details(manifestId: string): Promise<StoreDetails>
   }
   configs: {
     list(entryId: string): Promise<ConfigFileView[]>

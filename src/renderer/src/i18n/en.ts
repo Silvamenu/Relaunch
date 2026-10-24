@@ -193,6 +193,14 @@ export const en: Record<TranslationKey, string> = {
   'game.tabs.updates': 'Updates',
   'game.tabs.about': 'About',
 
+  'store.title': 'About the game',
+  'store.screenshots': 'Screenshots',
+  'store.viewOnGithub': 'View on GitHub',
+  'store.screenshotOf': 'Screenshot {n} of {total}',
+  'store.previous': 'Previous screenshot',
+  'store.next': 'Next screenshot',
+  'store.close': 'Close',
+
   'req.executable': 'Game executable',
   'req.runner': 'Emulator',
   'req.runnerMissing': 'Not installed. Install the emulator once for all of its games.',

@@ -190,6 +190,14 @@ export const ptBR = {
   'game.tabs.updates': 'Atualizações',
   'game.tabs.about': 'Sobre',
 
+  'store.title': 'Sobre o jogo',
+  'store.screenshots': 'Imagens',
+  'store.viewOnGithub': 'Ver no GitHub',
+  'store.screenshotOf': 'Imagem {n} de {total}',
+  'store.previous': 'Imagem anterior',
+  'store.next': 'Próxima imagem',
+  'store.close': 'Fechar',
+
   'req.executable': 'Executável do jogo',
   'req.runner': 'Emulador',
   'req.runnerMissing': 'Não instalado. Instale o emulador uma vez para todos os jogos dele.',

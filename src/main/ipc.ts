@@ -14,6 +14,7 @@ import type { GameUpdateService } from './gameUpdates'
 import { mainText } from './i18n'
 import { COVER_EXTENSIONS, type LibraryService } from './library'
 import type { ProfileService } from './profiles'
+import type { StoreInfoService } from './storeInfo'
 
 /** Um arquivo .relaunch tem poucos bytes; o limite só evita ler um arquivo enorme por engano. */
 const PROFILE_FILE_MAX_BYTES = 64 * 1024
@@ -25,6 +26,7 @@ export interface Services {
   appUpdater: AppUpdater
   devlog: DevlogTracker
   profiles: ProfileService
+  store: StoreInfoService
 }
 
 function str(value: unknown, name = 'valor'): string {
@@ -55,7 +57,7 @@ function handle(channel: string, fn: (...args: unknown[]) => unknown): void {
 }
 
 export function registerIpc(s: Services): void {
-  const { ctx, library, updates, appUpdater, devlog, profiles } = s
+  const { ctx, library, updates, appUpdater, devlog, profiles, store } = s
   const text = () => mainText(ctx.store.getSettings().language)
 
   const openDialog = async (options: OpenDialogOptions): Promise<string | null> => {
@@ -250,6 +252,7 @@ export function registerIpc(s: Services): void {
     if (!view) throw new AppError('NOT_FOUND')
     return { view, spec }
   }
+  handle('store:details', (id) => store.details(str(id)))
   handle('configs:list', async (id) => {
     const { entry, manifest } = entryOrThrow(str(id))
     const views = await Promise.all(manifest.configFiles.map((spec, i) => readConfigFile(spec, i, entry.path, ctx.platform)))

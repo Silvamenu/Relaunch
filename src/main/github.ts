@@ -110,6 +110,19 @@ export class GitHubClient {
     }
   }
 
+  /** README principal do repositório (texto e endereço bruto, base dos caminhos relativos); null se não houver. */
+  async getReadme(repo: string): Promise<{ markdown: string; url: string } | null> {
+    const data = await this.getJson<{ content?: string; encoding?: string; download_url?: string | null }>(`/repos/${repo}/readme`)
+    if (!data?.content || !data.download_url || data.encoding !== 'base64') return null
+    return { markdown: Buffer.from(data.content, 'base64').toString('utf8'), url: data.download_url }
+  }
+
+  /** Descrição curta do repositório (o "About" do GitHub); null se vazia. */
+  async getRepoDescription(repo: string): Promise<string | null> {
+    const data = await this.getJson<{ description?: string | null }>(`/repos/${repo}`)
+    return data?.description?.trim() || null
+  }
+
   /** Lista releases publicados (sem rascunhos), do mais novo para o mais antigo. */
   async listReleases(repo: string, perPage = 15): Promise<ReleaseInfo[]> {
     const data = await this.getJson<RawRelease[]>(`/repos/${repo}/releases?per_page=${perPage}`)

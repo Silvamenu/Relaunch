@@ -60,6 +60,9 @@ const api: RelaunchApi = {
     import: () => call('profiles:import'),
     export: () => call('profiles:export')
   },
+  store: {
+    details: (id) => call('store:details', id)
+  },
   configs: {
     list: (id) => call('configs:list', id),
     save: (id, index, content) => call('configs:save', id, index, content),
