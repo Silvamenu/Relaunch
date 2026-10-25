@@ -1,0 +1,77 @@
+{
+  "id": "the-last-guardian-pc",
+  "name": "The Last Guardian PC",
+  "originalGame": "The Last Guardian (PS4)",
+  "description": "Port nativo de The Last Guardian para Windows e Linux: o código do jogo de PS4 roda direto no processador e a GPU é traduzida para Vulkan. Você precisa do dump da sua própria cópia (CUSA03627 ou CUSA03745 com o update 01.03).",
+  "category": "playstation",
+  "repoUrl": "https://github.com/HayatoG/tlg_pc",
+  "accentColor": "#7d8f6a",
+  "executables": {
+    "win32": ["The Last Guardian.exe"],
+    "linux": ["The Last Guardian"]
+  },
+  "detectFiles": ["The Last Guardian.exe", "The Last Guardian", "Play The Last Guardian.exe", "launcher/tlg.png"],
+  "requirements": [
+    {
+      "id": "game-folder",
+      "type": "firstRun",
+      "label": "Escolher no launcher a pasta do seu dump (CUSA03627 ou CUSA03745 com o update 01.03)",
+      "doneWhen": ["{appData}/tlg-launcher/settings.json"],
+      "helpText": "Monte uma pasta só com o jogo base (CUSA03627 EUA ou CUSA03745 Europa) e o update 01.03 copiado por cima, substituindo os arquivos (~25 GB): eboot.bin do 1.03, sce_module/ (libc.prx, libSceFios2.prx), sce_sys/, trico_boot.psarc e trico_001 a trico_003.psarc, os trico_*p.psarc do update, os .psarc de idioma e os sce_discmap*.plt (recomendados). Abra o The Last Guardian, escolha essa pasta e o idioma e clique em Jogar. Confira os tamanhos: arquivos acima de 4 GB enviados pelo FTP do GoldHEN 2.2 chegam cortados; prefira copiar por um pendrive exFAT."
+    },
+    {
+      "id": "ngs2",
+      "type": "file",
+      "label": "libSceNgs2.sprx do firmware do seu PS4 (para ter som)",
+      "optional": true,
+      "patterns": ["system_lib/libSceNgs2.sprx"],
+      "helpText": "Copie o libSceNgs2.sprx da pasta /system/common/lib/ do seu próprio PS4 para a pasta system_lib/ do jogo. Sem ele o jogo roda sem som. O app não fornece esse arquivo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "user/tlg.ini",
+      "format": "ini",
+      "label": "Configurações do jogo (user/tlg.ini)",
+      "editable": true
+    },
+    {
+      "path": "{appData}/tlg-launcher/settings.json",
+      "format": "json",
+      "label": "Opções do launcher (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "HayatoG/tlg_pc",
+    "assetPatterns": {
+      "win32": "tlg-windows-x86_64*.zip",
+      "linux": "tlg-linux-x86_64*.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["user/**", "system_lib/libSceNgs2.sprx"]
+  },
+  "_todo": [
+    "Windows: build automática ainda sem teste em jogo, segundo o README e as notas de release. Linux testado (Nobara/Fedora 44) e exige glibc 2.39+.",
+    "Releases geradas pelo GitHub Actions (.github/workflows/build.yml) a cada push na main, com tag vAAAA.MM.DD-<commit> e SHA256SUMS. Os pacotes de v2026.10.24-1a130dd foram listados e conferem com o SHA256SUMS: launcher Qt congelado, out/tlg-probe(.exe), libtlggpu.so/DLLs, scripts, system_lib/LEIA-ME.txt; nenhum arquivo do jogo nem libSceNgs2.sprx.",
+    "O zip de Windows usa barras invertidas nos nomes das entradas (Compress-Archive); o yauzl do app as converte para '/'.",
+    "Saves, mods, cache e tlg.ini ficam em user/ na pasta do jogo, a não ser que o usuário mude a pasta na tela Saves do launcher (arquivo ponteiro %APPDATA%\\TLG-PC\\launcher.json ou ~/.config/tlg-pc/launcher.json); nesse caso user/tlg.ini não é o arquivo usado.",
+    "settings.json é gravado ao escolher a pasta no launcher Qt (backend.chooseFolder -> save_settings); no Linux fica em $XDG_CONFIG_HOME ou ~/.config, igual a {appData}."
+  ],
+  "_sources": [
+    "https://github.com/HayatoG/tlg_pc",
+    "https://github.com/HayatoG/tlg_pc/releases",
+    "https://github.com/HayatoG/tlg_pc/releases/expanded_assets/v2026.10.24-1a130dd",
+    "https://github.com/HayatoG/tlg_pc/releases/download/v2026.10.24-1a130dd/SHA256SUMS",
+    "https://github.com/HayatoG/tlg_pc/releases/download/v2026.10.24-1a130dd/tlg-windows-x86_64.zip",
+    "https://github.com/HayatoG/tlg_pc/releases/download/v2026.10.24-1a130dd/tlg-linux-x86_64.tar.gz",
+    "https://github.com/HayatoG/tlg_pc/tree/HEAD/port/src",
+    "https://raw.githubusercontent.com/HayatoG/tlg_pc/HEAD/README.md",
+    "https://raw.githubusercontent.com/HayatoG/tlg_pc/HEAD/.github/workflows/build.yml",
+    "https://raw.githubusercontent.com/HayatoG/tlg_pc/HEAD/port/launcher/tlg_run.py",
+    "https://raw.githubusercontent.com/HayatoG/tlg_pc/HEAD/port/launcher/qt/backend.py",
+    "https://raw.githubusercontent.com/HayatoG/tlg_pc/HEAD/port/launcher/userdata.py"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "goldeneye-pc-port",
+  "name": "GoldenEye 007 PC Port",
+  "originalGame": "GoldenEye 007 (N64)",
+  "description": "Port nativo para PC de GoldenEye 007 feito a partir da decompilação do jogo, com widescreen, 60 fps, mouse e tela dividida. Precisa da sua própria ROM americana (NTSC-U) do N64.",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/jkdansereau/goldeneye-pc-port",
+  "accentColor": "#c9a227",
+  "executables": {
+    "win32": ["ge007.x86_64.exe"],
+    "linux": ["ge007.x86_64"]
+  },
+  "detectFiles": ["ge007.x86_64.exe", "ge007.x86_64", "prepare-assets/prepare-assets.py"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "file",
+      "label": "Sua ROM de GoldenEye 007 (N64, EUA) em data/ge007.ntsc-final.z64",
+      "patterns": ["data/ge007.ntsc-final.z64"],
+      "helpText": "Crie a pasta \"data\" dentro da pasta do jogo, copie para ela a ROM do seu cartucho e renomeie para ge007.ntsc-final.z64. Só a versão americana (NTSC-U) em formato .z64 funciona hoje; o SHA-1 esperado é abe01e4aeb033b6c0836819f549c791b26cfde83."
+    },
+    {
+      "id": "rom-check",
+      "type": "userFile",
+      "label": "Conferir sua ROM de GoldenEye 007 (opcional)",
+      "optional": true,
+      "extensions": ["z64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [{ "sha1": "abe01e4aeb033b6c0836819f549c791b26cfde83", "label": "NTSC-U (EUA)" }]
+      },
+      "helpText": "Opcional: escolha sua ROM para conferir se é a versão aceita. Ela continua precisando estar em data/ge007.ntsc-final.z64 dentro da pasta do jogo."
+    },
+    {
+      "id": "rom-assets",
+      "type": "firstRun",
+      "label": "Gerar os assets a partir da sua ROM",
+      "doneWhen": ["data/pcmodels-*/**", "data/pccg-*/**"],
+      "helpText": "Na primeira vez que o jogo abre, ele lê sua ROM e gera os arquivos de assets em data/pcmodels-<região> e data/pccg-<região>. Leva alguns segundos e não precisa de nada além de abrir o jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "data/ge007.ini",
+      "format": "ini",
+      "label": "Configurações (ge007.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "jkdansereau/goldeneye-pc-port",
+    "assetPatterns": {
+      "win32": "goldeneye-pc-port-*-win64.zip",
+      "linux": "goldeneye-pc-port-*-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/*.z64", "data/ge007.eep", "data/ge007.ini"],
+    "_todo": "As pastas geradas data/pcmodels-*/ e data/pccg-*/ ficam de fora de propósito: o README pede para não reaproveitá-las entre versões (o jogo gera de novo na primeira execução)."
+  },
+  "_todo": [
+    "Tudo fica dentro da pasta do jogo: ROM, save (data/ge007.eep), configurações (data/ge007.ini), assets gerados e data/ge007.shaders; o port não grava em %APPDATA%. ge007.crash.log é criado na pasta de onde o jogo é aberto.",
+    "Só a ROM NTSC-U funciona na v0.5.0; PAL (167c3c433dec1f1eb921736f7d53fac8cb45ee31) e NTSC-J (2a5dade32f7fad6c73c659d2026994632c1b3174) ainda não são suportadas.",
+    "Saves de emulador (1964/Project64) podem ser copiados como data/ge007.eep e são convertidos na primeira execução.",
+    "O exe não é assinado (aviso do SmartScreen). Desde a v0.5.0 os artefatos têm atestação de proveniência do GitHub (gh attestation verify) e arquivos .sha256. Releases antigas tiveram os downloads removidos pelo próprio autor por estarem superadas (não por DMCA).",
+    "O projeto é um fork da decompilação n64decomp/007 e foi desenvolvido com agentes de IA (declarado no README)."
+  ],
+  "_sources": [
+    "https://github.com/jkdansereau/goldeneye-pc-port",
+    "https://github.com/jkdansereau",
+    "https://github.com/jkdansereau/goldeneye-pc-port/releases",
+    "https://github.com/jkdansereau/goldeneye-pc-port/releases/tag/v0.3.0",
+    "https://github.com/jkdansereau/goldeneye-pc-port/releases/expanded_assets/v0.5.0",
+    "https://github.com/jkdansereau/goldeneye-pc-port/releases/download/v0.5.0/goldeneye-pc-port-0.5.0-win64.zip (listado: ge007.x86_64.exe, DLLs MinGW/SDL2/zlib, prepare-assets/ com ge007-convert.exe e headers .inc.c da decompilação; sem ROM nem assets)",
+    "https://github.com/jkdansereau/goldeneye-pc-port/releases/download/v0.5.0/goldeneye-pc-port-0.5.0-linux-x86_64.tar.gz (listado: ge007.x86_64, libSDL2-2.0.so.0, prepare-assets/)",
+    "https://raw.githubusercontent.com/jkdansereau/goldeneye-pc-port/HEAD/README.md"
+  ]
+}

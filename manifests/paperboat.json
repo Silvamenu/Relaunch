@@ -1,0 +1,88 @@
+{
+  "id": "paperboat",
+  "name": "PaperBoat",
+  "originalGame": "Paper Mario (N64)",
+  "description": "Port para PC de Paper Mario feito pela Harbour Masters a partir da decompilação do jogo. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/HarbourMasters/PaperBoat",
+  "website": "https://www.harbourmasters.org",
+  "accentColor": "#d64541",
+  "executables": {
+    "win32": ["Paperboat.exe"],
+    "linux": ["Paperboat.AppImage"]
+  },
+  "detectFiles": ["Paperboat.exe", "Paperboat.AppImage", "paperboat.o2r", "config.yml"],
+  "requirements": [
+    {
+      "id": "port-data",
+      "type": "file",
+      "label": "Arquivo de dados do port (paperboat.o2r)",
+      "optional": true,
+      "patterns": ["paperboat.o2r"],
+      "helpText": "No Windows ele vem junto com o download oficial do port; se estiver faltando, reinstale ou atualize o jogo. No Linux esse arquivo fica dentro do AppImage.",
+      "_todo": "Marcado como opcional porque o pacote Linux só traz Paperboat.AppImage (o paperboat.o2r vai embutido no AppImage, CMakeLists.txt)."
+    },
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Paper Mario (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64"],
+      "validation": {
+        "sha1": [{ "sha1": "3837f44cda784b466c9a2d99df70d77c322b97a0", "label": "EUA (US)" }]
+      },
+      "copyToGameDir": true,
+      "helpText": "Opcional: o próprio jogo pede a ROM na primeira execução. Se você copiar a ROM para a pasta do jogo, ele a encontra sozinho. Só a versão americana é aceita; a verificação por SHA-1 vale para ROMs no formato .z64."
+    },
+    {
+      "id": "rom-assets",
+      "type": "firstRun",
+      "label": "Gerar os assets a partir da sua ROM (pm64.o2r)",
+      "doneWhen": ["pm64.o2r"],
+      "helpText": "Abra o jogo uma vez: ele pergunta se deseja gerar os arquivos e procura a ROM na pasta do jogo (ou pede para você escolher). A extração acontece só na primeira vez e cria o arquivo pm64.o2r."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "paperboat.cfg.json",
+      "format": "json",
+      "label": "Configurações (paperboat.cfg.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "launchEnv": {
+    "linux": {
+      "SHIP_HOME": "{gameDir}"
+    }
+  },
+  "updates": {
+    "source": "github-releases",
+    "repo": "HarbourMasters/PaperBoat",
+    "assetPatterns": {
+      "win32": "Paperboat-*-Win64.zip",
+      "linux": "Paperboat-*-Linux.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["pm64.o2r", "paperboat-hd.o2r", "saves/**", "mods/**", "logs/**", "paperboat.cfg.json", "imgui.ini", "*.z64"]
+  },
+  "_todo": [
+    "O nome das releases muda a cada versão (ex.: Paperboat-Mulberry-Delta-Win64.zip); os padrões usam * no lugar do nome.",
+    "O zip do Windows não tem pasta raiz e traz debug/Paperboat.pdb (~88 MB) junto; o zip do Linux traz só Paperboat.AppImage, gamecontrollerdb.txt e readme.txt.",
+    "Saves em saves/file<N>.json e saves/globals.json (SaveManager.cpp), dentro da pasta de dados do libultraship: no Windows é a pasta de trabalho (a pasta do jogo); no Linux também, ou SHIP_HOME quando definido (por isso o launchEnv). imgui.ini não foi conferido no código do PaperBoat.",
+    "Build para macOS não mapeada."
+  ],
+  "_sources": [
+    "https://github.com/HarbourMasters/PaperBoat",
+    "https://github.com/HarbourMasters/PaperBoat/releases",
+    "https://github.com/HarbourMasters/PaperBoat/releases/expanded_assets/1.0.3",
+    "https://github.com/HarbourMasters/PaperBoat/releases/download/1.0.3/Paperboat-Mulberry-Delta-Win64.zip (listado: Paperboat.exe, paperboat.o2r de 285 KB, assets/yaml com só offsets da ROM, config.yml com o SHA-1 aceito, shaderc_shared.dll, debug/Paperboat.pdb)",
+    "https://github.com/HarbourMasters/PaperBoat/releases/download/1.0.3/Paperboat-Mulberry-Delta-Linux.zip (listado: Paperboat.AppImage, gamecontrollerdb.txt, readme.txt)",
+    "https://raw.githubusercontent.com/HarbourMasters/PaperBoat/HEAD/README.md",
+    "https://raw.githubusercontent.com/HarbourMasters/PaperBoat/develop/src/port/Engine.cpp",
+    "https://raw.githubusercontent.com/HarbourMasters/PaperBoat/develop/src/port/save/SaveManager.cpp",
+    "https://raw.githubusercontent.com/HarbourMasters/PaperBoat/develop/CMakeLists.txt",
+    "https://raw.githubusercontent.com/HarbourMasters/PaperBoat/develop/.github/workflows/build.yml",
+    "https://raw.githubusercontent.com/JeodC/libultraship/lus-converge/src/ship/Context.cpp"
+  ]
+}

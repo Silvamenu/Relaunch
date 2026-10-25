@@ -1,0 +1,73 @@
+{
+  "id": "snap64-recomp",
+  "name": "Snap64 Recomp",
+  "originalGame": "Pokémon Snap (N64)",
+  "description": "Recompilação estática de Pokémon Snap para PC (N64Recomp + RT64), com widescreen, alta taxa de quadros e mira com mouse, tudo desligado por padrão. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/JackandBeans/Snap64Recomp",
+  "accentColor": "#3b7dd8",
+  "executables": {
+    "win32": ["Snap64Recomp.exe"],
+    "linux": ["Snap64Recomp"]
+  },
+  "detectFiles": ["Snap64Recomp.exe", "Snap64Recomp", "START HERE.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Pokémon Snap (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [{ "sha1": "edc7c49cc568c045fe48be0d18011c30f393cbaf", "label": "EUA (.z64)" }]
+      },
+      "helpText": "Opcional: o próprio jogo pede a ROM na primeira execução. Só a versão americana do cartucho funciona (as versões japonesa, europeia e australiana são builds diferentes). A verificação por SHA-1 vale para o formato .z64; arquivos .v64/.n64 também são aceitos pelo jogo."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Colocar sua ROM na pasta do jogo (pokemonsnap.z64)",
+      "doneWhen": ["pokemonsnap.z64"],
+      "helpText": "Copie sua ROM para a pasta do jogo com o nome pokemonsnap.z64, ou apenas abra o jogo: sem ROM, ele pede o arquivo, confere e copia para a pasta com esse nome (só uma vez). Uma ROM errada é recusada com os dois checksums na tela."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "snapsettings.json",
+        "linux": ["snapsettings.json", "{home}/.config/Snap64Recomp/snapsettings.json"]
+      },
+      "format": "json",
+      "label": "Configurações (snapsettings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "JackandBeans/Snap64Recomp",
+    "assetPatterns": {
+      "win32": "Snap64Recomp-*-win64.zip",
+      "linux": "Snap64Recomp-*-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["pokemonsnap.z64", "saves/**", "photos/**", "snapsettings.json", "mods/*.nrm", "texture_packs/*.rtz"],
+    "_todo": "Os padrões não pegam o .flatpak, o tarball linux-arm64, o .apk do Android, o zip do macOS nem os arquivos .sha256."
+  },
+  "_todo": [
+    "Tudo fica ao lado do programa: pokemonsnap.z64, saves/ (saves/pokemonsnap.bin e o backup), snapsettings.json, photos/ e snap64.log. No Linux, se a pasta não puder ser gravada, os arquivos vão para ~/.config/Snap64Recomp.",
+    "O pacote traz cache/rt64-seen-shaders.bin (lista de shaders) e as pastas mods/ e texture_packs/ só com um README; as extensões .nrm (mods N64Recomp) e .rtz (texture packs RT64) no preserve são suposições pelo formato dos projetos N64Recomp/RT64.",
+    "O exe do Windows não é assinado (aviso do SmartScreen). Cada asset tem um .sha256 ao lado; o README avisa que cópias do projeto fora deste repositório não são oficiais e que uma delas oferece um download falso."
+  ],
+  "_sources": [
+    "https://github.com/JackandBeans/Snap64Recomp",
+    "https://github.com/JackandBeans",
+    "https://github.com/JackandBeans/Snap64Recomp/releases",
+    "https://github.com/JackandBeans/Snap64Recomp/releases/expanded_assets/v1.1.6",
+    "https://github.com/JackandBeans/Snap64Recomp/releases/download/v1.1.6/Snap64Recomp-1.1.6-win64.zip (listado: Snap64Recomp.exe, .map, SDL2/DXC DLLs, menu_text/*.png, licenças; sem ROM nem assets do jogo; SHA-256 confere com o .sha256)",
+    "https://github.com/JackandBeans/Snap64Recomp/releases/download/v1.1.6/Snap64Recomp-1.1.6-linux-x86_64.tar.gz (listado: Snap64Recomp, ícones, licenças)",
+    "https://raw.githubusercontent.com/JackandBeans/Snap64Recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/JackandBeans/Snap64Recomp/HEAD/START%20HERE.txt"
+  ]
+}

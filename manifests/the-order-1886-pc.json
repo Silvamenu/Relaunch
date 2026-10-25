@@ -1,0 +1,76 @@
+{
+  "id": "the-order-1886-pc",
+  "name": "The Order: 1886 PC Native Port",
+  "originalGame": "The Order: 1886 (PS4)",
+  "description": "Port nativo, ainda em desenvolvimento, de The Order: 1886 para Windows: o código do jogo de PS4 roda direto no PC e os gráficos são traduzidos para Vulkan. Você precisa do dump da sua própria cópia (testado com CUSA00035 versão 01.02).",
+  "category": "playstation",
+  "repoUrl": "https://github.com/mateussmeneses/theorder1886-port",
+  "accentColor": "#6b5a43",
+  "executables": {
+    "win32": ["The Order 1886.exe"]
+  },
+  "detectFiles": ["The Order 1886.exe", "Play The Order 1886.exe", "bin/theorder-probe.exe"],
+  "requirements": [
+    {
+      "id": "game-folder",
+      "type": "firstRun",
+      "label": "Escolher no launcher a pasta do seu dump (ex.: CUSA00035) e jogar uma vez",
+      "doneWhen": ["out/boot-linked.bin"],
+      "helpText": "Abra o The Order 1886.exe; na página Jogo (Game), escolha a pasta do dump da sua cópia, a que tem eboot.bin, sce_module e sce_sys (se o update estiver numa pasta separada, indique-a também), e clique em JOGAR. A primeira execução demora mais: o port prepara o jogo a partir do seu eboot.bin (gera out/boot-linked.bin) e monta os shaders. Testado com CUSA00035 versão 01.02; outras versões (CUSA00070, CUSA00076, CUSA00100, CUSA00670, CUSA00785) não foram verificadas por completo. O Windows pode avisar que o programa não é assinado digitalmente."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "theorder.ini",
+      "format": "ini",
+      "label": "Configurações do port (theorder.ini)",
+      "editable": true
+    },
+    {
+      "path": "settings.json",
+      "format": "json",
+      "label": "Opções do launcher (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mateussmeneses/theorder1886-port",
+    "assetPatterns": {
+      "win32": "theorder1886-windows*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "user/**",
+      "out/**",
+      "mods/**",
+      "theorder.ini",
+      "order1886.ini",
+      "mods.json",
+      "mods_presets.json",
+      "patches.json",
+      "last_run.log",
+      "settings.json"
+    ]
+  },
+  "_todo": [
+    "Só Windows 10/11 x64 (Linux não verificado pelo autor). Projeto em desenvolvimento: campanha depois do primeiro capítulo, som e placas AMD/Intel ainda não verificados (README).",
+    "Releases enviadas à mão pelo autor (sem CI). O theorder1886-windows.zip de windows-v0.7.8 confere com o .sha256 publicado e com packaging/windows/package.sh (launcher PyInstaller, bin/theorder-probe.exe e DLLs, scripts, run.py, patches/TheOrder1886-Orbis.xml com patches de memória no formato shadPS4); nenhum arquivo do jogo.",
+    "As notas da 0.6.1 mandam clicar em 'Executar assim mesmo' no SmartScreen (exe sem assinatura); não há instrução para desligar antivírus.",
+    "Tags no formato windows-vX.Y.Z; a windows-v0.7.6-rc.1 não aparece marcada como prerelease, então RCs podem chegar como atualização.",
+    "A lista preserve é a USER_FILES do launcher (launcher/port_launcher_win.py, modo portátil: settings.json fica na pasta do jogo). Sem pasta escolhida, o launcher procura CUSA00035 ao lado da pasta de instalação."
+  ],
+  "_sources": [
+    "https://github.com/mateussmeneses/theorder1886-port",
+    "https://github.com/mateussmeneses/theorder1886-port/releases",
+    "https://github.com/mateussmeneses/theorder1886-port/releases/expanded_assets/windows-v0.7.8",
+    "https://github.com/mateussmeneses/theorder1886-port/releases/download/windows-v0.7.8/theorder1886-windows.zip",
+    "https://github.com/mateussmeneses/theorder1886-port/releases/download/windows-v0.7.8/theorder1886-windows.zip.sha256",
+    "https://raw.githubusercontent.com/mateussmeneses/theorder1886-port/HEAD/README.md",
+    "https://raw.githubusercontent.com/mateussmeneses/theorder1886-port/HEAD/LEIA-ME_RELEASE.md",
+    "https://raw.githubusercontent.com/mateussmeneses/theorder1886-port/HEAD/packaging/windows/package.sh",
+    "https://raw.githubusercontent.com/mateussmeneses/theorder1886-port/HEAD/launcher/port_launcher_win.py",
+    "https://raw.githubusercontent.com/mateussmeneses/theorder1886-port/HEAD/run.py"
+  ]
+}

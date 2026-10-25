@@ -1,0 +1,74 @@
+{
+  "id": "opengoal-jak3",
+  "name": "OpenGOAL: Jak 3",
+  "originalGame": "Jak 3 (PS2)",
+  "description": "Port nativo para PC de Jak 3, feito a partir da decompilação do jogo de PS2; está em beta desde abril de 2026 e o próprio projeto avisa que ainda há bugs e bastante trabalho pela frente. Os dados do jogo saem da imagem ISO do seu próprio disco.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/open-goal/jak-project",
+  "website": "https://opengoal.dev",
+  "accentColor": "#c0392b",
+  "executables": {
+    "win32": ["gk.exe"],
+    "linux": ["gk"]
+  },
+  "detectFiles": ["gk.exe", "gk", "extractor.exe", "extractor"],
+  "requirements": [
+    {
+      "id": "extract",
+      "type": "firstRun",
+      "label": "Extrair e compilar o Jak 3 a partir do ISO do seu disco (extractor -g jak3)",
+      "doneWhen": ["{gameDir}/data/out/jak3/iso/GAME.CGO"],
+      "helpText": "Gere um arquivo .iso do seu próprio disco de Jak 3 de PS2 (NTSC-U, inclusive Greatest Hits; PAL; NTSC-K; a versão japonesa ainda não consta na validação do extractor e as versões de PS3/PS4/PS5 não servem). Para o Jak 3 o extractor precisa do parâmetro -g jak3, então arrastar o .iso sobre o extractor.exe não funciona: abra um terminal na pasta do jogo e rode, no Windows, .\\extractor.exe -g jak3 \"C:\\caminho\\do\\seu\\jak3.iso\"; no Linux, ./extractor -g jak3 \"/caminho/do/seu/jak3.iso\". O extractor valida, extrai, decompila e compila os dados (leva alguns minutos) e abre o jogo no final. Depois de cada atualização do OpenGOAL, repita este passo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "{appData}/OpenGOAL/jak3/settings/pc-settings.gc",
+      "format": "text",
+      "label": "Configurações do jogo (pc-settings.gc)",
+      "editable": true
+    }
+  ],
+  "launchArgs": ["-g", "jak3"],
+  "updates": {
+    "source": "github-releases",
+    "repo": "open-goal/jak-project",
+    "assetPatterns": {
+      "win32": "opengoal-windows-*.zip",
+      "linux": "opengoal-linux-*.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/iso_data/**", "data/decompiler_out/**", "data/out/**"],
+    "_todo": [
+      "Mesmo pacote do opengoal-jak1 (v0.3.9): opengoal-windows-v0.3.9.zip / opengoal-linux-v0.3.9.tar.gz, sem pasta raiz única (gk, extractor, goalc e data/ na raiz). Os padrões não casam com os assets do LSP nem com os de macOS.",
+      "A release não traz data/iso_data, data/decompiler_out nem data/out (conferido na listagem do .tar.gz): são gerados a partir do disco do usuário. Depois de atualizar, é preciso rodar o extractor -g jak3 de novo."
+    ]
+  },
+  "_todo": [
+    "Estado: o README diz 'Jak 3 has a good amount of work left to do'; o progress report Q1 2026 do site anuncia o 'Jak 3 beta release' (tooling 0.3.0, launcher 2.8.17+), e as notas da v0.3.9 ainda trazem correções do Jak 3. Jogável, mas em beta.",
+    "O extractor usa 'jak1' quando não recebe -g (decompiler/extractor/main.cpp: game_name = \"jak1\"; comentário 'game arg must be provided for jak 2/3'), por isso o passo manual pede o terminal em vez de arrastar o arquivo.",
+    "Discos aceitos conforme o banco de validação do extractor (decompiler/extractor/extractor_util.cpp): SCUS-97330 (NTSC-U), SCUS-97516 (NTSC-U Greatest Hits), SCES-52460 (PAL), SCKA-20040 (NTSC-K). Não há entrada para o NTSC-J; o README genérico diz que todas as versões PAL/NTSC/NTSC-J de PS2 servem, então isso pode mudar.",
+    "Saves ficam em {appData}/OpenGOAL/jak3/saves (fora da pasta do jogo; {appData} = ~/.config no Linux).",
+    "detectFiles iguais aos do opengoal-jak1 e opengoal-jak2 (é o mesmo pacote): uma pasta do OpenGOAL é reconhecida pelos três manifestos. Cada manifesto instala a sua própria cópia do pacote."
+  ],
+  "_sources": [
+    "https://github.com/open-goal/jak-project/releases/latest",
+    "https://github.com/open-goal/jak-project/releases",
+    "https://github.com/open-goal/jak-project/releases/expanded_assets/v0.3.9",
+    "https://github.com/open-goal/jak-project/releases/download/v0.3.9/opengoal-linux-v0.3.9.tar.gz",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/README.md",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/decompiler/extractor/main.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/decompiler/extractor/extractor_util.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/game/main.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/common/versions/versions.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/common/util/FileUtil.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/game/kernel/jak3/kmachine.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/goal_src/jak3/game.gp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/goal_src/jak3/lib/project-lib.gp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/goal_src/jak3/dgos/game.gd",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/goal_src/jak1/pc/pckernel-common.gc",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/decompiler/config/jak3/jak3_config.jsonc",
+    "https://raw.githubusercontent.com/open-goal/open-goal.github.io/master/blog/progress-report-q1-2026/index.mdx",
+    "https://raw.githubusercontent.com/open-goal/open-goal.github.io/master/blog/progress-report-q3-2026/index.mdx"
+  ]
+}

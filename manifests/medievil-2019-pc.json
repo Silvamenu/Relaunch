@@ -1,0 +1,76 @@
+{
+  "id": "medievil-2019-pc",
+  "name": "MediEvil (PS4) for PC",
+  "originalGame": "MediEvil (PS4, 2019)",
+  "description": "Port nativo para Windows do MediEvil de PS4 (baseado no port de God of War III): o código do próprio jogo roda na CPU e a GPU é traduzida para Vulkan. Você precisa da sua própria cópia do jogo, como pasta do dump ou fake PKG.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/bc160201983/medievil_2019_pc_port",
+  "accentColor": "#5f8f3a",
+  "executables": {
+    "win32": ["MediEvil.exe"]
+  },
+  "detectFiles": ["MediEvil.exe", "bin/medievil-runtime.exe", "patches/MediEvil.xml"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "firstRun",
+      "label": "Sua cópia do jogo (pasta CUSA11227/CUSA12982 ou fake PKG): escolher no launcher e jogar uma vez",
+      "doneWhen": ["out/boot-linked.bin"],
+      "helpText": "Abra o MediEvil.exe e, na página Game, use \"Browse…\" para escolher a pasta do seu dump (a que tem eboot.bin, sce_module e sce_sys) ou \"Choose .pkg…\" para um fake PKG feito a partir do seu dump (ele é desempacotado uma vez ao lado do .pkg; precisa de cerca de 32 GB livres). Servem CUSA11227 (EUA) e CUSA12982 (Europa), versões 01.00 e 01.02. O dump precisa ser feito por você, do seu próprio PS4; o app não fornece jogos. Depois escolha a resolução em Home e clique em PLAY: a primeira partida prepara a imagem do jogo na pasta out."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "medievil.ini",
+      "format": "ini",
+      "label": "Jogo e menu do jogo (medievil.ini)",
+      "editable": true
+    },
+    {
+      "path": ["launcher-data/settings.json", "{appData}/medievil-launcher/settings.json"],
+      "format": "json",
+      "label": "Launcher (settings.json)",
+      "editable": true,
+      "_todo": "launcher-data/ só existe no modo portátil (arquivo portable.txt ao lado do MediEvil.exe)."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "bc160201983/medievil_2019_pc_port",
+    "assetPatterns": {
+      "win32": "medievil-windows*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "user/**",
+      "out/**",
+      "mods/**",
+      "medievil.ini",
+      "mods.json",
+      "mods_presets.json",
+      "patches.json",
+      "last_run.log",
+      "launcher-data/**",
+      "portable.txt"
+    ],
+    "_todo": "Lista igual à USER_FILES do atualizador do próprio launcher (launcher/medievil_launcher.py)."
+  },
+  "_todo": [
+    "Releases publicadas pelo workflow .github/workflows/release.yml (GitHub Actions, a partir de tags v*).",
+    "Só Windows nas releases; o build Linux (AppImage) existe apenas no código (packaging/linux, contribuição da comunidade).",
+    "O extrator de fake PKG (scripts/pkg_extract.py, pkg_keys.py) traz as chaves públicas de fake PKG do shadPS4, como o próprio shadPS4. Store PKGs (criptografados para um console) não são aceitos.",
+    "A resolução 4K grava um pak de configuração (overbite/content/paks/pakchunk99-ps4_p.pak) dentro da pasta do jogo do usuário; ele é removido ao voltar para Native.",
+    "O README tem um link de Patreon do autor; os downloads são só pelas releases do GitHub."
+  ],
+  "_sources": [
+    "https://github.com/bc160201983/medievil_2019_pc_port",
+    "https://github.com/bc160201983/medievil_2019_pc_port/releases",
+    "https://github.com/bc160201983/medievil_2019_pc_port/releases/tag/v1.3.7",
+    "https://github.com/bc160201983/medievil_2019_pc_port/releases/expanded_assets/v1.3.7",
+    "https://github.com/bc160201983/medievil_2019_pc_port/releases/download/v1.3.7/medievil-windows.zip",
+    "https://raw.githubusercontent.com/bc160201983/medievil_2019_pc_port/HEAD/README.md",
+    "https://raw.githubusercontent.com/bc160201983/medievil_2019_pc_port/HEAD/.github/workflows/release.yml",
+    "https://raw.githubusercontent.com/bc160201983/medievil_2019_pc_port/HEAD/launcher/medievil_launcher.py"
+  ]
+}

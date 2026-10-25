@@ -1,0 +1,81 @@
+{
+  "id": "simpsons-game-recomp",
+  "name": "The Simpsons Game Recompiled",
+  "originalGame": "The Simpsons Game (Xbox 360, 2007)",
+  "description": "Port nativo de The Simpsons Game feito por recompilação estática, para Windows e Linux. O launcher do projeto instala os dados a partir da ISO do seu próprio disco de Xbox 360 (versão EUA; a europeia também roda).",
+  "category": "xbox",
+  "repoUrl": "https://github.com/YesterMester/TheSimpsonsGameRecomp",
+  "accentColor": "#ffd90f",
+  "executables": {
+    "win32": ["simpsons-launcher.exe"],
+    "linux": ["Play.sh"]
+  },
+  "detectFiles": ["simpsons.toml", "simpsons-launcher.exe", "simpsons.exe", "Play.sh", "launcher/launcher.py"],
+  "requirements": [
+    {
+      "id": "python",
+      "type": "firstRun",
+      "label": "Python 3.10 a 3.14 no sistema (só Linux)",
+      "optional": true,
+      "helpText": "No Linux o launcher é um script Python (launcher/launcher.py) e usa o python3 do sistema, versão 3.10 a 3.14. Com PySide6 instalado ele abre numa janela própria; sem ele, abre no navegador. No Windows o simpsons-launcher.exe já traz tudo."
+    },
+    {
+      "id": "install",
+      "type": "firstRun",
+      "label": "Instalar o jogo a partir da ISO do seu disco (aba Install)",
+      "doneWhen": ["gamedata/default.xex"],
+      "helpText": "Abra o launcher e, na aba Install, escolha a imagem ISO do seu disco de The Simpsons Game de Xbox 360 (versão EUA, title ID 45410809; a europeia também funciona, com menos testes). O launcher extrai os arquivos com o extract-xiso que vem no pacote para a pasta gamedata (cerca de 5 GB). Depois clique em Play."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "simpsons.toml",
+      "format": "text",
+      "label": "Configurações do jogo (simpsons.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "YesterMester/TheSimpsonsGameRecomp",
+    "assetPatterns": {
+      "win32": "TheSimpsonsGame-Recompiled-Windows-x64.zip",
+      "linux": "TheSimpsonsGame-Recompiled-Linux-x64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "simpsons.toml",
+      "gamedata/**",
+      "gamedata_previous/**",
+      "launcher.json",
+      "backups/**",
+      "mods/**",
+      "art/**",
+      "diagnostics/**",
+      "launcher/launcher.json",
+      "launcher/backups/**",
+      "launcher/mods/**",
+      "launcher/art/**",
+      "launcher/diagnostics/**"
+    ],
+    "_todo": "Os pacotes -NoAVX2 (para CPUs sem AVX2) não são selecionados; o pacote padrão é compilado para x86-64-v3 e não abre em CPUs antigas (erro 0xc0000142 no Windows)."
+  },
+  "_todo": [
+    "Release v0.0.6.5 (publicada pelo GitHub Actions, workflow release.yml) verificada: o zip do Windows não tem pasta raiz e traz simpsons-launcher.exe (PyInstaller), simpsons.exe, rexruntimerd.dll, extract-xiso.exe, ffmpeg.exe, simpsons.toml e native_shaders/; o .tar.gz do Linux traz simpsons, librexruntimerd.so, extract-xiso, Play.sh, launcher/ (launcher.py e a interface web) e simpsons.toml.",
+    "native_shaders/ (launcher/ui/native_shaders no Linux) tem cerca de 6.600 shaders .spv pré-compilados: são os shaders do jogo traduzidos para SPIR-V, código derivado do jogo como o próprio executável recompilado (o mesmo que o Unleashed Recompiled embute). Não há texturas, áudio, vídeos ou outros arquivos do disco.",
+    "O launcher gera artes a partir dos seus arquivos (pasta art) e pode se atualizar sozinho pela aba About, trocando só motor e launcher; isso pode conflitar com o atualizador do app.",
+    "Saves e cache de shaders ficam fora da pasta de instalação: ~/.local/share/simpsons (Linux) e %LOCALAPPDATA%\\simpsons (Windows).",
+    "No Windows, launcher.json, backups, mods e art ficam ao lado do exe; no Linux, dentro de launcher/ (por isso as duas formas em preserve).",
+    "O README avisa que o Defender às vezes acusa falso positivo nos exes não assinados e sugere compilar ou restaurar o arquivo; não manda desativar o antivírus.",
+    "Executar Play.sh --play (Linux) ou simpsons-launcher.exe --play abre o jogo direto, sem a janela do launcher; não foi usado em launchArgs porque a instalação é feita pela janela."
+  ],
+  "_sources": [
+    "https://github.com/YesterMester/TheSimpsonsGameRecomp",
+    "https://github.com/YesterMester/TheSimpsonsGameRecomp/releases",
+    "https://github.com/YesterMester/TheSimpsonsGameRecomp/releases/expanded_assets/v0.0.6.5",
+    "https://github.com/YesterMester/TheSimpsonsGameRecomp/releases/download/v0.0.6.5/TheSimpsonsGame-Recompiled-Linux-x64.tar.gz",
+    "https://github.com/YesterMester/TheSimpsonsGameRecomp/releases/download/v0.0.6.5/TheSimpsonsGame-Recompiled-Windows-x64.zip",
+    "https://raw.githubusercontent.com/YesterMester/TheSimpsonsGameRecomp/HEAD/README.md"
+  ]
+}

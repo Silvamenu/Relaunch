@@ -1,0 +1,64 @@
+{
+  "id": "unicorn-overlord-pc",
+  "name": "Unicorn Overlord PC (vwport)",
+  "originalGame": "Unicorn Overlord (PS4)",
+  "description": "Port nativo da versão de PS4 de Unicorn Overlord para Windows e Linux: o executável do jogo roda direto no PC, com o sistema do PS4 reimplementado e a GPU traduzida para Vulkan. Você precisa do dump da sua própria cópia (CUSA36381 com o update 1.04).",
+  "category": "playstation",
+  "repoUrl": "https://github.com/hachi23/unicorn_overlord_pc",
+  "accentColor": "#c8a254",
+  "executables": {
+    "win32": ["Unicorn Overlord.exe"],
+    "linux": ["Unicorn-Overlord-x86_64.AppImage"]
+  },
+  "detectFiles": ["Unicorn Overlord.exe", "Unicorn-Overlord-x86_64.AppImage", "_internal/runtime/bin/vwport.exe"],
+  "requirements": [
+    {
+      "id": "game-folder",
+      "type": "firstRun",
+      "label": "Escolher a pasta do seu dump (CUSA36381, app 01.04) na primeira abertura",
+      "doneWhen": ["data/launcher.json"],
+      "helpText": "Na primeira abertura o programa pede a pasta do dump da sua cópia com o update 1.04 (inglês) já mesclado: a pasta com eboot.bin, sce_module, sce_sys e os arquivos .CPK (~7 GB). Só a versão asiática CUSA36381 app 01.04 é aceita. O programa confere título e versão e instala o jogo em data/game, dentro da pasta do port (com hard links se o dump estiver no mesmo disco; senão copia ~7 GB, e uma cópia cancelada continua na próxima abertura). Para trocar a pasta depois: menu Insert (ou R3+L2), aba Overlay, Change game folder."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "data/vw.ini",
+      "format": "ini",
+      "label": "Configurações do port (data/vw.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "hachi23/unicorn_overlord_pc",
+    "assetPatterns": {
+      "win32": "Unicorn-Overlord-PC-windows*.zip",
+      "linux": "Unicorn-Overlord-*.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/**"]
+  },
+  "_todo": [
+    "Em desenvolvimento: só prólogo, capítulo 1 e a primeira batalha foram jogados (README, docs/KNOWN_ISSUES.md).",
+    "Releases geradas pelo GitHub Actions (.github/workflows/build.yml): tags vX.Y.Z viram releases normais; a main substitui a prerelease móvel 'latest' (builds de teste), que fica de fora com includePrereleases=false. Os pacotes da v1.2.0 foram listados e conferem com o SHA256SUMS: launcher PyInstaller, _internal/runtime/bin/vwport(.exe), scripts, licenças; nenhum arquivo do jogo.",
+    "Os ícones de botão Xbox/Nintendo vêm dos dados do próprio dump (entradas não usadas de GUI/Interface_Button.mbs, src/unicorn_button_icons.h), não do pacote.",
+    "data/ (vw.ini, launcher.json, game/ com o dump instalado, user/ com saves e caches, out/, logs/) fica ao lado do .exe ou do .AppImage (variável APPIMAGE), isto é, na pasta de instalação; VW_DATA_DIR muda isso.",
+    "O programa tem atualizador próprio (scripts/updates.py, confere SHA256SUMS)."
+  ],
+  "_sources": [
+    "https://github.com/hachi23/unicorn_overlord_pc",
+    "https://github.com/hachi23/unicorn_overlord_pc/releases",
+    "https://github.com/hachi23/unicorn_overlord_pc/releases/expanded_assets/v1.2.0",
+    "https://github.com/hachi23/unicorn_overlord_pc/releases/download/v1.2.0/SHA256SUMS",
+    "https://github.com/hachi23/unicorn_overlord_pc/releases/download/v1.2.0/Unicorn-Overlord-PC-windows.zip",
+    "https://github.com/hachi23/unicorn_overlord_pc/releases/download/v1.2.0/Unicorn-Overlord-x86_64.AppImage",
+    "https://github.com/hachi23/unicorn_overlord_pc/tree/HEAD/src",
+    "https://raw.githubusercontent.com/hachi23/unicorn_overlord_pc/HEAD/README.md",
+    "https://raw.githubusercontent.com/hachi23/unicorn_overlord_pc/HEAD/.github/workflows/build.yml",
+    "https://raw.githubusercontent.com/hachi23/unicorn_overlord_pc/HEAD/docs/RELEASING.md",
+    "https://raw.githubusercontent.com/hachi23/unicorn_overlord_pc/HEAD/docs/KNOWN_ISSUES.md",
+    "https://raw.githubusercontent.com/hachi23/unicorn_overlord_pc/HEAD/launcher/vw_launcher.py",
+    "https://raw.githubusercontent.com/hachi23/unicorn_overlord_pc/HEAD/src/unicorn_button_icons.h"
+  ]
+}

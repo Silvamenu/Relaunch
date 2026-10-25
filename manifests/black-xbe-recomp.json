@@ -1,0 +1,74 @@
+{
+  "id": "black-xbe-recomp",
+  "name": "Black - XBE Recomp",
+  "originalGame": "Black (Xbox)",
+  "description": "Port nativo não oficial para PC da versão de Xbox de Black, feito por recompilação estática. Você fornece os arquivos (ISO ou arquivos extraídos) do seu próprio disco da versão americana ou europeia.",
+  "category": "xbox",
+  "repoUrl": "https://github.com/TGP482/BLACK-XBERecomp",
+  "accentColor": "#c0392b",
+  "executables": {
+    "win32": ["BLACK.exe"]
+  },
+  "detectFiles": ["BLACK.exe", "compiler/xbe_recomp.exe", "d3dcompiler_47.dll"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "file",
+      "label": "Os arquivos do seu disco de Black (Xbox, EUA ou Europa) na pasta assets",
+      "patterns": ["assets/default.xbe", "assets/*.iso"],
+      "helpText": "Coloque na pasta assets (dentro da pasta do jogo) a imagem .iso do seu próprio disco ou os arquivos extraídos dele, com o default.xbe. Só as versões americana e europeia do Xbox funcionam; a europeia é convertida pelo próprio programa."
+    },
+    {
+      "id": "compile",
+      "type": "firstRun",
+      "label": "Compilar o código do jogo na primeira execução",
+      "doneWhen": ["BLACK.dll"],
+      "helpText": "Na primeira vez que o BLACK.exe abre, ele traduz o default.xbe do seu disco e compila o código do jogo (BLACK.dll) com o compilador que vem na pasta compiler. Isso acontece uma vez e pode demorar. Depois de cada atualização a compilação é refeita automaticamente."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "black.toml",
+      "format": "text",
+      "label": "Configurações (black.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "TGP482/BLACK-XBERecomp",
+    "assetPatterns": {
+      "win32": "BLACK-XBERecomp.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["assets/**", "black.toml", "hdd/**", "textures/**", "cursor.png", "cursor.dds"]
+  },
+  "_todo": [
+    "Só há build para Windows x64 (Direct3D 12); não há build de Linux.",
+    "A release V2 (BLACK-XBERecomp.zip, 67,6 MB) foi listada: BLACK.exe, d3dcompiler_47.dll e runtime do Visual C++ na raiz, pasta assets vazia e a pasta compiler (clang.exe, lld-link.exe, xbe_recomp.exe, configs e headers). Nenhum código ou dado do jogo: o código é gerado na máquina do usuário (release.bat exclui compiler/work).",
+    "O executável embute src/common/europe.patch, um patch binário que converte o default.xbe europeu no americano (dados derivados do XBE, não o XBE em si).",
+    "Saves ficam em hdd/ e logs em logs/ ao lado do exe (XboxXBE-Recomp runtime/app/main.cpp); o BLACK.dll compilado não é preservado porque o carimbo dele depende do BLACK.exe e é refeito após atualizar.",
+    "O repositório não mostra arquivo de licença."
+  ],
+  "_sources": [
+    "https://github.com/TGP482/BLACK-XBERecomp",
+    "https://github.com/TGP482/BLACK-XBERecomp/commits/main",
+    "https://github.com/TGP482/BLACK-XBERecomp/releases",
+    "https://github.com/TGP482/BLACK-XBERecomp/releases/tag/V2",
+    "https://github.com/TGP482/BLACK-XBERecomp/releases/expanded_assets/V2",
+    "https://github.com/TGP482/BLACK-XBERecomp/releases/download/V2/BLACK-XBERecomp.zip",
+    "https://raw.githubusercontent.com/TGP482/BLACK-XBERecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/TGP482/BLACK-XBERecomp/HEAD/CMakeLists.txt",
+    "https://raw.githubusercontent.com/TGP482/BLACK-XBERecomp/HEAD/build.bat",
+    "https://raw.githubusercontent.com/TGP482/BLACK-XBERecomp/HEAD/release.bat",
+    "https://raw.githubusercontent.com/TGP482/BLACK-XBERecomp/HEAD/.gitignore",
+    "https://raw.githubusercontent.com/TGP482/BLACK-XBERecomp/HEAD/src/common/game_files.cpp",
+    "https://raw.githubusercontent.com/TGP482/BLACK-XBERecomp/HEAD/src/common/game_info.cpp",
+    "https://raw.githubusercontent.com/TGP482/XboxXBE-Recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/TGP482/XboxXBE-Recomp/HEAD/cmake/XbeRecomp.cmake",
+    "https://raw.githubusercontent.com/TGP482/XboxXBE-Recomp/HEAD/runtime/app/game_code.cpp",
+    "https://raw.githubusercontent.com/TGP482/XboxXBE-Recomp/HEAD/runtime/app/settings.cpp",
+    "https://raw.githubusercontent.com/TGP482/XboxXBE-Recomp/HEAD/runtime/app/main.cpp"
+  ]
+}

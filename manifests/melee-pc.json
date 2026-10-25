@@ -1,0 +1,93 @@
+{
+  "id": "melee-pc",
+  "name": "melee-pc",
+  "originalGame": "Super Smash Bros. Melee (GameCube)",
+  "description": "Port nativo para PC de Super Smash Bros. Melee feito a partir da decompilação do jogo (beta), com resolução maior, pacotes de texturas e jogo em rede. Precisa da imagem do seu próprio disco americano (NTSC-U 1.02).",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/999sian/melee-pc",
+  "website": "https://999sian.github.io/melee-pc/",
+  "accentColor": "#b5121b",
+  "executables": {
+    "win32": ["melee.exe"],
+    "linux": ["Melee-x86_64.AppImage"]
+  },
+  "detectFiles": ["melee.exe", "Melee-x86_64.AppImage", "resources/launcher.rml", "initial_pipeline_cache.db"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Super Smash Bros. Melee (GameCube, EUA, revisão 2)",
+      "optional": true,
+      "extensions": ["iso", "gcm", "ciso", "rvz"],
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "d4e70c064cc714ba8400a849cf299dbd1aa326fc",
+            "label": "NTSC-U 1.02 (GALE01, .iso)"
+          }
+        ]
+      },
+      "copyToGameDir": false,
+      "helpText": "Opcional: escolha aqui o .iso para o app conferir a versão. A versão suportada é a americana revisão 2 (NTSC-U 1.02, GALE01), em .iso, .gcm, .ciso ou .rvz, feita a partir do seu próprio disco. Arquivos .ciso/.rvz têm SHA-1 diferente do .iso (o próprio melee-pc verifica a imagem pela leitura do disco). A versão europeia (GALP01) também abre, com limitações."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Selecionar a imagem do seu disco no launcher do melee-pc",
+      "helpText": "Abra o melee-pc, escolha a imagem do seu disco no launcher próprio dele e, se quiser, use Verify para comparar com o hash do Redump. O caminho fica salvo em launcher.cfg na pasta de preferências (%APPDATA%\\melee-pc no Windows ou ~/.local/share/melee-pc no Linux; ou na subpasta user/ ao lado do melee.exe se existir um arquivo portable.txt)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["user/launcher.cfg", "{appData}/melee-pc/launcher.cfg"],
+        "linux": ["{localAppData}/melee-pc/launcher.cfg"]
+      },
+      "format": "text",
+      "label": "Preferências do launcher (launcher.cfg)",
+      "editable": true,
+      "_todo": "Formato \"chave valor\" por linha (src/pc/launcher_data.cpp), não é INI. Pasta = SDL_GetPrefPath(NULL, \"melee-pc\") (src/pc/paths.c); user/ só no modo portátil (portable.txt ao lado do executável)."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "999sian/melee-pc",
+    "assetPatterns": {
+      "win32": "Melee-Windows-x86_64.zip",
+      "linux": "Melee-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "user/**", "textures/**", "files/**"],
+    "_todo": [
+      "Os nomes dos assets não trazem versão (Melee-Windows-x86_64.zip, Melee-x86_64.AppImage); os padrões não casam com ARM64, aarch64, macOS, Android, iOS nem com o tarball Linux.",
+      "O tarball melee-linux-x86_64.tar.gz não foi usado: lib/libSDL3.so.0 dentro dele é um link simbólico, que o instalador ignora; o AppImage é um arquivo único.",
+      "O próprio melee-pc tem verificação de atualização embutida (consulta as releases do GitHub e baixa o asset do mesmo nome)."
+    ]
+  },
+  "_todo": [
+    "O zip do Windows tem uma pasta raiz (melee-windows-x86_64/), que vira a raiz da instalação; traz também RUN-AND-LOG.bat (script de diagnóstico do próprio repositório, tools/windows/RUN-AND-LOG.bat, que roda melee.exe com log).",
+    "O melee-pc aceita o caminho do disco por argumento (melee.exe caminho.iso ou --dvd), mas manifestos nativos não repassam o arquivo escolhido; a seleção fica no launcher do jogo.",
+    "Projeto em beta; Linux x86-64 é a plataforma mais testada. Requisitos: Direct3D 12 (ou Vulkan 1.1) no Windows e Vulkan 1.1 no Linux. O AppImage pode precisar de FUSE (libfuse2).",
+    "Texturas (textures/) e músicas (music/) ficam normalmente na pasta de preferências; textures/ ao lado do executável também é lido."
+  ],
+  "_sources": [
+    "https://github.com/999sian/melee-pc",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/README.md",
+    "https://github.com/999sian/melee-pc/releases",
+    "https://github.com/999sian/melee-pc/releases/expanded_assets/v0.4.2",
+    "https://github.com/999sian/melee-pc/releases/download/v0.4.2/Melee-Windows-x86_64.zip",
+    "https://github.com/999sian/melee-pc/releases/download/v0.4.2/melee-linux-x86_64.tar.gz",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/src/pc/paths.c",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/src/pc/launcher.cpp",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/src/pc/launcher_data.cpp",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/src/pc/updater.cpp",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/src/pc/main.c",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/.github/workflows/build.yml",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/tools/package_windows.sh",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/tools/windows/RUN-AND-LOG.bat",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/tools/launcher_art/make_launcher_art.py",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/resources/FONT-LICENSE.txt",
+    "https://raw.githubusercontent.com/999sian/melee-pc/HEAD/docs/site/index.html"
+  ]
+}

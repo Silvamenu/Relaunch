@@ -1,0 +1,84 @@
+{
+  "id": "estacado",
+  "name": "Estacado",
+  "originalGame": "The Darkness (Xbox 360)",
+  "description": "Recompilação estática de The Darkness para Windows, com Direct3D 12 sobre o ReXGlue. Usa a ISO ou os arquivos extraídos do seu próprio disco (versão USA/Europa).",
+  "category": "xbox",
+  "repoUrl": "https://github.com/invinceble55-wq/Estacado-The-Darkness-Recomp",
+  "accentColor": "#7a1f2b",
+  "executables": {
+    "win32": ["TheDarknessSettings.exe"]
+  },
+  "detectFiles": ["TheDarknessSettings.exe", "TheDarkness.exe", "TheDarkness.package.toml"],
+  "requirements": [
+    {
+      "id": "vcredist",
+      "type": "firstRun",
+      "label": "Microsoft Visual C++ 2015-2022 Redistributable (x64)",
+      "optional": true,
+      "helpText": "Exigido pelo README. Se o jogo ou o launcher não abrirem por falta de DLL, instale o Visual C++ Redistributable x64 pelo site da Microsoft. O jogo também precisa de CPU com AVX2 e placa com Direct3D 12."
+    },
+    {
+      "id": "game",
+      "type": "firstRun",
+      "label": "Escolher a ISO ou a pasta da sua cópia de The Darkness",
+      "doneWhen": [
+        "TheDarkness.game.toml",
+        "game/default.xex",
+        "{home}/Saved Games/Estacado/TheDarkness.game.toml",
+        "{localAppData}/Estacado/TheDarkness.game.toml"
+      ],
+      "helpText": "Abra o TheDarknessSettings.exe (o launcher). Na primeira vez ele pede o jogo: \"Choose disc image...\" para a ISO do seu disco de The Darkness de Xbox 360 (USA/Europa, title ID 545407EE; ela é extraída uma vez para a pasta game, cerca de 8 GB) ou \"Choose game folder...\" para uma pasta já extraída com o default.xex. O launcher confere se o código do jogo é o suportado (versões com Title Update ainda não rodam). Depois escolha um preset e clique em Play."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": ["{home}/Saved Games/Estacado/TheDarkness.pc.toml", "TheDarkness.pc.toml"],
+      "format": "text",
+      "label": "Configurações (TheDarkness.pc.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "invinceble55-wq/Estacado-The-Darkness-Recomp",
+    "assetPatterns": {
+      "win32": "Estacado-+([0-9.])-windows-x64.zip"
+    },
+    "includePrereleases": true,
+    "preserve": [
+      "portable.txt",
+      "TheDarkness.game.toml",
+      "TheDarkness.pc.toml",
+      "TheDarkness.mods.toml",
+      "game/**",
+      "runtime_data/content/**",
+      "runtime_data/screenshots/**",
+      "runtime_data/gpu_calibration.toml",
+      "logs/**",
+      "session_log.txt"
+    ],
+    "_todo": "O padrão usa extglob +([0-9.]) para não pegar builds de teste como Estacado-0.9.5-test2-windows-x64.zip (release issue16-test2)."
+  },
+  "_todo": [
+    "Todos os releases são pre-release (até v0.9.8), por isso includePrereleases = true.",
+    "Release v0.9.8 verificada (SHA-256 do zip igual ao das notas): zip sem pasta raiz com TheDarknessSettings.exe, TheDarkness.exe, rexruntime.dll, rexgpu-xenos.dll, mspack_lzx.dll, DLLs de DLSS/FSR/XeSS, presets/, languages/ e licenses/. runtime_data/pipeline_seed/ traz só uma lista sem dados (hashes de shaders, estados de pipeline e índices no ProgramCache.xpc do próprio jogo, segundo o CHANGELOG); os shaders são reconstruídos a partir da sua cópia.",
+    "O repositório foi renomeado de invinceble55-wq/Estacado (o README ainda usa esse nome nos links; o GitHub redireciona). 18 commits, 104 estrelas, issues e PR de outros usuários; binários compilados localmente (sem CI).",
+    "Por padrão saves e configurações ficam em %USERPROFILE%\\Saved Games\\Estacado (content, screenshots, TheDarkness.pc.toml) e logs em %LOCALAPPDATA%\\Estacado\\logs; com portable.txt ao lado do TheDarkness.exe, ficam na pasta do jogo (TheDarkness.pc.toml e runtime_data). As subpastas exatas de runtime_data no modo portátil foram inferidas de runtime_user_data.h e não conferidas.",
+    "Não foi confirmado se TheDarkness.game.toml é gravado ao lado do exe ou na pasta de dados (o código procura nos dois lugares); por isso doneWhen lista os dois e a pasta game.",
+    "O launcher só consulta a lista de releases para avisar de versões novas (não se atualiza sozinho)."
+  ],
+  "_sources": [
+    "https://github.com/invinceble55-wq/Estacado-The-Darkness-Recomp",
+    "https://github.com/invinceble55-wq/Estacado",
+    "https://github.com/invinceble55-wq/Estacado-The-Darkness-Recomp/releases",
+    "https://github.com/invinceble55-wq/Estacado-The-Darkness-Recomp/releases/expanded_assets/v0.9.8",
+    "https://github.com/invinceble55-wq/Estacado-The-Darkness-Recomp/releases/download/v0.9.8/Estacado-0.9.8-windows-x64.zip",
+    "https://raw.githubusercontent.com/invinceble55-wq/Estacado-The-Darkness-Recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/invinceble55-wq/Estacado-The-Darkness-Recomp/HEAD/runtime/runtime_game_setup.cpp",
+    "https://raw.githubusercontent.com/invinceble55-wq/Estacado-The-Darkness-Recomp/HEAD/runtime/runtime_game_setup.h",
+    "https://raw.githubusercontent.com/invinceble55-wq/Estacado-The-Darkness-Recomp/HEAD/runtime/runtime_user_data.h",
+    "https://raw.githubusercontent.com/invinceble55-wq/Estacado-The-Darkness-Recomp/HEAD/runtime/main.cpp"
+  ]
+}

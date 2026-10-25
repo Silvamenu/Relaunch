@@ -1,0 +1,65 @@
+{
+  "id": "ngb-recomp",
+  "name": "Ninja Gaiden Black Recompiled",
+  "originalGame": "Ninja Gaiden Black (Xbox)",
+  "description": "Versão nativa para Windows e Linux de Ninja Gaiden Black, feita por recompilação estática do jogo de Xbox. Na primeira execução ele instala os dados a partir da imagem do seu próprio disco americano (NTSC-U).",
+  "category": "xbox",
+  "repoUrl": "https://github.com/gamboozino/ngbrecomp",
+  "accentColor": "#8b1a1a",
+  "executables": {
+    "win32": ["NinjaGaidenBlack.exe"],
+    "linux": ["NinjaGaidenBlack-x86_64.AppImage"]
+  },
+  "detectFiles": ["NinjaGaidenBlack.exe", "NinjaTrilogy.exe", "NinjaGaidenBlack-x86_64.AppImage"],
+  "requirements": [
+    {
+      "id": "install",
+      "type": "firstRun",
+      "label": "Instalar o jogo a partir do seu disco de Ninja Gaiden Black (Xbox, EUA)",
+      "doneWhen": [
+        "game/default.xbe",
+        "userdata/game/default.xbe",
+        "userdata/game-location.txt",
+        "{localAppData}/NinjaGaidenBlack/game/default.xbe",
+        "{localAppData}/NinjaGaidenBlack/game-location.txt",
+        "{home}/.local/share/NinjaGaidenBlack/game/default.xbe",
+        "{home}/.local/share/NinjaGaidenBlack/game-location.txt"
+      ],
+      "helpText": "Na primeira execução o jogo pede a sua cópia: a imagem do seu próprio disco (.iso, ou o .7z/.zip em que você a guardou) ou uma pasta com os arquivos extraídos e o default.xbe. Uma imagem é instalada uma vez (cerca de 6 GB) em %LOCALAPPDATA%\\NinjaGaidenBlack\\game ou ~/.local/share/NinjaGaidenBlack/game; no modo portátil (portable.txt), em userdata ao lado do programa. Só a versão americana de Xbox (título 5443000D) é aceita."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "gamboozino/ngbrecomp",
+    "assetPatterns": {
+      "win32": "NinjaGaidenBlack-windows-x64.zip",
+      "linux": "NinjaGaidenBlack-x86_64.AppImage"
+    },
+    "includePrereleases": true,
+    "preserve": ["portable.txt", "userdata/**", "game/**"],
+    "_todo": [
+      "O projeto só publica prereleases (v0.9.x), por isso includePrereleases = true.",
+      "O padrão de Windows é o nome exato para não pegar a variante NinjaGaidenBlack-windows-x64-shadowfix.zip da v0.9.30 (os nomes dos assets não têm versão)."
+    ]
+  },
+  "_todo": [
+    "Release v0.9.30 listada: o zip de Windows tem a pasta NinjaGaidenBlack/ com NinjaGaidenBlack.exe, NinjaTrilogy.exe, NinjaTomoe.exe (o arcade recompilado), DLLs, licenses/ e share/NinjaGaidenBlack (d3d-seed.bin e shader-seed/*.bin). Segundo docs/TECHNICAL.md, as sementes de shader guardam só estados de pipeline e posições no default.xbe do usuário, sem os programas de vértice do jogo.",
+    "O AppImage não foi listado (o conteúdo é o mesmo programa, segundo o README).",
+    "Configurações (settings.ini, controls.ini) ficam em %APPDATA%\\NinjaGaidenBlack ou ~/.config/NinjaGaidenBlack; não foram mapeadas como configFiles. Os ajustes ficam no menu RECOMP SETTINGS do próprio jogo.",
+    "Precisa de GPU com Vulkan 1.3; no Linux, glibc 2.35 ou mais nova."
+  ],
+  "_sources": [
+    "https://github.com/gamboozino/ngbrecomp",
+    "https://github.com/gamboozino/ngbrecomp/releases",
+    "https://github.com/gamboozino/ngbrecomp/releases/tag/v0.9.30",
+    "https://github.com/gamboozino/ngbrecomp/releases/expanded_assets/v0.9.30",
+    "https://github.com/gamboozino/ngbrecomp/releases/download/v0.9.30/NinjaGaidenBlack-windows-x64.zip",
+    "https://github.com/gamboozino/ngbrecomp/releases/download/v0.9.30/SHA256SUMS.txt",
+    "https://raw.githubusercontent.com/gamboozino/ngbrecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/gamboozino/ngbrecomp/HEAD/docs/TECHNICAL.md",
+    "https://raw.githubusercontent.com/gamboozino/ngbrecomp/HEAD/docs/renderer.md",
+    "https://raw.githubusercontent.com/gamboozino/ngbrecomp/HEAD/src/install.c",
+    "https://raw.githubusercontent.com/gamboozino/ngbrecomp/HEAD/src/main.c"
+  ]
+}

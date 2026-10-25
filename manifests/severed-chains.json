@@ -1,0 +1,76 @@
+{
+  "id": "severed-chains",
+  "name": "Severed Chains",
+  "originalGame": "The Legend of Dragoon (PS1)",
+  "description": "The Legend of Dragoon reescrito em Java por engenharia reversa (não é emulador), com correções, opções novas e suporte a mods. Você precisa das imagens dos 4 discos da sua cópia americana do jogo.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/Legend-of-Dragoon-Modding/Severed-Chains",
+  "website": "https://legendofdragoon.org/projects/severed-chains/",
+  "accentColor": "#a8322d",
+  "executables": {
+    "linux": ["launch"]
+  },
+  "detectFiles": ["launch", "lod-game-*.jar", "updater.jar"],
+  "requirements": [
+    {
+      "id": "discs",
+      "type": "file",
+      "label": "As imagens dos 4 discos do seu The Legend of Dragoon (EUA) na pasta isos",
+      "patterns": ["isos/*.bin", "isos/*.iso", "isos/*.img"],
+      "helpText": "Copie para a pasta isos (dentro da pasta do jogo) as imagens dos quatro discos da sua cópia americana (SCUS-94491, SCUS-94584, SCUS-94585 e SCUS-94586). Precisam ser imagens brutas de setores de 2352 bytes (o .bin de um dump bin/cue); um .iso de 2048 bytes não é reconhecido. O nome dos arquivos não importa: o jogo identifica cada disco pelo conteúdo. Discos europeus e japoneses são recusados."
+    },
+    {
+      "id": "unpack",
+      "type": "firstRun",
+      "label": "Primeira abertura: baixar o Java e extrair os arquivos dos seus discos",
+      "doneWhen": ["files/version"],
+      "helpText": "Na primeira abertura, o script launch baixa o Java 25 (Amazon Corretto, de corretto.aws; precisa de curl e tar) para a pasta jdk25 e o jogo extrai os arquivos dos seus discos para a pasta files. Isso leva alguns minutos e roda sem janela de terminal. Os saves ficam na pasta saves."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "launch.conf",
+      "format": "text",
+      "label": "Inicialização (launch.conf: GPU_PREFERENCE 0 = automático, 1 = placa dedicada, 2 = integrada)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Legend-of-Dragoon-Modding/Severed-Chains",
+    "assetPatterns": {
+      "linux": "Severed_Chains_Linux.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["isos/**", "saves/**", "mods/**", "files/**", "jdk25/**", "config.dcnf", "launch.conf"],
+    "_todo": [
+      "O padrão de Linux é o nome exato do asset (não tem versão no nome) para não pegar Severed_Chains_Linux_ARM64.tar.gz nem Severed_Chains_Steam_Deck.tar.gz.",
+      "O próprio jogo tem atualizador automático (botão \"Update Available\" na tela de título, updater.jar) que baixa e aplica versões novas por conta própria; depois disso a versão registrada pelo app fica desatualizada.",
+      "A release 'devbuild' (Latest Development Build) não é marcada como pré-release, mas /releases/latest aponta para release-3.0.0."
+    ]
+  },
+  "_todo": [
+    "Windows não mapeado: o pacote Severed_Chains_Windows.zip só tem launch.bat como ponto de entrada (sem .exe e sem Java embutido; o .bat baixa o JDK 25 do corretto.aws e roda jdk25\\bin\\java com o classpath lod-game-<hash do commit>.jar;libs/...). O app inicia executáveis com spawn sem shell, e o Node/Electron atual recusa .bat assim (EINVAL); o nome do jar muda a cada versão, então não dá para chamar o java direto com launchArgs fixos. Quando o app souber abrir .bat (cmd.exe /c), usar win32: [\"launch.bat\"], asset \"Severed_Chains_Windows.zip\" e detectFiles com launch.bat.",
+    "Pacotes verificados (release-3.0.0, listados sem extrair): Linux e Windows não têm pasta raiz única; trazem launch (0755) ou launch.bat, download-java, lod-game-<hash>.jar, updater.jar, libs/ (LWJGL, OpenCV etc.), patches/ (diffs de script), lang/, gfx/ (ícones, shaders, fontes e intro.mp4 do próprio projeto, commit 'New intro') e pastas isos/ e mods/ só com help.txt. Nenhum arquivo do jogo vem no pacote; os dados saem dos discos do usuário em tempo de execução (Unpacker.java).",
+    "O script launch encerra com 'read -p', que retorna na hora porque o app inicia o jogo sem terminal."
+  ],
+  "_sources": [
+    "https://github.com/Legend-of-Dragoon-Modding/Severed-Chains",
+    "https://github.com/Legend-of-Dragoon-Modding/Severed-Chains/releases",
+    "https://github.com/Legend-of-Dragoon-Modding/Severed-Chains/releases/expanded_assets/release-3.0.0",
+    "https://github.com/Legend-of-Dragoon-Modding/Severed-Chains/releases/download/release-3.0.0/Severed_Chains_Windows.zip",
+    "https://github.com/Legend-of-Dragoon-Modding/Severed-Chains/releases/download/release-3.0.0/Severed_Chains_Linux.tar.gz",
+    "https://github.com/Legend-of-Dragoon-Modding/Severed-Chains/commits/HEAD/gfx/intro.mp4",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/README.md",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/build.gradle",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/launch.bat",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/launch-linux",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/download-java",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/launch.conf",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/src/main/java/legend/core/GameEngine.java",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/src/main/java/legend/game/unpacker/Unpacker.java",
+    "https://raw.githubusercontent.com/Legend-of-Dragoon-Modding/Severed-Chains/HEAD/src/main/java/legend/game/unpacker/IsoReader.java",
+    "https://legendofdragoon.org/?p=1827"
+  ]
+}

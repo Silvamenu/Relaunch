@@ -1,0 +1,83 @@
+{
+  "id": "metroid-prime-port",
+  "name": "MetroidPrimePort",
+  "originalGame": "Metroid Prime (GameCube)",
+  "description": "Port nativo de Metroid Prime para PC feito a partir da decompilação PrimeDecomp, com widescreen, taxa de quadros livre, randomizer e Archipelago. Precisa da imagem do seu próprio disco de GameCube.",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/Odrannnn/MetroidPrimePort",
+  "accentColor": "#e0641c",
+  "executables": {
+    "win32": ["metroid_prime_port.exe"],
+    "linux": ["metroid_prime_port"]
+  },
+  "detectFiles": ["metroid_prime_port.exe", "metroid_prime_port", "licenses/port-notice.txt", "share/licenses/metroid-prime-port/port-notice.txt"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Metroid Prime (GameCube, EUA ou PAL)",
+      "optional": true,
+      "extensions": ["iso", "gcm", "rvz", "wbfs", "ciso", "nkit"],
+      "copyToGameDir": true,
+      "helpText": "Versões aceitas: GameCube EUA 1.00, 1.01 e 1.02 (GM8E01) e europeia (GM8P01, experimental). As versões japonesa e coreana, a Trilogy do Wii e o Remastered não servem como jogo base. Se a imagem for copiada para a pasta do jogo, o port a encontra sozinho; senão, ele pede o arquivo na primeira vez que abre.",
+      "_todo": "O port identifica o disco pelo cabeçalho (ID e revisão), sem hash documentado; por isso não há validação por SHA-1."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher a imagem do disco na primeira abertura (se não estiver na pasta do jogo)",
+      "optional": true,
+      "doneWhen": ["user/port_settings.ini"],
+      "helpText": "Sem imagem na pasta do jogo, o port abre um seletor de arquivo na primeira vez e guarda o caminho (disc_path) em user/port_settings.ini, ao lado do executável."
+    },
+    {
+      "id": "system-libs",
+      "type": "firstRun",
+      "label": "Bibliotecas do sistema (só se o jogo não abrir)",
+      "optional": true,
+      "helpText": "Windows: instale o Microsoft Visual C++ Redistributable (x64) pelo site da Microsoft. Linux: o pacote não traz bibliotecas; precisa de glibc 2.34 ou mais nova (Debian 12, Ubuntu 22.04 ou mais novos), driver Vulkan e freetype, libpng, zstd e OpenSSL 3 instalados pela sua distribuição."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "user/port_settings.ini",
+      "format": "ini",
+      "label": "Configurações (port_settings.ini)",
+      "editable": true,
+      "_todo": "Também existem user/controls.toml e user/imgui.ini. Se a pasta do jogo não puder ser gravada, o port usa %APPDATA%\\Metroid Prime ou ~/.local/share/Metroid Prime."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Odrannnn/MetroidPrimePort",
+    "assetPatterns": {
+      "win32": "metroid-prime-port-*-windows-x86_64.zip",
+      "linux": "metroid-prime-port-*-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["user/**", "textures/**", "*.iso", "*.gcm", "*.rvz", "*.wbfs", "*.ciso", "*.nkit"],
+    "_todo": "Não seleciona os builds arm64 (Windows e Linux), macOS, Android, a AppImage (MetroidPrime-x86_64.AppImage, que grava os dados soltos ao lado do arquivo) nem o Flatpak."
+  },
+  "_todo": [
+    "Zip do Windows (v0.33.1) sem pasta raiz: metroid_prime_port.exe, metroid_prime_port.pdb (símbolos de depuração, ~170 MB), ffmpeg.exe (LGPL, usado só na importação do Remastered), DLLs do Dawn/DXC, licenses/ e documentação. Tarball do Linux com pasta única metroid-prime-port-linux-x86_64/ (metroid_prime_port e share/licenses). Nenhum dado do jogo nos pacotes.",
+    "Todos os dados do port (port_settings.ini, saves em user/<região>/Card A, mods, save states, caches) ficam em user/ ao lado do executável.",
+    "O port aceita o caminho do disco como argumento ou em MP_DISC, mas manifestos nativos não repassam o arquivo escolhido.",
+    "Recursos opcionais (importar modelos do Metroid Prime Remastered) usam o dump e as chaves do próprio usuário; nada disso é incluído.",
+    "O código do jogo em src/ e include/ vem da decompilação e, segundo o NOTICE, continua sendo da Nintendo; a licença MIT cobre só a camada de plataforma."
+  ],
+  "_sources": [
+    "https://github.com/Odrannnn/MetroidPrimePort",
+    "https://raw.githubusercontent.com/Odrannnn/MetroidPrimePort/HEAD/README.md",
+    "https://raw.githubusercontent.com/Odrannnn/MetroidPrimePort/HEAD/NOTICE",
+    "https://raw.githubusercontent.com/Odrannnn/MetroidPrimePort/HEAD/docs/NATIVE_PORT.md",
+    "https://raw.githubusercontent.com/Odrannnn/MetroidPrimePort/HEAD/docs/SETTINGS.md",
+    "https://raw.githubusercontent.com/Odrannnn/MetroidPrimePort/HEAD/docs/RELEASING.md",
+    "https://github.com/Odrannnn/MetroidPrimePort/tree/port/textures",
+    "https://github.com/Odrannnn/MetroidPrimePort/releases",
+    "https://github.com/Odrannnn/MetroidPrimePort/releases/expanded_assets/v0.33.1",
+    "https://github.com/Odrannnn/MetroidPrimePort/releases/download/v0.33.1/metroid-prime-port-0.33.1-windows-x86_64.zip",
+    "https://github.com/Odrannnn/MetroidPrimePort/releases/download/v0.33.1/metroid-prime-port-0.33.1-linux-x86_64.tar.gz",
+    "https://ixbt.games/en/news/2026/10/07/440809-originalnuiu-metroid-prime-portirovali-na-android-i-pk-versiia-s-gamecube-rabotaet-bez-emuliatora.html"
+  ]
+}

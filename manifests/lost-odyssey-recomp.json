@@ -1,0 +1,87 @@
+{
+  "id": "lost-odyssey-recomp",
+  "name": "Lost Odyssey Recomp",
+  "originalGame": "Lost Odyssey (Xbox 360)",
+  "description": "Port nativo não oficial de Lost Odyssey para PC, feito por recompilação estática, com resoluções e taxas de quadros maiores. Os dados do jogo são importados dos seus próprios discos (pasta extraída, default.xex, ISO ou GOD).",
+  "category": "xbox",
+  "repoUrl": "https://github.com/freefrank/LostOdysseyRecomp",
+  "accentColor": "#7a5c2e",
+  "executables": {
+    "win32": ["LostOdysseyRecomp.exe"],
+    "linux": ["LostOdysseyRecomp.AppImage"]
+  },
+  "detectFiles": ["LostOdysseyRecomp.exe", "LostOdysseyRecomp.AppImage", "libxell.dll"],
+  "requirements": [
+    {
+      "id": "import",
+      "type": "firstRun",
+      "label": "Importar os discos do seu Lost Odyssey (Xbox 360) no importador do jogo",
+      "doneWhen": [
+        "game/disc1/default.xex",
+        "game/default.xex",
+        "game-path.txt",
+        "{home}/.local/share/lost-odyssey-recomp/game/disc1/default.xex",
+        "{home}/.config/lost-odyssey-recomp/game-path.txt"
+      ],
+      "helpText": "Abra o jogo: o importador aparece quando nenhum jogo é encontrado. Escolha os dados do disco 1 da sua própria cópia (pasta extraída, default.xex, imagem ISO ou dados GOD); o disco 1 é obrigatório. Depois adicione os discos 2 a 4 e as DLCs que você tiver em Settings > System > Import discs & DLC. Use um único conjunto de 4 discos (edição asiática multilíngue ou EUA/Europa) e não misture edições; title updates e XEX modificados não são aceitos. O importador só copia os arquivos (no Windows, para a pasta game ao lado do exe). Na primeira execução o jogo oferece baixar shaders pré-compilados do GitHub; se recusar, ele compila uma vez."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "settings.ini",
+        "linux": "{home}/.config/lost-odyssey-recomp/settings.ini"
+      },
+      "format": "ini",
+      "label": "Configurações (settings.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "launchEnv": {
+    "win32": { "LO_NO_UPDATE": "1" },
+    "linux": { "LO_NO_UPDATE": "1" }
+  },
+  "updates": {
+    "source": "github-releases",
+    "repo": "freefrank/LostOdysseyRecomp",
+    "assetPatterns": {
+      "win32": "LostOdysseyRecomp-windows-x64-*.zip",
+      "linux": "LostOdysseyRecomp-linux-x64-*.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "save/**",
+      "profile/**",
+      "settings.ini",
+      "game-path.txt",
+      "game/**",
+      "cache/**",
+      "shaders/**",
+      "mods/**",
+      "logs/**",
+      "captures/**",
+      "achievement.wav"
+    ]
+  },
+  "_todo": [
+    "Release v1.0.6 verificada: LostOdysseyRecomp-windows-x64-v1.0.6.zip (146 MB) tem uma pasta raiz LostOdysseyRecomp-windows-x64-v1.0.6/ com LostOdysseyRecomp.exe, DLLs de terceiros (DXC, FidelityFX, XeSS, DLSS/Streamline, MSVC), manifest.json, README.md, licenses/ e mo2/ (dois plugins .py do Mod Organizer 2). Nenhum arquivo do jogo.",
+    "O AppImage de Linux (LostOdysseyRecomp-linux-x64-*.AppImage, 84 MB) não foi baixado; ele guarda saves, jogo importado e cache em ~/.local/share/lost-odyssey-recomp/ e as configurações em ~/.config/lost-odyssey-recomp/ (XDG_DATA_HOME/XDG_CONFIG_HOME mudam isso). Flatpak, DMG e APK não são usados.",
+    "O jogo procura o default.xex em game/disc1 (ou game/) ao lado do exe, ou na pasta indicada em game-path.txt (settings/game_path.h). No AppImage também procura game/ ao lado do próprio AppImage.",
+    "O próprio jogo verifica atualizações no GitHub e no Windows/AppImage consegue se atualizar sozinho; launchEnv LO_NO_UPDATE=1 (documentado no README) desliga essa verificação para o app controlar as atualizações.",
+    "Os shaders pré-compilados oferecidos na primeira execução vêm das Releases do próprio repositório (updater/shader_pack_index.cpp); são opcionais (o jogo compila localmente se o usuário recusar).",
+    "CPU com AVX é exigida no Windows. Disco 1 ocupa vários GB; os quatro discos somam cerca de 14,5 GB depois da deduplicação do importador."
+  ],
+  "_sources": [
+    "https://github.com/freefrank/LostOdysseyRecomp",
+    "https://github.com/freefrank/LostOdysseyRecomp/releases",
+    "https://github.com/freefrank/LostOdysseyRecomp/releases/expanded_assets/v1.0.6",
+    "https://github.com/freefrank/LostOdysseyRecomp/releases/download/v1.0.6/LostOdysseyRecomp-windows-x64-v1.0.6.zip",
+    "https://raw.githubusercontent.com/freefrank/LostOdysseyRecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/freefrank/LostOdysseyRecomp/HEAD/docs/INSTALLING.md",
+    "https://raw.githubusercontent.com/freefrank/LostOdysseyRecomp/HEAD/LostOdysseyRecomp/main.cpp",
+    "https://raw.githubusercontent.com/freefrank/LostOdysseyRecomp/HEAD/LostOdysseyRecomp/settings/game_path.h",
+    "https://raw.githubusercontent.com/freefrank/LostOdysseyRecomp/HEAD/LostOdysseyRecomp/updater/shader_pack_index.cpp",
+    "https://www.videogameschronicle.com/news/the-other-xbox-360-exclusive-jrpg-from-the-creator-of-final-fantasy-now-has-a-pc-port/"
+  ]
+}

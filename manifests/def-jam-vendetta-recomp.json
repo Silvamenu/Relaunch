@@ -1,0 +1,63 @@
+{
+  "id": "def-jam-vendetta-recomp",
+  "name": "Def Jam Vendetta Recompiled",
+  "originalGame": "Def Jam Vendetta (PS2)",
+  "description": "Recompilação estática de Def Jam Vendetta para Windows (PS2Recomp + paraLLEl-GS). O jogo é compilado no seu PC a partir da ISO ou CHD do seu próprio disco americano.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/jcsix694/def-jam-vendetta-recomp",
+  "accentColor": "#e0243c",
+  "executables": {
+    "win32": ["Def Jam Vendetta Recompiled Settings.exe"]
+  },
+  "detectFiles": ["Def Jam Vendetta Recompiled Settings.exe", "files/release-manifest.txt"],
+  "requirements": [
+    {
+      "id": "build",
+      "type": "firstRun",
+      "label": "Escolher a ISO ou CHD do seu disco de Def Jam Vendetta (PS2, EUA, SLUS-20639) e compilar o jogo",
+      "doneWhen": ["files/Def Jam Vendetta Recompiled.exe"],
+      "helpText": "Abra o jogo pelo app: abre o Def Jam Vendetta Recompiled Settings. Escolha a imagem do seu próprio disco americano (.iso ou .chd; ele confere se é o SLUS-20639) e clique em \"Next: build the game\". Se o PC não tiver as ferramentas de C++ da Microsoft (Visual Studio Build Tools), o programa baixa o instalador oficial da Microsoft e o Windows pede permissão uma vez. A compilação leva de 20 a 30 minutos, uma vez só, e precisa de cerca de 8 GB livres e de internet. Depois use PLAY. Requer Windows 10/11 64 bits e placa de vídeo com Vulkan 1.3."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "files/settings.toml",
+      "format": "text",
+      "label": "Configurações (files/settings.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "jcsix694/def-jam-vendetta-recomp",
+    "assetPatterns": {
+      "win32": "Def-Jam-Vendetta-Recompiled-Windows*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["files/settings.toml", "files/game/**", "files/disc/**", "files/build/**", "files/logs/**"]
+  },
+  "_todo": [
+    "O executável do app é o programa de configurações (setup, ajustes e botão PLAY), não o jogo: o jogo (files/Def Jam Vendetta Recompiled.exe) só existe depois de compilado no PC do usuário e precisa receber o caminho de files/game/SLUS_206.39 e a pasta files/ como diretório de trabalho (settings-app/Services/GameFolder.cs).",
+    "Depois de uma atualização feita pelo app, o programa de configurações compara files/release-manifest.txt com files/build/built-from-manifest.txt e recompila o que mudou (tools/setup_game.py; a v0.4.0 passou a detectar atualizações manuais). Por isso release-manifest.txt não está em preserve.",
+    "O programa de configurações e o próprio jogo também procuram atualizações sozinhos (API do GitHub deste repositório) e podem baixar e aplicar a nova versão; dá para desligar em About > Check for updates automatically.",
+    "O README pede uma pasta de caminho curto (as ferramentas de build não aceitam caminhos muito longos); se a instalação do app ficar num caminho longo a compilação pode falhar.",
+    "Saves: files/game/mc0 (memory card). files/game e files/disc são gerados do disco do usuário (tools/prepare_disc.py) e nunca vêm na release.",
+    "Só Windows (não há build para Linux). Programa não assinado: o SmartScreen pode avisar ('Mais informações' > 'Executar assim mesmo')."
+  ],
+  "_sources": [
+    "https://github.com/jcsix694/def-jam-vendetta-recomp",
+    "https://github.com/jcsix694/def-jam-vendetta-recomp/releases",
+    "https://github.com/jcsix694/def-jam-vendetta-recomp/releases/expanded_assets/v0.4.3",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/setup.bat",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/make-release.bat",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/build-settings.bat",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/tools/setup_game.py",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/tools/make_release.py",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/tools/prepare_disc.py",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/settings-app/Program.cs",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/settings-app/Services/GameFolder.cs",
+    "https://raw.githubusercontent.com/jcsix694/def-jam-vendetta-recomp/HEAD/settings-app/Services/Updater.cs"
+  ]
+}

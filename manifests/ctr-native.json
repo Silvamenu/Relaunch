@@ -1,0 +1,65 @@
+{
+  "id": "ctr-native",
+  "name": "CTR Native",
+  "originalGame": "Crash Team Racing (PS1)",
+  "description": "Port nativo para PC de Crash Team Racing, construído sobre a decompilação CTR-ModSDK (beta). Você precisa da imagem .bin do disco da sua cópia americana do jogo.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/CTR-tools/ctr-native",
+  "accentColor": "#e8541c",
+  "executables": {
+    "win32": ["ctr_native.exe"],
+    "linux": ["ctr_native"]
+  },
+  "detectFiles": ["ctr_native.exe", "ctr_native", "THIRD_PARTY_NOTICES.md"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "file",
+      "label": "A imagem do seu disco de Crash Team Racing (EUA) em assets/ctr-u.bin",
+      "patterns": ["assets/ctr-u.bin", "assets/BIGFILE.BIG"],
+      "helpText": "Crie a pasta assets dentro da pasta do jogo e coloque nela a imagem do seu disco americano (NTSC-U, SCUS-94426) com o nome ctr-u.bin. Precisa ser o .bin bruto de faixa única (setores MODE2/2352, como sai de um dump bin/cue); um .iso de 2048 bytes perde o áudio XA e os vídeos. Arquivos extraídos do seu disco (BIGFILE.BIG, SOUNDS/KART.HWL e a pasta XA) na mesma pasta assets também funcionam."
+    },
+    {
+      "id": "linux-libs",
+      "type": "firstRun",
+      "label": "Linux: bibliotecas de 32 bits (só se o jogo não abrir)",
+      "optional": true,
+      "helpText": "A build de Linux é de 32 bits (i386). Instale pelo gerenciador de pacotes da sua distribuição a glibc de 32 bits, OpenGL/Mesa (ou o driver da sua placa) de 32 bits, X11 ou Wayland e ALSA/PulseAudio/PipeWire de 32 bits. É preciso uma GPU com OpenGL 3.3."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "CTR-tools/ctr-native",
+    "assetPatterns": {
+      "win32": "ctr-native-*-windows-x86.zip",
+      "linux": "ctr-native-*-linux-x86.tar.gz"
+    },
+    "includePrereleases": true,
+    "preserve": ["assets/**", "memcards/**"],
+    "_todo": [
+      "Todas as releases (beta-1 a beta-7.1) são pré-releases; por isso includePrereleases é true.",
+      "Os padrões terminam em .zip/.tar.gz e não pegam os .sha256 publicados ao lado."
+    ]
+  },
+  "_todo": [
+    "As builds são de 32 bits (x86): o .exe roda no Windows x64 normalmente; no Linux x64 precisa das bibliotecas i386 (README.txt gerado por package-linux.sh). Não há build x64.",
+    "Pacotes beta-7.1 verificados (listados sem extrair): o zip de Windows tem uma pasta raiz única ctr-native-beta-7_1-windows-x86\\ (nomes com barra invertida, que o yauzl converte) com ctr_native.exe, README.txt e THIRD_PARTY_NOTICES.md; o tar.gz de Linux tem ctr-native-beta-7.1-linux-x86/ com ctr_native (0755), LICENSE, README.txt e THIRD_PARTY_NOTICES.md. Nenhum arquivo do jogo vem no pacote.",
+    "A pasta assets é procurada (sem diferenciar maiúsculas) na pasta do executável, ou na pasta pai/avó se ela tiver o arquivo exigido (platform/native_assets.c). Os memory cards ficam em memcards/ (platform/native_memcard.c).",
+    "Não há hash documentado para o ctr-u.bin."
+  ],
+  "_sources": [
+    "https://github.com/CTR-tools/ctr-native",
+    "https://github.com/CTR-tools/ctr-native/releases",
+    "https://github.com/CTR-tools/ctr-native/releases/expanded_assets/beta-7.1",
+    "https://github.com/CTR-tools/ctr-native/releases/download/beta-7.1/ctr-native-beta-7_1-windows-x86.zip",
+    "https://github.com/CTR-tools/ctr-native/releases/download/beta-7.1/ctr-native-beta-7.1-linux-x86.tar.gz",
+    "https://raw.githubusercontent.com/CTR-tools/ctr-native/HEAD/README.md",
+    "https://raw.githubusercontent.com/CTR-tools/ctr-native/HEAD/package-linux.sh",
+    "https://raw.githubusercontent.com/CTR-tools/ctr-native/HEAD/.gitignore",
+    "https://raw.githubusercontent.com/CTR-tools/ctr-native/HEAD/platform/native_assets.c",
+    "https://raw.githubusercontent.com/CTR-tools/ctr-native/HEAD/platform/native_disc_image.c",
+    "https://raw.githubusercontent.com/CTR-tools/ctr-native/HEAD/platform/native_memcard.c",
+    "https://raw.githubusercontent.com/CTR-tools/ctr-native/HEAD/metadata/retail/ntsc-u-926/disc.json"
+  ]
+}

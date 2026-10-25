@@ -1,0 +1,74 @@
+{
+  "id": "shadow-of-the-colossus-pc",
+  "name": "Shadow of the Colossus PC",
+  "originalGame": "Shadow of the Colossus (PS4)",
+  "description": "Port nativo para Windows do remake de PS4: o código do próprio jogo roda na CPU e a GPU é traduzida para Vulkan. Você precisa do dump do jogo (CUSA08809) e, para ter som, de dois módulos do seu próprio console.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/AjncSystem/ShadowOfTheColossus-PC",
+  "accentColor": "#7a8a72",
+  "executables": {
+    "win32": ["SotC.exe"]
+  },
+  "detectFiles": ["SotC.exe", "bin/bb-probe.exe", "sotc.py"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "firstRun",
+      "label": "Seu dump do jogo (pasta CUSA08809): escolher no launcher e jogar uma vez",
+      "doneWhen": ["out/prepared.txt"],
+      "helpText": "Abra o SotC.exe. Na primeira vez ele procura sozinho, nos discos do PC, a pasta do seu dump (CUSA08809, com eboot.bin, sce_module e sce_sys); confira ou escolha a pasta na página \"Jogo e saves\" e clique em JOGAR. A versão EU 1.01 é a recomendada: os modos de 60 FPS e filtro 16x só se aplicam a ela. Uma pasta de atualização ao lado (CUSA08809-UPDATE ou -patch) é usada automaticamente. O dump precisa ser feito por você, do seu próprio PS4; o app não fornece jogos. Na primeira vez o port prepara a imagem do jogo na pasta out."
+    },
+    {
+      "id": "sound",
+      "type": "file",
+      "label": "Módulos de som do seu console (libSceNgs2.sprx e libSceUlt.sprx)",
+      "optional": true,
+      "patterns": ["user/sys_modules/libSceNgs2.sprx"],
+      "helpText": "Sem eles o jogo roda sem som. São arquivos de firmware da Sony, decriptados do seu próprio PS4 (/system/common/lib/) ou os mesmos da pasta user/sys_modules de um shadPS4 que você já usa; o port não os distribui. O launcher os procura e copia para user/sys_modules, dentro da pasta do port. Se você apontar outra pasta em \"Módulos de som\" no launcher, o som funciona mas este item continua aparecendo como pendente."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "user/launcher_settings.json",
+      "format": "json",
+      "label": "Launcher (user/launcher_settings.json)",
+      "editable": true
+    },
+    {
+      "path": "sotc.ini",
+      "format": "ini",
+      "label": "Uso sem o launcher (sotc.ini, lido pelo SotC.bat)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "AjncSystem/ShadowOfTheColossus-PC",
+    "assetPatterns": {
+      "win32": "SotC-PC.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["user/**", "update/**", "out/**", "sotc.ini"],
+    "_todo": "O atualizador do próprio port (launcher/sotc_update.py) nunca escreve em user/ e update/ e mantém um sotc.ini existente; out/ não vem no pacote e é refeito quando o jogo, os módulos ou os scripts mudam."
+  },
+  "_todo": [
+    "Releases enviadas à mão pelo autor (sem workflow de CI no repositório); o conteúdo do SotC-PC.zip da v0.60.6 confere com packaging/windows/package_sotc.sh (SotC.exe, bin/bb-probe.exe, scripts/, glyphs/xbox desenhados por tools/make_button_icons.py, sotc.ini padrão) e não tem .sprx/.prx nem arquivos do jogo.",
+    "Só Windows (não há build Linux nas releases).",
+    "O pacote traz o runtime NVIDIA Streamline/DLSS-G (redistribuível, licenças em bin/licenses-nvidia)."
+  ],
+  "_sources": [
+    "https://github.com/AjncSystem/ShadowOfTheColossus-PC",
+    "https://github.com/AjncSystem/ShadowOfTheColossus-PC/releases",
+    "https://github.com/AjncSystem/ShadowOfTheColossus-PC/releases/expanded_assets/v0.60.6",
+    "https://github.com/AjncSystem/ShadowOfTheColossus-PC/releases/download/v0.60.6/SotC-PC.zip",
+    "https://github.com/AjncSystem/ShadowOfTheColossus-PC/commits/main",
+    "https://raw.githubusercontent.com/AjncSystem/ShadowOfTheColossus-PC/HEAD/README.md",
+    "https://raw.githubusercontent.com/AjncSystem/ShadowOfTheColossus-PC/HEAD/packaging/windows/package_sotc.sh",
+    "https://raw.githubusercontent.com/AjncSystem/ShadowOfTheColossus-PC/HEAD/launcher/sotc_launcher_win.py",
+    "https://raw.githubusercontent.com/AjncSystem/ShadowOfTheColossus-PC/HEAD/launcher/sotc_update.py",
+    "https://raw.githubusercontent.com/AjncSystem/ShadowOfTheColossus-PC/HEAD/sotc.py",
+    "https://raw.githubusercontent.com/AjncSystem/ShadowOfTheColossus-PC/HEAD/SotC.bat",
+    "https://raw.githubusercontent.com/AjncSystem/ShadowOfTheColossus-PC/HEAD/tools/make_button_icons.py"
+  ]
+}

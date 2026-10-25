@@ -1,0 +1,78 @@
+{
+  "id": "medievil-recomp",
+  "name": "MediEvil Recomp",
+  "originalGame": "MediEvil (PS1)",
+  "description": "Recompilação estática de MediEvil para PC, feita com o RecompOne (beta aberta). Você precisa do dump .cue/.bin ou .chd do seu próprio disco americano (SCUS-94227) e do .NET 10 Runtime instalado.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/BlackLabelHQ/MediEvilRecomp",
+  "accentColor": "#5a8f29",
+  "executables": {
+    "win32": ["medievil.exe"],
+    "linux": ["medievil"]
+  },
+  "detectFiles": ["medievil.dll", "RecompOne.Runtime.dll", "medievil.exe", "medievil"],
+  "requirements": [
+    {
+      "id": "dotnet",
+      "type": "firstRun",
+      "label": "Instalar o .NET 10 Runtime",
+      "helpText": "O jogo depende do .NET 10 Runtime (x64) da Microsoft e não abre sem ele. No Windows, instale o .NET Runtime 10 pelo site oficial (dotnet.microsoft.com). No Linux, instale o pacote do .NET 10 Runtime da sua distribuição; o pacote do jogo também traz um run.sh que baixa o runtime oficial para ~/.dotnet se ele faltar. O OpenAL já vem no pacote."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o disco no próprio jogo",
+      "doneWhen": ["settings.json"],
+      "helpText": "Na primeira abertura o jogo pede a imagem do disco: escolha o arquivo .cue (com os .bin das faixas na mesma pasta) ou o .chd do seu disco americano de MediEvil (SCUS-94227). O caminho fica salvo em settings.json, na pasta do jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "settings.json",
+      "format": "json",
+      "label": "Configurações (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "BlackLabelHQ/MediEvilRecomp",
+    "assetPatterns": {
+      "win32": "MediEvilRecomp-*-windows-x64.zip",
+      "linux": "MediEvilRecomp-*-linux-x64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["settings.json", "interface.ini", "*.sav", "recordings/**", "mods/.cache/**"],
+    "_todo": [
+      "Os padrões não casam com os builds windows-arm64 e macOS.",
+      "\"settings.json\" sem barra também protege mods/ShaderMod/shaders/*/settings.json (presets do ShaderMod), que então não são trocados nas atualizações.",
+      "O próprio jogo tem um atualizador automático (misc/AutoUpdater.cs) que consulta a última release deste mesmo repositório e, se o usuário aceitar, sobrescreve a pasta; pode ser desligado no menu do jogo."
+    ]
+  },
+  "_todo": [
+    "A release (v0.2b) não traz disco nem BIOS; o medievil.dll contém o código do jogo recompilado para C# (o CI gera esse código a partir de um repositório privado com o disco), como em outras recompilações estáticas do catálogo.",
+    "settings.json, carda.sav e cardb.sav são caminhos relativos ao diretório de trabalho (RecompOne.Runtime/Config/Settings.cs e SystemSettings.cs); o app inicia o jogo na pasta de instalação. settings.json é gravado ao escolher o disco (DiscPickerPopup.cs chama Settings.Save), mas também pode surgir por outras mudanças de configuração.",
+    "O seletor de disco aceita .cue e .chd (DiscPickerPopup.cs); o README de build pede a versão norte-americana. Não há hash documentado."
+  ],
+  "_sources": [
+    "https://github.com/BlackLabelHQ/MediEvilRecomp",
+    "https://github.com/BlackLabelHQ/MediEvilRecomp/releases",
+    "https://github.com/BlackLabelHQ/MediEvilRecomp/releases/expanded_assets/v0.2b",
+    "https://github.com/BlackLabelHQ/MediEvilRecomp/releases/download/v0.2b/MediEvilRecomp-v0.2b-windows-x64.zip",
+    "https://github.com/BlackLabelHQ/MediEvilRecomp/releases/download/v0.2b/MediEvilRecomp-v0.2b-linux-x64.tar.gz",
+    "https://github.com/BlackLabelHQ/MediEvilRecomp/commits/master",
+    "https://raw.githubusercontent.com/BlackLabelHQ/MediEvilRecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/BlackLabelHQ/MediEvilRecomp/HEAD/changelog.md",
+    "https://raw.githubusercontent.com/BlackLabelHQ/MediEvilRecomp/HEAD/Program.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/MediEvilRecomp/HEAD/run.sh",
+    "https://raw.githubusercontent.com/BlackLabelHQ/MediEvilRecomp/HEAD/misc/AutoUpdater.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/MediEvilRecomp/HEAD/.github/workflows/release.yml",
+    "https://raw.githubusercontent.com/BlackLabelHQ/MediEvilRecomp/HEAD/config/MediEvil.json",
+    "https://github.com/BlackLabelHQ/RecompOne",
+    "https://raw.githubusercontent.com/BlackLabelHQ/RecompOne/HEAD/RecompOne.Runtime/Config/Settings.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/RecompOne/HEAD/RecompOne.Runtime/Config/SystemSettings.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/RecompOne/HEAD/RecompOne.Runtime/Host/Window/HostWindow.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/RecompOne/HEAD/RecompOne.Runtime/Host/Window/Popups/DiscPickerPopup.cs"
+  ]
+}

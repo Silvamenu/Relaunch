@@ -1,0 +1,67 @@
+{
+  "id": "reblue",
+  "name": "re:Blue",
+  "originalGame": "Blue Dragon (Xbox 360)",
+  "description": "Port nativo não oficial de Blue Dragon para PC, feito por recompilação estática com o ReXGlue SDK, com 4K, FPS desbloqueado, teclado e mouse e mods. Exige as imagens dos três discos da sua própria cópia (versão global EUA/Europa).",
+  "category": "xbox",
+  "repoUrl": "https://github.com/zolaware/reblue",
+  "accentColor": "#2a5db0",
+  "executables": {
+    "win32": ["reblue.exe", "reblue_vk.exe"],
+    "linux": ["reblue.AppImage"]
+  },
+  "detectFiles": ["reblue.exe", "reblue_vk.exe", "reblue.AppImage"],
+  "requirements": [
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Instalar os 3 discos do seu Blue Dragon no assistente do jogo",
+      "doneWhen": ["game/default.xex", ".reblue_install", "{home}/.config/reblue/install.toml"],
+      "helpText": "Abra o jogo: um assistente pede a imagem de cada um dos três discos da sua própria cópia de Blue Dragon (versão global EUA/Europa; a japonesa/asiática ainda não funciona), confere cada uma e copia os arquivos do jogo. No Windows, escolha o modo portátil (Portable) para que tudo fique na pasta do jogo; no modo instalado o programa se copia para outra pasta e passa a avisar quando é aberto daqui. No Linux (AppImage) o modo portátil não existe: os arquivos vão para a pasta que você escolher no assistente. As DLCs oficiais que você tiver podem ser instaladas pelo mesmo assistente ou pelo menu de configurações. Se faltar algo depois, abrir com --repair copia só o necessário."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "profiles/default/reblue.toml"
+      },
+      "format": "text",
+      "label": "Configurações do perfil (profiles/default/reblue.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "zolaware/reblue",
+    "assetPatterns": {
+      "win32": "reblue-*-win-amd64.zip",
+      "linux": "reblue-*-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [".reblue_install", "game/**", "profiles/**", "mods/**"]
+  },
+  "_todo": [
+    "Release v1.3.1 verificada: reblue-1.3.1-win-amd64.zip (43,4 MB) contém só reblue.exe (DX12), reblue_vk.exe (Vulkan), rexruntime.dll, dxcompiler.dll, dxil.dll, D3D12/D3D12Core.dll e gamecontrollerdb.txt na raiz. Nenhum arquivo do jogo.",
+    "O padrão do Windows não casa com reblue-*-win-amd64-symbols.zip; o do Linux não casa com o AppImage aarch64. As \"dev nightly\" são pré-releases (tags nightly-*) e ficam de fora com includePrereleases = false.",
+    "O AppImage x86_64 (39,9 MB) não foi baixado. Em AppImage o modo portátil é desativado (installer_wizard.cpp: portable_allowed_ exige não ser app empacotado); o registro da instalação fica em ~/.config/reblue/install.toml (ou $XDG_CONFIG_HOME/reblue) e os dados na pasta escolhida no assistente, fora da pasta do app.",
+    "No Windows o modo portátil grava .reblue_install ao lado do exe e usa game/ e profiles/ ali; o modo instalado grava o registro em HKCU e copia os arquivos do programa para a pasta escolhida (installer/self_install.cpp). O texto exato do botão do modo portátil no assistente não foi conferido.",
+    "Saves, configurações e conquistas ficam em profiles/<perfil>/ dentro da pasta de instalação; mods em mods/ (FAQ do README).",
+    "O repositório antes estava em rexglue/reblue (o link antigo abre zolaware/reblue); o líder do projeto (tomcl7) é o autor do ReXGlue SDK."
+  ],
+  "_sources": [
+    "https://github.com/zolaware/reblue",
+    "https://github.com/rexglue/reblue",
+    "https://github.com/zolaware/reblue/releases",
+    "https://github.com/zolaware/reblue/releases/expanded_assets/v1.3.1",
+    "https://github.com/zolaware/reblue/releases/download/v1.3.1/reblue-1.3.1-win-amd64.zip",
+    "https://raw.githubusercontent.com/zolaware/reblue/HEAD/README.md",
+    "https://raw.githubusercontent.com/zolaware/reblue/HEAD/src/reblue_app.cpp",
+    "https://raw.githubusercontent.com/zolaware/reblue/HEAD/src/core/app_root.cpp",
+    "https://raw.githubusercontent.com/zolaware/reblue/HEAD/src/installer/install_registry.cpp",
+    "https://raw.githubusercontent.com/zolaware/reblue/HEAD/src/installer/install_registry.h",
+    "https://raw.githubusercontent.com/zolaware/reblue/HEAD/src/installer/installer_wizard.cpp",
+    "https://raw.githubusercontent.com/zolaware/reblue/HEAD/src/installer/self_install.cpp",
+    "https://www.pcgamer.com/games/rpg/blue-dragon-has-been-stuck-on-the-xbox-360-for-20-years-but-no-longer-a-fantastic-unofficial-pc-port-unlocks-the-fps-goes-4k-and-even-adds-mod-support/"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "id": "ico-pc",
+  "name": "ico-pc",
+  "originalGame": "ICO (PS2)",
+  "description": "Port nativo para PC de ICO, feito a partir da decompilação do jogo de PS2. Os dados do jogo são copiados, uma única vez, da imagem do seu próprio disco (.iso, .chd ou .bin/.cue).",
+  "category": "playstation",
+  "repoUrl": "https://github.com/nathanialf/ico-pc",
+  "website": "https://nathanialf.github.io/ico-pc/",
+  "accentColor": "#a08c64",
+  "executables": {
+    "win32": ["x64/ico_pc_x64.exe"],
+    "linux": ["ico_pc"]
+  },
+  "detectFiles": ["x64/ico_pc_x64.exe", "ico_pc", "x64/ico-pc.ini", "ico-pc.ini"],
+  "requirements": [
+    {
+      "id": "disc-image",
+      "type": "firstRun",
+      "label": "Escolher a imagem do seu disco de ICO na primeira execução",
+      "doneWhen": [
+        "x64/userdata/*.o2r",
+        "userdata/*.o2r",
+        "{appData}/ico-pc/ico-pc/ico.o2r",
+        "{appData}/ico-pc/ico-pc/ico-jpn.o2r",
+        "{appData}/ico-pc/ico-pc/ico-kor.o2r",
+        "{appData}/ico-pc/ico-pc/ico-ntsc.o2r",
+        "{appData}/ico-pc/ico-pc/ico-cn.o2r",
+        "{appData}/ico-pc/ico-pc/ico-aug6.o2r",
+        "{appData}/ico-pc/ico-pc/ico-jun26.o2r",
+        "{home}/.local/share/ico-pc/ico-pc/ico.o2r",
+        "{home}/.local/share/ico-pc/ico-pc/ico-jpn.o2r",
+        "{home}/.local/share/ico-pc/ico-pc/ico-kor.o2r",
+        "{home}/.local/share/ico-pc/ico-pc/ico-ntsc.o2r",
+        "{home}/.local/share/ico-pc/ico-pc/ico-cn.o2r",
+        "{home}/.local/share/ico-pc/ico-pc/ico-aug6.o2r",
+        "{home}/.local/share/ico-pc/ico-pc/ico-jun26.o2r"
+      ],
+      "helpText": "Gere uma imagem (.iso, .chd ou .bin com .cue) do seu próprio disco de ICO de PS2. Discos aceitos: europeu (SCES-50760), japonês (SCPS-11003), coreano (SCPS-56001), norte-americano (SCUS-97113), asiático (SCPS-55001), o disco de prévia de agosto de 2001 e a demo de revista de junho de 2001 (SCUS-97158); outras edições não funcionam. Na primeira vez, o jogo pede a imagem numa janela própria, confere e copia os dados dela (cerca de 1 GB de espaço livre, um ou dois minutos); depois disso a imagem não é mais necessária. Em vez de escolher na janela, você também pode colocar a imagem ao lado do executável (no Windows, dentro da pasta x64) com o nome Ico_PAL, Ico_JPN, Ico_KOR, Ico_USA, Ico_CN, Ico_AUG6 ou Ico_JUN26, mais a extensão."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "x64/ico-pc.ini",
+        "linux": "ico-pc.ini"
+      },
+      "format": "ini",
+      "label": "Opções do programa (ico-pc.ini)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["x64/userdata/config.toml", "{appData}/ico-pc/ico-pc/config.toml"],
+        "linux": ["userdata/config.toml", "{home}/.local/share/ico-pc/ico-pc/config.toml"]
+      },
+      "format": "text",
+      "label": "Configurações do jogo (config.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "nathanialf/ico-pc",
+    "assetPatterns": {
+      "win32": "ico-pc-*-win.zip",
+      "linux": "ico-pc-*-linux.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "x64/ico-pc.ini",
+      "ico-pc.ini",
+      "x64/userdata/**",
+      "userdata/**",
+      "x64/textures/**",
+      "textures/**",
+      "x64/models/**",
+      "models/**",
+      "x64/reshade/**",
+      "reshade/**",
+      "x64/Ico_*",
+      "Ico_*"
+    ],
+    "_todo": [
+      "Assets da v0.9.0: ico-pc-v0.9.0-win.zip (pasta raiz única ico-pc-v0.9.0/, exe em x64/ico_pc_x64.exe) e ico-pc-v0.9.0-linux.tar.gz (raiz ico-pc-v0.9.0/, binário ico_pc + libSDL3.so.0). Os padrões evitam -win-portable.zip, -linux-portable.tar.gz, -linux-arm64*.tar.gz, o AppImage, .apk, .ipa e macOS.",
+      "ico-pc.ini fica na pasta do programa e o jogo grava nele a linha iso= com a imagem escolhida; por isso ele é preservado. textures/ e models/ recebem pacotes de texturas/modelos do usuário."
+    ]
+  },
+  "_todo": [
+    "O executável só traz código; os dados do jogo saem do disco do usuário (docs/port/ARCHITECTURE.md: 'The binary holds no disc data'; na primeira execução o extractor confere o SHA-1 da imagem ou do ELF de boot e grava ico*.o2r na pasta do usuário: %APPDATA%\\ico-pc\\ico-pc no Windows, ~/.local/share/ico-pc/ico-pc no Linux). Nomes dos arquivos .o2r por disco conferidos em port/data/discs.c.",
+    "doneWhen do Linux assume o padrão ~/.local/share (o SDL usa XDG_DATA_HOME se estiver definido).",
+    "Sem validação por SHA-1 no app: o jogo aceita .iso, .chd e .bin/.cue (hashes diferentes) e já valida a imagem sozinho.",
+    "As builds x86-64 da release são feitas na máquina do mantenedor (o CI só publica o pacote arm64 como artifact); o repositório tem o código-fonte completo e ~7.500 commits. Releases saem quase diariamente.",
+    "Saves (memcard/) e config.toml ficam na pasta do usuário, fora da pasta do jogo (ou em userdata/ no modo portátil)."
+  ],
+  "_sources": [
+    "https://github.com/nathanialf/ico-pc",
+    "https://github.com/nathanialf/ico-pc/releases",
+    "https://github.com/nathanialf/ico-pc/releases/expanded_assets/v0.9.0",
+    "https://github.com/nathanialf/ico-pc/releases/download/v0.9.0/ico-pc-v0.9.0-win.zip",
+    "https://github.com/nathanialf/ico-pc/releases/download/v0.9.0/ico-pc-v0.9.0-linux.tar.gz",
+    "https://raw.githubusercontent.com/nathanialf/ico-pc/HEAD/README.md",
+    "https://raw.githubusercontent.com/nathanialf/ico-pc/HEAD/docs/PORTABLE_MODE.md",
+    "https://raw.githubusercontent.com/nathanialf/ico-pc/HEAD/docs/port/ARCHITECTURE.md",
+    "https://raw.githubusercontent.com/nathanialf/ico-pc/HEAD/port/platform/main_host.c",
+    "https://raw.githubusercontent.com/nathanialf/ico-pc/HEAD/port/data/discs.c",
+    "https://raw.githubusercontent.com/nathanialf/ico-pc/HEAD/.github/workflows/ci.yml",
+    "https://github.com/nathanialf/ico"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "openrac",
+  "name": "OpenRAC",
+  "originalGame": "Ratchet & Clank (PS2)",
+  "description": "Port nativo para PC de Ratchet & Clank, feito a partir da decompilação do jogo de PS2 e instalado pelo launcher oficial do projeto. Modelos, texturas, som e fases saem da imagem do seu próprio disco.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/OpenRAC/OpenRAC",
+  "website": "https://openrac.dev",
+  "accentColor": "#e8a317",
+  "executables": {
+    "linux": ["OpenRAC-Launcher.AppImage"]
+  },
+  "detectFiles": ["OpenRAC-Launcher.AppImage"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A ISO do seu disco de Ratchet & Clank (PS2)",
+      "optional": true,
+      "extensions": ["iso"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          { "sha1": "ef304c641c7cd426ba492707dda5974679befbc0", "label": "PAL (Europa), SCES-50916, disco v2.00" },
+          { "sha1": "aee9275384f739c9b24cd5de6f7e200292db7b01", "label": "NTSC-U (EUA), SCUS-97199, disco v1.00" }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir a sua ISO. Só as versões PAL (SCES-50916) e NTSC-U (SCUS-97199) do Ratchet & Clank de 2002 são aceitas; Greatest Hits e outras regiões têm checksum diferente. A imagem é escolhida dentro do launcher do OpenRAC (passo seguinte)."
+    },
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Configurar o jogo a partir do seu disco (no launcher do OpenRAC)",
+      "doneWhen": ["{home}/OpenRAC/active/rac1/data/iso_data/rac1/buildinfo.json"],
+      "helpText": "Abra o OpenRAC Launcher, escolha a pasta onde está a imagem do seu próprio disco (.iso ou .chd) e use \"Set up from your disc\". O launcher valida o disco, extrai os dados para ~/OpenRAC/active/rac1/data, prepara as fases e só então libera o botão Play. Saves e configurações ficam em ~/.local/share/openrac."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "OpenRAC/OpenRAC",
+    "assetPatterns": {
+      "linux": "OpenRAC.Launcher_*_amd64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [],
+    "_todo": [
+      "Windows: a release só traz instaladores (OpenRAC.Launcher_*_x64-setup.exe, NSIS, e OpenRAC.Launcher_*_x64_en-US.msi), que não contam como build portátil; por isso não há entrada win32.",
+      "Os padrões não casam com os .sig, o AppImage aarch64, .deb/.rpm, .dmg/.app.tar.gz nem o APK. As releases sdk-v* (Mod SDK) e a pré-release launcher-dev-master não têm AppImage.",
+      "O próprio launcher tem atualizador embutido (Tauri, latest.json) e pode se atualizar sozinho."
+    ]
+  },
+  "_todo": [
+    "O executável do jogo (openrac-rac1-pal / openrac-rac1-ntsc) fica dentro do AppImage do launcher, então o app abre o launcher, não o jogo direto.",
+    "doneWhen usa a pasta de instalação padrão (~/OpenRAC); se o usuário escolher outra pasta em Settings, o passo não é detectado.",
+    "Só Ratchet & Clank (PAL e NTSC-U) é jogável hoje; Going Commando, Up Your Arsenal, Deadlocked, Size Matters e Secret Agent Clank aparecem no launcher mas ainda não jogam.",
+    "AppImage precisa de FUSE (libfuse2) no Linux; não confirmado se o AppImage roda sem ele.",
+    "Arquivo de configurações do jogo: ~/.local/share/openrac/settings/<id>.ini (docs/port/SETTINGS.md); o <id> exato não foi confirmado, por isso não há configFiles."
+  ],
+  "_sources": [
+    "https://github.com/OpenRAC/OpenRAC",
+    "https://github.com/OpenRAC/OpenRAC/releases",
+    "https://github.com/OpenRAC/OpenRAC/releases?page=2",
+    "https://github.com/OpenRAC/OpenRAC/releases/expanded_assets/launcher-v0.9.0",
+    "https://github.com/OpenRAC/OpenRAC/releases/download/launcher-v0.9.0/OpenRAC.Launcher_0.9.0_amd64.AppImage",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/README.md",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/launcher/README.md",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/launcher/docs/INTEGRATION.md",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/launcher/core/src/install.rs",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/launcher/src-tauri/tauri.conf.json",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/.github/workflows/launcher.yml",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/tools/bundle_standalone.py",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/baserom/README.md",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/games/README.md",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/docs/policy/SOURCING.md",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/docs/port/SETTINGS.md",
+    "https://raw.githubusercontent.com/OpenRAC/OpenRAC/HEAD/docs/DEVELOPING.md"
+  ]
+}

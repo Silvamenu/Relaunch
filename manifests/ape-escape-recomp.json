@@ -1,0 +1,94 @@
+{
+  "id": "ape-escape-recomp",
+  "name": "Ape Escape Recompiled",
+  "originalGame": "Ape Escape (PS1)",
+  "description": "Recompilação estática de Ape Escape para PC, feita com o PSXRecomp (prévia em desenvolvimento). Você precisa da imagem .cue/.bin do seu próprio disco americano (SCUS-94423).",
+  "category": "playstation",
+  "repoUrl": "https://github.com/mstan/ApeEscapeRecomp",
+  "accentColor": "#f2b705",
+  "executables": {
+    "win32": ["ApeEscapeRecomp.exe"],
+    "linux": ["ApeEscapeRecomp.AppImage"]
+  },
+  "detectFiles": ["ApeEscapeRecomp.exe", "ApeEscapeRecomp.AppImage", "bios/openbios.bin"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Ape Escape (EUA, arquivo .bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "466cce4bcd6992f57227abd270323bcdad2fb7fc",
+            "label": "Ape Escape (USA) SCUS-94423, .bin MODE2/2352"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se o seu dump é o esperado. O jogo não recebe o arquivo por aqui; o disco é escolhido no launcher do próprio jogo (passo seguinte). Use um dump .cue + .bin do seu disco; não converta para .iso de 2048 bytes (perde os vídeos e o áudio XA)."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o disco no launcher do jogo",
+      "doneWhen": ["disc.cfg", "{home}/.local/share/ApeEscapeRecomp/disc.cfg"],
+      "helpText": "Abra o jogo. Na janela do launcher, defina a linha \"Disc\" com o arquivo .cue do seu disco (deixe o .bin na mesma pasta) e clique em Launch. O BIOS livre OpenBIOS já vem no pacote; usar o seu próprio SCPH1001.BIN é opcional. A escolha fica salva em disc.cfg, ao lado do executável no Windows ou em ~/.local/share/ApeEscapeRecomp no Linux (AppImage)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "input.ini",
+        "linux": "{home}/.local/share/ApeEscapeRecomp/input.ini"
+      },
+      "format": "ini",
+      "label": "Controles (input.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/ApeEscapeRecomp",
+    "assetPatterns": {
+      "win32": "ApeEscapeRecomp-*-windows-x64.zip",
+      "linux": "ApeEscapeRecomp-*-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "disc.cfg",
+      "bios.cfg",
+      "settings.toml",
+      "input.ini",
+      "keybinds.ini",
+      "config.ini",
+      "launcher-window.ini",
+      "overlay_captures.json"
+    ],
+    "_todo": "Os arquivos .sha256 da release não casam com os padrões. A pasta cache/ não é preservada de propósito: a release traz shards nativos novos nela (o AppRun oficial também os renova a cada versão); o que o jogo gera durante a partida e não vem no pacote continua lá."
+  },
+  "_todo": [
+    "A release (v0.5.2) não traz disco, BIOS comercial nem dados do jogo; o ApeEscapeRecomp.exe e os .dll em cache/SCUS-94423 contêm código do jogo recompilado (tradução da MIPS para nativo), como em outras recompilações estáticas do catálogo.",
+    "disc.cfg/bios.cfg/settings.toml ficam ao lado do executável (psxrecomp runtime/src/main.cpp: sidecar_cfg_path + exe_dir_from_argv, conferido no HEAD do psxrecomp; o jogo fixa o commit f7f0ad1). No Linux o AppRun copia tudo para $XDG_DATA_HOME/ApeEscapeRecomp (padrão ~/.local/share/ApeEscapeRecomp) e roda de lá; com XDG_DATA_HOME diferente o doneWhen do Linux não é encontrado.",
+    "O SHA-1 do .bin vem do DISC.md do projeto (Redump); o jogo também aceita .chd segundo o README do psxrecomp, que tem outro hash."
+  ],
+  "_sources": [
+    "https://github.com/mstan/ApeEscapeRecomp",
+    "https://github.com/mstan/ApeEscapeRecomp/releases",
+    "https://github.com/mstan/ApeEscapeRecomp/releases/expanded_assets/v0.5.2",
+    "https://github.com/mstan/ApeEscapeRecomp/releases/download/v0.5.2/ApeEscapeRecomp-v0.5.2-windows-x64.zip",
+    "https://raw.githubusercontent.com/mstan/ApeEscapeRecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/mstan/ApeEscapeRecomp/HEAD/DISC.md",
+    "https://raw.githubusercontent.com/mstan/ApeEscapeRecomp/HEAD/packaging/release/START_HERE.txt",
+    "https://raw.githubusercontent.com/mstan/ApeEscapeRecomp/HEAD/packaging/release/app.conf",
+    "https://raw.githubusercontent.com/mstan/ApeEscapeRecomp/HEAD/packaging/linux/AppRun",
+    "https://raw.githubusercontent.com/mstan/ApeEscapeRecomp/HEAD/framework_pins.txt",
+    "https://github.com/mstan/psxrecomp",
+    "https://raw.githubusercontent.com/mstan/psxrecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/mstan/psxrecomp/HEAD/runtime/src/main.cpp",
+    "https://raw.githubusercontent.com/mstan/recomp-ui/HEAD/README.md"
+  ]
+}
