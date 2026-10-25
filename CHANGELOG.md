@@ -7,6 +7,12 @@ O conteúdo de cada versão é usado como nota do release no GitHub (`npm run re
 
 ## [Não lançado]
 
+## [0.1.2] - 2026-10-25
+
+### Correções
+
+- A atualização do Relaunch não abre mais as telas do instalador ("Para quem esta aplicação deve ser instalada?"). Ao clicar no botão azul, o app fecha, atualiza na mesma pasta e abre de novo sozinho. Já vale para quem atualizar da 0.1.1 para esta versão.
+
 ## [0.1.1] - 2026-10-25
 
 ### Novidades

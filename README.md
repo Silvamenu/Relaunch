@@ -294,9 +294,10 @@ Falta algum? Cada jogo é um arquivo JSON, sem mexer no código: veja [Criar um 
 
 - Na versão instalada, o Relaunch procura versões novas dele mesmo **ao abrir e a cada 3 horas**, nos GitHub Releases deste repositório.
 - A versão nova é baixada em segundo plano. Um **botão azul** aparece acima do avatar, na barra lateral: clique para reiniciar e instalar, ou ela é instalada quando você fechar o app.
+- A instalação da atualização não mostra as telas do instalador: o app fecha, atualiza na mesma pasta e abre de novo sozinho.
 - Depois de atualizar, o popup **Novidades da vX.Y.Z** mostra as notas do `CHANGELOG.md`. Para rever, use **Configurações → Ver novidades**.
 
-![Popup "Novidades da v0.1.0" com a lista de novidades da versão](docs/screenshots/novidades.png)
+![Popup "Novidades da v0.1.1" com a lista de novidades da versão](docs/screenshots/novidades.png)
 
 ### Limite da API do GitHub
 

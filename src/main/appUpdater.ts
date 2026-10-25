@@ -112,8 +112,8 @@ export class AppUpdater {
       this.setState({ status: 'idle' })
       return
     }
-    // isSilent=false (mostra o instalador NSIS), isForceRunAfter=true (reabre o app)
-    setImmediate(() => this.updater?.quitAndInstall(false, true))
+    // isSilent=true (atualiza sem as telas do instalador, na mesma pasta), isForceRunAfter=true (reabre o app)
+    setImmediate(() => this.updater?.quitAndInstall(true, true))
   }
 
   /** RELAUNCH_FAKE_UPDATE=1 em desenvolvimento: simula o ciclo para testar a interface. */
