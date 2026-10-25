@@ -43,6 +43,18 @@ jobs:
         run: |
           pkg="v$(node -p "require('./package.json').version")"
           [ "$pkg" = "$GITHUB_REF_NAME" ] || { echo "Tag $GITHUB_REF_NAME diferente da versão $pkg do package.json"; exit 1; }
-      - run: npm run release
+      # O electron-builder só gera os arquivos: publicando por ele, duas tarefas de envio em paralelo
+      # criavam dois rascunhos para a mesma tag (um com o instalador, outro com o .blockmap).
+      - run: npm run dist
+      - name: Criar o rascunho do release
+        shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          # Instalador, mapa de blocos (atualização diferencial) e latest.yml (lido pelo electron-updater).
+          files=("dist/Relaunch-Setup-$version.exe" "dist/Relaunch-Setup-$version.exe.blockmap" "dist/latest.yml")
+          for f in "${files[@]}"; do [ -f "$f" ] || { echo "Arquivo esperado não foi gerado: $f"; exit 1; }; done
+          gh release create "$TAG" "${files[@]}" --draft --verify-tag --title "$version" --notes-file build/release-notes.md

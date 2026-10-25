@@ -474,7 +474,6 @@ Electron + electron-vite + React + TypeScript + Tailwind CSS. Requisitos: Node.j
 | `npm run dist:linux`    | Gera um AppImage para Linux em `dist/`.                                          |
 | `npm run dist:dir`      | Empacota sem instalador (útil para testar).                                      |
 | `npm run release-notes` | Extrai do `CHANGELOG.md` as notas da versão atual para `build/release-notes.md`. |
-| `npm run release`       | Gera o instalador e o envia a um release em rascunho (precisa de `GH_TOKEN`).    |
 | `npm run icon`          | Regenera `build/icon.png`.                                                       |
 
 `dist`, `dist:linux` e `release` geram as notas a partir do `CHANGELOG.md` e falham se não houver uma seção para a `version` do `package.json`.
@@ -515,7 +514,7 @@ As notas de cada release vêm do `CHANGELOG.md`, a mesma fonte do popup de novid
 
 4. Quando o workflow terminar, abra o rascunho em [Releases](https://github.com/Silvamenu/Relaunch/releases), confira o instalador e as notas e clique em **Publish release**.
 
-O workflow [`release.yml`](.github/workflows/release.yml) confere se a tag aponta para um commit da `main` e bate com a `version` do `package.json`, roda os testes e roda `npm run release`, que gera as notas a partir do `CHANGELOG.md` e envia o instalador e o `latest.yml` para um release em **rascunho**. Nada chega aos apps instalados antes do passo 4. Para gerar o rascunho fora do CI, use `GH_TOKEN=<token> npm run release`.
+O workflow [`release.yml`](.github/workflows/release.yml) confere se a tag aponta para um commit da `main` e bate com a `version` do `package.json`, roda os testes e `npm run dist`, que gera as notas a partir do `CHANGELOG.md` e o instalador. Depois cria **um** release em **rascunho** com o instalador, o `.blockmap` e o `latest.yml` (e falha se algum deles faltar). Nada chega aos apps instalados antes do passo 4.
 
 Os apps instalados checam os releases ao abrir e a cada 3 horas, baixam em segundo plano e instalam quando você clica no botão azul ou ao fechar o app.
 
