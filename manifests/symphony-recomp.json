@@ -1,0 +1,79 @@
+{
+  "id": "symphony-recomp",
+  "name": "SymphonyRecomp",
+  "originalGame": "Castlevania: Symphony of the Night (PS1)",
+  "description": "Recompilação estática de Castlevania: Symphony of the Night para PC, feita com o RecompOne (beta aberta), com widescreen, randomizer e mods. Você precisa do dump .cue/.bin ou .chd do seu próprio disco norte-americano e do .NET 10 Runtime.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/BlackLabelHQ/SymphonyRecomp",
+  "accentColor": "#7a1f3d",
+  "executables": {
+    "win32": ["sotn.exe"],
+    "linux": ["run.sh", "sotn"]
+  },
+  "detectFiles": ["sotn.dll", "RecompOne.Runtime.dll", "sotn.exe", "sotn"],
+  "requirements": [
+    {
+      "id": "dotnet",
+      "type": "firstRun",
+      "label": "Instalar o .NET 10 Runtime",
+      "helpText": "O jogo depende do .NET 10 Runtime (x64) da Microsoft e não abre sem ele. No Windows, instale o .NET Runtime 10 pelo site oficial (dotnet.microsoft.com). No Linux, o app abre o run.sh do pacote, que usa o .NET 10 já instalado ou baixa o runtime oficial para ~/.dotnet (precisa de curl ou wget). O OpenAL já vem no pacote."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o disco no próprio jogo",
+      "helpText": "Na primeira abertura o jogo pede a imagem do disco: escolha o .cue (com os .bin das faixas 1 e 2 na mesma pasta) ou o .chd do seu disco norte-americano (NTSC-U) de Castlevania: Symphony of the Night para PS1. Outras regiões não servem para jogar. O caminho fica salvo em settings.json, na pasta do jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "settings.json",
+      "format": "json",
+      "label": "Configurações (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "BlackLabelHQ/SymphonyRecomp",
+    "assetPatterns": {
+      "win32": "SymphonyRecomp-*-windows-x64.zip",
+      "linux": "SymphonyRecomp-*-linux-x64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["settings.json", "interface.ini", "*.sav", "disc/**", "packs/**", "translations/**", "mods/.cache/**"],
+    "_todo": [
+      "Os padrões não casam com os builds windows-arm64 e macOS.",
+      "\"settings.json\" sem barra também protege mods/shaders/shaders/*/settings.json (presets do mod de shaders), que então não são trocados nas atualizações.",
+      "A v1.0.0p é pré-release só para testadores e fica de fora (latest = v0.5.1b).",
+      "O próprio jogo tem atualizador automático (AutoUpdater, registrado em Program.cs) que pode sobrescrever a pasta; depois disso a versão registrada pelo app fica desatualizada."
+    ]
+  },
+  "_todo": [
+    "A release v0.5.1b (listada sem extrair) não tem pasta raiz única e não traz disco nem BIOS; tem sotn.exe/sotn (apphost .NET), sotn.dll (90 MB), RecompOne.Runtime.dll, bibliotecas (Silk.NET, ImGui, SDL2, OpenAL, glfw), run.sh (0755, só Linux) e dois mods de exemplo. O sotn.dll contém o código do jogo recompilado para C#: o CI (.github/workflows/release.yml) gera esse código a partir de um repositório privado com o disco (BlackLabelHQ/SymphonyDiscSource), como em outras recompilações estáticas do catálogo.",
+    "settings.json, carda.sav e cardb.sav são caminhos relativos ao diretório de trabalho (RecompOne.Runtime/Config/Settings.cs e SystemSettings.cs); o app inicia o jogo na pasta de instalação. Sem disco válido, HostWindow.WaitForValidDisc abre o DiscPickerPopup. settings.json pode surgir antes da escolha do disco (aviso de beta), por isso o passo não tem doneWhen.",
+    "No Linux, o run.sh termina com exec ./sotn, então o processo em execução se chama sotn."
+  ],
+  "_sources": [
+    "https://github.com/BlackLabelHQ/SymphonyRecomp",
+    "https://github.com/BlackLabelHQ/SymphonyRecomp/releases",
+    "https://github.com/BlackLabelHQ/SymphonyRecomp/releases/tag/v0.5.1b",
+    "https://github.com/BlackLabelHQ/SymphonyRecomp/releases/expanded_assets/v0.5.1b",
+    "https://github.com/BlackLabelHQ/SymphonyRecomp/releases/download/v0.5.1b/SymphonyRecomp-v0.5.1b-windows-x64.zip",
+    "https://github.com/BlackLabelHQ/SymphonyRecomp/releases/download/v0.5.1b/SymphonyRecomp-v0.5.1b-linux-x64.tar.gz",
+    "https://github.com/BlackLabelHQ/SymphonyRecomp/tree/HEAD/disc",
+    "https://raw.githubusercontent.com/BlackLabelHQ/SymphonyRecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/BlackLabelHQ/SymphonyRecomp/HEAD/CHANGELOG.md",
+    "https://raw.githubusercontent.com/BlackLabelHQ/SymphonyRecomp/HEAD/Program.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/SymphonyRecomp/HEAD/run.sh",
+    "https://raw.githubusercontent.com/BlackLabelHQ/SymphonyRecomp/HEAD/.gitignore",
+    "https://raw.githubusercontent.com/BlackLabelHQ/SymphonyRecomp/HEAD/.gitmodules",
+    "https://raw.githubusercontent.com/BlackLabelHQ/SymphonyRecomp/HEAD/.github/workflows/release.yml",
+    "https://github.com/BlackLabelHQ/RecompOne",
+    "https://raw.githubusercontent.com/BlackLabelHQ/RecompOne/HEAD/RecompOne.Runtime/Config/Settings.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/RecompOne/HEAD/RecompOne.Runtime/Config/SystemSettings.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/RecompOne/HEAD/RecompOne.Runtime/Runtime.cs",
+    "https://raw.githubusercontent.com/BlackLabelHQ/RecompOne/HEAD/RecompOne.Runtime/Host/Window/HostWindow.cs"
+  ]
+}

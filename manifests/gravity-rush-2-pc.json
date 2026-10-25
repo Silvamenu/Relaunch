@@ -1,0 +1,77 @@
+{
+  "id": "gravity-rush-2-pc",
+  "name": "Gravity Rush 2 PC",
+  "originalGame": "Gravity Rush 2 (PS4)",
+  "description": "Port nativo de Gravity Rush 2 para Windows e Linux: o código do jogo de PS4 roda direto no processador e a GPU é traduzida para Vulkan. Você precisa do dump da sua própria cópia (CUSA03694 com o update 01.11).",
+  "category": "playstation",
+  "repoUrl": "https://github.com/HayatoG/gr2_pc",
+  "accentColor": "#6b3fa0",
+  "executables": {
+    "win32": ["Gravity Rush 2.exe"],
+    "linux": ["Gravity Rush 2"]
+  },
+  "detectFiles": ["Gravity Rush 2.exe", "Gravity Rush 2", "Play Gravity Rush 2.exe", "launcher/gr2.png"],
+  "requirements": [
+    {
+      "id": "game-folder",
+      "type": "firstRun",
+      "label": "Escolher no launcher a pasta do seu dump (CUSA03694 com o update 01.11)",
+      "doneWhen": ["{appData}/gr2-launcher/settings.json"],
+      "helpText": "Monte uma pasta só com o jogo base CUSA03694 (EUA) e o update 01.11 copiado por cima, substituindo os arquivos (~28 GB): eboot.bin do 1.11, sce_module/ (libc.prx, libSceFios2.prx, libSceJobManager.prx), sysdata/libSceSecure.prx, sce_sys/, Gravite2_Chunk0.psarc, Gravite2_Chunk1.psarc, os Gravite2_Patch_Chunk*.psarc e os sce_discmap*.plt. Abra o Gravity Rush 2, escolha essa pasta e o idioma do jogo e clique em Jogar. Confira os tamanhos: arquivos acima de 4 GB enviados pelo FTP do GoldHEN 2.2 chegam cortados; prefira copiar por um pendrive exFAT."
+    },
+    {
+      "id": "ngs2",
+      "type": "file",
+      "label": "libSceNgs2.sprx do firmware do seu PS4 (para ter som)",
+      "optional": true,
+      "patterns": ["system_lib/libSceNgs2.sprx"],
+      "helpText": "Copie o libSceNgs2.sprx da pasta /system/common/lib/ do seu próprio PS4 para a pasta system_lib/ do jogo. Sem ele o jogo roda sem som. O app não fornece esse arquivo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "user/tlg.ini",
+      "format": "ini",
+      "label": "Configurações do jogo (user/tlg.ini)",
+      "editable": true
+    },
+    {
+      "path": "{appData}/gr2-launcher/settings.json",
+      "format": "json",
+      "label": "Opções do launcher (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "HayatoG/gr2_pc",
+    "assetPatterns": {
+      "win32": "gr2-windows-x86_64*.zip",
+      "linux": "gr2-linux-x86_64*.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["user/**", "system_lib/libSceNgs2.sprx"]
+  },
+  "_todo": [
+    "Windows: build automática ainda sem teste em jogo, segundo o README e as notas de cada release. Linux testado (Nobara/Fedora 44) e exige glibc 2.39+.",
+    "Releases geradas pelo GitHub Actions (.github/workflows/build.yml) a cada push na main, com tag vAAAA.MM.DD-<commit>, todas como release normal (não prerelease). Os pacotes de v2026.10.24-a2e69a1 foram listados: launcher Qt congelado, out/tlg-probe(.exe), libtlggpu.so/DLLs, scripts de preparo, system_lib/LEIA-ME.txt; nenhum arquivo do jogo nem libSceNgs2.sprx.",
+    "O zip de Windows usa barras invertidas nos nomes das entradas (Compress-Archive); o yauzl do app as converte para '/'.",
+    "Saves, mods, cache de shaders e tlg.ini ficam em user/ na pasta do jogo (gr2_run.py usa USER_DIR fixo; o arquivo ponteiro de userdata.py ainda não está ligado).",
+    "settings.json é gravado ao escolher a pasta no launcher Qt (backend.chooseFolder -> save_settings); no Linux fica em $XDG_CONFIG_HOME ou ~/.config, igual a {appData}."
+  ],
+  "_sources": [
+    "https://github.com/HayatoG/gr2_pc",
+    "https://github.com/HayatoG/gr2_pc/releases",
+    "https://github.com/HayatoG/gr2_pc/releases/expanded_assets/v2026.10.24-a2e69a1",
+    "https://github.com/HayatoG/gr2_pc/releases/download/v2026.10.24-a2e69a1/gr2-windows-x86_64.zip",
+    "https://github.com/HayatoG/gr2_pc/releases/download/v2026.10.24-a2e69a1/gr2-linux-x86_64.tar.gz",
+    "https://github.com/HayatoG/gr2_pc/tree/HEAD/port/src",
+    "https://raw.githubusercontent.com/HayatoG/gr2_pc/HEAD/README.md",
+    "https://raw.githubusercontent.com/HayatoG/gr2_pc/HEAD/.github/workflows/build.yml",
+    "https://raw.githubusercontent.com/HayatoG/gr2_pc/HEAD/port/launcher/gr2_run.py",
+    "https://raw.githubusercontent.com/HayatoG/gr2_pc/HEAD/port/launcher/gr2_launcher_qt.py",
+    "https://raw.githubusercontent.com/HayatoG/gr2_pc/HEAD/port/launcher/qt/backend.py",
+    "https://raw.githubusercontent.com/HayatoG/gr2_pc/HEAD/port/launcher/userdata.py"
+  ]
+}

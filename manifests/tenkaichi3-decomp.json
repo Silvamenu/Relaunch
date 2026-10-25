@@ -1,0 +1,65 @@
+{
+  "id": "tenkaichi3-decomp",
+  "name": "Tenkaichi3Decomp",
+  "originalGame": "Dragon Ball Z: Budokai Tenkaichi 3 (PS2)",
+  "description": "Port nativo para PC de Budokai Tenkaichi 3, feito a partir da decompilação do jogo de PS2. Os dados do jogo saem da ISO do seu próprio disco americano.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/z3xox/Tenkaichi3Decomp",
+  "accentColor": "#f08a24",
+  "executables": {
+    "win32": ["Tenkaichi3Decomp.exe"],
+    "linux": ["Tenkaichi3Decomp"]
+  },
+  "detectFiles": ["Tenkaichi3Decomp.exe", "Tenkaichi3Decomp", "Tenkaichi3Decomp.dat", "Tenkaichi3Decomp-setup.exe", "Tenkaichi3Decomp-setup"],
+  "requirements": [
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Instalar os dados do jogo a partir da ISO do seu disco (Tenkaichi3Decomp-setup)",
+      "doneWhen": ["gamedata/.installed"],
+      "helpText": "Abra o Tenkaichi3Decomp-setup (Tenkaichi3Decomp-setup.exe no Windows) que está na pasta do jogo e escolha a ISO do seu próprio disco de Budokai Tenkaichi 3 de PS2, versão americana (SLUS-21678). O setup confere se é o disco original sem modificações e descompacta os dados ao lado do programa, na pasta gamedata (cerca de 4 GB). Opcional: a ISO da versão europeia (SLES-54945) adiciona espanhol, alemão, francês e italiano (botão \"Add languages...\" no setup)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "bt3_settings.txt",
+      "format": "text",
+      "label": "Configurações (bt3_settings.txt)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "z3xox/Tenkaichi3Decomp",
+    "assetPatterns": {
+      "win32": "Tenkaichi3Decomp-windows-x64*.zip",
+      "linux": "Tenkaichi3Decomp-linux-x64*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["saves/**", "bt3_settings.txt", "gamedata/**", "textures/**", "stages/**", "songs/**", "a11y_*_own.txt"]
+  },
+  "_todo": [
+    "bt3_settings.txt e saves/ ficam no diretório atual (port/src/plat_settings.c e plat_mc.c); o app abre o jogo com a pasta do jogo como diretório de trabalho, que é onde o setup também os coloca.",
+    "A conferência do disco é por SHA-1 de arquivos de dentro da ISO (SLUS_216.78 e BIN/DBZP.BIN, port/setup/native.cpp), não da ISO inteira; por isso não há sha1 de validação aqui.",
+    "O jogo também pode ser aberto pelo setup (botão Play). O app abre o jogo direto, como o README sugere depois da instalação.",
+    "Online (experimental) usa um serviço de matchmaking num Cloudflare Worker (código em port/matchmaking) e relay TURN da Cloudflare só quando o jogador usa código de sala.",
+    "Releases são criadas pelo workflow .github/workflows/release.yml (github-actions) a partir do próprio repositório; o projeto lança versões quase todo dia."
+  ],
+  "_sources": [
+    "https://github.com/z3xox/Tenkaichi3Decomp",
+    "https://github.com/z3xox/Tenkaichi3Decomp/releases",
+    "https://github.com/z3xox/Tenkaichi3Decomp/releases/expanded_assets/v0.1.38.7",
+    "https://github.com/z3xox/Tenkaichi3Decomp/releases/tag/v0.1.37.1",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/.github/workflows/release.yml",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/port/release/inside.sh",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/port/release/build.sh",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/port/tools/package.py",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/port/tbo/ui/CREDITS.md",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/port/setup/setup.cpp",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/port/setup/native.cpp",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/port/src/plat_settings.c",
+    "https://raw.githubusercontent.com/z3xox/Tenkaichi3Decomp/HEAD/port/src/plat_mc.c"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "megaman-x4-recomp",
+  "name": "Mega Man X4 Recompiled",
+  "originalGame": "Mega Man X4 (PS1)",
+  "description": "Recompilação estática de Mega Man X4 para PC, feita com o PSXRecomp, com co-op local e online para dois jogadores (beta pública). Você precisa da imagem .cue/.bin do seu próprio disco americano original (SLUS-00561).",
+  "category": "playstation",
+  "repoUrl": "https://github.com/mstan/MegaManX4Recomp",
+  "accentColor": "#1f6fd1",
+  "executables": {
+    "win32": ["MegaManX4Recomp.exe"],
+    "linux": ["MegaManX4Recomp.AppImage"]
+  },
+  "detectFiles": ["MegaManX4Recomp.exe", "MegaManX4Recomp.AppImage", "MegaManX4Recomp.execution.json"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Mega Man X4 (EUA, arquivo .bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "26ffe24a79384b24af7571674251ee575e889b38",
+            "label": "Mega Man X4 (USA) SLUS-00561, .bin MODE2/2352"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se o seu dump é o esperado. O jogo não recebe o arquivo por aqui; o disco é escolhido no launcher do próprio jogo (passo seguinte). Só o disco americano original, sem modificações, é aceito: imagens com undub, tradução ou patches são recusadas (essas mudanças entram pelos Mods). Não converta para .iso de 2048 bytes."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o disco no launcher do jogo",
+      "doneWhen": ["disc.cfg", "{home}/.local/share/MegaManX4Recomp/disc.cfg"],
+      "helpText": "Abra o jogo. No launcher, defina a linha \"Disc\" com o arquivo .cue do seu disco (deixe o .bin na mesma pasta) e clique em Play. O BIOS livre OpenBIOS já vem no pacote; o seu próprio SCPH1001.BIN é opcional. Os FMVs japoneses (mod opcional) pedem também o seu disco japonês de Rockman X4. A escolha fica salva em disc.cfg, ao lado do executável no Windows ou em ~/.local/share/MegaManX4Recomp no Linux. O AppImage do Linux exige glibc 2.38 ou mais nova."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "input.ini",
+        "linux": "{home}/.local/share/MegaManX4Recomp/input.ini"
+      },
+      "format": "ini",
+      "label": "Controles (input.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/MegaManX4Recomp",
+    "assetPatterns": {
+      "win32": "MegaManX4Recomp-*-windows-x64.zip",
+      "linux": "MegaManX4Recomp-*-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "disc.cfg",
+      "bios.cfg",
+      "settings.toml",
+      "input.ini",
+      "keybinds.ini",
+      "config.ini",
+      "launcher-window.ini",
+      "overlay_captures.json"
+    ],
+    "_todo": "As prévias de co-op para 4 jogadores (tags v*-4p-spike.*) são pre-releases e ficam de fora com includePrereleases=false. O SHA256SUMS.txt não casa com os padrões."
+  },
+  "_todo": [
+    "A release (v1.0.9) não traz disco, BIOS comercial nem dados do jogo; o MegaManX4Recomp.exe contém o código do jogo recompilado, como em outras recompilações estáticas do catálogo. O mod de FMVs japoneses só traz legendas de fãs e lê os vídeos do disco japonês do próprio usuário.",
+    "disc.cfg/settings.toml ficam ao lado do executável (psxrecomp runtime/src/main.cpp, conferido no HEAD do psxrecomp). No Linux o AppRun copia tudo para $XDG_DATA_HOME/MegaManX4Recomp (padrão ~/.local/share/MegaManX4Recomp) e roda de lá; as gravações de diagnóstico ficam em saves/diagnostics.",
+    "O AppImage do Linux não foi listado por dentro (squashfs que o 7za local não abre); o conteúdo foi conferido no zip do Windows e no AppRun do repositório."
+  ],
+  "_sources": [
+    "https://github.com/mstan/MegaManX4Recomp",
+    "https://github.com/mstan/MegaManX4Recomp/releases",
+    "https://github.com/mstan/MegaManX4Recomp/releases/expanded_assets/v1.0.9",
+    "https://github.com/mstan/MegaManX4Recomp/releases/download/v1.0.9/MegaManX4Recomp-v1.0.9-windows-x64.zip",
+    "https://github.com/mstan/MegaManX4Recomp/releases/download/v1.0.9/SHA256SUMS.txt",
+    "https://raw.githubusercontent.com/mstan/MegaManX4Recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/mstan/MegaManX4Recomp/HEAD/DISC.md",
+    "https://raw.githubusercontent.com/mstan/MegaManX4Recomp/HEAD/packaging/release/START_HERE.txt",
+    "https://raw.githubusercontent.com/mstan/MegaManX4Recomp/HEAD/packaging/release/app.conf",
+    "https://raw.githubusercontent.com/mstan/MegaManX4Recomp/HEAD/packaging/linux/AppRun",
+    "https://github.com/mstan/psxrecomp",
+    "https://raw.githubusercontent.com/mstan/psxrecomp/HEAD/runtime/src/main.cpp"
+  ]
+}

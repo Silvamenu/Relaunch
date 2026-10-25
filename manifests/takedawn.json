@@ -1,0 +1,58 @@
+{
+  "id": "takedawn",
+  "name": "Takedawn",
+  "originalGame": "Burnout 3: Takedown (Xbox)",
+  "description": "Recompilação estática não oficial da versão de Xbox de Burnout 3: Takedown, como programa nativo. Os dados do jogo saem da imagem ou dos arquivos do seu próprio disco norte-americano (NTSC-U).",
+  "category": "xbox",
+  "repoUrl": "https://github.com/xenophobentx/takedawn",
+  "accentColor": "#c8102e",
+  "executables": {
+    "linux": ["Takedawn-linux-x86_64.AppImage"]
+  },
+  "detectFiles": ["Takedawn-linux-x86_64.AppImage"],
+  "requirements": [
+    {
+      "id": "install",
+      "type": "firstRun",
+      "label": "Instalar os dados do seu disco de Burnout 3 (Xbox, NTSC-U)",
+      "doneWhen": ["{home}/.local/share/takedawn/Game/.complete"],
+      "helpText": "Na primeira execução abre a janela de instalação do Takedawn. Escolha a imagem do seu próprio disco norte-americano de Xbox (.iso no formato XISO, imagem completa do disco ou pasta com os arquivos extraídos) e clique em Install. Ele confere cada arquivo e copia uns 2,5 GB para ~/.local/share/takedawn/Game (ou para a pasta que você escolher em Change...). Versões PAL, japonesa e arquivos modificados são recusados."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "linux": "{home}/.local/share/takedawn/settings.toml"
+      },
+      "format": "text",
+      "label": "Configurações (settings.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "xenophobentx/takedawn",
+    "assetPatterns": {
+      "linux": "Takedawn-*-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [],
+    "_todo": "Windows: a release só traz Takedawn-*-windows-x64-setup.exe (instalador Inno Setup, instala em %LOCALAPPDATA%\\Programs\\Takedawn; o README diz que não há zip portátil), por isso o Windows ficou de fora. macOS (.dmg) e Android (.apk) também não são usados."
+  },
+  "_todo": [
+    "Saves, settings.toml e logs ficam em ~/.local/share/takedawn ($XDG_DATA_HOME/takedawn), fora da pasta do jogo; o cache de shaders em ~/.cache/takedawn. Se o usuário escolher outra pasta para os dados, o caminho fica em data-folder.txt e o doneWhen acima não detecta.",
+    "O AppImage (squashfs com zstd) não pôde ser listado aqui; pela documentação ele contém o programa com o código traduzido do default.xbe e nenhum dado do jogo (sem texturas, sons, filmes nem cache de shaders).",
+    "Projeto novo (releases de 13 a 22/10/2026, 49 commits), feito com ajuda de agentes de IA segundo o próprio README; deriva de sp00nznet/burnout3 e do toolkit xboxrecomp, com fontes publicados em cada release."
+  ],
+  "_sources": [
+    "https://github.com/xenophobentx/takedawn",
+    "https://github.com/xenophobentx/takedawn/commits/main",
+    "https://github.com/xenophobentx/takedawn/releases",
+    "https://github.com/xenophobentx/takedawn/releases/expanded_assets/v0.2.1",
+    "https://github.com/xenophobentx/takedawn/releases/download/v0.2.1/BUILDINFO",
+    "https://github.com/xenophobentx/takedawn/releases/download/v0.2.1/Takedawn-0.2.1-linux-x86_64.AppImage",
+    "https://raw.githubusercontent.com/xenophobentx/takedawn/HEAD/README.md",
+    "https://raw.githubusercontent.com/xenophobentx/takedawn/HEAD/docs/installer.md"
+  ]
+}

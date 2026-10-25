@@ -1,0 +1,71 @@
+{
+  "id": "opengoal-jak2",
+  "name": "OpenGOAL: Jak II",
+  "originalGame": "Jak II (PS2)",
+  "description": "Port nativo para PC de Jak II, feito a partir da decompilação do jogo de PS2 (ainda em beta, mas praticamente completo segundo o projeto). Os dados do jogo saem da imagem ISO do seu próprio disco.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/open-goal/jak-project",
+  "website": "https://opengoal.dev",
+  "accentColor": "#2f6db5",
+  "executables": {
+    "win32": ["gk.exe"],
+    "linux": ["gk"]
+  },
+  "detectFiles": ["gk.exe", "gk", "extractor.exe", "extractor"],
+  "requirements": [
+    {
+      "id": "extract",
+      "type": "firstRun",
+      "label": "Extrair e compilar o Jak II a partir do ISO do seu disco (extractor -g jak2)",
+      "doneWhen": ["{gameDir}/data/out/jak2/iso/GAME.CGO"],
+      "helpText": "Gere um arquivo .iso do seu próprio disco de Jak II de PS2 (NTSC-U, inclusive Greatest Hits; PAL \"Jak II: Renegade\"; NTSC-J ou NTSC-K; as versões de PS3/PS4/PS5 não servem). Para o Jak II o extractor precisa do parâmetro -g jak2, então arrastar o .iso sobre o extractor.exe não funciona: abra um terminal na pasta do jogo e rode, no Windows, .\\extractor.exe -g jak2 \"C:\\caminho\\do\\seu\\jak2.iso\"; no Linux, ./extractor -g jak2 \"/caminho/do/seu/jak2.iso\". O extractor valida, extrai, decompila e compila os dados (leva alguns minutos) e abre o jogo no final. Depois de cada atualização do OpenGOAL, repita este passo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "{appData}/OpenGOAL/jak2/settings/pc-settings.gc",
+      "format": "text",
+      "label": "Configurações do jogo (pc-settings.gc)",
+      "editable": true
+    }
+  ],
+  "launchArgs": ["-g", "jak2"],
+  "updates": {
+    "source": "github-releases",
+    "repo": "open-goal/jak-project",
+    "assetPatterns": {
+      "win32": "opengoal-windows-*.zip",
+      "linux": "opengoal-linux-*.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/iso_data/**", "data/decompiler_out/**", "data/out/**"],
+    "_todo": [
+      "Mesmo pacote do opengoal-jak1 (v0.3.9): opengoal-windows-v0.3.9.zip / opengoal-linux-v0.3.9.tar.gz, sem pasta raiz única (gk, extractor, goalc e data/ na raiz). Os padrões não casam com os assets do LSP nem com os de macOS.",
+      "A release não traz data/iso_data, data/decompiler_out nem data/out (conferido na listagem do .tar.gz): são gerados a partir do disco do usuário. Depois de atualizar, é preciso rodar o extractor -g jak2 de novo."
+    ]
+  },
+  "_todo": [
+    "O extractor usa 'jak1' quando não recebe -g (decompiler/extractor/main.cpp: game_name = \"jak1\"; comentário 'game arg must be provided for jak 2/3'). Com um ISO de Jak II sem -g jak2, a validação falha e a compilação usa goal_src/jak1, por isso o passo manual pede o terminal em vez de arrastar o arquivo.",
+    "Discos aceitos conforme o banco de validação do extractor (decompiler/extractor/extractor_util.cpp): SCUS-97265 (NTSC-U v1 e v2), SCES-51608 (PAL), SCPS-15057 (NTSC-J), SCKA-20010 (NTSC-K).",
+    "Saves ficam em {appData}/OpenGOAL/jak2/saves (fora da pasta do jogo; {appData} = ~/.config no Linux).",
+    "detectFiles iguais aos do opengoal-jak1 e opengoal-jak3 (é o mesmo pacote): uma pasta do OpenGOAL é reconhecida pelos três manifestos. Cada manifesto instala a sua própria cópia do pacote.",
+    "O README ainda classifica o Jak 2 como beta ('Jak 2 is considered in beta ... to the casual user, the game is essentially complete')."
+  ],
+  "_sources": [
+    "https://github.com/open-goal/jak-project/releases/latest",
+    "https://github.com/open-goal/jak-project/releases",
+    "https://github.com/open-goal/jak-project/releases/expanded_assets/v0.3.9",
+    "https://github.com/open-goal/jak-project/releases/download/v0.3.9/opengoal-linux-v0.3.9.tar.gz",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/README.md",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/decompiler/extractor/main.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/decompiler/extractor/extractor_util.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/game/main.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/common/versions/versions.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/common/util/FileUtil.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/game/kernel/jak2/kmachine.cpp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/goal_src/jak2/game.gp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/goal_src/jak2/lib/project-lib.gp",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/goal_src/jak2/dgos/game.gd",
+    "https://raw.githubusercontent.com/open-goal/jak-project/HEAD/goal_src/jak1/pc/pckernel-common.gc"
+  ]
+}

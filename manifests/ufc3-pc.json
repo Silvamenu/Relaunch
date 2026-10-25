@@ -1,0 +1,69 @@
+{
+  "id": "ufc3-pc",
+  "name": "UFC 3 native port",
+  "originalGame": "EA Sports UFC 3 (PS4)",
+  "description": "Port nativo para Windows e Linux de UFC 3 (baseado no SacredFire): o código do próprio jogo roda na CPU e a GPU é traduzida para Vulkan. Você precisa do dump do jogo base (CUSA06534) e da atualização 1.14, feitos do seu próprio PS4.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS",
+  "accentColor": "#d20a11",
+  "executables": {
+    "win32": ["UFC3.exe"],
+    "linux": ["ufc3.sh"]
+  },
+  "detectFiles": ["UFC3.exe", "bin/sacredfire-game.exe", "ufc3.sh", "bin/sacredfire", "share/aerolib.inl"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "firstRun",
+      "label": "Seu dump do jogo (pasta CUSA06534) e da atualização 1.14: escolher no launcher e jogar uma vez",
+      "doneWhen": ["{localAppData}/UFC3Native/out/boot-linked.bin", "{home}/.local/share/UFC3Native/out/boot-linked.bin"],
+      "helpText": "Deixe a atualização 1.14 ao lado do jogo base, por exemplo PS4/CUSA06534 e PS4/CUSA06534-patch (-PATCH, -update e _patch também servem). Abra o launcher, escolha a pasta CUSA06534 (Browse...) e clique em Play: o port junta as duas em CUSA06534-merged, ao lado, com links físicos, e prepara o jogo em %LOCALAPPDATA%\\UFC3Native (Windows) ou ~/.local/share/UFC3Native (Linux). O dump precisa ser feito por você, do seu próprio PS4; o app não fornece jogos. A CPU precisa de AVX2, BMI1, MOVBE e LZCNT (Intel 4ª geração ou Ryzen)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "{localAppData}/UFC3Native/bbport.ini",
+        "linux": "{home}/.local/share/UFC3Native/bbport.ini"
+      },
+      "format": "ini",
+      "label": "Controles e menu do jogo (bbport.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS",
+    "assetPatterns": {
+      "win32": "UFC3Native-*-windows-x86_64.zip",
+      "linux": "UFC3Native-*-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [],
+    "_todo": [
+      "As notas da 0.1.14 pedem para extrair cada versão numa pasta nova e vazia, não por cima da anterior; a atualização no lugar do app pode deixar arquivos antigos (o log avisa 'VERSION MISMATCH' se a instalação misturar versões).",
+      "Dados, saves, configurações e a imagem preparada ficam fora da pasta do port (%LOCALAPPDATA%\\UFC3Native / ~/.local/share/UFC3Native), por isso preserve vazio.",
+      "O AppImage do Linux (UFC3Native-*-x86_64.AppImage) não é escolhido; usa-se o tar.gz, que não precisa de FUSE."
+    ]
+  },
+  "_todo": [
+    "Releases geradas e publicadas localmente por scripts/release.sh (cross-compile llvm-mingw para Windows, build Linux local, gh release create); sem CI. Os pacotes da 0.1.14 conferem com scripts/package-windows.sh e package-linux.sh (VERSION = ufc3-v0.1.14) e não têm arquivos do jogo (share/skip_movie.mkv é um clipe preto do port).",
+    "Linux: o launcher gráfico precisa de python3, PyGObject e GTK 4 do sistema (python-gobject gtk4 no Arch; python3-gi gir1.2-gtk-4.0 no Debian/Ubuntu) e glibc 2.38+. 'ufc3.sh' sem argumentos abre o launcher (o padrão também casa com UFC3.sh, que faz o mesmo).",
+    "O README-Windows.md, para o erro 0xC0000022 (acesso negado), sugere liberar o arquivo no antivírus (Histórico de proteção), extrair fora do OneDrive ou desbloquear o zip.",
+    "Jogo online experimental com servidor privado em Python (tools/ufc3_server.py) e VPN opcional; nada é baixado de fora do GitHub."
+  ],
+  "_sources": [
+    "https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS",
+    "https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/releases",
+    "https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/releases/tag/ufc3-v0.1.14",
+    "https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/releases/expanded_assets/ufc3-v0.1.14",
+    "https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/releases/download/ufc3-v0.1.14/UFC3Native-ufc3-v0.1.14-windows-x86_64.zip",
+    "https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/releases/download/ufc3-v0.1.14/UFC3Native-ufc3-v0.1.14-linux-x86_64.tar.gz",
+    "https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/commits/main",
+    "https://raw.githubusercontent.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/HEAD/README.md",
+    "https://raw.githubusercontent.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/HEAD/scripts/release.sh",
+    "https://raw.githubusercontent.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/HEAD/scripts/package-windows.sh",
+    "https://raw.githubusercontent.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS/HEAD/packaging/windows/sacredfire_launcher.c"
+  ]
+}

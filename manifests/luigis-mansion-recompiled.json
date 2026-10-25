@@ -1,0 +1,78 @@
+{
+  "id": "luigis-mansion-recompiled",
+  "name": "Luigi's Mansion Recompiled",
+  "originalGame": "Luigi's Mansion (GameCube)",
+  "description": "Port nativo de Luigi's Mansion para PC: na primeira abertura, o código do jogo é traduzido e compilado no seu computador a partir do seu próprio disco (EUA e/ou Europa), com widescreen, alta taxa de quadros e opções extras.",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/rob646464/luigis-mansion-recompiled",
+  "accentColor": "#3c9a48",
+  "executables": {
+    "win32": ["LuigisMansionRecomp.exe"],
+    "linux": ["LuigisMansionRecompiled.sh", "LuigisMansionRecomp"]
+  },
+  "detectFiles": ["LuigisMansionRecomp.exe", "LuigisMansionRecomp", "pipelines.bin", "llvm/LLVM-LICENSE.TXT"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Luigi's Mansion (GameCube, EUA GLME01 e/ou Europa GLMP01)",
+      "optional": true,
+      "extensions": ["iso", "gcm", "rvz", "wia", "gcz", "ciso", "nfs", "tgc", "wbfs"],
+      "copyToGameDir": false,
+      "helpText": "Basta um disco; com os dois (EUA e Europa) você escolhe a versão e libera a Hidden Mansion europeia. Outras revisões, outros jogos e imagens modificadas são recusados. O arquivo é escolhido na tela de instalação do próprio jogo.",
+      "_todo": "O jogo valida o SHA-1 do main.dol dentro da imagem, não da imagem inteira; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Escolher o(s) disco(s) e clicar em Install na primeira abertura",
+      "doneWhen": ["{appData}/Luigi's Mansion Recompiled/install.ini", "portable/install.ini"],
+      "helpText": "Na primeira abertura, use \"Browse...\" para escolher seu disco dos EUA e/ou da Europa e clique em \"Install\". O código do jogo é traduzido e compilado no seu PC com o compilador que vem junto (pasta llvm), em cerca de 20 a 60 segundos, e os shaders são preparados uma vez. Os caminhos dos discos ficam em install.ini (%APPDATA%\\Luigi's Mansion Recompiled no Windows, ~/.config/Luigi's Mansion Recompiled no Linux, ou na pasta portable). Para trocar de disco depois: F1 > Game > Add or change discs."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": ["portable/settings.ini", "{appData}/Luigi's Mansion Recompiled/settings.ini"],
+      "format": "ini",
+      "label": "Configurações (settings.ini)",
+      "editable": true,
+      "_todo": "{appData} vira %APPDATA% no Windows e ~/.config (XDG_CONFIG_HOME) no Linux, onde o jogo guarda settings.ini e install.ini; portable/ só vale com portable.txt ao lado do executável."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "rob646464/luigis-mansion-recompiled",
+    "assetPatterns": {
+      "win32": "LuigisMansionRecompiled-*-windows-x64.zip",
+      "linux": "LuigisMansionRecompiled-*-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "portable/**", "*.iso", "*.gcm", "*.rvz", "*.wia", "*.gcz", "*.ciso", "*.nfs", "*.tgc", "*.wbfs"],
+    "_todo": "Releases até a v1.0.1 se chamavam LuigisMansionPC-* e não casam com estes padrões (não importa para versões novas)."
+  },
+  "_todo": [
+    "Pacotes da v1.1.4: zip do Windows com pasta única LuigisMansionRecompiled-1.1.4-windows-x64/ (LuigisMansionRecomp.exe, DLLs do SDL3/Dawn/DXC/nod/libpng/zlib, pipelines.bin, llvm/bin/clang.exe e lld-link.exe); tarball do Linux com pasta única LuigisMansionRecompiled-linux-x86_64/ (LuigisMansionRecomp, LuigisMansionRecompiled.sh, llvm/bin/clang e ld.lld). Nenhum código ou dado do jogo: o módulo do jogo é gerado no PC do usuário a partir do disco dele.",
+    "As entradas do zip do Windows usam barra invertida (\\) como separador; o extrator do app normaliza para '/', então a pasta raiz única funciona.",
+    "O jogo tem atualizador próprio (F1 > Game > Updates), que baixa só das releases deste repositório no GitHub e instala na própria pasta do jogo.",
+    "Dados fora da pasta do jogo: Windows %APPDATA%\\Luigi's Mansion Recompiled (saves em USA\\Card A e EUR\\Card A, módulo do jogo em game\\); Linux ~/.config, ~/.local/share e ~/.cache/Luigi's Mansion Recompiled. Com portable.txt ao lado do executável tudo vai para portable/.",
+    "Requisitos do README: Windows 10/11 64 bits, GPU com Direct3D 12 e cerca de 2 GB livres.",
+    "As releases são montadas localmente pelo autor (o repositório não tem workflow de CI). O CLAUDE.md do repositório diz que a conta anterior do autor (robfozz64) foi suspensa pelo GitHub; o motivo não é informado."
+  ],
+  "_sources": [
+    "https://github.com/rob646464/luigis-mansion-recompiled",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/README.md",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/NOTICE.md",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/CLAUDE.md",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/docs/SETUP.md",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/packaging/windows/README.txt",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/packaging/linux/README.txt",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/packaging/linux/LuigisMansionRecompiled.sh",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/src/port/install.cpp",
+    "https://raw.githubusercontent.com/rob646464/luigis-mansion-recompiled/HEAD/src/port/update.cpp",
+    "https://github.com/rob646464/luigis-mansion-recompiled/releases",
+    "https://github.com/rob646464/luigis-mansion-recompiled/releases/expanded_assets/v1.1.4",
+    "https://github.com/rob646464/luigis-mansion-recompiled/releases/download/v1.1.4/LuigisMansionRecompiled-1.1.4-windows-x64.zip",
+    "https://github.com/rob646464/luigis-mansion-recompiled/releases/download/v1.1.4/LuigisMansionRecompiled-1.1.4-linux-x86_64.tar.gz"
+  ]
+}

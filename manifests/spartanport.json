@@ -1,0 +1,95 @@
+{
+  "id": "spartanport",
+  "name": "SpartanPort",
+  "originalGame": "God of War III Remastered (PS4)",
+  "description": "Port nativo para PC de God of War III Remastered: o código do próprio jogo roda na CPU e a GPU é traduzida para Vulkan pelo núcleo de vídeo do shadPS4. Você precisa do dump do jogo feito do seu próprio PS4.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/FelipePrado0/SpartanPort",
+  "accentColor": "#b3261e",
+  "executables": {
+    "win32": ["SpartanPort.exe"],
+    "linux": ["spartanport-x86_64.AppImage"]
+  },
+  "detectFiles": ["SpartanPort.exe", "bin/spartanport-probe.exe", "patches/CUSA01623.xml", "spartanport-x86_64.AppImage"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "firstRun",
+      "label": "Seu dump do jogo (pasta CUSA01623 ou CUSA01715): escolher no launcher do SpartanPort",
+      "doneWhen": ["out/eboot.elf", "{home}/.local/share/spartanport/out/eboot.elf"],
+      "helpText": "Abra o SpartanPort, clique em \"Choose the game folder\" e, na página Game, use Browse… para escolher a pasta do seu dump (a que tem eboot.bin, sce_module e sce_sys; testado com CUSA01623 e CUSA01715, versões 01.00 e 01.02). O dump precisa ser feito por você, do seu próprio PS4; o app não fornece jogos. Se a atualização foi extraída à parte, escolha-a em Game > Update folder. Depois clique em Save e em PLAY: na primeira vez o port prepara a imagem do jogo (pasta out, ao lado do programa no Windows; ~/.local/share/spartanport/out no Linux)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "spartanport.ini",
+        "linux": "{home}/.local/share/spartanport/spartanport.ini"
+      },
+      "format": "ini",
+      "label": "Jogo e menu do jogo (spartanport.ini)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": "settings.json",
+        "linux": "{home}/.local/share/spartanport/settings.json"
+      },
+      "format": "json",
+      "label": "Launcher do port (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "FelipePrado0/SpartanPort",
+    "assetPatterns": {
+      "win32": "spartanport-windows.zip",
+      "linux": "spartanport-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "user/**",
+      "out/**",
+      "mods/**",
+      "spartanport.ini",
+      "settings.json",
+      "game_icon.ico",
+      "mods.json",
+      "mods_presets.json",
+      "patches.json",
+      "last_run.log",
+      "gamecontrollerdb.txt"
+    ],
+    "_todo": [
+      "Windows e Linux saem na MESMA release (tag windows-vX.Y.Z): o zip vem do workflow windows-zip.yml e o AppImage do linux-appimage.yml, que anexa o arquivo à release da tag windows-v*. Na windows-v2.7.0 (Latest) os dois estão presentes; se uma release futura sair sem o AppImage, o Linux não acha asset até o workflow ser rodado para ela.",
+      "As builds de teste (windows-v*-test*, macos-v*) são pre-releases e ficam de fora (includePrereleases false).",
+      "A lista de preserve é a USER_FILES do próprio atualizador do port (launcher-rust/src/core/update.rs).",
+      "O port também se atualiza sozinho (Advanced > Check for updates; o AppImage se substitui com verificação SHA-256)."
+    ]
+  },
+  "_todo": [
+    "Já existe no catálogo o manifesto god-of-war-3-remastered (o mesmo jogo pelo shadPS4); este é o port nativo, com id próprio.",
+    "No Linux, XDG_DATA_HOME ou SPARTAN_DATA_DIR mudam a pasta de dados (o doneWhen/configFiles cobrem só o padrão ~/.local/share/spartanport).",
+    "Os zips do Windows usam '\\' nos nomes das entradas (o yauzl converte para '/').",
+    "Site citado no README (spartanport.com) não resolveu no teste; não incluído."
+  ],
+  "_sources": [
+    "https://github.com/FelipePrado0/SpartanPort",
+    "https://github.com/FelipePrado0/SpartanPort/releases",
+    "https://github.com/FelipePrado0/SpartanPort/releases/latest",
+    "https://github.com/FelipePrado0/SpartanPort/releases/expanded_assets/windows-v2.7.0",
+    "https://github.com/FelipePrado0/SpartanPort/releases/download/windows-v2.7.0/spartanport-windows.zip",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/README.md",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/packaging/windows/README-Windows.txt",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/.github/workflows/windows-zip.yml",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/.github/workflows/linux-appimage.yml",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/packaging/linux/AppRun",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/launcher-rust/src/core/paths.rs",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/launcher-rust/src/core/settings.rs",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/launcher-rust/src/core/update.rs",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/launcher-rust/src/runner/plan.rs",
+    "https://raw.githubusercontent.com/FelipePrado0/SpartanPort/HEAD/launcher-rust/src/runner/prepare.rs"
+  ]
+}

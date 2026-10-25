@@ -1,0 +1,74 @@
+{
+  "id": "dkr-r",
+  "name": "DKR-R (Diddy Kong Racing Recompiled)",
+  "originalGame": "Diddy Kong Racing (N64)",
+  "description": "Recompilação estática de Diddy Kong Racing para PC, com widescreen, alta taxa de quadros, mods e modo online. Precisa da sua própria ROM americana do N64 (v1.0 ou Rev A/v1.1).",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/ThatGuyMcd/DKR-R",
+  "accentColor": "#f2b21c",
+  "executables": {
+    "win32": ["DKR-R.exe"],
+    "linux": ["DKR-R.AppImage"]
+  },
+  "detectFiles": ["DKR-R.exe", "libexec/dkr-r/DKR-R-Runtime.exe", "DKR-R.AppImage", "assets/updates/install.json"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Diddy Kong Racing (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          { "sha1": "0cb115d8716dbbc2922fda38e533b9fe63bb9670", "label": "EUA v1.0 (v77)" },
+          { "sha1": "6d96743d46f8c0cd0edb0ec5600b003c89b93755", "label": "EUA Rev A / v1.1 (v80)" }
+        ]
+      },
+      "helpText": "Opcional: a ROM é adicionada dentro do próprio programa (Play > Add a ROM…). Só as versões americanas v1.0 e Rev A/v1.1, sem modificações, são aceitas. A verificação por SHA-1 vale para o formato .z64; arquivos .v64/.n64 também funcionam no programa, que os converte."
+    },
+    {
+      "id": "add-rom",
+      "type": "firstRun",
+      "label": "Adicionar sua ROM no DKR-R",
+      "helpText": "Abra o DKR-R, vá em Play > Add a ROM… e escolha sua ROM. Ele valida o arquivo e guarda uma cópia própria; depois disso a ROM aparece na lista Game ROM. Patches de mods antigos são importados em Mods / Hacks, não escolhendo uma ROM já modificada."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "ThatGuyMcd/DKR-R",
+    "assetPatterns": {
+      "win32": "DKR-R-*-Windows-x64.zip",
+      "linux": "DKR-R-*-Linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "dkr-runtime-data/**", ".dkr-update-backups/**"],
+    "_todo": [
+      "Os padrões não pegam o AppImage Linux ARM64 (DKR-R-*-Linux-aarch64.AppImage), o do Steam Deck (DKR-R-*-SteamDeck-x86_64.AppImage, o próprio projeto diz que o Deck usa o pacote Linux x86_64) nem os arquivos DKR-R-update.json/.sig.",
+      "As tags seguem o formato \"Version1.0.11\"; algumas betas antigas (ex.: Version1.0.5beta12) não estão marcadas como prerelease."
+    ]
+  },
+  "_todo": [
+    "Por padrão saves, mods, ROMs importadas, configurações e logs ficam fora da pasta do jogo: %APPDATA%\\DKRPort no Windows e $XDG_CONFIG_HOME/dkr-port (ou ~/.config/dkr-port) no Linux. No modo portátil (portable.txt) ficam em dkr-runtime-data ao lado do programa. O save principal é saves/dkr.us.v77.bin dentro desse perfil.",
+    "Os nomes dos arquivos de configuração e a pasta exata da cópia da ROM (rom-cache) não estão documentados; por isso não há configFiles nem doneWhen no passo da ROM.",
+    "O programa tem atualizador próprio (pacotes assinados vindos do GitHub Releases, só com a escolha do usuário). Se o usuário atualizar por ele, a versão registrada pelo app pode ficar desatualizada.",
+    "Recursos online (lobbies, login com Discord) e a Mod Store usam a API do site positron-portal.com (não foi possível acessar o site daqui); a Mod Store pode instalar mods de código de terceiros, com aprovação do usuário. Nada disso é necessário para jogar offline.",
+    "No Windows, DKR-R.exe precisa das pastas assets/ e libexec/ junto (o runtime real é libexec/dkr-r/DKR-R-Runtime.exe). O Linux precisa de glibc 2.38, GLIBCXX_3.4.32 e driver Vulkan."
+  ],
+  "_sources": [
+    "https://github.com/ThatGuyMcd/DKR-R",
+    "https://github.com/ThatGuyMcd",
+    "https://github.com/ThatGuyMcd/DKR-R/releases",
+    "https://github.com/ThatGuyMcd/DKR-R/releases/expanded_assets/Version1.0.11",
+    "https://github.com/ThatGuyMcd/DKR-R/releases/download/Version1.0.11/DKR-R-1.0.11-Windows-x64.zip (listado: DKR-R.exe, libexec/dkr-r/*.exe e DLLs, assets/ da interface, licenças; sem ROM nem assets do jogo)",
+    "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/HEAD/README.md",
+    "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/HEAD/docs/ROM_SETUP.md",
+    "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/HEAD/docs/SAVES.md",
+    "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/HEAD/docs/UPDATES.md",
+    "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/HEAD/docs/TROUBLESHOOTING.md",
+    "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/HEAD/docs/ASSET_POLICY.md",
+    "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/HEAD/docs/README.md",
+    "https://raw.githubusercontent.com/ThatGuyMcd/DKR-R/HEAD/RELATORIO_IA_BOTS.md"
+  ]
+}

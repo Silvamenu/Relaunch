@@ -1,0 +1,64 @@
+{
+  "id": "bloodborne-pc",
+  "name": "bbport",
+  "originalGame": "Bloodborne (PS4)",
+  "description": "Port nativo de Bloodborne para Linux: o executável do jogo de PS4 roda direto no PC e os gráficos são traduzidos para Vulkan (experimental, mas jogável). Você precisa do dump da sua própria cópia, com o update 1.09.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/deadinside28/bloodborne_pc",
+  "accentColor": "#8a1c2b",
+  "executables": {
+    "linux": ["Bloodborne-bbport-x86_64.AppImage"]
+  },
+  "detectFiles": ["Bloodborne-bbport-x86_64.AppImage"],
+  "requirements": [
+    {
+      "id": "game-folder",
+      "type": "firstRun",
+      "label": "Escolher no launcher do bbport a pasta do seu dump do jogo (ex.: CUSA03173, com o update 1.09)",
+      "doneWhen": ["{appData}/bbport-launcher/settings.json"],
+      "helpText": "Ao abrir o AppImage aparece o launcher do bbport: escolha nele a pasta do dump da sua cópia (a que tem eboot.bin e sce_module), já com o update 1.09 copiado por cima do jogo base, substituindo os arquivos (o jogo base 1.00 sozinho fecha ao iniciar). Serve qualquer versão de varejo com o 1.09 (CUSA00900 EUA, CUSA03173 Europa, CUSA03023 Ásia...). Se o seu eboot.bin vier com um patch de 60 fps embutido, o launcher pede o eboot.bin original (o port tem 60 fps próprio). Saves, cache de shaders e o bbport.ini ficam em ~/.local/share/bbport; DLCs vão em ~/.local/share/bbport/user/addcont/<title id>/<rótulo> (ex.: user/addcont/CUSA03173/SPEXPANSIONDLC03 para The Old Hunters)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "{localAppData}/bbport/bbport.ini",
+      "format": "ini",
+      "label": "Configurações do port (bbport.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "deadinside28/bloodborne_pc",
+    "assetPatterns": {
+      "linux": "Bloodborne-bbport-*.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [],
+    "_todo": "Saves, bbport.ini e arquivos gerados ficam fora da pasta de instalação (~/.local/share/bbport, BB_DATA_DIR), então nada precisa ser preservado no update."
+  },
+  "_todo": [
+    "Só Linux x86-64: o repositório não publica build para Windows (há adaptações para Windows em outros repositórios, ex.: Supermedo/bloodborne_pc, não avaliadas aqui).",
+    "Releases são enviadas à mão pelo autor (não há CI). O AppImage da 0.6 (481 MB, SHA-256 igual ao SHA256SUMS da release) foi listado: o conteúdo bate com packaging/appimage.sh e packaging/default.nix (bb-probe, libbbgpu.so, libbbnet*.so, launcher GTK4 em Python, scripts de preparo, patches/Bloodborne.xml, modelos FSR 4 da AMD e a DLSS da NVIDIA com licença) e não traz nenhum arquivo do jogo (sem eboot, .prx, .sprx ou .psarc).",
+    "O AppImage (nix-appimage) monta a própria /nix/store com user namespaces; sem FUSE o README sugere APPIMAGE_EXTRACT_AND_RUN=1. A opção --play inicia o jogo sem a janela do launcher (com as últimas configurações) e poderia ir em launchArgs depois do primeiro uso.",
+    "settings.json do launcher (gravado ao escolher a pasta; guarda também a senha do shadNet) fica em $XDG_CONFIG_HOME/bbport-launcher, igual a {appData} no Linux; por isso não foi exposto como arquivo de configuração.",
+    "Online (Seamless Hunt / The Hunter's Dream) usa servidores de terceiros; não avaliado. Nomes exatos dos botões do launcher (russo/inglês) não verificados."
+  ],
+  "_sources": [
+    "https://github.com/deadinside28/bloodborne_pc",
+    "https://github.com/deadinside28/bloodborne_pc/releases",
+    "https://github.com/deadinside28/bloodborne_pc/releases/expanded_assets/0.6",
+    "https://github.com/deadinside28/bloodborne_pc/releases/download/0.6/SHA256SUMS",
+    "https://github.com/deadinside28/bloodborne_pc/releases/download/0.6/Bloodborne-bbport-x86_64.AppImage",
+    "https://github.com/deadinside28/bloodborne_pc/tree/HEAD/src",
+    "https://raw.githubusercontent.com/deadinside28/bloodborne_pc/HEAD/README.md",
+    "https://raw.githubusercontent.com/deadinside28/bloodborne_pc/HEAD/packaging/appimage.sh",
+    "https://raw.githubusercontent.com/deadinside28/bloodborne_pc/HEAD/packaging/default.nix",
+    "https://raw.githubusercontent.com/deadinside28/bloodborne_pc/HEAD/launcher/bbport_launcher.py",
+    "https://raw.githubusercontent.com/deadinside28/bloodborne_pc/HEAD/run.sh",
+    "https://raw.githubusercontent.com/deadinside28/bloodborne_pc/HEAD/.gitmodules",
+    "https://www.pcgameshardware.de/Bloodborne-Spiel-54461/News/Linux-Port-FSR-4-DLSS-Koop-bbport-Fork-1556998/",
+    "https://ixbt.games/en/news/2026/10/04/bloodborne-portirovali-a-pk-igra-zapuskaetsia-bez-emuliatora.html"
+  ]
+}

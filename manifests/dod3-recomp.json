@@ -1,0 +1,69 @@
+{
+  "id": "dod3-recomp",
+  "name": "Drakengard 3 Recompiled",
+  "originalGame": "Drakengard 3 (PS3)",
+  "description": "Port nativo para PC de Drakengard 3, feito por recompilação estática do código do jogo de PS3. Você precisa da sua própria cópia americana (disco BLUS31197 ou versão PSN NPUB31251) e da atualização 1.01.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/soyjxck/dod3-recomp",
+  "accentColor": "#9b1c2e",
+  "executables": {
+    "win32": ["dod3.exe"]
+  },
+  "detectFiles": ["dod3.exe", "LICENSE-ps3recomp.txt"],
+  "requirements": [
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Instalar o jogo a partir da sua cópia (instalador do dod3.exe)",
+      "doneWhen": ["elf/EBOOT_101.ELF"],
+      "helpText": "Na primeira abertura, o dod3.exe abre o próprio instalador. Use Add Files / Add Folder para adicionar, em qualquer ordem: o dump do seu disco americano (BLUS31197), como a pasta que contém PS3_GAME ou como .iso DESCRIPTOGRAFADO (o PS3 Disc Dumper gera um assim a partir do seu disco; uma imagem comum, criptografada, é recusada), ou o pacote .pkg da versão PSN americana (UP0082-NPUB31251_00-DOD3MAINGAME0000); o pacote da atualização 1.01 (UP0082-BLUS31197_00-DOD3PATCH0000000-A0101-V0101-PE.pkg, obrigatório); e, se quiser, os pacotes .pkg das DLCs que você tem. Depois clique em Install: os arquivos vão para a pasta game, ao lado do dod3.exe (cerca de 16 GB). Outras regiões (Europa, Japão) são recusadas. A pasta do jogo precisa ficar num disco NTFS (exFAT não serve). Das próximas vezes, o dod3.exe abre um menu com Play, mods, DLCs e configurações."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "dod3.ini",
+      "format": "ini",
+      "label": "Configurações (dod3.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "soyjxck/dod3-recomp",
+    "assetPatterns": {
+      "win32": "dod3-recomp-*-win64.zip"
+    },
+    "includePrereleases": true,
+    "preserve": ["dod3.ini", "game/**", "elf/**", "gamedata/**", "keys.txt"],
+    "_todo": [
+      "Todas as releases (v0.1.1-alpha a v0.4.0-alpha) são pre-releases; por isso includePrereleases = true.",
+      "O pacote de macOS (dod3-recomp-*-macos-arm64.zip) não é selecionado. Não há build para Linux (pedido em aberto na issue #16)."
+    ]
+  },
+  "_todo": [
+    "A pasta base do jogo no Windows é a pasta do dod3.exe (src/main.cpp, GetModuleFileNameW); o instalador grava o executável descriptografado em elf/EBOOT_101.ELF e o jogo em game/disc (src/install/install.cpp, installed()). Saves em gamedata/, cache de shaders em cache/, log em dod3.log.",
+    "O zip da v0.4.0-alpha foi listado: dod3.exe (310 MB, código recompilado), DLLs do runtime (SDL2, zlib, MSVC), dod3.ini, README/licenças e cache/dxbc/ com 1375 shaders DXBC pré-compilados (~10 MB), traduzidos dos shaders do próprio jogo (no mesmo espírito do cache de shaders embutido no Unleashed Recompiled). Nenhum arquivo do jogo (EBOOT, .pkg, dados) vem no pacote.",
+    "O instalador traz embutidas as chaves públicas de SELF/NPDRM do PS3 (src/install/keys_builtin.h: npdrm_erk/riv, klic_free, klic_key, app_erk/riv), as mesmas que o RPCS3 tem no código; o usuário não precisa fornecer licenças (.rap).",
+    "Os nomes dentro do zip usam barra invertida (dod3-recomp-v0.4.0-alpha-win64\\dod3.exe); o yauzl/toPosix do app converte para '/', e a pasta única do topo vira a raiz da instalação. Vale conferir numa instalação real.",
+    "Mods (tradução para espanhol, DLC Undub) são arquivos que o próprio usuário adiciona pelo menu do jogo; o programa não baixa nada."
+  ],
+  "_sources": [
+    "https://github.com/soyjxck/dod3-recomp",
+    "https://raw.githubusercontent.com/soyjxck/dod3-recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/soyjxck/dod3-recomp/HEAD/docs/PLAYING.md",
+    "https://raw.githubusercontent.com/soyjxck/dod3-recomp/HEAD/docs/BUILDING.md",
+    "https://raw.githubusercontent.com/soyjxck/dod3-recomp/HEAD/.gitignore",
+    "https://raw.githubusercontent.com/soyjxck/dod3-recomp/HEAD/src/main.cpp",
+    "https://raw.githubusercontent.com/soyjxck/dod3-recomp/HEAD/src/install/install.cpp",
+    "https://raw.githubusercontent.com/soyjxck/dod3-recomp/HEAD/src/install/keys.h",
+    "https://raw.githubusercontent.com/soyjxck/dod3-recomp/HEAD/src/install/keys_builtin.h",
+    "https://github.com/soyjxck/dod3-recomp/releases",
+    "https://github.com/soyjxck/dod3-recomp/releases/tag/v0.4.0-alpha",
+    "https://github.com/soyjxck/dod3-recomp/releases/expanded_assets/v0.4.0-alpha",
+    "https://github.com/soyjxck/dod3-recomp/releases/download/v0.4.0-alpha/dod3-recomp-v0.4.0-alpha-win64.zip",
+    "https://github.com/soyjxck/dod3-recomp/commits/main",
+    "https://github.com/soyjxck/dod3-recomp/issues/4",
+    "https://github.com/soyjxck"
+  ]
+}

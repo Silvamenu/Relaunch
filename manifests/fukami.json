@@ -1,0 +1,66 @@
+{
+  "id": "fukami",
+  "name": "Fukami",
+  "originalGame": "Ridge Racer V (PS2)",
+  "description": "Port nativo de Ridge Racer V feito por recompilação estática do código do PS2 (com o renderizador GS do PCSX2). Você precisa de um CHD ou .cue/.bin do seu próprio disco americano.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/danisandoval/fukami",
+  "accentColor": "#2f6fd6",
+  "executables": {
+    "win32": ["Fukami.exe"],
+    "linux": ["Fukami"]
+  },
+  "detectFiles": ["Fukami.exe", "bin/Fukami", "share/fukami-default.ini"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "firstRun",
+      "label": "Escolher o CHD ou .cue/.bin do seu disco de Ridge Racer V (PS2, EUA, SLUS-20002)",
+      "doneWhen": ["{localAppData}/Fukami/disc/.fukami-disc-verified"],
+      "helpText": "Na primeira vez, o Fukami pede a imagem do seu próprio disco americano (um .chd, ou o .cue de um par .cue/.bin). Ele confere os arquivos do disco por SHA-256, recusa outras versões e descompacta os arquivos do jogo uma vez (cerca de 500 MB) na pasta de dados (%LOCALAPPDATA%\\Fukami no Windows, ~/.local/share/Fukami no Linux). No Linux o seletor de arquivo usa zenity ou kdialog; sem eles, coloque o .chd nessa pasta antes de abrir. No Windows é preciso ter o Microsoft Visual C++ Redistributable (x64) instalado."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "{localAppData}/Fukami/fukami.ini",
+      "format": "ini",
+      "label": "Configurações (fukami.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "danisandoval/fukami",
+    "assetPatterns": {
+      "win32": "Fukami-*-windows-x86_64.zip",
+      "linux": "Fukami-*-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [],
+    "_todo": "Os padrões não casam com o build de macOS (Fukami-*-macos-arm64.zip) nem com SHA256SUMS."
+  },
+  "_todo": [
+    "Configurações, saves (mc/) e os arquivos descompactados do disco (disc/) ficam fora da pasta do jogo: %LOCALAPPDATA%\\Fukami no Windows e ${XDG_DATA_HOME:-~/.local/share}/Fukami no Linux (src/app/fukami_app_win.cpp e fukami_app_linux.cpp). Por isso preserve está vazio.",
+    "O Fukami só usa XDG_DATA_HOME se for caminho absoluto; o {localAppData} do app usa XDG_DATA_HOME de qualquer jeito (diferença só em configurações incomuns).",
+    "Linux: 'Fukami' na raiz é um script de 277 bytes (o binário fica em bin/Fukami); o build é feito para Steam Deck (SteamOS 3.7+), outras distros são 'untested' segundo o README. O install.sh do pacote (copia para ~/Applications e adiciona ao Steam) não é usado pelo app.",
+    "Windows: a release 1.1.0 é a primeira com build para Windows e foi testada pelo autor em um único notebook (notas da release). O .exe não é assinado (aviso do SmartScreen).",
+    "Os binários da release contêm o código do jogo traduzido para C++ (gerado pelo autor a partir da cópia dele), como em outros recomps; os dados do jogo (R5.ALL etc.) vêm do disco do usuário."
+  ],
+  "_sources": [
+    "https://github.com/danisandoval/fukami",
+    "https://github.com/danisandoval/fukami/releases",
+    "https://github.com/danisandoval/fukami/releases/expanded_assets/v1.1.0",
+    "https://github.com/danisandoval/fukami/releases/download/v1.1.0/SHA256SUMS",
+    "https://github.com/danisandoval/fukami/commits/main",
+    "https://github.com/danisandoval",
+    "https://raw.githubusercontent.com/danisandoval/fukami/HEAD/README.md",
+    "https://raw.githubusercontent.com/danisandoval/fukami/HEAD/LEGAL.md",
+    "https://raw.githubusercontent.com/danisandoval/fukami/HEAD/docs/USER_GUIDE.md",
+    "https://raw.githubusercontent.com/danisandoval/fukami/HEAD/src/app/fukami_app_win.cpp",
+    "https://raw.githubusercontent.com/danisandoval/fukami/HEAD/src/app/fukami_app_linux.cpp",
+    "https://raw.githubusercontent.com/danisandoval/fukami/HEAD/src/app/fukami_app_common.cpp",
+    "https://raw.githubusercontent.com/danisandoval/fukami/HEAD/src/app/fukami_app_common.h",
+    "https://raw.githubusercontent.com/danisandoval/fukami/HEAD/src/app/disc_extract.cpp"
+  ]
+}

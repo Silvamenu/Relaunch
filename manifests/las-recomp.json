@@ -1,0 +1,68 @@
+{
+  "id": "las-recomp",
+  "name": "LAS Recomp",
+  "originalGame": "The Legend of Zelda: Link's Awakening (Switch)",
+  "description": "Recompilação estática de Link's Awakening (Switch, 2019) para PC (beta), com telas largas, resolução maior e randomizer. Precisa dos arquivos extraídos (exefs e romfs) do seu próprio jogo.",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/peiikai/LASRecomp",
+  "accentColor": "#e0a83a",
+  "executables": {
+    "win32": ["lasrecomp.exe"],
+    "linux": ["LASRecomp-linux-x86_64.AppImage"]
+  },
+  "detectFiles": ["lasrecomp.exe", "LASRecomp-linux-x86_64.AppImage", "lasgen/lasgen.exe", "rando-gen/rando-gen.exe"],
+  "requirements": [
+    {
+      "id": "game-files",
+      "type": "firstRun",
+      "label": "Escolher a pasta com exefs e romfs do seu jogo no LAS Recomp",
+      "doneWhen": ["extracted/lasgame.dll", "{localAppData}/lasrecomp/extracted/lasgame.so"],
+      "helpText": "Abra o LAS Recomp e, em Game Files, escolha a pasta que contém as pastas exefs e romfs (ou o conteúdo delas) do seu próprio jogo, versão 1.0.0, 1.0.1 ou 1.1.0, extraídas a partir do seu próprio console. Arquivos .xci, .nsp, .nca ou .nsz não servem, e o LAS Recomp não pede chaves do console. Ele copia os arquivos para a pasta de dados (ao lado do lasrecomp.exe no Windows, ~/.local/share/lasrecomp no Linux) e compila o código do jogo no seu computador; reserve cerca de 12 GB livres."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "larecomp.ini",
+        "linux": "{localAppData}/lasrecomp/larecomp.ini"
+      },
+      "format": "ini",
+      "label": "Configurações (larecomp.ini)",
+      "editable": true,
+      "_todo": "Nome do arquivo em runtime/settings.c e runtime/paths.c (DATA_ENTRIES); ele fica na pasta de dados, que o usuário pode mudar em Settings > Prelaunch > Data folder (data_root.txt)."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "peiikai/LASRecomp",
+    "assetPatterns": {
+      "win32": "LAS.Recomp-*-windows.zip",
+      "linux": "LAS.Recomp-*-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["extracted/**", "save/**", "rando/**", "cache/**", "fonts/**", "larecomp.ini", "gamecontrollerdb.txt", "data_root.txt"],
+    "_todo": [
+      "Os padrões não casam com o AppImage aarch64, o .dmg do macOS nem com as pre-releases de teste (test-*).",
+      "No Windows os dados (jogo extraído, saves, seeds, configurações) ficam ao lado do lasrecomp.exe; a lista de preserve segue DATA_ENTRIES de runtime/paths.c. No Linux ficam em ~/.local/share/lasrecomp, fora da pasta do jogo."
+    ]
+  },
+  "_todo": [
+    "A pasta raiz do zip (\"LAS Recomp/\") vira a raiz da instalação; o zip já traz o compilador zig e os geradores (lasgen, rando-gen) usados na primeira abertura.",
+    "O README avisa que quase todo o código foi escrito com IA (Claude) e revisado por uma pessoa; o projeto está em beta.",
+    "Requisitos: CPU x86-64 com AVX2 e FMA, GPU com Vulkan 1.3, 8 GB de RAM. No Steam Deck pode ser preciso APPIMAGE_EXTRACT_AND_RUN=1.",
+    "O README não explica como obter os arquivos do jogo e não aponta sites de chaves ou firmware; o app recusa .xci/.nsp/.nca (runtime/ui/launcher.mm)."
+  ],
+  "_sources": [
+    "https://github.com/peiikai/LASRecomp",
+    "https://raw.githubusercontent.com/peiikai/LASRecomp/HEAD/README.md",
+    "https://github.com/peiikai/LASRecomp/releases",
+    "https://github.com/peiikai/LASRecomp/releases/expanded_assets/beta_5.2",
+    "https://github.com/peiikai/LASRecomp/releases/download/beta_5.2/LAS.Recomp-beta_5.2-windows.zip",
+    "https://github.com/peiikai/LASRecomp/commits/main",
+    "https://raw.githubusercontent.com/peiikai/LASRecomp/HEAD/runtime/paths.c",
+    "https://raw.githubusercontent.com/peiikai/LASRecomp/HEAD/runtime/settings.c",
+    "https://raw.githubusercontent.com/peiikai/LASRecomp/HEAD/runtime/gamelib.h",
+    "https://raw.githubusercontent.com/peiikai/LASRecomp/HEAD/runtime/ui/launcher.mm"
+  ]
+}

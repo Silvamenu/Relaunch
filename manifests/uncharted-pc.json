@@ -1,0 +1,63 @@
+{
+  "id": "uncharted-pc",
+  "name": "Uncharted: The Nathan Drake Collection for Windows",
+  "originalGame": "Uncharted: The Nathan Drake Collection (PS4)",
+  "description": "Port nativo para Windows de Uncharted 1, 2 e 3 da coleção de PS4: o código original do jogo roda direto no PC e os gráficos são traduzidos para Vulkan. Você precisa do dump descriptografado da sua própria cópia da coleção.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/Supermedo/uncharted_pc",
+  "accentColor": "#c8962e",
+  "executables": {
+    "win32": ["Uncharted.exe"]
+  },
+  "detectFiles": ["Uncharted.exe", "Play Uncharted.exe", "bin/bb-probe.exe"],
+  "requirements": [
+    {
+      "id": "game-folder",
+      "type": "firstRun",
+      "label": "Escolher no launcher a pasta do seu dump da coleção (ex.: CUSA02343 ou CUSA02320)",
+      "doneWhen": ["{appData}/uncharted-launcher/settings.json"],
+      "helpText": "Abra o Uncharted.exe e, na página Game, use Browse… em Game folder para escolher a pasta do dump descriptografado da sua cópia: a que tem eboot.bin, big2-ps4_Shipping.elf, big3-ps4_Shipping.elf, sce_sys, u1data, u2data e u3data. Se cada jogo foi copiado numa pasta separada, preencha as pastas por jogo logo abaixo. Depois escolha o jogo e clique em PLAY. Precisa de uma placa com Vulkan 1.3 e 6 GB de memória de vídeo ou mais. Saves e cache de shaders ficam na pasta user, ao lado do launcher."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "bbport.ini",
+      "format": "ini",
+      "label": "Configurações do port (bbport.ini)",
+      "editable": true
+    },
+    {
+      "path": "{appData}/uncharted-launcher/settings.json",
+      "format": "json",
+      "label": "Opções do launcher (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Supermedo/uncharted_pc",
+    "assetPatterns": {
+      "win32": "uncharted-windows*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["user/**", "out/**", "art/**", "bbport.ini", "input.ini", "last_run.log"]
+  },
+  "_todo": [
+    "Só Windows 10/11 x64; não há build para Linux.",
+    "Releases enviadas à mão pelo autor (sem CI). O uncharted-windows.zip da v0.3.9 foi listado: o conteúdo bate com packaging/windows/package.sh (Uncharted.exe congelado com PyInstaller, Play Uncharted.exe, bin/bb-probe.exe e DLLs do MSYS2, scripts de preparo, run.py, FSR 4, DLSS da NVIDIA, licenças) e não traz arquivos do jogo; as capas covers/u1-u3.jpg do launcher são declaradas no README como arte original.",
+    "A lista preserve é a USER_FILES do próprio launcher (uncharted_launcher.py), que o atualizador interno também nunca sobrescreve.",
+    "O settings.json é gravado quando o launcher salva as opções (ao jogar, por exemplo), não exatamente no momento em que a pasta é escolhida.",
+    "O launcher tem atualizador próprio (api.github.com .../Supermedo/uncharted_pc/releases/latest)."
+  ],
+  "_sources": [
+    "https://github.com/Supermedo/uncharted_pc",
+    "https://github.com/Supermedo/uncharted_pc/releases",
+    "https://github.com/Supermedo/uncharted_pc/releases/expanded_assets/v0.3.9",
+    "https://github.com/Supermedo/uncharted_pc/releases/download/v0.3.9/uncharted-windows.zip",
+    "https://raw.githubusercontent.com/Supermedo/uncharted_pc/HEAD/README.md",
+    "https://raw.githubusercontent.com/Supermedo/uncharted_pc/HEAD/packaging/windows/package.sh",
+    "https://raw.githubusercontent.com/Supermedo/uncharted_pc/HEAD/launcher/uncharted_launcher.py",
+    "https://www.dsogaming.com/?p=197672"
+  ]
+}

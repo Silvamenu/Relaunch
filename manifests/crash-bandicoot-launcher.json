@@ -1,0 +1,76 @@
+{
+  "id": "crash-bandicoot-launcher",
+  "name": "Crash Bandicoot Launcher",
+  "originalGame": "Crash Bandicoot (PS1)",
+  "description": "Recompilação estática de Crash Bandicoot feita no seu PC a partir do seu próprio disco (RecompOne), com widescreen, alta taxa de quadros e mods. Você precisa do dump da sua cópia americana em .chd ou .cue + .bin.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/Matteo842/CrashBandicoot-Launcher",
+  "accentColor": "#e8761c",
+  "executables": {
+    "win32": ["CrashBandicoot.exe"],
+    "linux": ["CrashBandicoot-Linux"]
+  },
+  "detectFiles": ["CrashBandicoot.exe", "CrashBandicoot-Linux"],
+  "requirements": [
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o dump do seu Crash Bandicoot no launcher do jogo",
+      "helpText": "Abra o programa, clique em Select disc e escolha o .chd ou o .cue (com o .bin ao lado) da sua cópia americana de Crash Bandicoot (SCUS-94900, uma única faixa MODE2/2352); outras regiões não funcionam. Na primeira vez o jogo é recompilado a partir do seu disco na pasta game (leva alguns minutos). Deixe o arquivo do disco no mesmo lugar: o jogo lê fases e áudio dele a cada partida."
+    },
+    {
+      "id": "vcredist",
+      "type": "firstRun",
+      "label": "Visual C++ Redistributable 2015-2022 x64 (só se a janela do jogo não abrir)",
+      "optional": true,
+      "helpText": "No Windows o jogo precisa do Microsoft Visual C++ Redistributable 2015-2022 (x64), que a maioria dos PCs já tem. Também é preciso uma GPU com OpenGL 4.3 (ou 3.3)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "settings.json",
+      "format": "json",
+      "label": "Configurações (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Matteo842/CrashBandicoot-Launcher",
+    "assetPatterns": {
+      "win32": "CrashBandicoot.exe"
+    },
+    "includePrereleases": false,
+    "preserve": ["settings.json", "save/**", "game/**", "mods/**", "logs/**"],
+    "_todo": [
+      "O asset de Windows é um .exe solto (CrashBandicoot.exe, sem versão no nome); o padrão exato não pega CrashBandicoot-arm64.exe.",
+      "Linux sem padrão de asset: o binário de Linux é publicado como arquivo solto sem extensão (CrashBandicoot-Linux), formato que o instalador não aceita (archiveKindOf só reconhece .exe/.AppImage/.x86_64/.bin). No Linux, baixe CrashBandicoot-Linux da release e adicione a pasta manualmente; o executável já está mapeado."
+    ]
+  },
+  "_todo": [
+    "É o próprio port, não um invólucro de emulador: o repositório tem o pipeline de recompilação (CrashBandicoot.Launcher/Recomp: RecompPipeline, GameCompiler, patches), o runtime do RecompOne (MIT) adaptado com widescreen, frame pacing e cheats, e o launcher. O código do jogo é gerado e compilado na máquina do usuário a partir do disco dele.",
+    "Release 2.3.1 verificada: CrashBandicoot.exe é um bundle single-file do .NET 10 (x64); a lista interna (360 arquivos, lida sem executar) só tem runtime .NET/WinForms, Silk.NET, ImGui, MonoMod, Roslyn, RecompOne.Recompiler/Runtime, CHDSharp, fontes, a arte do launcher (Ui/world_map.png, ilustração própria) e mods de exemplo. Não há disco, BIOS nem código do jogo recompilado (game.recomp.dll é gerado localmente).",
+    "Saves em save/, jogo preparado em game/, settings.json e mods/ ficam ao lado do exe (README). O caminho do disco fica em settings.json (CdPath); por isso o passo de escolher o disco não tem doneWhen.",
+    "No Linux também dá para iniciar sem o launcher com --run <arquivo.cue|.chd>, mas o app não passa o caminho do disco do usuário (launchArgs fixos)."
+  ],
+  "_sources": [
+    "https://github.com/Matteo842/CrashBandicoot-Launcher",
+    "https://github.com/Matteo842",
+    "https://github.com/Matteo842/CrashBandicoot-Launcher/releases",
+    "https://github.com/Matteo842/CrashBandicoot-Launcher/releases?page=3",
+    "https://github.com/Matteo842/CrashBandicoot-Launcher/releases/expanded_assets/2.3.1",
+    "https://github.com/Matteo842/CrashBandicoot-Launcher/releases/download/2.3.1/CrashBandicoot.exe",
+    "https://github.com/Matteo842/CrashBandicoot-Launcher/tree/main/CrashBandicoot.Launcher",
+    "https://github.com/Matteo842/CrashBandicoot-Launcher/commits/main/CrashBandicoot.Launcher/Ui/world_map.png",
+    "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/HEAD/README.md",
+    "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/HEAD/THIRD-PARTY-NOTICES.txt",
+    "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/HEAD/CrashBandicoot.Launcher/Program.cs",
+    "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/HEAD/CrashBandicoot.Launcher/LauncherHost.cs",
+    "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/HEAD/CrashBandicoot.Launcher/Ui/UI_STRATEGY.md",
+    "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/HEAD/CrashBandicoot.Launcher/Ui/world_map.png",
+    "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/HEAD/CrashBandicoot.Launcher/Recomp/RecompPipeline.cs",
+    "https://raw.githubusercontent.com/Matteo842/CrashBandicoot-Launcher/HEAD/CrashBandicoot.Launcher/Recomp/DiscValidator.cs",
+    "https://github.com/BlackLabelHQ/RecompOne"
+  ]
+}

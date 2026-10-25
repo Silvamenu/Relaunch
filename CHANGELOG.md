@@ -7,6 +7,16 @@ O conteúdo de cada versão é usado como nota do release no GitHub (`npm run re
 
 ## [Não lançado]
 
+## [0.1.1] - 2026-10-25
+
+### Novidades
+
+- Catálogo com **119 projetos**: 53 ports e recompilações novos. Cada um foi conferido no repositório oficial: código-fonte publicado, download só pelos GitHub Releases e nenhum arquivo do jogo no pacote. Todos usam a sua própria cópia (ROM, ISO ou dump do seu console).
+  - PlayStation: SpartanPort (God of War III Remastered), Uncharted: The Nathan Drake Collection, Shadow of the Colossus, Gravity Rush 2, The Last Guardian, The Order: 1886, Unicorn Overlord, Crash Team Racing Nitro-Fueled, MediEvil (PS4), Dragon's Crown Pro e UFC 3, de PS4; Drakengard 3 e Monster Hunter Portable 3rd HD (Yakumo), de PS3; Jak II e Jak 3 (OpenGOAL), ICO, Ridge Racer V (Fukami), Budokai Tenkaichi 3 e Def Jam Vendetta, de PS2; Crash Bandicoot, Crash Team Racing (CTR Native), Castlevania: Symphony of the Night, Ape Escape, MediEvil e Mega Man X4, de PS1.
+  - Xbox: Fable II, Lost Odyssey, Blue Dragon (re:Blue), Ace Combat 6, Call of Duty 3, The Darkness (Estacado), The Simpsons Game e Banjo-Kazooie: Nuts & Bolts (reNut), de Xbox 360; BLACK, Ninja Gaiden Black, Jet Set Radio Future e SSX Tricky, de Xbox.
+  - Nintendo: Paper Mario (PaperBoat), GoldenEye 007, Diddy Kong Racing e Pokémon Snap, de N64; The Wind Waker (BlueWake), Metroid Prime, Luigi's Mansion, Super Mario Strikers, Super Smash Bros. Melee e Animal Crossing, de GameCube; The Wind Waker HD, de Wii U; e Link's Awakening, de Switch.
+  - Só para Linux, por enquanto: bbport (Bloodborne), OpenRAC (Ratchet & Clank), Severed Chains (The Legend of Dragoon) e Takedawn (Burnout 3). No Windows eles aparecem no catálogo, mas sem o botão de baixar.
+
 ## [0.1.0] - 2026-10-23
 
 ### Novidades

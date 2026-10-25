@@ -1,0 +1,79 @@
+{
+  "id": "acgc-pc-port",
+  "name": "Animal Crossing PC Port",
+  "originalGame": "Animal Crossing (GameCube)",
+  "description": "Port nativo para PC de Animal Crossing feito a partir da decompilação ac-decomp, com resolução até 4K e pacotes de texturas (versão de testes). Precisa da imagem do seu próprio disco americano.",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/flyngmt/ACGC-PC-Port",
+  "accentColor": "#3f9b3a",
+  "executables": {
+    "win32": ["AnimalCrossing.exe"]
+  },
+  "detectFiles": ["AnimalCrossing.exe", "shaders/default.frag", "shaders/default.vert"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Animal Crossing (GameCube, EUA)",
+      "optional": true,
+      "extensions": ["iso", "gcm", "ciso"],
+      "copyToGameDir": true,
+      "helpText": "Escolha a imagem (.iso, .gcm ou .ciso) do seu próprio disco americano (GAFE01, Rev 0) para o app copiar para a pasta do jogo. Formatos .rvz/.gcz não são lidos. O projeto não documenta hash do disco, então o arquivo não é conferido aqui."
+    },
+    {
+      "id": "disc-in-folder",
+      "type": "file",
+      "label": "Imagem do disco na pasta do jogo (ou em rom/)",
+      "patterns": ["*.iso", "*.gcm", "*.ciso", "rom/*.iso", "rom/*.gcm", "rom/*.ciso", "orig/*.iso", "orig/*.gcm", "orig/*.ciso"],
+      "helpText": "Ao abrir, o jogo procura um arquivo .iso, .gcm ou .ciso na própria pasta, depois em orig/ e em rom/, e usa o primeiro que achar; os recursos são lidos direto da imagem, sem extração. Deixe só a imagem do seu disco lá."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "settings.ini",
+      "format": "ini",
+      "label": "Gráficos (settings.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybindings.ini",
+      "format": "ini",
+      "label": "Teclas (keybindings.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "flyngmt/ACGC-PC-Port",
+    "assetPatterns": {
+      "win32": "ACGC-PC-Port*.zip"
+    },
+    "includePrereleases": true,
+    "preserve": ["save/**", "rom/**", "orig/**", "texture_pack/**", "nes_roms/**", "settings.ini", "keybindings.ini", "*.iso", "*.gcm", "*.ciso"],
+    "_todo": [
+      "O projeto só publica pre-releases (\"playtest\", v0.8 a v0.9.3-playtest); por isso includePrereleases é true.",
+      "Cada release tem um único zip (ACGC-PC-Port0.9.3.zip), sem pasta raiz, com AnimalCrossing.exe (32 bits), SDL2.dll, shaders/ e pastas vazias rom/, save/, nes_roms/ e texture_pack/."
+    ]
+  },
+  "_todo": [
+    "Só Windows: o FAQ diz que o .exe roda no Linux via Wine/Proton, mas não há build nativo para Linux ainda.",
+    "Os saves ficam em save/card_a e save/card_b (formato GCI, compatível com o Dolphin).",
+    "A pasta nes_roms/ (vazia no download) lê arquivos .nes do próprio usuário para o NES dentro do jogo; não é requisito.",
+    "Settings.ini e keybindings.ini são criados na pasta do jogo (caminhos relativos ao diretório de trabalho, que o app define como a pasta de instalação).",
+    "O README recomenda um pacote de texturas HD num tópico do fórum do Dolphin (conteúdo de fãs); não é requisito."
+  ],
+  "_sources": [
+    "https://github.com/flyngmt/ACGC-PC-Port",
+    "https://raw.githubusercontent.com/flyngmt/ACGC-PC-Port/HEAD/README.md",
+    "https://raw.githubusercontent.com/flyngmt/ACGC-PC-Port/HEAD/FAQ.md",
+    "https://raw.githubusercontent.com/flyngmt/ACGC-PC-Port/HEAD/pc/DOCUMENTATION.md",
+    "https://raw.githubusercontent.com/flyngmt/ACGC-PC-Port/HEAD/pc/src/pc_disc.c",
+    "https://raw.githubusercontent.com/flyngmt/ACGC-PC-Port/HEAD/pc/src/pc_card.c",
+    "https://raw.githubusercontent.com/flyngmt/ACGC-PC-Port/HEAD/src/static/Famicom/famicom.cpp",
+    "https://github.com/flyngmt/ACGC-PC-Port/releases",
+    "https://github.com/flyngmt/ACGC-PC-Port/releases/tag/v0.9.3-playtest",
+    "https://github.com/flyngmt/ACGC-PC-Port/releases/expanded_assets/v0.9.3-playtest",
+    "https://github.com/flyngmt/ACGC-PC-Port/releases/download/v0.9.3-playtest/ACGC-PC-Port0.9.3.zip"
+  ]
+}

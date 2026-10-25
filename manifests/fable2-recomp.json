@@ -1,0 +1,71 @@
+{
+  "id": "fable2-recomp",
+  "name": "Fable 2 Recompiled",
+  "originalGame": "Fable II (Xbox 360)",
+  "description": "Recompilação estática não oficial da versão de Xbox 360 de Fable II para Windows, com launcher próprio de configurações. Os arquivos do jogo (default.xex e data) saem do ISO do seu próprio disco de Fable II Game of the Year.",
+  "category": "xbox",
+  "repoUrl": "https://github.com/himdo/Fable-2-Recomp",
+  "accentColor": "#a67c2e",
+  "executables": {
+    "win32": ["Fable2Launcher.exe", "fable_2.exe"]
+  },
+  "detectFiles": ["fable_2.exe", "Fable2Launcher.exe", "fable2_build.json"],
+  "requirements": [
+    {
+      "id": "extract",
+      "type": "firstRun",
+      "label": "Extrair o jogo do ISO do seu disco de Fable II (Xbox 360)",
+      "doneWhen": ["default.xex", "launcher-game-path.txt"],
+      "helpText": "Abra o jogo (o launcher Fable2Launcher.exe) e use \"Extract from ISO\" para escolher o .iso do seu próprio disco de Fable II Game of the Year (EUA/Europa ou a GOTY alemã). O launcher confere o SHA-256 do default.xex e só então extrai default.xex e a pasta data para a pasta do jogo (cerca de 6,5 GB). Revisões desconhecidas são recusadas. Se você já tem esses arquivos extraídos em outra pasta, selecione essa pasta no launcher."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "fable2_config.toml",
+      "format": "text",
+      "label": "Configurações da recompilação (fable2_config.toml)",
+      "editable": true
+    },
+    {
+      "path": "fable_2.toml",
+      "format": "text",
+      "label": "Configurações do ReXGlue (fable_2.toml)",
+      "editable": true
+    },
+    {
+      "path": "launcher-settings.toml",
+      "format": "text",
+      "label": "Preferências do launcher (launcher-settings.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "himdo/Fable-2-Recomp",
+    "assetPatterns": {
+      "win32": "Fable_2_recomp_*_windows.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/dir.manifest", "saves/**", "fable2_config.toml", "fable_2.toml", "launcher-settings.toml", "launcher-game-path.txt"]
+  },
+  "_todo": [
+    "Release 1.5.0 verificada: Fable_2_recomp_v1.5.0_windows.zip (96,2 MB) tem uma única pasta raiz \"Fable 2 1.5.0/\" com Fable2Launcher.exe (WPF com .NET 8 embutido, ~162 MB), fable_2.exe, rexruntime.dll, rexgpu-xenos.dll, fable2_config.toml, fable2_build.json, README.md e data/ só com dir.manifest (129 bytes) e quatro scripts Lua do próprio projeto (data/scripts/recomp/*.lua, de src/lua). Nenhum arquivo do jogo.",
+    "O dir.manifest do pacote só lista os scripts Lua do projeto; o jogo indexa data/ por ele e o launcher/jogo acrescenta essas linhas ao dir.manifest do disco. Por isso data/dir.manifest fica no preserve (uma atualização não pode trocar o do jogo pelo de 129 bytes). Os .lua continuam sendo atualizados.",
+    "O \"Extract from ISO\" grava direto na pasta do launcher (sem escolher destino) e passa a usar essa pasta; uma pasta escolhida à mão fica em launcher-game-path.txt e o launcher a repassa com --game_data_root. Abrir fable_2.exe direto só procura o jogo na pasta do exe.",
+    "Saves, cache e logs ficam ao lado do fable_2.exe (saves/). Só Windows; builds de Linux e Vulkan ainda estão nos planos.",
+    "O README diz que o projeto começou como teste de IA local (Qwen) e foi concluído com trabalho manual; 159 commits, 539 estrelas, licença MIT, releases só no GitHub. Algumas versões antigas (1.4.1, 1.1.1) são pré-releases; a 1.5.0 é a Latest normal.",
+    "XEX aceitos: GOTY EUA/Europa e GOTY alemã (perfil goty-compatible); a SHA-256 do ISO usado no desenvolvimento é 685a0d3bea9718812f17bcd155907a5359a548b6d3d8342dd2a6c944f45e35ff (sem SHA-1 publicado, por isso não há validação no app)."
+  ],
+  "_sources": [
+    "https://github.com/himdo/Fable-2-Recomp",
+    "https://github.com/himdo/Fable-2-Recomp/releases",
+    "https://github.com/himdo/Fable-2-Recomp/releases/tag/1.5.0",
+    "https://github.com/himdo/Fable-2-Recomp/releases/expanded_assets/1.5.0",
+    "https://github.com/himdo/Fable-2-Recomp/releases/download/1.5.0/Fable_2_recomp_v1.5.0_windows.zip",
+    "https://raw.githubusercontent.com/himdo/Fable-2-Recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/himdo/Fable-2-Recomp/HEAD/launcher/README.md",
+    "https://raw.githubusercontent.com/himdo/Fable-2-Recomp/HEAD/CMakeLists.txt",
+    "https://raw.githubusercontent.com/himdo/Fable-2-Recomp/HEAD/config/fable2_config.toml"
+  ]
+}

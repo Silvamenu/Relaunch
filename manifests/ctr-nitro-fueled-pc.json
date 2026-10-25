@@ -1,0 +1,66 @@
+{
+  "id": "ctr-nitro-fueled-pc",
+  "name": "CTR-NitroFueled-PC",
+  "originalGame": "Crash Team Racing Nitro-Fueled (PS4)",
+  "description": "Port nativo para Windows (fork do SacredFire): o código do próprio jogo roda na CPU e a GPU é traduzida para Vulkan. Você precisa do dump do jogo base e da atualização 1.21, feitos do seu próprio PS4.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/GetLostIn/CTR-NitroFueled-PC",
+  "accentColor": "#f28c1b",
+  "executables": {
+    "win32": ["CTR-NitroFueled-PC.exe"]
+  },
+  "detectFiles": ["CTR-NitroFueled-PC.exe", "bin/sacredfire.exe", "bbport.default.ini"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "firstRun",
+      "label": "Seu dump do jogo base (CUSA13795 ou CUSA14876) e da atualização 1.21: escolher e preparar no launcher",
+      "doneWhen": ["out/boot-linked.bin"],
+      "helpText": "Abra o CTR-NitroFueled-PC.exe, escolha em \"Juego base\" a pasta do jogo base (versão 01.00) e em \"Actualización 1.21\" a pasta da atualização, e clique em \"Preparar el juego\": ele cria CUSA13795-1.21 ao lado do jogo base com links físicos, sem ocupar espaço extra. Servem a edição americana CUSA13795 e a europeia CUSA14876, como arquivos decriptados (dump feito no seu PS4, ou extraído com PS4 PKG Tool nas pastas Image0 e Sc0); um .pkg não extraído ou arquivos criptografados não servem. O dump precisa ser feito por você; o app não fornece jogos. Depois clique em JOGAR: a primeira partida prepara a imagem do jogo na pasta out."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "bbport.ini",
+      "format": "ini",
+      "label": "Jogo e menu do jogo (bbport.ini)",
+      "editable": true,
+      "_todo": "Criado a partir de bbport.default.ini na primeira execução."
+    },
+    {
+      "path": "launcher.ini",
+      "format": "ini",
+      "label": "Launcher (launcher.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "GetLostIn/CTR-NitroFueled-PC",
+    "assetPatterns": {
+      "win32": "CTR-NitroFueled-PC-portable-windows*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["user/**", "bbport.ini", "launcher.ini", "dlc/**", "backups/**", "logs/**", "last_run.log"],
+    "_todo": "out/ não está no preserve de propósito: o pacote traz out/aerolib.inl, que deve ser atualizado; o resto de out/ (imagem preparada) não vem no pacote e é refeito sozinho."
+  },
+  "_todo": [
+    "Releases montadas localmente (MSYS2 CLANG64 + packaging/windows/make_portable.py) e enviadas à mão; o único workflow do repositório é de testes. O conteúdo do zip v0.4 confere com o make_portable.py.",
+    "Só Windows nas releases (o SacredFire original, de onde vem o fork, é Linux e não é este repositório).",
+    "O pacote inclui duas shaders SPIR-V pequenas (scripts/ultrawide_*_data/shaders/0x*.spv, ~7 KB) que substituem shaders de HUD do jogo para o modo ultrawide (patch da comunidade, de tcosi); além delas, só patches de bytes/JSON, nenhum arquivo do jogo.",
+    "Também traz nvngx_dlss.dll (NVIDIA DLSS SDK, redistribuível) e os arquivos do modelo FSR 4 v07 (FSR-Vulkan, MIT).",
+    "DLC opcional: os .pkg de DLC do próprio usuário (aba DLC do launcher)."
+  ],
+  "_sources": [
+    "https://github.com/GetLostIn/CTR-NitroFueled-PC",
+    "https://github.com/GetLostIn/CTR-NitroFueled-PC/releases",
+    "https://github.com/GetLostIn/CTR-NitroFueled-PC/releases/tag/v0.4",
+    "https://github.com/GetLostIn/CTR-NitroFueled-PC/releases/expanded_assets/v0.4",
+    "https://github.com/GetLostIn/CTR-NitroFueled-PC/releases/download/v0.4/CTR-NitroFueled-PC-portable-windows.zip",
+    "https://github.com/GetLostIn/CTR-NitroFueled-PC/commits/main",
+    "https://github.com/GetLostIn/CTR-NitroFueled-PC/tree/main/.github/workflows",
+    "https://raw.githubusercontent.com/GetLostIn/CTR-NitroFueled-PC/HEAD/README.md",
+    "https://raw.githubusercontent.com/GetLostIn/CTR-NitroFueled-PC/HEAD/packaging/windows/make_portable.py"
+  ]
+}

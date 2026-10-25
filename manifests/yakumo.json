@@ -1,0 +1,67 @@
+{
+  "id": "yakumo",
+  "name": "Yakumo",
+  "originalGame": "Monster Hunter Portable 3rd HD Ver. (PS3)",
+  "description": "Port nativo para PC de Monster Hunter Portable 3rd HD Ver., feito por recompilação estática do código do jogo. Você fornece a imagem .iso da sua própria cópia (NPJB-40001).",
+  "category": "playstation",
+  "repoUrl": "https://github.com/TeamGDB/Yakumo",
+  "accentColor": "#b98335",
+  "executables": {
+    "win32": ["Yakumo.exe"],
+    "linux": ["yakumo"]
+  },
+  "detectFiles": ["Yakumo.exe", "yakumo", "Yakumo"],
+  "requirements": [
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Preparar o jogo a partir da imagem .iso da sua cópia",
+      "doneWhen": ["data/EBOOT.ELF", "{appData}/Yakumo/MHP3rd/EBOOT.ELF", "{localAppData}/Yakumo/MHP3rd/EBOOT.ELF"],
+      "helpText": "Na primeira abertura, o Yakumo pede a imagem do jogo no próprio navegador de arquivos (ou arraste o arquivo para a janela). Use a imagem de UMD de PSP (.iso sem compressão; .cso não serve) que vem na sua cópia de Monster Hunter Portable 3rd HD Ver. de PS3 (NPJB-40001); uma imagem de disco de PS3 ou de outra versão/região é recusada. O Yakumo confere a imagem, copia (cerca de 1,3 GB) ou usa no lugar, e prepara o executável do jogo a partir dela. No Windows (pacote portátil) tudo fica na pasta data ao lado do Yakumo.exe; no Linux, em ~/.local/share/Yakumo/MHP3rd."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["data/settings.ini", "{appData}/Yakumo/MHP3rd/settings.ini"],
+        "linux": ["{localAppData}/Yakumo/MHP3rd/settings.ini", "data/settings.ini"]
+      },
+      "format": "ini",
+      "label": "Configurações (settings.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "TeamGDB/Yakumo",
+    "assetPatterns": {
+      "win32": "yakumo-*-windows-x86_64-portable.zip",
+      "linux": "yakumo-*-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/**"],
+    "_todo": [
+      "Não selecionados: yakumo-*-windows-x86_64.zip (versão não portátil, dados em %APPDATA%), .flatpak, .apk, .dmg/.zip de macOS, ffmpeg-*.tar.xz (código-fonte do FFmpeg) e SHA256SUMS*.",
+      "Builds de teste saem como pre-release com '(test)'/'(unstable)' no título; ficam de fora com includePrereleases = false."
+    ]
+  },
+  "_todo": [
+    "Windows usa o pacote portátil: ele traz portable.txt, então configurações, saves (data/ms0/PSP/SAVEDATA), o EBOOT.ELF preparado e a cópia da imagem (data/disc.iso) ficam em data/ ao lado do Yakumo.exe. Sem portable.txt o Yakumo usaria %APPDATA%\\Yakumo\\MHP3rd.",
+    "No Linux o tarball não é portátil: os dados vão para ~/.local/share/Yakumo/MHP3rd (ou $XDG_DATA_HOME). O projeto aceita --portable para usar data/ ao lado do executável, mas não foi usado aqui para seguir o padrão do projeto.",
+    "No Linux o tarball tem o script yakumo (recomendado, ajusta a pilha para 64 MiB) e o binário Yakumo. A busca de executáveis do app não diferencia maiúsculas, então 'yakumo' casa com os dois; o binário direto também funciona (ele mesmo aumenta o limite da pilha, reiniciando uma vez).",
+    "Os pacotes de v0.7.5 foram listados: Windows portátil = Yakumo.exe, DLLs do FFmpeg/SDL3/MSVC, overlays/ (355 DLLs de código recompilado), licenses/, README.txt, BUILDINFO.txt, portable.txt; Linux = Yakumo, yakumo, lib/, overlays/*.so, fonts/NotoSansCJKjp-Regular.otf, licenses/. Nenhum arquivo do jogo (imagem, EBOOT, texturas, áudio) vem nos pacotes.",
+    "O código recompilado não fica no repositório (README: 'generated locally from your copy of the game and is never committed'); ele vem compilado dentro do Yakumo.exe e dos overlays, como nos outros recomps do catálogo."
+  ],
+  "_sources": [
+    "https://github.com/TeamGDB/Yakumo",
+    "https://raw.githubusercontent.com/TeamGDB/Yakumo/HEAD/README.md",
+    "https://raw.githubusercontent.com/TeamGDB/Yakumo/HEAD/profiles/mhp3rd/README.md",
+    "https://raw.githubusercontent.com/TeamGDB/Yakumo/HEAD/docs/LINUX.md",
+    "https://github.com/TeamGDB/Yakumo/releases",
+    "https://github.com/TeamGDB/Yakumo/releases/expanded_assets/v0.7.5",
+    "https://github.com/TeamGDB/Yakumo/releases/download/v0.7.5/yakumo-0.7.5-windows-x86_64-portable.zip",
+    "https://github.com/TeamGDB/Yakumo/releases/download/v0.7.5/yakumo-0.7.5-linux-x86_64.tar.gz",
+    "https://gbatemp.net/threads/monster-hunter-portable-3rd-gets-a-static-recompilation-port-for-windows-linux-mac-and-android.684734/"
+  ]
+}

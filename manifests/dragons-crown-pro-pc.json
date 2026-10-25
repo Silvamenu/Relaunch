@@ -1,0 +1,59 @@
+{
+  "id": "dragons-crown-pro-pc",
+  "name": "Dragon's Crown Pro PC Port",
+  "originalGame": "Dragon's Crown Pro (PS4)",
+  "description": "Port nativo para PC de Dragon's Crown Pro: o código do próprio jogo roda na CPU, com bibliotecas de sistema substitutas e renderizador Vulkan derivado do shadPS4. Você precisa do .pkg decriptado da sua própria cópia, que o launcher instala.",
+  "category": "playstation",
+  "repoUrl": "https://github.com/saulob/dragons-crown-pro-pc",
+  "accentColor": "#e0bb32",
+  "executables": {
+    "win32": ["dragons_crown_pro.exe"],
+    "linux": ["DragonsCrownProPC-x86_64.AppImage"]
+  },
+  "detectFiles": ["dragons_crown_pro.exe", "trg-updater.exe", "DragonsCrownProPC-x86_64.AppImage"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "firstRun",
+      "label": "Seu .pkg decriptado do jogo: instalar pelo launcher (Install game...)",
+      "doneWhen": ["game/image/*/boot.bin"],
+      "helpText": "Abra o port e, na página Play, clique em \"Install game...\" e escolha o .pkg decriptado (fake PKG) feito da sua própria cópia. Versões aceitas: EUA CUSA10454 1.00 (base) e 1.01 (atualização instalada por cima), Japão CUSA07001 1.00, 1.02 e 1.03, Ásia/Hong Kong CUSA10209 1.00 e 1.02; o launcher confere Title ID, Content ID, versão e o hash do eboot.bin e recusa outras. Um pacote criptografado para um console não pode ser aberto. O jogo é desempacotado na pasta game ao lado do programa (cerca de 6 GB) e o .pkg é só lido. O app não fornece jogos. Quando aparecer \"Ready to play\", clique em PLAY."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "user/dcp.ini",
+      "format": "ini",
+      "label": "Launcher e jogo (user/dcp.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "saulob/dragons-crown-pro-pc",
+    "assetPatterns": {
+      "win32": "DragonsCrownProPC-*-windows-x64.zip",
+      "linux": "DragonsCrownProPC-*-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["user/**", "game/**", "logs/**"],
+    "_todo": "O README manda manter user/ (e game/, para não reinstalar) ao atualizar; nenhum dos dois vem no pacote."
+  },
+  "_todo": [
+    "Releases montadas localmente (tools/package-release.ps1: zip no Windows e AppImage no WSL2 Ubuntu 20.04) e enviadas à mão; o workflow linux-appimage.yml só compila, não publica. O zip v0.7.1 traz só o programa, DLLs, licenças, a arte do launcher (desenho próprio) e o trg-updater.exe do TRG Launcher.",
+    "Linux/Steam Deck é experimental. O AppImage guarda game/, user/ e logs/ ao lado do próprio arquivo quando a pasta é gravável (senão em $XDG_DATA_HOME/DragonsCrownProPC); o nome versionado do asset é salvo como DragonsCrownProPC-x86_64.AppImage.",
+    "O instalador de PKG é o extrator de fake PKG do shadPS4 (antes do commit be22674f), com as chaves públicas de fake PKG que o shadPS4 usava.",
+    "A Trophy Key é opcional e fornecida pelo usuário (fica em user/keys.json); o port não a inclui."
+  ],
+  "_sources": [
+    "https://github.com/saulob/dragons-crown-pro-pc",
+    "https://github.com/saulob/dragons-crown-pro-pc/releases",
+    "https://github.com/saulob/dragons-crown-pro-pc/releases/expanded_assets/v0.7.1",
+    "https://github.com/saulob/dragons-crown-pro-pc/releases/download/v0.7.1/DragonsCrownProPC-v0.7.1-windows-x64.zip",
+    "https://github.com/saulob/dragons-crown-pro-pc/commits/main",
+    "https://github.com/saulob",
+    "https://raw.githubusercontent.com/saulob/dragons-crown-pro-pc/HEAD/README.md",
+    "https://raw.githubusercontent.com/saulob/dragons-crown-pro-pc/HEAD/docs/LAUNCHER.md"
+  ]
+}

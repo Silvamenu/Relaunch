@@ -1,0 +1,58 @@
+{
+  "id": "cod3-recomp",
+  "name": "CoD3Recomp",
+  "originalGame": "Call of Duty 3 (Xbox 360)",
+  "description": "Recompilação estática de Call of Duty 3 para Windows, com renderizador Direct3D 11. Os dados do jogo são instalados a partir da imagem ISO do seu próprio disco (versão USA/Europa).",
+  "category": "xbox",
+  "repoUrl": "https://github.com/FrankHUN88453/CoD3Recomp",
+  "accentColor": "#6b7a3a",
+  "executables": {
+    "win32": ["CoD3SP_s.exe"]
+  },
+  "detectFiles": ["CoD3SP_s.exe"],
+  "requirements": [
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Instalar o jogo a partir da ISO do seu disco (configuração inicial)",
+      "doneWhen": ["game.path", "game/default.xex", "default.xex"],
+      "helpText": "Na primeira vez, abra a pasta do jogo e rode o CoD3SP_s.exe diretamente (duplo clique no Explorer), porque a configuração faz uma pergunta na janela de console. Responda 1 (instalação nova) e escolha a imagem ISO do seu disco de Call of Duty 3 de Xbox 360 (USA, Europe) e depois a pasta onde os arquivos serão extraídos (vários GB); ou responda 2 se você já tem a pasta do jogo extraída (a que contém default.xex e a pasta sp). O programa confere o default.xex e grava o caminho em game.path. Os saves ficam na pasta save dentro dessa pasta do jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "CoD3Recomp.ini",
+      "format": "ini",
+      "label": "Configurações (CoD3Recomp.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": ["--no-update"],
+  "updates": {
+    "source": "github-releases",
+    "repo": "FrankHUN88453/CoD3Recomp",
+    "assetPatterns": {
+      "win32": "CoD3SP_s.exe"
+    },
+    "includePrereleases": true,
+    "preserve": ["game.path", "CoD3Recomp.ini", "game/**", "saves/**", "screenshots/**", "CoD3.log", "CoD3.previous.log"]
+  },
+  "_todo": [
+    "Todos os 8 releases (v0.1 a v0.5.0) são pre-release, por isso includePrereleases = true.",
+    "A partir da v0.5.0 o release é um único CoD3SP_s.exe (245 MB, com o FFmpeg embutido, extraído em %LOCALAPPDATA%\\CoD3Recomp\\libraries). Por ser um .exe avulso, o conteúdo não foi listado nem executado; só a documentação foi conferida.",
+    "--no-update desliga o atualizador embutido (updater.cpp consulta a API do GitHub deste repositório e troca o próprio exe, deixando CoD3SP_s.exe.old); assim quem atualiza é o app.",
+    "Como o app inicia o jogo sem entrada de console (stdio ignorado), a pergunta da primeira execução não pode ser respondida por ele: por isso o passo manual pelo Explorer. Depois disso o exe acha o jogo por game.path (ou por uma pasta game/ ao lado dele) sem perguntar nada.",
+    "Se a pasta do jogo escolhida ficar dentro da pasta de instalação com outro nome que não game/, ela não está na lista preserve.",
+    "Linux: sem build (só Windows, renderizador Direct3D 11). O repositório não declara licença."
+  ],
+  "_sources": [
+    "https://github.com/FrankHUN88453/CoD3Recomp",
+    "https://github.com/FrankHUN88453/CoD3Recomp/releases",
+    "https://github.com/FrankHUN88453/CoD3Recomp/releases/tag/v0.5.0",
+    "https://github.com/FrankHUN88453/CoD3Recomp/releases/expanded_assets/v0.5.0",
+    "https://raw.githubusercontent.com/FrankHUN88453/CoD3Recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/FrankHUN88453/CoD3Recomp/HEAD/CoD3Host/installer.cpp",
+    "https://raw.githubusercontent.com/FrankHUN88453/CoD3Recomp/HEAD/CoD3Host/updater.cpp",
+    "https://raw.githubusercontent.com/FrankHUN88453/CoD3Recomp/HEAD/CoD3Host/main.cpp"
+  ]
+}

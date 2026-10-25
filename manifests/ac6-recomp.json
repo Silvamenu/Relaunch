@@ -1,0 +1,70 @@
+{
+  "id": "ac6-recomp",
+  "name": "AC6Recomp",
+  "originalGame": "Ace Combat 6: Fires of Liberation (Xbox 360)",
+  "description": "Port nativo não oficial para Windows de Ace Combat 6, feito por recompilação estática com o ReXGlue SDK, com 60 FPS, resolução maior e ultrawide. Usa a ISO ou os arquivos extraídos do seu próprio disco americano do jogo.",
+  "category": "xbox",
+  "repoUrl": "https://github.com/sal063/AC6_recomp",
+  "accentColor": "#2f6fa8",
+  "executables": {
+    "win32": ["ac6recomp.exe"]
+  },
+  "detectFiles": ["ac6recomp.exe"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "file",
+      "label": "A ISO do seu disco de Ace Combat 6 (EUA) ou a pasta assets extraída",
+      "patterns": ["*.iso", "assets/default.xex"],
+      "helpText": "Coloque na pasta do jogo, ao lado do ac6recomp.exe, a imagem .iso feita do seu próprio disco de Ace Combat 6: Fires of Liberation, ou uma pasta assets com os arquivos extraídos do disco (com o default.xex dentro). Só a versão americana funciona; as versões europeia e japonesa não. Se houver mais de uma .iso, o jogo escolhe a de Ace Combat 6 pelo Title ID. DLCs extraídas da sua conta podem ir numa pasta dlc, também ao lado do exe."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "ac6recomp.toml",
+      "format": "text",
+      "label": "Configurações (ac6recomp.toml)",
+      "editable": true
+    },
+    {
+      "path": "ac6_input.toml",
+      "format": "text",
+      "label": "Teclado e mouse (ac6_input.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "sal063/AC6_recomp",
+    "assetPatterns": {
+      "win32": "ac6recomp-*.zip"
+    },
+    "includePrereleases": true,
+    "preserve": ["*.iso", "assets/**", "dlc/**", "ac6recomp.toml", "ac6_input.toml", "*.log"]
+  },
+  "_todo": [
+    "Release v1.0.0-beta.2 verificada: ac6recomp-1.0.0-beta.2.zip (8,1 MB) contém só ac6recomp.exe (32 MB) na raiz. Nenhum arquivo do jogo.",
+    "O projeto só publica pré-releases (v1.0.0-beta, beta.1, beta.2), por isso includePrereleases = true.",
+    "ac6recomp.toml é criado ao lado do exe na primeira execução; ac6_input.toml só aparece depois de ativar ac6_kbm_enabled.",
+    "Saves e perfis ficam fora da pasta do jogo: o ReXGlue usa Documentos/ac6recomp (GetUserFolder() = FOLDERID_Documents + nome do app) quando user_data_root não é definido. A beta.2 mudou o formato dos saves (o próprio aviso da release pede backup antes de atualizar).",
+    "Requisitos do README: Windows 10/11 64-bit, CPU com AVX2 e GPU com Direct3D 12. Não há build de Linux nas releases; o fork QaidVoid/ac6recomp adiciona Linux mas não publica binários.",
+    "O README lista os dois jeitos de fornecer o jogo (a .iso ou a pasta assets/ ao lado do exe); a busca da .iso fica no SDK vendorizado (rapidsamphire/rexglue-sdk, branch ac6recomp-fixes) e o nome exato do arquivo não importa (o app valida o Title ID 4E4D07D1)."
+  ],
+  "_sources": [
+    "https://github.com/sal063/AC6_recomp",
+    "https://github.com/sal063/AC6_recomp/releases",
+    "https://github.com/sal063/AC6_recomp/releases/tag/v1.0.0-beta",
+    "https://github.com/sal063/AC6_recomp/releases/tag/v1.0.0-beta.2",
+    "https://github.com/sal063/AC6_recomp/releases/expanded_assets/v1.0.0-beta.2",
+    "https://github.com/sal063/AC6_recomp/releases/download/v1.0.0-beta.2/ac6recomp-1.0.0-beta.2.zip",
+    "https://github.com/sal063/AC6_recomp/commits/main",
+    "https://raw.githubusercontent.com/sal063/AC6_recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/sal063/AC6_recomp/HEAD/.gitmodules",
+    "https://raw.githubusercontent.com/sal063/AC6_recomp/HEAD/.gitignore",
+    "https://raw.githubusercontent.com/sal063/AC6_recomp/HEAD/src/ac6recomp_app.h",
+    "https://raw.githubusercontent.com/rapidsamphire/rexglue-sdk/ac6recomp-fixes/src/ui/rex_app.cpp",
+    "https://raw.githubusercontent.com/rapidsamphire/rexglue-sdk/ac6recomp-fixes/src/core/filesystem_win.cpp",
+    "https://www.generationamiga.com/2026/08/12/ace-combat-6-gets-an-unofficial-pc-recompilation-with-major-upgrades/"
+  ]
+}

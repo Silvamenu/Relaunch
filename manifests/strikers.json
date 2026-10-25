@@ -1,0 +1,69 @@
+{
+  "id": "strikers",
+  "name": "Strikers",
+  "originalGame": "Super Mario Strikers (GameCube)",
+  "description": "Port nativo de Super Mario Strikers para PC feito a partir da decompilação do jogo, com widescreen, alta taxa de quadros e controles configuráveis. Precisa da imagem do seu próprio disco de GameCube.",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/new-coke/strikers",
+  "accentColor": "#d7262e",
+  "executables": {
+    "win32": ["strikers.exe"],
+    "linux": ["strikers"]
+  },
+  "detectFiles": ["strikers.exe", "strikers", "strikers-settings.exe", "strikers-settings", "strikers.ini.example"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Super Mario Strikers (GameCube)",
+      "extensions": ["iso", "gcm", "ciso", "gcz"],
+      "copyToGameDir": true,
+      "helpText": "Discos aceitos: Super Mario Strikers (EUA, G4QE01), Mario Smash Football (Europa, G4QP01) e Super Mario Strikers (Japão, G4QJ01), em .iso ou .gcm (NKit ou não), .ciso ou .gcz; .rvz e .wia precisam antes ser convertidos para ISO no Dolphin. O jogo usa a imagem que estiver na própria pasta dele, então use a opção de copiar. Outra opção: abrir o strikers-settings na pasta do jogo e escolher a imagem na aba Game (\"Disc Image...\").",
+      "_todo": "O port identifica o disco pelo cabeçalho; não há hash documentado, por isso não há validação por SHA-1."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "strikers.ini",
+      "format": "ini",
+      "label": "Configurações (strikers.ini)",
+      "editable": true,
+      "_todo": "O arquivo só existe depois de salvo pelo strikers-settings (ou copiado de strikers.ini.example). A chave data, na seção [paths], aponta para a imagem do disco ou para a pasta files de um disco extraído."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "new-coke/strikers",
+    "assetPatterns": {
+      "win32": "strikers-windows-x86_64.zip",
+      "linux": "strikers-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["strikers.ini", "*.iso", "*.gcm", "*.ciso", "*.gcz", "files/**", "sys/**", "user/**", "cache/**", "mods/**"],
+    "_todo": "Não seleciona os pacotes linux-arm64, macOS e Switch."
+  },
+  "_todo": [
+    "Pacotes da v1.3.0 sem pasta raiz: Windows com strikers.exe, strikers-settings.exe (app de configurações em Qt 6, com as DLLs e plugins do Qt), DLLs do SDL3/Dawn/DXC/VC++, input-prompts/kenney (ícones de botões, CC0), strikers.ini.example e licenças; Linux com strikers, strikers-settings, input-prompts/, 51-gamecube-adapter.rules e licenças. Nenhum dado do jogo.",
+    "Ordem de busca dos dados (src/platform/dvd.c): STRIKERS_DATA/chave data do strikers.ini, pasta files/ ao lado do jogo, uma imagem de disco ao lado do jogo (a primeira em ordem alfabética), data/G4QE01/files.",
+    "Saves e pacotes de textura ficam em %APPDATA%\\Super Mario Strikers (Windows) ou ~/.local/share/Super Mario Strikers (Linux); portable = 1 no strikers.ini usa user/ e cache/ ao lado do jogo.",
+    "No Linux o strikers-settings (Qt 6) provavelmente depende do Qt do sistema, pois o tarball não traz as bibliotecas do Qt; não verificado.",
+    "A wiki avisa que o Windows Defender pode colocar strikers.exe em quarentena por falso positivo e sugere conferir no VirusTotal.",
+    "O autor publica numa conta 'burner' declarada no README; as releases são geradas pelo workflow .github/workflows/release.yml a partir das tags."
+  ],
+  "_sources": [
+    "https://github.com/new-coke/strikers",
+    "https://raw.githubusercontent.com/new-coke/strikers/HEAD/README.md",
+    "https://raw.githubusercontent.com/new-coke/strikers/HEAD/smstrikers-port/strikers.ini.example",
+    "https://raw.githubusercontent.com/new-coke/strikers/HEAD/smstrikers-port/src/platform/dvd.c",
+    "https://raw.githubusercontent.com/new-coke/strikers/HEAD/smstrikers-port/src/platform/disc.c",
+    "https://raw.githubusercontent.com/new-coke/strikers/HEAD/smstrikers-port/src/platform/config.c",
+    "https://raw.githubusercontent.com/new-coke/strikers/HEAD/.github/workflows/release.yml",
+    "https://github.com/new-coke/strikers/wiki/Windows",
+    "https://github.com/new-coke/strikers/commits/main",
+    "https://github.com/new-coke/strikers/releases",
+    "https://github.com/new-coke/strikers/releases/expanded_assets/v1.3.0",
+    "https://github.com/new-coke/strikers/releases/download/v1.3.0/strikers-windows-x86_64.zip",
+    "https://github.com/new-coke/strikers/releases/download/v1.3.0/strikers-linux-x86_64.tar.gz"
+  ]
+}

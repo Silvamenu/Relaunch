@@ -1,0 +1,54 @@
+{
+  "id": "ssx-tricky-pc",
+  "name": "SSX Tricky: PC Port",
+  "originalGame": "SSX Tricky (Xbox)",
+  "description": "Port nativo para Windows da versão de Xbox de SSX Tricky, feito com o recompilador xboxrecomp. Você fornece a imagem .iso do seu próprio disco americano.",
+  "category": "xbox",
+  "repoUrl": "https://github.com/MatiasRiveraC/SSX-Tricky-PC",
+  "accentColor": "#1e88e5",
+  "executables": {
+    "win32": ["SSX Tricky.exe"]
+  },
+  "detectFiles": ["SSX Tricky.exe", "LICENSE-xboxrecomp.txt"],
+  "requirements": [
+    {
+      "id": "select-iso",
+      "type": "firstRun",
+      "label": "Escolher a ISO do seu disco de SSX Tricky (Xbox, EUA) nas configurações",
+      "doneWhen": ["SSX Tricky.ini"],
+      "helpText": "Abra o SSX Tricky.exe, entre em Settings e, em Disc image, escolha a imagem .iso completa do seu próprio disco americano de Xbox. O launcher confere se é o jogo e a versão certos e só então libera o Start game. As versões de PS2 e GameCube não servem."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "SSX Tricky.ini",
+      "format": "ini",
+      "label": "Configurações (SSX Tricky.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "MatiasRiveraC/SSX-Tricky-PC",
+    "assetPatterns": {
+      "win32": "SSX-Tricky-PC-*-win64.7z"
+    },
+    "includePrereleases": false,
+    "preserve": ["SSX Tricky.ini", "hdd/**", "Screenshots/**", "SSX Tricky.log"]
+  },
+  "_todo": [
+    "Release v0.2.0 listada: o 7z tem a pasta SSX-Tricky-PC-v0.2.0/ com SSX Tricky.exe, libwinpthread-1.dll, README.txt e LICENSE-xboxrecomp.txt. Nenhum dado do jogo.",
+    "SSX Tricky.ini é gravado ao lado do exe quando as configurações são salvas (port/src/launcher.c, chave [Game] DiscImage); o doneWhen só confere que o arquivo existe, não que a ISO foi escolhida.",
+    "Só há build para Windows x64 (Direct3D 11). Projeto pequeno (6 estrelas, 68 commits), declarado como feito em grande parte com Claude Code; ainda em desenvolvimento.",
+    "O repositório não traz licença própria (só a do xboxrecomp, MIT)."
+  ],
+  "_sources": [
+    "https://github.com/MatiasRiveraC/SSX-Tricky-PC",
+    "https://github.com/MatiasRiveraC/SSX-Tricky-PC/releases",
+    "https://github.com/MatiasRiveraC/SSX-Tricky-PC/releases/expanded_assets/v0.2.0",
+    "https://github.com/MatiasRiveraC/SSX-Tricky-PC/releases/download/v0.2.0/SSX-Tricky-PC-v0.2.0-win64.7z",
+    "https://raw.githubusercontent.com/MatiasRiveraC/SSX-Tricky-PC/HEAD/README.md",
+    "https://raw.githubusercontent.com/MatiasRiveraC/SSX-Tricky-PC/HEAD/port/src/launcher.c"
+  ]
+}

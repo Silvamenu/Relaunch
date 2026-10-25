@@ -1,0 +1,76 @@
+{
+  "id": "bluewake",
+  "name": "BlueWake",
+  "originalGame": "The Legend of Zelda: The Wind Waker (GameCube)",
+  "description": "Recompilação estática de The Wind Waker para PC, com resolução maior, widescreen, pacotes de texturas e mods. Precisa da imagem do seu próprio disco americano de GameCube (GZLE01).",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/chrissotraidis/bluewake",
+  "accentColor": "#1f7fc4",
+  "executables": {
+    "win32": ["BlueWake.exe"]
+  },
+  "detectFiles": ["BlueWake.exe", "gGZLE01_recomp.dll", "BuilderProvenance.json"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de The Wind Waker (GameCube, EUA, GZLE01 revisão 0)",
+      "optional": true,
+      "extensions": ["iso", "gcm"],
+      "copyToGameDir": false,
+      "helpText": "Use uma imagem .iso ou .gcm do seu próprio disco americano (GZLE01, revisão 0); outras versões e o Wind Waker HD do Wii U são recusados. Um .rvz do Dolphin precisa antes ser convertido para ISO no próprio Dolphin (Converter arquivo). O arquivo é escolhido dentro do BlueWake, na primeira vez que ele abre.",
+      "_todo": "O BlueWake confere o ID do disco e o SHA-1 do main.dol, não da imagem inteira; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher a imagem do disco na primeira abertura",
+      "doneWhen": ["{appData}/BlueWake/game.txt", "user/game.txt"],
+      "helpText": "Abra o BlueWake.exe: ele pede a imagem do disco, confere o jogo, prepara os arquivos uma vez e lembra o caminho (disc.txt e game.txt em %APPDATA%\\BlueWake, ou na pasta user ao lado do exe se existir um arquivo portable.txt). Se a imagem mudar de lugar, ele pede de novo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["user/settings.ini", "{appData}/BlueWake/settings.ini"]
+      },
+      "format": "ini",
+      "label": "Configurações (settings.ini)",
+      "editable": true,
+      "_todo": "Arquivo KEY=VALUE gravado pelo menu F1 (nomes BLUEWAKE_*, ex.: BLUEWAKE_ASPECT=21:9); user/ só vale no modo portátil (portable.txt)."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "chrissotraidis/bluewake",
+    "assetPatterns": {
+      "win32": "BlueWake-*-windows-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "user/**", "game/**"],
+    "_todo": "Não seleciona BlueWake-*-source.zip, o .ipa de iOS nem o padmint.json. Não há build pronta para Linux (só compilação a partir do próprio disco)."
+  },
+  "_todo": [
+    "O zip do Windows (v0.9.0) tem uma pasta BlueWake/ com BlueWake.exe, gGZLE01_recomp.dll (~456 MB, o código do jogo já traduzido a partir do disco do mantenedor, como em Zelda64Recomp/UnleashedRecomp), DLLs (SDL3, Dawn, DXC, VC++), dsp/dsp_rom.bin e dsp/dsp_coef.bin (substitutos livres do Dolphin, vindos de RecompCore Data/Sys/GC) e licenças. Não traz imagem de disco, texturas, áudio nem saves; os dados do jogo são lidos do disco do usuário.",
+    "Requisitos do README: Windows 10/11, CPU com AVX2 (Haswell/Ryzen ou mais nova) e GPU com Direct3D 12 (D3D11 como alternativa desde a 0.8.0).",
+    "O executável não é assinado; a doc diz que o Microsoft Defender acusou a 0.8.0 (Tecabans.STV!cl) e pede para conferir o SHA256SUMS da release, sem desligar o antivírus.",
+    "Saves (GZLE01.card), sram.bin, logs e settings.ini ficam em %APPDATA%\\BlueWake; com portable.txt ao lado do exe, ficam em user/.",
+    "O BlueWake aceita --disc ARQUIVO, mas manifestos nativos não repassam o arquivo escolhido; a seleção é feita no próprio programa.",
+    "Releases do Windows são compiladas localmente por um mantenedor (não por CI), a partir do main, com BuilderProvenance.json no pacote."
+  ],
+  "_sources": [
+    "https://github.com/chrissotraidis/bluewake",
+    "https://raw.githubusercontent.com/chrissotraidis/bluewake/HEAD/README.md",
+    "https://raw.githubusercontent.com/chrissotraidis/bluewake/HEAD/RIGHTS_AND_LICENSES.md",
+    "https://raw.githubusercontent.com/chrissotraidis/bluewake/HEAD/docs/WINDOWS.md",
+    "https://raw.githubusercontent.com/chrissotraidis/bluewake/HEAD/windows/src/win_entry.c",
+    "https://raw.githubusercontent.com/chrissotraidis/bluewake/HEAD/windows/src/win_disc.c",
+    "https://raw.githubusercontent.com/chrissotraidis/bluewake/HEAD/windows/src/win_settings.cpp",
+    "https://raw.githubusercontent.com/chrissotraidis/bluewake/HEAD/scripts/windows/build.py",
+    "https://github.com/chrissotraidis/bluewake/releases",
+    "https://github.com/chrissotraidis/bluewake/releases/tag/v0.9.0",
+    "https://github.com/chrissotraidis/bluewake/releases/expanded_assets/v0.9.0",
+    "https://github.com/chrissotraidis/bluewake/releases/download/v0.9.0/BlueWake-v0.9.0-windows-x64.zip"
+  ]
+}

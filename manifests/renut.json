@@ -1,0 +1,77 @@
+{
+  "id": "renut",
+  "name": "reNut",
+  "originalGame": "Banjo-Kazooie: Nuts & Bolts (Xbox 360)",
+  "description": "Recompilação de Banjo-Kazooie: Nuts & Bolts feita com o ReXGlue SDK, com renderizador nativo. Usa os arquivos extraídos da ISO do seu disco (versão EUA) e o Title Update do seu console.",
+  "category": "xbox",
+  "repoUrl": "https://github.com/masterspike52/reNut",
+  "accentColor": "#e0a526",
+  "executables": {
+    "win32": ["renut.exe"],
+    "linux": ["renut-x86_64.AppImage"]
+  },
+  "detectFiles": ["renut.exe", "rexruntime.dll", "renut-x86_64.AppImage"],
+  "requirements": [
+    {
+      "id": "paths",
+      "type": "firstRun",
+      "label": "Indicar as pastas do seu jogo no assistente \"Game Path Setup\"",
+      "doneWhen": ["renut.cfg", "{home}/.local/share/renut/renut.cfg"],
+      "helpText": "Antes, extraia a ISO do seu disco de Banjo-Kazooie: Nuts & Bolts (EUA) para uma pasta (com um extrator de XISO, por exemplo o extract-xiso) e tenha o Title Update copiado do seu console. Na primeira vez que o jogo abre aparece a janela \"Game Path Setup\": em Game Data Root escolha a pasta com os arquivos extraídos, em User Data Root a pasta para saves e em Update Data Root a pasta do Title Update. As escolhas ficam gravadas em renut.cfg (ao lado do exe no Windows; em ~/.local/share/renut no Linux)."
+    },
+    {
+      "id": "dlc",
+      "type": "file",
+      "label": "Suas DLCs (opcional, pasta dlc)",
+      "optional": true,
+      "patterns": ["dlc/*", "{home}/.local/share/renut/dlc/*"],
+      "helpText": "Se você tem DLCs do jogo na sua conta/console, coloque os pacotes delas numa pasta chamada dlc ao lado do renut.exe (no Linux, em ~/.local/share/renut/dlc). Elas são instaladas quando o jogo abre."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "renut.toml",
+        "linux": "{home}/.local/share/renut/renut.toml"
+      },
+      "format": "text",
+      "label": "Configurações (renut.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "masterspike52/reNut",
+    "assetPatterns": {
+      "win32": "renut*.zip",
+      "linux": "*x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["renut.cfg", "renut.toml", "dlc/**", "mods/**", "logs/**", "pipeline_list.bin"]
+  },
+  "_todo": [
+    "Release beta11 verificada: renut.zip tem só renut.exe, rexruntime.dll e EOSSDK-Win64-Shipping.dll (Epic Online Services, para o online) na raiz. O AppImage (squashfs zstd) tem usr/bin/renut, librexruntime.so, libEOSSDK-Linux-Shipping.so e algumas libs do sistema; nenhum dado do jogo.",
+    "O README manda usar o NutStaller (etonedemid/NutStaller, projeto de terceiros) para extrair a ISO e gravar renut.cfg; ele não foi avaliado e o app não o usa.",
+    "Não está documentado em que formato o Title Update deve estar na pasta Update Data Root (pacote ou arquivos extraídos), nem se ele é obrigatório na beta11.",
+    "Segundo o NutStaller, o AppImage do reNut precisa de glibc 2.38 ou mais nova (Ubuntu 24.04, Debian 13, Fedora 39).",
+    "No AppImage, renut.toml, logs, renut.cfg, dlc e mods ficam em ~/.local/share/renut (app_paths.h); no Windows, ao lado do exe. A pasta de saves padrão (User Data Root) vem do ReXGlue SDK e não foi conferida.",
+    "Mods .nbpatch vão numa pasta mods ao lado do exe. O README avisa que o código tem uso pesado de IA.",
+    "O repositório não declara licença; os binários são compilados localmente (não há workflow de CI)."
+  ],
+  "_sources": [
+    "https://github.com/masterspike52/reNut",
+    "https://github.com/masterspike52/reNut/releases",
+    "https://github.com/masterspike52/reNut/releases/expanded_assets/beta11",
+    "https://github.com/masterspike52/reNut/releases/download/beta11/renut.zip",
+    "https://github.com/masterspike52/reNut/releases/download/beta11/renut-x86_64.AppImage",
+    "https://raw.githubusercontent.com/masterspike52/reNut/HEAD/README.md",
+    "https://raw.githubusercontent.com/masterspike52/reNut/HEAD/src/renut_app.h",
+    "https://raw.githubusercontent.com/masterspike52/reNut/HEAD/src/renut_engine/app/app_paths.h",
+    "https://raw.githubusercontent.com/masterspike52/reNut/HEAD/src/renut_engine/app/path_config_store.h",
+    "https://raw.githubusercontent.com/masterspike52/reNut/HEAD/src/renut_engine/ui/path_setup_wizard.h",
+    "https://raw.githubusercontent.com/masterspike52/reNut/HEAD/src/renut_engine/app/dlc_install.cpp",
+    "https://raw.githubusercontent.com/masterspike52/reNut/HEAD/renut_config.toml",
+    "https://github.com/etonedemid/NutStaller"
+  ]
+}

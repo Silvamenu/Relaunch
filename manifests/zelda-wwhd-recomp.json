@@ -1,0 +1,76 @@
+{
+  "id": "zelda-wwhd-recomp",
+  "name": "Zelda Wind Waker HD Recomp",
+  "originalGame": "The Legend of Zelda: The Wind Waker HD (Wii U)",
+  "description": "Recompilação estática de The Wind Waker HD para PC (código do Wii U traduzido para C e compilado no seu computador), com 60 fps, resolução maior e mods. Precisa do dump do seu próprio jogo (disco ou console Wii U).",
+  "category": "nintendo",
+  "repoUrl": "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp",
+  "accentColor": "#1f7fbf",
+  "executables": {
+    "win32": ["Wind Waker HD.exe"],
+    "linux": ["wind-waker-hd"]
+  },
+  "detectFiles": ["Wind Waker HD.exe", "wind-waker-hd", "tools/installer/setup.py", "tools/recomp/recomp.py"],
+  "requirements": [
+    {
+      "id": "dump",
+      "type": "userFile",
+      "label": "O dump do seu jogo The Wind Waker HD (Wii U, EUA ou Europa, versão 0)",
+      "optional": true,
+      "extensions": ["wux", "wud", "wua"],
+      "copyToGameDir": false,
+      "helpText": "Opcional aqui: o arquivo é escolhido dentro do próprio Wind Waker HD na primeira abertura. Servem a imagem do seu disco (.wux/.wud), um arquivo do Cemu (.wua) ou uma pasta já extraída do jogo (com code, content e meta), todos feitos a partir do seu próprio disco e console. Só a versão 0 (sem atualização) da edição americana (00050000-10143500) ou europeia (00050000-10143600) é aceita; a configuração confere o code/cking.rpx por SHA-256."
+    },
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Preparar o jogo na primeira abertura (escolher o dump e compilar)",
+      "doneWhen": ["data/install.json"],
+      "helpText": "Abra o Wind Waker HD: a configuração própria dele pede o seu dump, extrai os arquivos para data/ (cerca de 1,7 GB), traduz o código para C e compila (alguns minutos). Uma pasta extraída ou um .wua não precisam de chaves. Uma imagem .wux/.wud precisa da chave do disco e da chave comum do Wii U, que devem vir do seu próprio console; o projeto não inclui chaves. No Windows, a primeira abertura baixa o compilador llvm-mingw (190 MB, conferido por SHA-256) para a pasta do jogo; no Linux, usa o Python 3 do sistema e baixa o compilador zig (55 MB). Para reparar ou trocar o jogo depois, segure Shift ao abrir (Windows) ou rode com --setup (Linux)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "data/user/settings.ini",
+      "format": "ini",
+      "label": "Configurações (settings.ini)",
+      "editable": true,
+      "_todo": "Caminho deduzido do README (configurações, controles e save states em data/user no modo portátil; arquivo settings.ini citado para tela cheia e GamePad). Os controles ficam em controls.json; não confirmei o caminho exato no código."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "ZeldaWWHDRecomp/ZeldaWWHDRecomp",
+    "assetPatterns": {
+      "win32": "WindWakerHD-*-windows-x86_64.zip",
+      "linux": "WindWakerHD-*-linux-x86_64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/**"],
+    "_todo": [
+      "Os padrões não casam com os builds arm64/aarch64, macOS, Android (.apk), o AppImage, SHA256SUMS.txt e vt-report.json, nem com a pre-release devel-build ou a release appimage-runtime-*.",
+      "O zip Linux foi preferido ao AppImage porque mantém tudo em data/ dentro da pasta do jogo (portable.txt), como no Windows; o AppImage grava em ~/.local/share/wwhd e ~/.config/wwhd.",
+      "O README recomenda descompactar cada versão nova ao lado da antiga e rodar a configuração de novo; depois de uma atualização no lugar, pode ser preciso reparar (Shift ao abrir / --setup) para recompilar o código do jogo para o runtime novo."
+    ]
+  },
+  "_todo": [
+    "A pasta raiz do zip (WindWakerHD-<versão>-<plataforma>/) vira a raiz da instalação.",
+    "A configuração baixa compiladores e Python de fontes oficiais com SHA-256 fixado (tools/installer/toolchains.json: github.com/mstorsjo/llvm-mingw, ziglang.org, python.org, astral-sh/python-build-standalone). Não é um instalador; o zip já é a instalação portátil.",
+    "Requisitos: GPU com Vulkan 1.3 (ou 1.1/1.2 com VK_KHR_dynamic_rendering); no Linux, glibc 2.35+ e Python 3.",
+    "A release traz tools/shadercache/template.bin, descrito como modelo sem código de shader (hashes e parâmetros), conferido pelo tools/release/guard.py.",
+    "Atualizações e DLC do jogo não são suportados; só a versão 0."
+  ],
+  "_sources": [
+    "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp",
+    "https://raw.githubusercontent.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/HEAD/README.md",
+    "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases",
+    "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases/expanded_assets/v0.4.0",
+    "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases/download/v0.4.0/WindWakerHD-v0.4.0-windows-x86_64.zip",
+    "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases/download/v0.4.0/WindWakerHD-v0.4.0-linux-x86_64.zip",
+    "https://raw.githubusercontent.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/HEAD/tools/installer/toolchains.json",
+    "https://raw.githubusercontent.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/HEAD/tools/installer/setup.py",
+    "https://raw.githubusercontent.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/HEAD/tools/shadercache/README.md",
+    "https://raw.githubusercontent.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/HEAD/runtime/src/main.cpp"
+  ]
+}

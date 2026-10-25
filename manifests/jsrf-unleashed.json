@@ -1,0 +1,48 @@
+{
+  "id": "jsrf-unleashed",
+  "name": "JSRF Unleashed",
+  "originalGame": "Jet Set Radio Future (Xbox)",
+  "description": "Jet Set Radio Future rodando de forma nativa, feito por recompilação estática do jogo de Xbox. Você fornece a pasta extraída ou a imagem .iso do seu próprio disco avulso americano (NTSC-U).",
+  "category": "xbox",
+  "repoUrl": "https://github.com/JuMatt/JetSetRadioFuture-Unleashed",
+  "accentColor": "#39b54a",
+  "executables": {
+    "win32": ["JSRF Unleashed.exe"],
+    "linux": ["jsrf-unleashed"]
+  },
+  "detectFiles": ["JSRF Unleashed.exe", "engine/jsrf_recomp.exe", "jsrf-unleashed", "bin/jsrf_recomp"],
+  "requirements": [
+    {
+      "id": "select-game",
+      "type": "firstRun",
+      "label": "Indicar a pasta do seu jogo (Xbox, EUA) na primeira execução",
+      "doneWhen": ["{localAppData}/JSRF Unleashed/settings", "{home}/.config/jsrf-unleashed/settings"],
+      "helpText": "Na primeira execução o programa pergunta onde está o jogo: escolha a pasta com o default.xbe e a pasta Media, extraída do seu próprio disco, ou a pasta onde está a imagem .iso dele (que é descompactada uma vez). Só serve o disco avulso americano; as versões europeia e japonesa e o disco combo Sega GT 2002 + JSRF não funcionam. Os saves ficam na pasta do jogo, em UDATA, então ela precisa permitir gravação."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "JuMatt/JetSetRadioFuture-Unleashed",
+    "assetPatterns": {
+      "win32": "JSRF-Unleashed-windows-x86_64.zip",
+      "linux": "JSRF-Unleashed-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": []
+  },
+  "_todo": [
+    "Release v0.5.6 listada: o zip de Windows tem a pasta JSRF-Unleashed-windows-x86_64/ com JSRF Unleashed.exe, engine/jsrf_recomp.exe e DLLs (SDL2, libepoxy, winpthread); o tar.gz de Linux tem JSRF-Unleashed-linux-x86_64/ com o script jsrf-unleashed, bin/jsrf_recomp e lib/libSDL2-2.0.so.0. Nenhum dado do jogo.",
+    "No Linux o executável é um script de shell (jsrf-unleashed) que guarda a pasta do jogo em ~/.config/jsrf-unleashed/settings e chama bin/jsrf_recomp. No Windows a escolha fica em %LOCALAPPDATA%\\JSRF Unleashed\\settings (README.txt da release); o momento exato em que esse arquivo é criado no Windows não foi conferido no código.",
+    "O build de Windows foi testado só no Wine, segundo o autor; o de Linux é menos testado que o de Mac.",
+    "Saves ficam na pasta do jogo do usuário (UDATA), fora da pasta de instalação."
+  ],
+  "_sources": [
+    "https://github.com/JuMatt/JetSetRadioFuture-Unleashed",
+    "https://github.com/JuMatt/JetSetRadioFuture-Unleashed/releases",
+    "https://github.com/JuMatt/JetSetRadioFuture-Unleashed/releases/expanded_assets/v0.5.6",
+    "https://github.com/JuMatt/JetSetRadioFuture-Unleashed/releases/download/v0.5.6/JSRF-Unleashed-windows-x86_64.zip",
+    "https://github.com/JuMatt/JetSetRadioFuture-Unleashed/releases/download/v0.5.6/JSRF-Unleashed-linux-x86_64.tar.gz",
+    "https://raw.githubusercontent.com/JuMatt/JetSetRadioFuture-Unleashed/HEAD/README.md"
+  ]
+}

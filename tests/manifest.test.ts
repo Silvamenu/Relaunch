@@ -139,16 +139,21 @@ describe('manifestos embutidos', () => {
     }
   })
 
-  it('projetos com binários publicados declaram assets para Windows e preservam dados do usuário', async () => {
+  it('projetos com binários publicados declaram assets e preservam dados do usuário', async () => {
     const { manifests } = await loadManifests([{ dir, origin: 'builtin' }])
+    // Guardam configurações e saves fora da pasta do jogo (Documentos, %LOCALAPPDATA%, ~/.local/share) ou num AppImage.
+    const dataOutside = new Set(['openrct2', 'bloodborne-pc', 'fukami', 'jsrf-unleashed', 'openrac', 'takedawn', 'ufc3-pc'])
     for (const m of manifests) {
-      if (m.updates.source !== 'github-releases') continue
-      expect(assetPatternsFor(m.updates, 'win32').length, m.id).toBeGreaterThan(0)
-      // O OpenRCT2 guarda configurações e saves fora da pasta do jogo (Documentos / ~/.config).
-      if (m.id !== 'openrct2') expect(m.updates.preserve.length, m.id).toBeGreaterThan(0)
+      const updates = m.updates
+      if (updates.source !== 'github-releases') continue
+      // Alguns ports só publicam builds de Linux; cada plataforma com asset precisa de um executável.
+      const platforms = (['win32', 'linux'] as const).filter((p) => assetPatternsFor(updates, p).length > 0)
+      expect(platforms.length, m.id).toBeGreaterThan(0)
+      for (const p of platforms) expect(executablesFor(m, p).length, `${m.id} ${p}`).toBeGreaterThan(0)
+      if (!dataOutside.has(m.id)) expect(updates.preserve.length, m.id).toBeGreaterThan(0)
       // Binários podem vir de outro repositório do mesmo dono (ex.: RPCS3/rpcs3-binaries-win).
       const owner = (repo: string) => repo.toLowerCase().split('/')[0]
-      expect(owner(new URL(m.repoUrl).pathname.slice(1)), m.id).toBe(owner(m.updates.repo))
+      expect(owner(new URL(m.repoUrl).pathname.slice(1)), m.id).toBe(owner(updates.repo))
     }
     const soh = manifests.find((m) => m.id === 'soh')!
     // soh.o2r pertence ao port e PRECISA ser atualizado; só os arquivos gerados da ROM são preservados.
