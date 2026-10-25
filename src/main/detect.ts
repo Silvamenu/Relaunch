@@ -1,14 +1,30 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import picomatch from 'picomatch'
 import type { Manifest } from '../shared/manifest'
+import { toPosix } from '../shared/patterns'
 import type { DetectionCandidate } from '../shared/types'
-import { isDirectory, matchWalked, walkFiles } from './fsutil'
+import { isDirectory, isFile, matchWalked, walkFiles, type WalkedFile } from './fsutil'
+
+const WALK_DEPTH = 2
+
+/**
+ * Caminho exato mais fundo que a varredura (ex.: dados extraídos do disco do usuário, que separam
+ * Jak II e Jak 3 do Jak 1 na mesma pasta do OpenGOAL): confere direto no disco.
+ */
+async function hasDetectFile(folder: string, files: WalkedFile[], pattern: string): Promise<boolean> {
+  if (matchWalked(files, [pattern]).length > 0) return true
+  const posix = toPosix(pattern)
+  if (posix.split('/').length - 1 <= WALK_DEPTH || picomatch.scan(posix).isGlob) return false
+  return isFile(path.join(folder, posix))
+}
 
 async function scoreFolder(folder: string, manifests: Manifest[]): Promise<DetectionCandidate[]> {
-  const files = await walkFiles(folder, 2)
+  const files = await walkFiles(folder, WALK_DEPTH)
   const out: DetectionCandidate[] = []
   for (const manifest of manifests) {
-    const matched = manifest.detectFiles.filter((pattern) => matchWalked(files, [pattern]).length > 0)
+    const matched: string[] = []
+    for (const pattern of manifest.detectFiles) if (await hasDetectFile(folder, files, pattern)) matched.push(pattern)
     if (matched.length > 0) {
       out.push({
         manifestId: manifest.id,
