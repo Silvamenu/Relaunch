@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto'
 import path from 'node:path'
+import picomatch from 'picomatch'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { detectGame } from '../src/main/detect'
 import { loadManifests } from '../src/main/manifests'
@@ -31,6 +32,27 @@ describe('detecção de jogos', () => {
       expect(result[0]?.manifestId, JSON.stringify(tree)).toBe(expected)
       expect(result[0].path).toBe(dir)
     }
+  })
+
+  it('cada embutido fica em primeiro numa pasta com os arquivos que ele procura', async () => {
+    const wrong: string[] = []
+    for (const m of manifests) {
+      const literal = m.detectFiles.filter((p) => !picomatch.scan(p).isGlob)
+      if (literal.length === 0) continue
+      const dir = await tempDir()
+      await writeTree(dir, Object.fromEntries(literal.map((p) => [p, ''])))
+      const first = (await detectGame(dir, manifests))[0]?.manifestId
+      if (first !== m.id) wrong.push(`${m.id} -> ${first}`)
+    }
+    expect(wrong).toEqual([])
+  })
+
+  it('a mesma pasta do OpenGOAL vira Jak II ou Jak 3 só com os dados extraídos daquele jogo', async () => {
+    const dir = await tempDir()
+    await writeTree(dir, { 'gk.exe': '', 'extractor.exe': '' })
+    expect((await detectGame(dir, manifests))[0]?.manifestId).toBe('opengoal-jak1')
+    await writeTree(dir, { 'data/out/jak2/iso/GAME.CGO': '' })
+    expect((await detectGame(dir, manifests))[0]?.manifestId).toBe('opengoal-jak2')
   })
 
   it('não diferencia maiúsculas de minúsculas', async () => {

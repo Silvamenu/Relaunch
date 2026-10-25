@@ -11,7 +11,7 @@
     "win32": ["gk.exe"],
     "linux": ["gk"]
   },
-  "detectFiles": ["gk.exe", "gk", "extractor.exe", "extractor"],
+  "detectFiles": ["gk.exe", "gk", "extractor.exe", "extractor", "data/out/jak2/iso/GAME.CGO"],
   "requirements": [
     {
       "id": "extract",
