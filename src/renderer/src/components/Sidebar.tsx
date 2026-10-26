@@ -8,7 +8,7 @@ import { Logo } from './brand'
 import { NavIcon } from './icons'
 import { ProfileAvatar } from './ProfileAvatar'
 import { statusTone, useStatusLabel } from './Status'
-import { Dot, Kbd, ProgressBar, ProgressRing, Tooltip } from './ui'
+import { Dot, Kbd, ProgressBar } from './ui'
 
 function NavItem({
   active,
@@ -39,34 +39,39 @@ function NavItem({
   )
 }
 
-/** Botão circular azul: só aparece quando há atualização do launcher. Fica logo acima do avatar. */
-export function AppUpdateButton() {
+/**
+ * Barra azul acima do perfil: aparece quando há versão nova do launcher. Enquanto baixa mostra o progresso;
+ * pronta, vira o botão "Atualizar". Só esse clique instala: fechar o app não instala nada.
+ */
+export function AppUpdateBar() {
   const { appUpdate } = useAppState()
   const { t } = useI18n()
   const visible = appUpdate.status === 'available' || appUpdate.status === 'downloading' || appUpdate.status === 'downloaded'
   if (!visible) return null
   const version = appUpdate.version ?? ''
-  const ready = appUpdate.status === 'downloaded'
-  const percent = appUpdate.percent ?? 0
-  const label = ready
-    ? t('appUpdate.ready', { version })
-    : appUpdate.status === 'downloading'
-      ? `${t('appUpdate.available', { version })} (${percent}%)`
-      : t('appUpdate.available', { version })
+  if (appUpdate.status !== 'downloaded') {
+    const percent = appUpdate.percent ?? 0
+    return (
+      <div role="status" className="update-bar relative w-full overflow-hidden rounded-xl border border-[#3B82F6]/60 text-accent-fg">
+        <span aria-hidden className="absolute inset-y-0 left-0 bg-[#3B82F6]/15 transition-[width] duration-500" style={{ width: `${percent}%` }} />
+        <span className="relative flex h-9 items-center gap-2 px-3 text-[12.5px]">
+          <ArrowDownToLine size={14} className="shrink-0" />
+          <span className="min-w-0 flex-1 truncate">{t('appUpdate.downloading', { version })}</span>
+          <span className="shrink-0 font-mono text-[11px]">{percent}%</span>
+        </span>
+      </div>
+    )
+  }
   return (
-    <Tooltip text={label}>
-      <span className="relative flex h-11 w-11 items-center justify-center">
-        {!ready && <ProgressRing size={44} stroke={2.5} percent={percent} className="absolute inset-0 text-[#3B82F6]" />}
-        <button
-          type="button"
-          aria-label={label}
-          onClick={() => ready && void window.api.appUpdate.install()}
-          className={`update-button relative flex h-9 w-9 items-center justify-center rounded-full bg-[#3B82F6] text-white transition hover:brightness-110 ${ready ? '' : 'cursor-default'}`}
-        >
-          <ArrowDownToLine size={17} strokeWidth={2.4} />
-        </button>
-      </span>
-    </Tooltip>
+    <button
+      type="button"
+      title={t('appUpdate.readyHint')}
+      onClick={() => void window.api.appUpdate.install()}
+      className="update-bar update-bar-ready flex h-9 w-full items-center gap-2 rounded-xl bg-[#3B82F6] px-3 text-left text-[13px] font-medium text-white transition hover:brightness-110"
+    >
+      <ArrowDownToLine size={15} strokeWidth={2.4} className="shrink-0" />
+      <span className="min-w-0 flex-1 truncate">{t('appUpdate.ready', { version })}</span>
+    </button>
   )
 }
 
@@ -266,13 +271,8 @@ export function Sidebar() {
 
       <div className="mt-3 flex flex-col gap-2">
         <DownloadWidget />
-        <div className="flex flex-col items-start gap-1">
-          {/* alinhado com o avatar do cartão de perfil */}
-          <div className="pl-[3px]">
-            <AppUpdateButton />
-          </div>
-          <ProfileCard />
-        </div>
+        <AppUpdateBar />
+        <ProfileCard />
       </div>
     </aside>
   )

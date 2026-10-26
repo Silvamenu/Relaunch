@@ -7,6 +7,17 @@ O conteúdo de cada versão é usado como nota do release no GitHub (`npm run re
 
 ## [Não lançado]
 
+## [0.1.2] - 2026-10-25
+
+### Melhorias
+
+- A atualização do Relaunch só é instalada quando você pede. A versão nova continua sendo baixada em segundo plano, e uma barra azul acima do seu perfil mostra o download. Quando termina, clique em **Atualizar para a vX.Y.Z**. Fechar o app não instala nada.
+- Nova pergunta nas **Dúvidas frequentes**: "Como o Relaunch se atualiza?".
+
+### Correções
+
+- A atualização do Relaunch não abre mais as telas do instalador ("Para quem esta aplicação deve ser instalada?"). Ao clicar em **Atualizar**, o app fecha, atualiza na mesma pasta e abre de novo sozinho. Já vale para quem atualizar da 0.1.1 para esta versão.
+
 ## [0.1.1] - 2026-10-25
 
 ### Novidades
