@@ -229,6 +229,10 @@
   outline: 3px solid #3b82f6;
   outline-offset: 2px;
 }
+/* Lista de opções em escolha pelo controle (cima e baixo trocam a opção). */
+.gamepad select[data-picking]:focus {
+  outline-color: #f59e0b;
+}
 
 @keyframes fade-in {
   from {

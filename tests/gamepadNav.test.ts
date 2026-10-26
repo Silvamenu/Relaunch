@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createRepeater, heldActions, type PadSnapshot } from '../src/shared/gamepad'
+import { createRepeater, heldActions, nextOption, type PadSnapshot } from '../src/shared/gamepad'
 import { firstInReadingOrder, nextInDirection, type Box } from '../src/shared/spatialNav'
 
 const box = (left: number, top: number, w = 100, h = 40): Box => ({ left, top, right: left + w, bottom: top + h })
@@ -56,6 +56,17 @@ describe('leitura do controle', () => {
     expect([...heldActions([pad([], [-0.9, 0.7])])].sort()).toEqual(['down', 'left'])
     expect(heldActions([pad([], [0.3, -0.4])]).size).toBe(0)
     expect(heldActions([null, pad([13])])).toEqual(new Set(['down']))
+  })
+
+  it('nas listas de opções, cima e baixo pulam as desabilitadas e param nas pontas', () => {
+    // Primeira opção desabilitada ("Escolha a versão") e selecionada, como no seletor de versão.
+    const disabled = [true, false, true, false]
+    expect(nextOption(disabled, 0, 1)).toBe(1)
+    expect(nextOption(disabled, 1, 1)).toBe(3)
+    expect(nextOption(disabled, 3, 1)).toBe(3)
+    expect(nextOption(disabled, 3, -1)).toBe(1)
+    expect(nextOption(disabled, 1, -1)).toBe(1)
+    expect(nextOption([], -1, 1)).toBe(-1)
   })
 
   it('cada aperto vale uma vez; só as direções seguradas repetem', () => {

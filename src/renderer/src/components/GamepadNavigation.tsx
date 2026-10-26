@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { createRepeater, heldActions, type PadAction } from '../../../shared/gamepad'
+import { createRepeater, heldActions, nextOption, type PadAction } from '../../../shared/gamepad'
 import { firstInReadingOrder, nextInDirection, type Box, type Direction } from '../../../shared/spatialNav'
 import { useAppState } from '../state/AppState'
 
@@ -52,11 +52,49 @@ function move(dir: Direction): void {
   next.scrollIntoView({ block: 'nearest', inline: 'nearest' })
 }
 
+/**
+ * Lista de opções em escolha pelo controle. A lista nativa do sistema não responde ao controle, então
+ * o A entra na lista, cima e baixo trocam a opção, o A confirma e o B desiste.
+ */
+let picking: { el: HTMLSelectElement; original: number } | null = null
+
+function stopPicking(keep: boolean): void {
+  if (!picking) return
+  const { el, original } = picking
+  picking = null
+  delete el.dataset.picking
+  if (!keep) el.selectedIndex = original
+  else if (el.selectedIndex !== original) el.dispatchEvent(new Event('change', { bubbles: true }))
+}
+
+/** Trata a ação enquanto uma lista está em escolha; false se não há escolha em andamento. */
+function pick(action: PadAction): boolean {
+  if (!picking) return false
+  // Saiu da lista por outro meio (mouse, teclado): desiste e segue com a ação normal.
+  if (document.activeElement !== picking.el) {
+    stopPicking(false)
+    return false
+  }
+  const { el } = picking
+  if (action === 'up' || action === 'down') {
+    el.selectedIndex = nextOption(
+      [...el.options].map((o) => o.disabled),
+      el.selectedIndex,
+      action === 'down' ? 1 : -1
+    )
+  } else if (action === 'confirm' || action === 'back') {
+    stopPicking(action === 'confirm')
+  }
+  return true
+}
+
 function confirm(): void {
   const el = document.activeElement
   if (!(el instanceof HTMLElement) || el === document.body) return
-  if (el instanceof HTMLSelectElement) el.showPicker?.()
-  else if (!isTyping(el)) el.click()
+  if (el instanceof HTMLSelectElement) {
+    picking = { el, original: el.selectedIndex }
+    el.dataset.picking = ''
+  } else if (!isTyping(el)) el.click()
 }
 
 /** B: fecha a janelinha ou o menu aberto e sai do campo de texto (como o Esc); senão, volta uma página. */
@@ -83,14 +121,16 @@ export function GamepadNavigation() {
     const next = createRepeater()
     let frame = 0
     const loop = (now: number) => {
+      // O próximo quadro é agendado antes: um erro numa ação nunca para a leitura do controle.
+      frame = requestAnimationFrame(loop)
       const actions = next(heldActions(navigator.getGamepads()), now)
       if (actions.length && document.hasFocus()) {
         setPadMode(true)
         for (const action of actions) run(action)
       }
-      frame = requestAnimationFrame(loop)
     }
     const run = (action: PadAction) => {
+      if (pick(action)) return
       if (action === 'confirm') confirm()
       else if (action === 'back') back(goBack, onLoginScreen)
       else move(action)
@@ -110,6 +150,7 @@ export function GamepadNavigation() {
     window.addEventListener('mousedown', mouse)
     if (navigator.getGamepads().some(Boolean)) start()
     return () => {
+      stopPicking(false)
       cancelAnimationFrame(frame)
       window.removeEventListener('gamepadconnected', start)
       window.removeEventListener('gamepaddisconnected', stop)

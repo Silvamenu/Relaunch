@@ -35,6 +35,15 @@ export function heldActions(pads: ReadonlyArray<PadSnapshot | null>): Set<PadAct
   return held
 }
 
+/**
+ * Próxima opção habilitada de uma lista, andando `step` (1 desce, -1 sobe) a partir de `index`.
+ * Nas pontas, fica onde está.
+ */
+export function nextOption(disabled: readonly boolean[], index: number, step: 1 | -1): number {
+  for (let i = index + step; i >= 0 && i < disabled.length; i += step) if (!disabled[i]) return i
+  return index
+}
+
 const DIRECTIONS: ReadonlySet<PadAction> = new Set<PadAction>(['up', 'down', 'left', 'right'])
 
 /**
