@@ -224,6 +224,12 @@
     update-pulse 2.6s ease-out 600ms 3;
 }
 
+/* Controle: contorno grosso e bem visível no item selecionado, só enquanto o controle está em uso (o mouse o esconde) */
+.gamepad :focus {
+  outline: 3px solid #3b82f6;
+  outline-offset: 2px;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

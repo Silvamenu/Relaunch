@@ -6,6 +6,7 @@ import type { Manifest, Platform } from '../shared/manifest'
 import { launchArgsFor, launchEnvFor } from '../shared/manifestUtils'
 import type { GameEntry } from '../shared/types'
 import { expandVariables } from './pathVars'
+import { countProcessesIn } from './processes'
 
 export interface LaunchCallbacks {
   onStart: (entryId: string) => void
@@ -53,18 +54,49 @@ export function runnerPlan(
   }
 }
 
+export interface LauncherOptions {
+  /** Quantos programas rodam a partir de uma pasta (padrão: consulta o sistema). */
+  countProcessesIn?: (dir: string) => Promise<number>
+  /** Intervalo entre as consultas enquanto algum programa da pasta do jogo segue aberto. */
+  pollMs?: number
+}
+
 /** Inicia os jogos e mede o tempo jogado. */
 export class GameLauncher {
   /** Quantas sessões usam cada entrada agora (um emulador pode estar rodando vários jogos). */
   private readonly running = new Map<string, number>()
+  /** Programas abertos pelo Relaunch que ainda rodam, por pasta (dois jogos no mesmo emulador). */
+  private readonly liveIn = new Map<string, number>()
+  private readonly countProcessesIn: (dir: string) => Promise<number>
+  private readonly pollMs: number
 
   constructor(
     private readonly platform: Platform,
-    private readonly callbacks: LaunchCallbacks
-  ) {}
+    private readonly callbacks: LaunchCallbacks,
+    options: LauncherOptions = {}
+  ) {
+    this.countProcessesIn = options.countProcessesIn ?? ((dir) => countProcessesIn(dir, platform))
+    this.pollMs = options.pollMs ?? 3000
+  }
 
   isRunning(entryId: string): boolean {
     return (this.running.get(entryId) ?? 0) > 0
+  }
+
+  /** Algum jogo aberto agora. */
+  anyRunning(): boolean {
+    return this.running.size > 0
+  }
+
+  /**
+   * Muitos ports abrem primeiro um launcher próprio, que fecha e deixa o jogo rodando. A sessão só
+   * termina quando nenhum programa da pasta de onde o jogo foi aberto continua rodando, fora os de
+   * outras sessões abertas pelo Relaunch na mesma pasta.
+   */
+  private async waitFolderIdle(dir: string): Promise<void> {
+    while ((await this.countProcessesIn(dir)) > (this.liveIn.get(dir) ?? 0)) {
+      await new Promise((resolve) => setTimeout(resolve, this.pollMs))
+    }
   }
 
   /** `alsoBusy`: entradas usadas pelo jogo enquanto ele roda (o emulador não pode ser atualizado no meio). */
@@ -103,14 +135,20 @@ export class GameLauncher {
     const startedAt = Date.now()
     const ids = [entryId, ...alsoBusy.filter((id) => id !== entryId)]
     ids.forEach((id) => this.running.set(id, (this.running.get(id) ?? 0) + 1))
+    this.liveIn.set(plan.cwd, (this.liveIn.get(plan.cwd) ?? 0) + 1)
     this.callbacks.onStart(entryId)
     child.once('exit', () => {
-      for (const id of ids) {
-        const left = (this.running.get(id) ?? 1) - 1
-        if (left > 0) this.running.set(id, left)
-        else this.running.delete(id)
-      }
-      this.callbacks.onExit(entryId, Math.round((Date.now() - startedAt) / 1000))
+      const live = (this.liveIn.get(plan.cwd) ?? 1) - 1
+      if (live > 0) this.liveIn.set(plan.cwd, live)
+      else this.liveIn.delete(plan.cwd)
+      void this.waitFolderIdle(plan.cwd).finally(() => {
+        for (const id of ids) {
+          const left = (this.running.get(id) ?? 1) - 1
+          if (left > 0) this.running.set(id, left)
+          else this.running.delete(id)
+        }
+        this.callbacks.onExit(entryId, Math.round((Date.now() - startedAt) / 1000))
+      })
     })
   }
 }

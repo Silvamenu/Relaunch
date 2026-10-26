@@ -60,6 +60,20 @@ export class AppContext {
     return this.manifestsReport.manifests.find((m) => m.id === id) ?? null
   }
 
+  /**
+   * Restaura e traz a janela para a frente. O "sempre no topo" de um instante evita que o Windows só
+   * pisque o ícone na barra de tarefas quando outro programa (o jogo) estava em primeiro plano.
+   */
+  bringToFront(): void {
+    const win = this.window
+    if (!win || win.isDestroyed()) return
+    if (win.isMinimized()) win.restore()
+    win.show()
+    win.setAlwaysOnTop(true)
+    win.focus()
+    win.setAlwaysOnTop(false)
+  }
+
   emit<K extends ApiEventName>(event: K, payload: ApiEvents[K]): void {
     const win = this.window
     if (win && !win.isDestroyed()) win.webContents.send('api:event', event, payload)

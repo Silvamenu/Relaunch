@@ -48,6 +48,8 @@ interface AppStateValue {
   setQuery: (query: string) => void
   route: Route
   navigate: (route: Route) => void
+  /** Volta para a página anterior (botão B do controle). Retorna false quando não há para onde voltar. */
+  goBack: () => boolean
   updateSettings: (patch: SettingsPatch) => Promise<void>
   setManifests: (report: ManifestsReport) => void
   toasts: Toast[]
@@ -106,10 +108,31 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     setSettings(await window.api.settings.set(patch))
   }, [])
 
-  const navigate = useCallback((next: Route) => {
+  // Páginas visitadas, para o botão B do controle voltar.
+  const routeRef = useRef(route)
+  const backStack = useRef<Route[]>([])
+  const show = useCallback((next: Route) => {
+    routeRef.current = next
     setRoute(next)
     document.getElementById('main-scroll')?.scrollTo({ top: 0 })
   }, [])
+
+  const navigate = useCallback(
+    (next: Route) => {
+      const prev = routeRef.current
+      if (JSON.stringify(prev) !== JSON.stringify(next)) backStack.current = [...backStack.current, prev].slice(-50)
+      show(next)
+    },
+    [show]
+  )
+
+  const goBack = useCallback(() => {
+    const prev = backStack.current.at(-1)
+    if (!prev) return false
+    backStack.current = backStack.current.slice(0, -1)
+    show(prev)
+    return true
+  }, [show])
 
   const openDevlog = useCallback((view: DevlogView) => setDevlog(view), [])
   const closeDevlog = useCallback(() => {
@@ -142,7 +165,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       window.api.on('manifests:changed', (report) => setManifests(report)),
       window.api.on('appUpdate:state', (state) => setAppUpdate(state)),
       window.api.on('settings:changed', (view) => setSettings(view)),
-      window.api.on('navigate:game', (id) => setRoute({ page: 'game', id, tab: 'updates' })),
+      window.api.on('navigate:game', (id) => navigate({ page: 'game', id, tab: 'updates' })),
       window.api.on('game:progress', (p) => {
         setProgress((all) => ({ ...all, [p.entryId]: p }))
         if (p.stage === 'done' || p.stage === 'cancelled' || p.stage === 'error') {
@@ -157,7 +180,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       alive = false
       offs.forEach((off) => off())
     }
-  }, [refresh])
+  }, [refresh, navigate])
 
   const theme = settings?.theme
   useEffect(() => (theme ? applyTheme(theme) : undefined), [theme])
@@ -182,6 +205,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setQuery,
       route,
       navigate,
+      goBack,
       updateSettings,
       setManifests,
       toasts,
@@ -204,6 +228,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       query,
       route,
       navigate,
+      goBack,
       updateSettings,
       toasts,
       toast,

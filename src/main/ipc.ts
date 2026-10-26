@@ -289,6 +289,7 @@ export function registerIpc(s: Services): void {
     if (p.language === 'pt-BR' || p.language === 'en') clean.language = p.language
     if (typeof p.notifications === 'boolean') clean.notifications = p.notifications
     if (typeof p.checkGameUpdates === 'boolean') clean.checkGameUpdates = p.checkGameUpdates
+    if (typeof p.minimizeOnPlay === 'boolean') clean.minimizeOnPlay = p.minimizeOnPlay
     ctx.store.setSettings(clean)
     if (typeof p.githubToken === 'string') ctx.store.setGithubToken(p.githubToken)
     const view = ctx.store.settingsView()

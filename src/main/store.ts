@@ -29,7 +29,8 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: 'dark',
   language: 'pt-BR',
   notifications: true,
-  checkGameUpdates: true
+  checkGameUpdates: true,
+  minimizeOnPlay: true
 }
 
 const HTTP_CACHE_LIMIT = 60

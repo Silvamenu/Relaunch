@@ -94,6 +94,9 @@ export const ptBR = {
   'faq.saves.q': 'Meus saves se perdem quando o jogo atualiza?',
   'faq.saves.a':
     'Não. Antes de atualizar, o Relaunch faz backup dos arquivos que vão ser trocados e nunca sobrescreve saves, configurações, mods e arquivos gerados da sua ROM. Se algo der errado, a versão anterior volta sozinha, e você também pode voltar a ela pela aba "{updatesTab}".',
+  'faq.controller.q': 'Posso usar um controle?',
+  'faq.controller.a':
+    'Sim. Conecte o controle (o de Xbox é o mais garantido) e use o direcional ou o analógico esquerdo para andar pelos jogos, menus e botões; uma borda azul mostra onde você está. O A confirma, e o B fecha a janela ou o menu aberto ou volta para a página anterior. Mexer no mouse esconde a borda.\nCom "{settings}" > "{minimizeOnPlay}" ligado, como já vem, o Relaunch se minimiza quando o jogo abre e volta para a frente quando você fecha o último jogo. Enquanto você joga, ele não reage ao controle.\nAinda é preciso mouse ou teclado para escrever (a busca ou o nome de um perfil) e nas janelas do Windows de escolher arquivo ou pasta. Se a Steam estiver aberta com o Steam Input ligado, ela pode tomar o controle para ela.',
   'faq.update.q': 'Como o Relaunch se atualiza?',
   'faq.update.a':
     'O Relaunch procura uma versão nova dele mesmo ao abrir e a cada 3 horas, e baixa em segundo plano. Quando o download termina, aparece uma barra azul acima do seu perfil, na barra lateral: clique em "{updateApp}" para instalar. O app fecha, instala na mesma pasta, sem telas de instalação, e abre de novo sozinho.\nSe você não clicar, nada é instalado, nem quando você fecha o app: a barra continua lá até você decidir. Para procurar uma versão nova na hora, vá em "{settings}" > "{checkNow}".',
@@ -337,6 +340,9 @@ export const ptBR = {
   'settings.theme.light': 'Claro',
   'settings.theme.system': 'Sistema',
   'settings.language': 'Idioma',
+  'settings.playing': 'Ao jogar',
+  'settings.minimizeOnPlay': 'Minimizar o Relaunch enquanto um jogo está aberto',
+  'settings.minimizeOnPlayHint': 'Quando o último jogo fecha, o Relaunch volta para a frente.',
   'settings.updates': 'Atualizações dos jogos',
   'settings.checkGames': 'Verificar atualizações automaticamente (ao abrir e a cada 3 horas)',
   'settings.notifications': 'Notificações do sistema',

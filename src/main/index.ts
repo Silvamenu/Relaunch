@@ -116,9 +116,22 @@ async function bootstrap(): Promise<void> {
   if (ctx.manifestsReport.errors.length > 0) console.warn('[manifests]', ctx.manifestsReport.errors)
 
   const library = new LibraryService(ctx)
+  // Com a opção ligada, o jogo fica sozinho na tela e o Relaunch volta quando o último jogo fecha.
+  let minimizedForGame = false
   const launcher = new GameLauncher(ctx.platform, {
-    onStart: (id) => library.onGameStarted(id),
-    onExit: (id, seconds) => library.onGameExited(id, seconds)
+    onStart: (id) => {
+      library.onGameStarted(id)
+      const win = ctx.window
+      if (!ctx.store.getSettings().minimizeOnPlay || !win || win.isDestroyed()) return
+      win.minimize()
+      minimizedForGame = true
+    },
+    onExit: (id, seconds) => {
+      library.onGameExited(id, seconds)
+      if (!minimizedForGame || launcher.anyRunning()) return
+      minimizedForGame = false
+      ctx.bringToFront()
+    }
   })
   library.attachLauncher(launcher)
   const updates = new GameUpdateService(ctx, library)
@@ -159,12 +172,7 @@ async function bootstrap(): Promise<void> {
     setTimeout(() => appUpdater.start(), FIRST_CHECK_DELAY_MS)
   })
 
-  app.on('second-instance', () => {
-    const win = ctx.window
-    if (!win) return
-    if (win.isMinimized()) win.restore()
-    win.focus()
-  })
+  app.on('second-instance', () => ctx.bringToFront())
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) ctx.window = createWindow(ctx)
   })

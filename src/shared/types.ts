@@ -13,6 +13,8 @@ export interface Settings {
   language: Language
   notifications: boolean
   checkGameUpdates: boolean
+  /** Minimiza o Relaunch ao abrir um jogo e o traz de volta quando o último jogo fecha. */
+  minimizeOnPlay: boolean
 }
 
 /** O token do GitHub nunca volta para a interface; ela só sabe se existe. */
