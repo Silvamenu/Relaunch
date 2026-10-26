@@ -1,13 +1,16 @@
 # Gera o instalador do launcher e o envia a um release em RASCUNHO neste repositório.
 # O electron-updater dos apps instalados só enxerga releases publicados.
-# Uso: atualize "version" no package.json e a seção correspondente do CHANGELOG.md (via PR),
-# depois crie e envie a tag de um commit da main:  git tag v0.2.0 && git push origin v0.2.0
+# Uso: atualize "version" no package.json e a seção correspondente do CHANGELOG.md (via PR). Depois:
+#   - pelo site: aba Actions > Release > Run workflow, na branch main. A versão vem do package.json e
+#     a tag vX.Y.Z é criada no commit atual da main, só depois das conferências e do build;
+#   - ou pelo terminal, a partir de um commit da main:  git tag v0.2.0 && git push origin v0.2.0
 # Por fim, confira os arquivos do rascunho na página de Releases e clique em "Publish release".
 name: Release
 
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
 
 permissions: {}
 
@@ -21,15 +24,19 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 30
     permissions:
-      contents: write # criar o GitHub Release e enviar o instalador
+      contents: write # criar a tag (execução pelo site), o GitHub Release e enviar o instalador
     steps:
+      - name: Conferir a branch da execução pelo site
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: '[ "$GITHUB_REF" = "refs/heads/main" ] || { echo "Rode o Release na branch main (esta execução está em $GITHUB_REF)"; exit 1; }'
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
           fetch-depth: 0 # histórico da main para conferir a origem da tag
-      - name: Conferir que a tag está na main
+      - name: Conferir que o commit está na main
         shell: bash
-        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "A tag $GITHUB_REF_NAME não aponta para um commit da main"; exit 1; }
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "$GITHUB_REF_NAME não aponta para um commit da main"; exit 1; }
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .nvmrc
@@ -38,20 +45,56 @@ jobs:
       # Sem scripts de instalação: nada no build precisa deles, e é a via mais comum de pacote malicioso.
       - run: npm ci --ignore-scripts
       - run: npm test
-      - name: Conferir versão da tag
+      # Push de tag: a própria tag, que precisa bater com o package.json. Pelo site: "v" + versão do package.json.
+      - name: Conferir a versão
+        id: version
         shell: bash
         run: |
           pkg="v$(node -p "require('./package.json').version")"
-          [ "$pkg" = "$GITHUB_REF_NAME" ] || { echo "Tag $GITHUB_REF_NAME diferente da versão $pkg do package.json"; exit 1; }
+          [[ "$pkg" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Versão inválida no package.json: $pkg"; exit 1; }
+          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$pkg" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME diferente da versão $pkg do package.json"; exit 1
+          fi
+          echo "tag=$pkg" >> "$GITHUB_OUTPUT"
+      # Pelo site, avisa logo (antes do build) se essa versão já foi lançada em outro commit.
+      - name: Conferir que a versão ainda não tem tag
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          existing=$(gh api "repos/$GH_REPO/git/matching-refs/tags/$TAG" --jq ".[] | select(.ref == \"refs/tags/$TAG\") | .object.sha")
+          if [ -n "$existing" ] && [ "$existing" != "$GITHUB_SHA" ]; then
+            echo "A tag $TAG já existe em outro commit ($existing). Suba a versão no package.json e no CHANGELOG."; exit 1
+          fi
       # O electron-builder só gera os arquivos: publicando por ele, duas tarefas de envio em paralelo
       # criavam dois rascunhos para a mesma tag (um com o instalador, outro com o .blockmap).
       - run: npm run dist
+      # Só pelo site, e só depois de testes e build: cria a tag no commit da execução. Com o token do
+      # workflow ela não dispara este Release de novo. Numa nova tentativa, a tag no mesmo commit é reaproveitada.
+      - name: Criar a tag
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          existing=$(gh api "repos/$GH_REPO/git/matching-refs/tags/$TAG" --jq ".[] | select(.ref == \"refs/tags/$TAG\") | .object.sha")
+          if [ -z "$existing" ]; then
+            gh api "repos/$GH_REPO/git/refs" -f ref="refs/tags/$TAG" -f sha="$GITHUB_SHA" --silent
+            echo "Tag $TAG criada em $GITHUB_SHA"
+          elif [ "$existing" != "$GITHUB_SHA" ]; then
+            echo "A tag $TAG já existe em outro commit ($existing). Suba a versão no package.json."; exit 1
+          fi
       - name: Criar o rascunho do release
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
           version="${TAG#v}"
           # Instalador, mapa de blocos (atualização diferencial) e latest.yml (lido pelo electron-updater).

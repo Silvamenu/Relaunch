@@ -263,6 +263,17 @@ export function SettingsPage() {
         </Row>
       </Section>
 
+      <Section title={t('settings.playing')}>
+        <div className="px-[18px] py-4">
+          <Toggle
+            checked={settings.minimizeOnPlay}
+            onChange={(v) => void save(() => updateSettings({ minimizeOnPlay: v }))}
+            label={t('settings.minimizeOnPlay')}
+            hint={t('settings.minimizeOnPlayHint')}
+          />
+        </div>
+      </Section>
+
       <Section title={t('settings.updates')}>
         <div className="px-[18px] py-4">
           <Toggle

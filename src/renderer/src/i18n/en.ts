@@ -96,6 +96,9 @@ export const en: Record<TranslationKey, string> = {
   'faq.saves.q': 'Do I lose my saves when the game updates?',
   'faq.saves.a':
     'No. Before updating, Relaunch backs up the files that will be replaced and never overwrites saves, settings, mods or files generated from your ROM. If something goes wrong, the previous version comes back on its own, and you can also roll back from the "{updatesTab}" tab.',
+  'faq.controller.q': 'Can I use a controller?',
+  'faq.controller.a':
+    'Yes. Connect the controller (an Xbox one is the safest bet) and use the D-pad or the left stick to move through games, menus and buttons; a blue outline shows where you are. A confirms, and B closes the open window or menu or goes back to the previous page. In a list of options, A starts choosing, up and down change the option, A confirms and B cancels. Moving the mouse hides the outline.\nWith "{settings}" > "{minimizeOnPlay}" on, as it comes, Relaunch minimizes itself when the game opens and comes back to the front when you close the last game. While you play, it ignores the controller.\nYou still need a mouse or keyboard to type (the search or a profile name) and in the Windows dialogs for choosing a file or folder. If Steam is open with Steam Input on, it may take the controller for itself.',
   'faq.update.q': 'How does Relaunch update itself?',
   'faq.update.a':
     'Relaunch checks for a new version of itself when it opens and every 3 hours, and downloads it in the background. When the download finishes, a blue bar appears above your profile in the sidebar: click "{updateApp}" to install it. The app closes, installs in the same folder without any installer screens, and opens again by itself.\nIf you don\'t click, nothing is installed, not even when you close the app: the bar stays there until you decide. To check for a new version right away, go to "{settings}" > "{checkNow}".',
@@ -339,6 +342,9 @@ export const en: Record<TranslationKey, string> = {
   'settings.theme.light': 'Light',
   'settings.theme.system': 'System',
   'settings.language': 'Language',
+  'settings.playing': 'While playing',
+  'settings.minimizeOnPlay': 'Minimize Relaunch while a game is open',
+  'settings.minimizeOnPlayHint': 'When the last game closes, Relaunch comes back to the front.',
   'settings.updates': 'Game updates',
   'settings.checkGames': 'Check for updates automatically (on start and every 3 hours)',
   'settings.notifications': 'System notifications',

@@ -88,8 +88,18 @@ function ProfileCard() {
     const close = (e: MouseEvent) => {
       if (!ref.current?.contains(e.target as Node)) setOpen(false)
     }
+    // Esc (ou o B do controle) fecha e devolve a seleção ao cartão do perfil.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      setOpen(false)
+      ref.current?.querySelector<HTMLElement>('[aria-expanded]')?.focus()
+    }
     window.addEventListener('mousedown', close)
-    return () => window.removeEventListener('mousedown', close)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('mousedown', close)
+      window.removeEventListener('keydown', onKey)
+    }
   }, [open])
 
   if (!profile) return null
@@ -104,9 +114,13 @@ function ProfileCard() {
   return (
     <div ref={ref} className="relative w-full">
       {open && (
-        <div className="animate-pop-in absolute bottom-full left-0 z-30 mb-2 w-full rounded-xl border border-control-line bg-control p-1.5 shadow-[0_20px_50px_var(--shadow)]">
+        <div
+          role="menu"
+          className="animate-pop-in absolute bottom-full left-0 z-30 mb-2 w-full rounded-xl border border-control-line bg-control p-1.5 shadow-[0_20px_50px_var(--shadow)]"
+        >
           <button
             type="button"
+            role="menuitem"
             onClick={() => (setOpen(false), navigate({ page: 'settings' }))}
             className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] text-fg-2 transition-colors hover:bg-hover"
           >
@@ -115,6 +129,7 @@ function ProfileCard() {
           </button>
           <button
             type="button"
+            role="menuitem"
             onClick={() => void switchProfile()}
             className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] text-fg-2 transition-colors hover:bg-hover"
           >
@@ -125,6 +140,7 @@ function ProfileCard() {
       )}
       <button
         type="button"
+        aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center gap-2.5 rounded-xl border border-line-soft p-2 text-left transition-colors hover:border-line"

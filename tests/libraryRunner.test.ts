@@ -212,13 +212,18 @@ describe('sessões em andamento', () => {
     const exits: string[] = []
     let done: () => void = () => undefined
     const finished = new Promise<void>((resolve) => (done = resolve))
-    const launcher = new GameLauncher(process.platform === 'win32' ? 'win32' : 'linux', {
-      onStart: () => undefined,
-      onExit: (id) => {
-        exits.push(id)
-        if (exits.length === 2) done()
-      }
-    })
+    const launcher = new GameLauncher(
+      process.platform === 'win32' ? 'win32' : 'linux',
+      {
+        onStart: () => undefined,
+        onExit: (id) => {
+          exits.push(id)
+          if (exits.length === 2) done()
+        }
+      },
+      // Os "jogos" aqui são o próprio Node, que roda de fora da pasta: nenhum programa fica para trás.
+      { countProcessesIn: async () => 0 }
+    )
     const plan = (ms: number) => ({ exe: process.execPath, args: ['-e', `setTimeout(() => {}, ${ms})`], cwd: process.cwd(), env: {} })
     await launcher.launch('g1', plan(50), ['emu'])
     await launcher.launch('g2', plan(1500), ['emu'])

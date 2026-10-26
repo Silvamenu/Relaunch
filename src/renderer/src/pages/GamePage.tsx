@@ -19,6 +19,7 @@ function MenuItem({ icon, children, onClick, danger }: { icon: ReactNode; childr
   return (
     <button
       type="button"
+      role="menuitem"
       onClick={onClick}
       className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] transition-colors hover:bg-hover ${danger ? 'text-bad' : 'text-fg-2'}`}
     >
@@ -129,8 +130,18 @@ export function GamePage({ id, tab }: { id: string; tab?: GameTab }) {
     const close = (e: MouseEvent) => {
       if (!menuRef.current?.contains(e.target as Node)) setMenu(false)
     }
+    // Esc (ou o B do controle) fecha e devolve a seleção ao botão da engrenagem.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      setMenu(false)
+      menuRef.current?.querySelector<HTMLElement>('[aria-expanded]')?.focus()
+    }
     window.addEventListener('mousedown', close)
-    return () => window.removeEventListener('mousedown', close)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('mousedown', close)
+      window.removeEventListener('keydown', onKey)
+    }
   }, [menu])
 
   if (!item) {
@@ -307,9 +318,20 @@ export function GamePage({ id, tab }: { id: string; tab?: GameTab }) {
             </Button>
           )}
           <div className="relative" ref={menuRef}>
-            <Button size="lg" icon={<NavIcon name="gear" />} aria-label={t('game.more')} title={t('game.more')} onClick={() => setMenu((m) => !m)} />
+            <Button
+              size="lg"
+              icon={<NavIcon name="gear" />}
+              aria-label={t('game.more')}
+              title={t('game.more')}
+              aria-haspopup="menu"
+              aria-expanded={menu}
+              onClick={() => setMenu((m) => !m)}
+            />
             {menu && (
-              <div className="animate-pop-in absolute left-0 z-30 mt-2 w-64 rounded-xl border border-control-line bg-control p-1.5 shadow-[0_20px_50px_var(--shadow)]">
+              <div
+                role="menu"
+                className="animate-pop-in absolute left-0 z-30 mt-2 w-64 rounded-xl border border-control-line bg-control p-1.5 shadow-[0_20px_50px_var(--shadow)]"
+              >
                 <MenuItem icon={<SlidersHorizontal size={15} />} onClick={() => (setMenu(false), showSection('configs'))}>
                   {t('game.tabs.configs')}
                 </MenuItem>

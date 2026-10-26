@@ -173,12 +173,7 @@ export class GameUpdateService {
     const manifest = this.ctx.getManifest(entry.manifestId)
     const notification = new Notification({ title: entry.customName || manifest?.name || 'Relaunch', body })
     notification.on('click', () => {
-      const win = this.ctx.window
-      if (win) {
-        if (win.isMinimized()) win.restore()
-        win.show()
-        win.focus()
-      }
+      this.ctx.bringToFront()
       this.ctx.emit('navigate:game', entry.id)
     })
     notification.show()

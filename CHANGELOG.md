@@ -7,6 +7,22 @@ O conteúdo de cada versão é usado como nota do release no GitHub (`npm run re
 
 ## [Não lançado]
 
+## [0.1.3] - 2026-10-26
+
+### Novidades
+
+- Use o app com controle: o direcional ou o analógico esquerdo movem a seleção, mostrada com uma borda azul, o **A** confirma e o **B** fecha a janela ou o menu aberto ou volta para a página anterior. Mexer no mouse esconde a borda. O controle de Xbox é o mais garantido.
+- Ao abrir um jogo, o Relaunch se minimiza e volta para a frente quando o último jogo fecha. Para desligar, vá em **Configurações** > **Ao jogar**.
+- Nova pergunta nas **Dúvidas frequentes**: "Posso usar um controle?".
+
+### Melhorias
+
+- Os menus da página do jogo e do perfil agora fecham com o Esc.
+
+### Correções
+
+- Nos ports que abrem primeiro um launcher próprio, que fecha e deixa o jogo rodando, o Relaunch achava que o jogo já tinha fechado, e o tempo jogado ficava errado. Agora o jogo conta como aberto enquanto algum programa da pasta dele está rodando.
+
 ## [0.1.2] - 2026-10-25
 
 ### Melhorias

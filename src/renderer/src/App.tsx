@@ -1,6 +1,7 @@
 import { LoaderCircle } from 'lucide-react'
 import { useEffect } from 'react'
 import { DevlogModal } from './components/DevlogModal'
+import { GamepadNavigation } from './components/GamepadNavigation'
 import { Sidebar } from './components/Sidebar'
 import { Toasts } from './components/Toasts'
 import { useI18n } from './i18n'
@@ -35,7 +36,13 @@ function InstallNotices() {
 export default function App() {
   const { ready, route, profiles } = useAppState()
   if (!profiles) return <div className="h-full bg-[#141416]" />
-  if (!profiles.current) return <LoginScreen />
+  if (!profiles.current)
+    return (
+      <>
+        <LoginScreen />
+        <GamepadNavigation />
+      </>
+    )
   return (
     <div className="flex h-full min-h-[560px] overflow-hidden bg-app py-2 pr-2">
       <Sidebar />
@@ -63,6 +70,7 @@ export default function App() {
       <DevlogModal />
       <Toasts />
       <InstallNotices />
+      <GamepadNavigation />
     </div>
   )
 }
