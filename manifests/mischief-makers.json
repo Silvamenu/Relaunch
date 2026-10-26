@@ -1,0 +1,74 @@
+{
+  "id": "mischief-makers",
+  "name": "Trouble Makers",
+  "originalGame": "Mischief Makers (Nintendo 64)",
+  "description": "Recompilação estática de Mischief Makers para PC, feita com o N64Recomp e renderização RT64, com alta resolução, widescreen e alta taxa de quadros experimentais. Você precisa da sua própria ROM americana (1.1) do jogo.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/ThiagoLira/trouble-makers-pc-recomp",
+  "accentColor": "#2f5fd0",
+  "executables": {
+    "win32": ["troublemakers.exe"],
+    "linux": ["TroubleMakers-x86_64.AppImage"]
+  },
+  "detectFiles": ["troublemakers.exe", "TroubleMakers-x86_64.AppImage", "assets/launcher/comfy-generic-workflow.json"],
+  "requirements": [
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Escolher a ROM no launcher do jogo",
+      "helpText": "Abra o jogo e escolha no launcher dele a sua ROM de Mischief Makers (EUA, versão 1.1; .z64, .n64 ou .v64). O jogo valida a ROM e guarda o caminho em display.cfg, em %LOCALAPPDATA%\\troublemakers-recomp no Windows ou ~/.config/troublemakers-recomp no Linux (ou na pasta do jogo, se existir um arquivo portable.txt). Saves e configurações ficam nessa mesma pasta."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["display.cfg", "{localAppData}/troublemakers-recomp/display.cfg"],
+        "linux": ["display.cfg", "{home}/.config/troublemakers-recomp/display.cfg"]
+      },
+      "format": "ini",
+      "label": "Vídeo e ROM (display.cfg)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/troublemakers-recomp/controls.json"],
+        "linux": ["controls.json", "{home}/.config/troublemakers-recomp/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "ThiagoLira/trouble-makers-pc-recomp",
+    "assetPatterns": {
+      "win32": "TroubleMakers-Windows-X64.zip",
+      "linux": "TroubleMakers-x86_64.AppImage"
+    },
+    "includePrereleases": true,
+    "preserve": ["portable.txt", "display.cfg", "controls.json", "saves/**", "logs/**", "*.z64", "*.n64", "*.v64"],
+    "_todo": "Todos os releases são pre-releases (o CI publica sempre com --prerelease). O padrão do Linux pega só o AppImage comum; TroubleMakers-SteamDeck-x86_64.AppImage (mesmo programa com padrões de Steam Deck) fica de fora."
+  },
+  "_todo": [
+    "Os pacotes são gerados no CI (.github/workflows/build.yml): o zip do Windows (15,1 MB na v0.8.4) leva troublemakers.exe, SDL2.dll e as DLLs do DXC na raiz, mais assets/; o AppImage (8,5 MB) é montado por .github/linux/appimage.sh com o binário, assets/ e icons/512.png. A ROM vem de um repositório privado só para gerar o código no CI e não entra nos pacotes.",
+    "assets/launcher/ traz só arte do launcher: splash-background.jpg (arte de IA img2img a partir de um quadro do jogo, segundo CREDITS.md), title-logo.png (letreiro próprio com a fonte Luckiest Guy), a fonte Luckiest Guy (Apache 2.0), o workflow do ComfyUI e CREDITS.md. Arte oficial e arte derivada foram liberadas pelo dono do projeto nesta rodada. O executável contém o código do jogo e o microcódigo de áudio recompilados (N64Recomp/RSPRecomp), como no Zelda64Recomp.",
+    "O README documenta só o SHA-256 da ROM (e00ab74c3dee79efaafe8e10f2a6b67784d7327ab588d8ef90ad8945427da627, US 1.1 .z64); o jogo valida por XXH3. Por isso não há requisito userFile com SHA-1.",
+    "display.cfg também é gravado quando o usuário sai do launcher sem escolher ROM, por isso o passo de primeira execução não tem doneWhen.",
+    "Status do README: boots, intro e menus completos, muitas fases verificadas jogáveis; jogo inteiro ainda não verificado; widescreen e interpolação experimentais (KNOWN_ISSUES.md)."
+  ],
+  "_sources": [
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/releases",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/releases/expanded_assets/v0.8.4",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/blob/HEAD/README.md",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/blob/HEAD/KNOWN_ISSUES.md",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/blob/HEAD/.github/workflows/build.yml",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/blob/HEAD/.github/linux/appimage.sh",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/blob/HEAD/assets/launcher/CREDITS.md",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/blob/HEAD/src/game/app_dirs.h",
+    "https://github.com/ThiagoLira/trouble-makers-pc-recomp/blob/HEAD/src/game/main.cpp"
+  ]
+}

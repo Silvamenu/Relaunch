@@ -1,0 +1,135 @@
+{
+  "id": "road-rash-64",
+  "name": "Road Rash 64 Recompiled",
+  "originalGame": "Road Rash 64 (Nintendo 64)",
+  "description": "Recompilação estática de Road Rash 64 para PC (N64Recomp + RT64), com 60 fps, widescreen, tela dividida, conquistas e modos extras (online e pistas importadas ainda experimentais). Você precisa da ROM americana v1.0 do seu próprio cartucho.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/linkssy2/RoadRash64Recompiled",
+  "accentColor": "#c8331e",
+  "executables": {
+    "win32": ["RoadRash64Recompiled.exe"],
+    "linux": ["RoadRash64Recompiled-x86_64.AppImage"]
+  },
+  "detectFiles": ["RoadRash64Recompiled.exe", "RoadRash64DirectStart.exe", "RoadRash64Recompiled-x86_64.AppImage", "assets/RoadRashLauncher-v4.png"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Road Rash 64 (N64, EUA v1.0)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional aqui: a ROM é escolhida no launcher do próprio jogo (Select Game ROM). Só a versão americana v1.0 é aceita; o jogo confere a ROM por hash."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no launcher do jogo",
+      "doneWhen": ["rr64.n64.us.1.0.z64", "{localAppData}/RoadRash64Recompiled/rr64.n64.us.1.0.z64", "{home}/.config/RoadRash64Recompiled/rr64.n64.us.1.0.z64"],
+      "helpText": "Abra o jogo, clique em Select Game ROM, escolha sua ROM e depois Start Game. No Windows o pacote já traz portable.txt, então a cópia validada da ROM, saves e configurações ficam na pasta do jogo; no Linux (AppImage) ficam em ~/.config/RoadRash64Recompiled. Depois da configuração, o RoadRash64DirectStart.exe abre o jogo direto, sem o launcher."
+    },
+    {
+      "id": "mk64-rom",
+      "type": "userFile",
+      "label": "Sua ROM de Mario Kart 64 (N64, EUA) — opcional, para importar pistas",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Só para o importador de pistas e itens de Mario Kart 64 (experimental), em Settings → Mods. Nenhuma pista vem no pacote: o importador converte as pistas a partir da sua própria ROM."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/RoadRash64Recompiled/general.json"],
+        "linux": ["{home}/.config/RoadRash64Recompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/RoadRash64Recompiled/graphics.json"],
+        "linux": ["{home}/.config/RoadRash64Recompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/RoadRash64Recompiled/controls.json"],
+        "linux": ["{home}/.config/RoadRash64Recompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/RoadRash64Recompiled/sound.json"],
+        "linux": ["{home}/.config/RoadRash64Recompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "linkssy2/RoadRash64Recompiled",
+    "assetPatterns": {
+      "win32": "RoadRash64Recompiled-*-Win64.zip",
+      "linux": "RoadRash64Recompiled-*-Linux*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "portable.txt",
+      "saves/**",
+      "mods/**",
+      "mod_config/**",
+      "race-packs/**",
+      "music/**",
+      "general.json",
+      "graphics.json",
+      "controls.json",
+      "sound.json",
+      "mods.json",
+      "race_packs.json",
+      "cheats.json",
+      "character-preferences.cfg",
+      "local-race-options.cfg",
+      "thrash-race-options.cfg",
+      "achievements.txt",
+      "*.z64",
+      "*.n64",
+      "*.v64"
+    ],
+    "_todo": "Cada release traz também RoadRash64Recompiled-Optional-Texture-Mod.zip (pacote de texturas remasterizadas, 205 MB), MoreCharacters*.nrm (skins de personagens de outras franquias), RoadRash64Recompiled-*-Source.zip e SHA256SUMS.txt; os padrões casam só com o zip do programa de cada sistema (…-Win64.zip e …-Linux-Experimental.zip). O texture mod e o More Characters não são instalados pelo app."
+  },
+  "_todo": [
+    "Releases montadas localmente pelo autor (sem CI). Conteúdo pelo docs/PLAYER_PACKAGE.md e scripts/package_player.py: zip com uma pasta de topo única (vira a raiz). Windows (45,1 MB na v1.4.8): RoadRash64Recompiled.exe, RoadRash64DirectStart.exe, SDL2.dll, dxcompiler.dll, dxil.dll, portable.txt, README.md, assets/ (arte do launcher feita sobre o logo oficial, ícone, selos de conquista recortados de telas/sprites do jogo, fontes Noto Emoji/PromptFont/Lato e ícones SVG), tools/mk64-importer/ (importador Python congelado, sem dados convertidos), music/README.txt e docs/. O package_player.py recusa ROMs, .rtz, saves, assets/sky/ e músicas no pacote.",
+    "Pela regra nova, a arte oficial (logo, ícone) e os selos de conquista são aceitos. Não achei áudio, texturas extraídas nem fases no pacote: os módulos *_assets.cpp leem modelos, terreno e tráfego da ROM do usuário em tempo de execução (offsets fixos).",
+    "O zip Linux (…-Linux-Experimental.zip) tem 562 MB porque traz, em docs/redistribution, os pacotes-fonte do Ubuntu, SDL2 e FFmpeg das bibliotecas embutidas no AppImage (scripts/collect_linux_licenses.py). O Linux é experimental (AppImage; requer x86-64, Vulkan, glibc 2.35+).",
+    "Big Game Co-op, online e pistas/itens de Mario Kart 64 continuam experimentais; recomendam 50–60% de Draw Distance.",
+    "O projeto declara uso de IA (docs/PROJECT_DETAILS.md)."
+  ],
+  "_sources": [
+    "https://github.com/linkssy2/RoadRash64Recompiled",
+    "https://github.com/linkssy2/RoadRash64Recompiled/releases",
+    "https://github.com/linkssy2/RoadRash64Recompiled/releases/tag/v1.4.8",
+    "https://github.com/linkssy2/RoadRash64Recompiled/releases/expanded_assets/v1.4.8",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/README.md",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/docs/PLAYER_PACKAGE.md",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/scripts/package_player.py",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/scripts/build_appimage.py",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/scripts/collect_linux_licenses.py",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/native/cmake/Application.cmake",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/native/src/main.cpp",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/native/src/rr64_world_object_assets.cpp",
+    "https://github.com/linkssy2/RoadRash64Recompiled/blob/HEAD/native/src/rr64_highlight_traffic_assets.cpp"
+  ]
+}

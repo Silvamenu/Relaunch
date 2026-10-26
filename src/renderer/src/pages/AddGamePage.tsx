@@ -88,7 +88,7 @@ function ManifestRow({
 
 /**
  * Ações ao lado de cada projeto: Abrir (já na biblioteca), Baixar (instala do repositório oficial) ou,
- * nos jogos via emulador, Instalar o emulador / Adicionar o jogo (o arquivo do usuário). E o GitHub.
+ * nos jogos via emulador, Instalar o emulador / Adicionar o jogo (o arquivo do usuário). E o link do projeto (GitHub ou GitLab).
  */
 function ProjectActions({ manifest }: { manifest: Manifest }) {
   const { items, info, manifests, navigate, toast } = useAppState()
@@ -184,7 +184,7 @@ function ProjectActions({ manifest }: { manifest: Manifest }) {
       )}
       {main}
       <button type="button" className="text-[12.5px] text-link hover:underline" onClick={() => void window.api.app.openExternal(manifest.repoUrl)}>
-        GitHub
+        {/^https:\/\/gitlab\.com\//i.test(manifest.repoUrl) ? 'GitLab' : 'GitHub'}
       </button>
     </span>
   )

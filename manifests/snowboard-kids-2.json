@@ -1,0 +1,121 @@
+{
+  "id": "snowboard-kids-2",
+  "name": "Snowboard Kids 2: Recompiled",
+  "originalGame": "Snowboard Kids 2 (Nintendo 64)",
+  "description": "Recompilação estática de Snowboard Kids 2 para PC (N64Recomp + RT64), com widescreen, alta taxa de quadros, tela dividida para até 4 jogadores e mods. Você precisa da ROM americana do seu próprio cartucho.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/cdlewis/snowboardkids2-recomp",
+  "accentColor": "#3a8fd6",
+  "executables": {
+    "win32": ["SnowboardKids2Recompiled.exe"],
+    "linux": ["SnowboardKids2Recompiled"]
+  },
+  "detectFiles": ["SnowboardKids2Recompiled.exe", "SnowboardKids2Recompiled", "assets/launcher_background.png"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Snowboard Kids 2 (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional aqui: a ROM é escolhida dentro do próprio jogo, no menu principal. Só a versão americana do N64 é aceita (o jogo confere a ROM por hash); arquivos .n64/.v64 são convertidos automaticamente."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": [
+        "snowboardkids2.n64.us.z64",
+        "{localAppData}/SnowboardKids2Recompiled/snowboardkids2.n64.us.z64",
+        "{home}/.config/SnowboardKids2Recompiled/snowboardkids2.n64.us.z64"
+      ],
+      "helpText": "Abra o jogo e escolha sua ROM no menu principal. O jogo valida e guarda uma cópia na pasta de dados (%LOCALAPPDATA%\\SnowboardKids2Recompiled no Windows ou ~/.config/SnowboardKids2Recompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt ao lado do executável)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/SnowboardKids2Recompiled/general.json"],
+        "linux": ["general.json", "{home}/.config/SnowboardKids2Recompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/SnowboardKids2Recompiled/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/SnowboardKids2Recompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/SnowboardKids2Recompiled/controls.json"],
+        "linux": ["controls.json", "{home}/.config/SnowboardKids2Recompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/SnowboardKids2Recompiled/sound.json"],
+        "linux": ["sound.json", "{home}/.config/SnowboardKids2Recompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "cdlewis/snowboardkids2-recomp",
+    "assetPatterns": {
+      "win32": "SnowboardKids2Recompiled-Windows*.zip",
+      "linux": "SnowboardKids2Recompiled-Linux-X64*.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "portable.txt",
+      "saves/**",
+      "mods/**",
+      "mod_config/**",
+      "mods.json",
+      "general.json",
+      "graphics.json",
+      "controls.json",
+      "sound.json",
+      "*.z64",
+      "*.n64",
+      "*.v64"
+    ],
+    "_todo": "Assets da v2.0.2: SnowboardKids2Recompiled-Windows.zip (19,1 MB), -Linux-X64.tar.gz (10,1 MB), -Linux-ARM64.tar.gz, -macOS.zip e -Flatpak-X64.flatpak; os padrões ignoram ARM64, macOS, Flatpak e o .pdb de depuração (que só aparece em algumas releases). O workflow atual nomeia os artefatos com o tipo de build (ex.: -Windows-RelWithDebInfo.zip, -Linux-X64-Release.tar.gz); os padrões cobrem os dois formatos. As prereleases v2.0.0+alpha ficam de fora."
+  },
+  "_todo": [
+    "Conteúdo confirmado em .github/workflows/validate.yml e scripts/stage-assets.cmake (build no GitHub Actions): Windows = SnowboardKids2Recompiled.exe, SDL2.dll, dxcompiler.dll, dxil.dll, recompcontrollerdb.txt e assets/; Linux = SnowboardKids2Recompiled, assets/ e recompcontrollerdb.txt. Os arquivos ficam na raiz do pacote (sem pasta de topo).",
+    "assets/ = tema do launcher (lib/recomp-theme: fontes Fredoka/Lato/Noto Emoji/PromptFont, ícones SVG e um rock.png desenhado) + assets/ do repositório: launcher_background.png (ilustração oficial da capa) e logo.png (logo do jogo). Arte oficial aceita pela regra nova; nada de texturas, áudio ou dados extraídos da ROM.",
+    "Os mods de fábrica (quick start, randomiser, time trial, nepo kids, template) são .nrm embutidos no executável: código compilado pequeno (mod_binary.bin de poucos KB) + miniatura thumb.png.",
+    "O Quiver cria um portable.txt ao lado do executável; aqui não criamos arquivos. Sem ele, saves, configurações e mods ficam em %LOCALAPPDATA%\\SnowboardKids2Recompiled (Windows) ou ~/.config/SnowboardKids2Recompiled (Linux).",
+    "Windows precisa do Visual C++ Redistributable; GPU com Direct3D 12 ou Vulkan 1.2."
+  ],
+  "_sources": [
+    "https://github.com/cdlewis/snowboardkids2-recomp",
+    "https://github.com/cdlewis/snowboardkids2-recomp/releases",
+    "https://github.com/cdlewis/snowboardkids2-recomp/releases/expanded_assets/v2.0.2",
+    "https://github.com/cdlewis/snowboardkids2-recomp/blob/HEAD/README.md",
+    "https://github.com/cdlewis/snowboardkids2-recomp/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/cdlewis/snowboardkids2-recomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/cdlewis/snowboardkids2-recomp/blob/HEAD/scripts/stage-assets.cmake",
+    "https://github.com/cdlewis/snowboardkids2-recomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/cdlewis/snowboardkids2-recomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/cdlewis/snowboardkids2-recomp/blob/HEAD/include/zelda_config.h",
+    "https://github.com/cdlewis/snowboardkids-recomp-theme/tree/0cb9a83a263607fbc8ab6176a758a00726e237cc/assets",
+    "https://github.com/cdlewis/RecompFrontend/blob/fa4f0ca42ba2efaca631203ef1e0753f2be78985/recompui/include/recompui/config.h"
+  ]
+}

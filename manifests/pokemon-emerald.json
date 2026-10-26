@@ -1,0 +1,123 @@
+{
+  "id": "pokemon-emerald",
+  "name": "EmeraldRecomp",
+  "originalGame": "Pokémon Emerald (Game Boy Advance)",
+  "description": "Recompilação estática de Pokémon Emerald para PC, feita com o gbarecomp, com widescreen opcional e link cable via netplay experimental (prévia em desenvolvimento). Você precisa da sua própria ROM americana do jogo e do dump da BIOS do seu GBA.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/EmeraldRecomp",
+  "accentColor": "#1e9e5a",
+  "executables": {
+    "win32": ["EmeraldRecomp.exe"],
+    "linux": ["EmeraldRecomp.AppImage"]
+  },
+  "detectFiles": ["EmeraldRecomp.exe", "EmeraldRecomp.AppImage", "assets/img/boxart_emerald.tga"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Pokémon Emerald (GBA, EUA)",
+      "optional": true,
+      "extensions": ["gba"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "f3ae088181bf583e55daf962a92bb46f4f1d07b7",
+            "label": "Pokémon Emerald (USA)"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita. O jogo não recebe o arquivo por aqui; a ROM é escolhida no launcher do próprio jogo (passo seguinte) e ele recusa ROMs com SHA-1 diferente."
+    },
+    {
+      "id": "bios",
+      "type": "userFile",
+      "label": "O dump da BIOS do seu Game Boy Advance (gba_bios.bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "300c20df6731a33952ded8c436f7f186d25d3492",
+            "label": "BIOS do GBA"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir o arquivo. A BIOS é pedida pelo launcher do jogo na primeira execução."
+    },
+    {
+      "id": "select-files",
+      "type": "firstRun",
+      "label": "Escolher a ROM e a BIOS no launcher do jogo",
+      "doneWhen": ["rom.cfg", "{home}/.local/share/EmeraldRecomp/rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM de Pokémon Emerald (EUA) e o seu gba_bios.bin. No Windows os caminhos ficam em rom.cfg/bios.cfg ao lado do executável, junto com os saves. No Linux o AppImage guarda tudo em ~/.local/share/EmeraldRecomp."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "config.ini",
+        "linux": "{home}/.local/share/EmeraldRecomp/config.ini"
+      },
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": "keybinds.ini",
+        "linux": "{home}/.local/share/EmeraldRecomp/keybinds.ini"
+      },
+      "format": "ini",
+      "label": "Controles (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/EmeraldRecomp",
+    "assetPatterns": {
+      "win32": "EmeraldRecomp-windows-x64-*.zip",
+      "linux": "EmeraldRecomp-linux-x86_64-*.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "recomp_cache/**",
+      "rom.cfg",
+      "bios.cfg",
+      "config.ini",
+      "keybinds.ini",
+      "game.toml",
+      "mods/state.toml",
+      "*.gba",
+      "*.sav",
+      "*.state*",
+      "gba_bios.bin"
+    ],
+    "_todo": "O APK de Android (EmeraldRecomp-android-arm64-*.apk) e o SHA256SUMS.txt não casam com os padrões."
+  },
+  "_todo": [
+    "v0.1.2 (18/10/2026): EmeraldRecomp-windows-x64-v0.1.2.zip (84,3 MB) e EmeraldRecomp-linux-x86_64-v0.1.2.AppImage (69,7 MB). O zip é montado por tools/make_release.ps1 sem pasta raiz: EmeraldRecomp.exe, 4 DLLs MinGW/SDL2, assets/ do launcher recomp-ui (fontes livres, ícones, desenho do controle de GBA e a capa oficial do jogo em assets/img/boxart_emerald.tga), mods/ (pacotes Widescreen e Absolute RTC, só dados), licenses/, overlay_toolchain/ (TCC) e README. O script recusa .gba/.agb/.sav, gba_bios.bin, .bin de 16 KB e arquivos com o cabeçalho da ROM de Emerald.",
+    "O AppImage (tools/linux/build_appimage.sh) traz o mesmo programa, assets e mods; o AppRun roda a partir de ~/.local/share/EmeraldRecomp (ou $EMERALDRECOMP_HOME), onde ficam rom.cfg, bios.cfg, config.ini, keybinds.ini, saves e mods. O ícone é gerado do vetor próprio do app Android. Não foi listado por dentro.",
+    "A capa oficial (variants/emerald/launcher/boxart.tga) vem no pacote; arte oficial foi liberada pelo dono do projeto nesta rodada. Do pret/pokeemerald só entram metadados de símbolos no repositório, nada no pacote. Como em toda recompilação estática, o executável contém o código do jogo traduzido; o gbarecomp também compila nele a BIOS do GBA recompilada (gerada na máquina do mantenedor), mas o jogo continua exigindo o dump da BIOS do próprio usuário.",
+    "SHA-1 da BIOS tirado do bios/README.md do gbarecomp. Os nomes dos arquivos de save/save state seguem o runtime do gbarecomp (.sav e .state<N>); não foi confirmado em execução se ficam em saves/ ou ao lado da ROM.",
+    "README: prévia em desenvolvimento ('playable bring-up'); nem todo código está recompilado estaticamente (interpretador + JIT na primeira vez); netplay de link cable e Union Room sem fio experimentais."
+  ],
+  "_sources": [
+    "https://github.com/mstan/EmeraldRecomp",
+    "https://github.com/mstan/EmeraldRecomp/releases",
+    "https://github.com/mstan/EmeraldRecomp/releases/expanded_assets/v0.1.2",
+    "https://github.com/mstan/EmeraldRecomp/blob/HEAD/README.md",
+    "https://github.com/mstan/EmeraldRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/EmeraldRecomp/blob/HEAD/tools/linux/build_appimage.sh",
+    "https://github.com/mstan/EmeraldRecomp/blob/HEAD/tools/linux/AppRun",
+    "https://github.com/mstan/EmeraldRecomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/mstan/EmeraldRecomp/blob/HEAD/src/main.cpp",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/bios/README.md",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/launcher_seam.h"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "pokemon-sapphire",
+  "name": "SapphireRecomp",
+  "originalGame": "Pokémon Sapphire (Game Boy Advance)",
+  "description": "Recompilação estática de Pokémon Sapphire para PC (Windows), feita com o gbarecomp; ainda em fase inicial. Você precisa da ROM americana (rev1) do seu próprio cartucho e de um dump da BIOS do seu Game Boy Advance.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/RubySapphireRecomp",
+  "accentColor": "#1f4fa3",
+  "executables": {
+    "win32": ["SapphireRecomp.exe"]
+  },
+  "detectFiles": ["SapphireRecomp.exe", "assets/img/boxart_sapphire.tga"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Pokémon Sapphire (GBA, EUA rev1)",
+      "optional": true,
+      "extensions": ["gba"],
+      "copyToGameDir": true,
+      "validation": {
+        "sha1": [{ "sha1": "4722efb8cd45772ca32555b98fd3b9719f8e60a9", "label": "Sapphire EUA rev1 (AXPE)" }]
+      },
+      "helpText": "Opcional aqui: a ROM é escolhida no launcher do próprio jogo (passo abaixo), que recusa qualquer ROM com SHA-1 diferente. Copiar para a pasta do jogo ajuda a manter o save junto: o arquivo .sav é gravado ao lado da ROM escolhida."
+    },
+    {
+      "id": "bios",
+      "type": "userFile",
+      "label": "O dump da BIOS do seu Game Boy Advance (gba_bios.bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": true,
+      "validation": {
+        "sha1": [{ "sha1": "300c20df6731a33952ded8c436f7f186d25d3492", "label": "BIOS do GBA" }]
+      },
+      "helpText": "Opcional aqui, mas obrigatório para o jogo: na primeira execução o launcher pede a BIOS do GBA (16 KB) feita a partir do seu próprio aparelho e confere o SHA-1."
+    },
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Escolher a ROM e a BIOS no launcher do jogo",
+      "doneWhen": ["rom_sapphire.cfg"],
+      "helpText": "Abra o SapphireRecomp.exe: o launcher (Dear ImGui) pede a ROM e a BIOS, confere o SHA-1 de cada uma e guarda os caminhos em rom_sapphire.cfg e bios_sapphire.cfg, ao lado do executável."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config_sapphire.ini",
+      "format": "ini",
+      "label": "Configurações do launcher (config_sapphire.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybinds_sapphire.ini",
+      "format": "ini",
+      "label": "Teclas (keybinds_sapphire.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/RubySapphireRecomp",
+    "assetPatterns": {
+      "win32": "SapphireRecomp-windows-x64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["*.sav", "*.gba", "gba_bios.bin", "*.cfg", "*.ini", "recomp_cache/**", "mods/config/**"],
+    "_todo": "A mesma release traz o RubyRecomp-windows-x64-*.zip (outro jogo) e o SHA256SUMS.txt; o padrão casa só com o zip do Sapphire. Não há build para Linux."
+  },
+  "_todo": [
+    "Conteúdo do zip conferido no tools/make_release.ps1 (build local, sem CI): SapphireRecomp.exe, SDL2.dll e DLLs do MinGW, LICENSE, README.md, assets/ do recomp-ui (fontes Lato/Noto/OpenMoji, ícones da interface, logos/controle de consoles e a capa oficial do jogo em assets/img/boxart_*.tga, arte aceita pela regra nova), mods/ (catálogo de mods em TOML, só dados) e overlay_toolchain/ (TinyCC). Nada da ROM vai no pacote; tamanho 59,6 MB. Zip sem pasta de topo (arquivos na raiz).",
+    "Como em toda recompilação estática, o executável contém o código do jogo traduzido para C++; os dados vêm da ROM do usuário. O README do projeto diz que a BIOS do GBA também é recompilada; o .gitignore do gbarecomp impede publicar esse código no repositório, mas não confirmei se o exe da release o inclui.",
+    "Caminhos de código não recompilados rodam num interpretador e são compilados em tempo de execução (sljit/TinyCC) para recomp_cache/; antivírus podem estranhar as DLLs geradas ali.",
+    "Fase inicial ('playable bring-up'): chega ao título e ao jogo, mas o jogo inteiro não foi testado; por isso experimental.",
+    "Pasta dos mods ativados (mods/config) não confirmada; preserve inclui por precaução."
+  ],
+  "_sources": [
+    "https://github.com/mstan/RubySapphireRecomp",
+    "https://github.com/mstan/RubySapphireRecomp/releases",
+    "https://github.com/mstan/RubySapphireRecomp/releases/tag/v0.0.6",
+    "https://github.com/mstan/RubySapphireRecomp/releases/expanded_assets/v0.0.6",
+    "https://github.com/mstan/RubySapphireRecomp/blob/HEAD/README.md",
+    "https://github.com/mstan/RubySapphireRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/RubySapphireRecomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/mstan/RubySapphireRecomp/blob/HEAD/variants/sapphire/game.toml",
+    "https://github.com/mstan/recomp-ui/tree/0546fbcb0126bb14bf88d2128b4fe8a4229570a3/assets",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/runtime.cpp",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/generated_bios/.gitignore"
+  ]
+}

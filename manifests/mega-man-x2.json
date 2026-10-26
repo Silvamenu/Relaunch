@@ -1,0 +1,78 @@
+{
+  "id": "mega-man-x2",
+  "name": "MegaManX2SNESRecomp",
+  "originalGame": "Mega Man X2 (SNES)",
+  "description": "Recompilação estática de Mega Man X2 para PC, feita com o snesrecomp, com widescreen opcional (projeto em fase inicial). Você precisa da sua própria ROM americana do jogo.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/MegaManX2Recomp",
+  "accentColor": "#2a6fdb",
+  "executables": {
+    "win32": ["MegaManX2SNESRecomp.exe"]
+  },
+  "detectFiles": ["MegaManX2SNESRecomp.exe", "docs/COVERAGE_2026-10-18.md"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Mega Man X2 (SNES, EUA)",
+      "optional": true,
+      "extensions": ["sfc", "smc"],
+      "validation": {
+        "sizes": [1572864, 1573376]
+      },
+      "copyToGameDir": false,
+      "helpText": "Opcional: serve só para conferir o tamanho do arquivo (1,5 MiB, com ou sem cabeçalho de 512 bytes). O jogo não recebe o arquivo por aqui; ele é escolhido no launcher do próprio jogo (passo seguinte). Só a versão americana sem modificações é aceita (CRC32 947B0355, SHA-256 f3246755f608a1e1dc9c848b61da3b824c7853b29b3be40df6fc7f2793a887ed). O chip Cx4 é emulado sem precisar de arquivo extra."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Escolher a ROM no launcher do jogo",
+      "doneWhen": ["rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM de Mega Man X2. O caminho fica em rom.cfg; configurações (config.ini, keybinds.ini) e saves (saves/) ficam na pasta do jogo. O widescreen fica na página Mods do launcher, desligado por padrão, e precisa de uma janela larga (ex.: 1280x720)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.ini",
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybinds.ini",
+      "format": "ini",
+      "label": "Controles (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/MegaManX2Recomp",
+    "assetPatterns": {
+      "win32": "MegaManX2SNESRecomp-windows-x64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["saves/**", "rom.cfg", "config.ini", "config.local.ini", "keybinds.ini", "mods/state.toml", "cx4.rom", "*.sfc", "*.smc"]
+  },
+  "_todo": [
+    "v0.1.4 (18/10/2026): MegaManX2SNESRecomp-windows-x64-v0.1.4.zip (12,4 MB) e SHA256SUMS.txt. Build local do autor; tools/make_release.ps1 monta o zip sem pasta raiz: o exe, README, LICENSE, docs/COVERAGE_2026-10-18.md, assets/ do launcher recomp-ui (inclui a capa oficial recomp/launcher/boxart.tga, aceita pela regra de arte), mods/packages (widescreen, só dados) e as DLLs de runtime (SDL3 e dependências). O script não inclui ROM, C gerado, config.ini/keybinds.ini do desenvolvedor nem seleções de mods, e recusa builds de diagnóstico.",
+    "Só há build para Windows na release atual; a v0.1.0 teve um build Linux, que não foi refeito nas versões seguintes.",
+    "rom.cfg fica na pasta do executável (snesrecomp runner/src/launcher_cache.c); config.ini, keybinds.ini e saves/ são relativos à pasta de trabalho (host_main.c, keybinds.c). doneWhen=rom.cfg não foi confirmado em execução.",
+    "O projeto não documenta SHA-1 da ROM (só CRC32 e SHA-256 em rom_identity.txt), por isso a validação é só por tamanho.",
+    "Estado: o README diz que o jogo chega às cutscenes de abertura; a pesquisa de cobertura de 18/10/2026 completou 12 checkpoints dos estágios $01-$0C com movimento e tiro, sem certificar chefes nem o jogo inteiro. Áudio e cobertura ampla ainda não verificados."
+  ],
+  "_sources": [
+    "https://github.com/mstan/MegaManX2Recomp",
+    "https://github.com/mstan/MegaManX2Recomp/releases",
+    "https://github.com/mstan/MegaManX2Recomp/releases/expanded_assets/v0.1.4",
+    "https://github.com/mstan/MegaManX2Recomp/blob/HEAD/README.md",
+    "https://github.com/mstan/MegaManX2Recomp/blob/HEAD/rom_identity.txt",
+    "https://github.com/mstan/MegaManX2Recomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/MegaManX2Recomp/blob/HEAD/docs/COVERAGE_2026-10-18.md",
+    "https://github.com/mstan/MegaManX2Recomp/blob/HEAD/symbols/README.md",
+    "https://github.com/RetroPortingToolKit/snesrecomp/blob/f68aa0fe8edae75cbc7d4b9473c71687b45ce702/runner/src/launcher_cache.c",
+    "https://github.com/RetroPortingToolKit/snesrecomp/blob/f68aa0fe8edae75cbc7d4b9473c71687b45ce702/runner/src/desktop/host_main.c"
+  ]
+}

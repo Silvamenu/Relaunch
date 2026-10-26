@@ -1,0 +1,116 @@
+{
+  "id": "dragon-ball-z-buus-fury",
+  "name": "DragonBallZBuusFuryRecomp",
+  "originalGame": "Dragon Ball Z: Buu's Fury (Game Boy Advance)",
+  "description": "Recompilação estática de Dragon Ball Z: Buu's Fury para PC, feita com o gbarecomp, com widescreen adaptável opcional (prévia experimental). Você precisa da sua própria ROM americana do jogo e do dump da BIOS do seu GBA.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/DragonBallZBuusFuryRecomp",
+  "accentColor": "#f28c28",
+  "executables": {
+    "win32": ["DragonBallZBuusFuryRecomp.exe"]
+  },
+  "detectFiles": ["DragonBallZBuusFuryRecomp.exe", "mods/packages/dragon-ball-z-buus-fury.enhancement.adaptive-view/1.0.0/manifest.toml"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Dragon Ball Z: Buu's Fury (GBA, EUA)",
+      "optional": true,
+      "extensions": ["gba"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "f1c4b07554d2a3b1ad2f325307051e775ce68087",
+            "label": "Dragon Ball Z: Buu's Fury (USA), revisão 0"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita. O jogo não recebe o arquivo por aqui; a ROM é escolhida no launcher do próprio jogo (passo seguinte). Só a versão americana sem modificações é aceita."
+    },
+    {
+      "id": "bios",
+      "type": "userFile",
+      "label": "O dump da BIOS do seu Game Boy Advance (gba_bios.bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "300c20df6731a33952ded8c436f7f186d25d3492",
+            "label": "BIOS do GBA"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir o arquivo. A BIOS é obrigatória para jogar e também é escolhida no launcher do próprio jogo (Settings > System)."
+    },
+    {
+      "id": "select-files",
+      "type": "firstRun",
+      "label": "Escolher a ROM e a BIOS no launcher do jogo",
+      "doneWhen": ["rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM de Buu's Fury (EUA) e o seu gba_bios.bin. Os caminhos ficam em rom.cfg e bios.cfg, ao lado do executável. O save do cartucho é gravado ao lado da sua ROM (mesmo nome, extensão .sav). O widescreen adaptável fica na página Mods do launcher, desligado por padrão."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.ini",
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybinds.ini",
+      "format": "ini",
+      "label": "Controles (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/DragonBallZBuusFuryRecomp",
+    "assetPatterns": {
+      "win32": "DragonBallZBuusFuryRecomp-windows-x64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "recomp_cache/**",
+      "mods/state.toml",
+      "rom.cfg",
+      "bios.cfg",
+      "config.ini",
+      "keybinds.ini",
+      "mods.ini",
+      "game.toml",
+      "*.gba",
+      "*.sav",
+      "gba_bios.bin"
+    ]
+  },
+  "_todo": [
+    "Só há build para Windows x64 (v0.0.4, 18/10/2026: DragonBallZBuusFuryRecomp-windows-x64-v0.0.4.zip, 13,4 MB, e SHA256SUMS.txt). Build local do autor por tools/make_release.ps1, zip sem pasta raiz: o exe, 4 DLLs do MinGW/SDL2, assets/ do launcher recomp-ui (inclui a capa americana oficial em assets/img/boxart.tga, aceita pela regra de arte), mods/packages (pacote Adaptive Widescreen, só dados), overlay_toolchain/ (TCC) e um README. O script recusa .gba, .bin, .sav, .json, game.toml, rom.cfg, bios.cfg, config.ini, keybinds.ini e mods.ini no pacote.",
+    "Como em toda recompilação estática, o executável contém o código do jogo traduzido. O make_release.ps1 exige src/runtime/generated_bios/bios_recompiled.cpp do gbarecomp, então o exe também traz a BIOS do GBA recompilada (gerada na máquina do mantenedor, não publicada no repositório); o jogo continua exigindo e validando o dump da BIOS do próprio usuário.",
+    "rom.cfg/bios.cfg/config.ini/keybinds.ini ficam ao lado do executável (gbarecomp launcher_seam.h). O jogo não define caminho próprio de save, então o .sav fica ao lado da ROM do usuário. doneWhen=rom.cfg não foi confirmado em execução.",
+    "SHA-1 da ROM em baserom.md/src/main.cpp; SHA-1 da BIOS no bios/README.md do gbarecomp.",
+    "Notas da v0.0.4: só a rota de boot testada (6.000 quadros, sem interpretador); o jogo inteiro não foi certificado."
+  ],
+  "_sources": [
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp",
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp/releases",
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp/releases/expanded_assets/v0.0.4",
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp/blob/HEAD/README.md",
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp/blob/HEAD/baserom.md",
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp/blob/HEAD/src/main.cpp",
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/mstan/DragonBallZBuusFuryRecomp/blob/HEAD/recomp/launcher/README.md",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/bios/README.md",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/launcher_seam.h",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/generated_bios/.gitignore"
+  ]
+}

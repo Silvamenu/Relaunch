@@ -1,0 +1,89 @@
+{
+  "id": "automobili-lamborghini",
+  "name": "Automobili Lamborghini: Recompiled",
+  "originalGame": "Automobili Lamborghini (Nintendo 64)",
+  "description": "Recompilação estática de Automobili Lamborghini para PC (N64Recomp + RT64), com widescreen, corridas com até 16 carros e sombras com ray tracing; ainda em desenvolvimento. Você precisa da ROM americana do seu próprio cartucho.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/alondero/automobililamborghini-recomp",
+  "accentColor": "#e3a21a",
+  "executables": {
+    "win32": ["lamborghini_modern.exe"],
+    "linux": ["lamborghini_modern"]
+  },
+  "detectFiles": ["lamborghini_modern.exe", "lamborghini_modern", "lamborghini.syms.toml"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Automobili Lamborghini (N64, EUA)",
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": true,
+      "helpText": "Só a versão americana é aceita. O jogo procura, ao lado do executável, um arquivo chamado exatamente \"Automobili Lamborghini (USA).z64\" (ou .n64); renomeie a cópia se o nome for outro. A ordem dos bytes é detectada sozinha e o arquivo original não é alterado."
+    },
+    {
+      "id": "rom-name",
+      "type": "file",
+      "label": "ROM com o nome esperado na pasta do jogo",
+      "patterns": ["Automobili Lamborghini (USA).z64", "Automobili Lamborghini (USA).n64"],
+      "helpText": "O jogo só encontra a ROM sozinho com o nome \"Automobili Lamborghini (USA).z64\" ou \"Automobili Lamborghini (USA).n64\" ao lado do lamborghini_modern(.exe). Se os dois existirem, o .z64 tem prioridade."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/LamborghiniRecomp/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/LamborghiniRecomp/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/LamborghiniRecomp/general.json"],
+        "linux": ["general.json", "{home}/.config/LamborghiniRecomp/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["driving-controls.json", "{localAppData}/LamborghiniRecomp/driving-controls.json"],
+        "linux": ["driving-controls.json", "{home}/.config/LamborghiniRecomp/driving-controls.json"]
+      },
+      "format": "json",
+      "label": "Pedais e direção (driving-controls.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "alondero/automobililamborghini-recomp",
+    "assetPatterns": {
+      "win32": "lamborghini-recomp-windows-x64*.zip",
+      "linux": "lamborghini-recomp-linux-x64*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "*.z64", "*.n64", "*.v64", "*.json", "lambo_controller_pak.mpk", "mods/**", "mod_config/**", "logs/**"],
+    "_todo": "A release v0.10.0 também traz três pacotes de texturas RT64 (automobili-lamborghini-rt64-*.rtz, o HD com 93 MB) com seus -metadata.zip, capturas PNG, o APK Android e SHA256SUMS; os padrões casam só com os zips do programa (Windows 34,6 MB, Linux 21,9 MB). Os pacotes de texturas não são instalados pelo app."
+  },
+  "_todo": [
+    "Conteúdo confirmado no .github/workflows/build-release.yml (build no GitHub Actions; a ROM vem de um repositório privado só para compilar e é apagada antes de empacotar): Windows = lamborghini_modern.exe, SDL2.dll, dxcompiler.dll, dxil.dll, freetype.dll, assets/ e lamborghini.syms.toml; Linux = lamborghini_modern, assets/, install_linux_launcher.sh e lamborghini.syms.toml. Arquivos na raiz do zip (sem pasta de topo).",
+    "assets/ = interface do launcher (assets/frontend: fontes Lato/Noto Emoji/PromptFont, ícones SVG e lambo-fan-art.png, fan art de Gary (POOTERMAN) usada também no ícone) + lambo-icon. Nada de texturas, áudio ou dados da ROM; o README diz que o port não traz arte de substituição.",
+    "O Quiver cria um portable.txt ao lado do executável; aqui não criamos arquivos. Sem ele, configurações, perfis e o save do Controller Pak ficam em %LOCALAPPDATA%\\LamborghiniRecomp (Windows) ou ~/.config/LamborghiniRecomp (Linux).",
+    "Linux precisa de SDL2 e Vulkan instalados no sistema. As notas de várias versões dizem 'Pre-release quality' e 'There's still glitches', por isso compatibility=ingame."
+  ],
+  "_sources": [
+    "https://github.com/alondero/automobililamborghini-recomp",
+    "https://github.com/alondero/automobililamborghini-recomp/releases",
+    "https://github.com/alondero/automobililamborghini-recomp/releases/expanded_assets/v0.10.0",
+    "https://github.com/alondero/automobililamborghini-recomp/blob/HEAD/README.md",
+    "https://github.com/alondero/automobililamborghini-recomp/blob/HEAD/docs/configuration.md",
+    "https://github.com/alondero/automobililamborghini-recomp/blob/HEAD/.github/workflows/build-release.yml",
+    "https://github.com/alondero/automobililamborghini-recomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/alondero/automobililamborghini-recomp/tree/HEAD/assets/frontend"
+  ]
+}

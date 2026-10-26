@@ -5,6 +5,8 @@
   "description": "Port nativo de Street Fighter III: 3rd Strike para PC, feito a partir da decompilação da versão de PS2, com netcode rollback. Você precisa da ISO do seu próprio Street Fighter III: 3rd Strike ou Street Fighter Anniversary Collection de PS2.",
   "category": "playstation",
   "compatibility": "ingame",
+  "gameKey": "street-fighter-iii-3rd-strike",
+  "recommended": true,
   "repoUrl": "https://github.com/crowded-street/3sx",
   "accentColor": "#e0561b",
   "executables": {

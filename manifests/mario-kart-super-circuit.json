@@ -1,0 +1,130 @@
+{
+  "id": "mario-kart-super-circuit",
+  "name": "MarioKartSuperCircuitRecomp",
+  "originalGame": "Mario Kart: Super Circuit (Game Boy Advance)",
+  "description": "Recompilação estática de Mario Kart: Super Circuit para PC, feita com o gbarecomp, com netplay para dois jogadores e mods opcionais de 60 FPS, widescreen e resolução interna maior (prévia experimental). Você precisa da sua própria ROM americana do jogo e do dump da BIOS do seu GBA.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/MarioKartSuperCircuitRecomp",
+  "accentColor": "#e4000f",
+  "executables": {
+    "win32": ["MarioKartSuperCircuitRecomp.exe"],
+    "linux": ["MarioKartSuperCircuitRecomp.AppImage"]
+  },
+  "detectFiles": [
+    "MarioKartSuperCircuitRecomp.exe",
+    "MarioKartSuperCircuitRecomp.AppImage",
+    "mods/packages/mario-kart-super-circuit.enhancement.track-60fps/1.0.0/manifest.toml"
+  ],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Mario Kart: Super Circuit (GBA, EUA)",
+      "optional": true,
+      "extensions": ["gba"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "9d327c030c3e2d9007990518594f70c3340ac56f",
+            "label": "Mario Kart: Super Circuit (USA), AMKE revisão 0"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita. O jogo não recebe o arquivo por aqui; a ROM é escolhida no launcher do próprio jogo (passo seguinte). Só a versão americana sem modificações é aceita."
+    },
+    {
+      "id": "bios",
+      "type": "userFile",
+      "label": "O dump da BIOS do seu Game Boy Advance (gba_bios.bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "300c20df6731a33952ded8c436f7f186d25d3492",
+            "label": "BIOS do GBA"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir o arquivo. A BIOS é obrigatória para jogar e também é escolhida no launcher do próprio jogo."
+    },
+    {
+      "id": "select-files",
+      "type": "firstRun",
+      "label": "Escolher a ROM e a BIOS no launcher do jogo",
+      "doneWhen": ["rom.cfg", "{home}/.local/share/MarioKartSuperCircuitRecomp/rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM de Mario Kart: Super Circuit (EUA) e o seu gba_bios.bin. No Windows os caminhos, configurações e saves (saves/) ficam na pasta do jogo; no Linux o AppImage guarda tudo em ~/.local/share/MarioKartSuperCircuitRecomp. No Linux o seletor de arquivos usa zenity ou kdialog, e o AppImage precisa de FUSE 2 (libfuse2)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "config.ini",
+        "linux": "{home}/.local/share/MarioKartSuperCircuitRecomp/config.ini"
+      },
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": "keybinds.ini",
+        "linux": "{home}/.local/share/MarioKartSuperCircuitRecomp/keybinds.ini"
+      },
+      "format": "ini",
+      "label": "Controles (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/MarioKartSuperCircuitRecomp",
+    "assetPatterns": {
+      "win32": "MarioKartSuperCircuitRecomp-windows-x64-*.zip",
+      "linux": "MarioKartSuperCircuitRecomp-linux-x86_64-*.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "recomp_cache/**",
+      "mods/state.toml",
+      "rom.cfg",
+      "bios.cfg",
+      "config.ini",
+      "keybinds.ini",
+      "mods.ini",
+      "game.toml",
+      "*.gba",
+      "*.sav",
+      "gba_bios.bin"
+    ],
+    "_todo": "As releases trazem também uma captura PNG (ex.: 4x-internal-resolution.png) e SHA256SUMS.txt; os padrões só casam com o zip do Windows e o AppImage do Linux x86_64."
+  },
+  "_todo": [
+    "v0.1.8 (19/10/2026): MarioKartSuperCircuitRecomp-windows-x64-v0.1.8.zip (20,6 MB) e MarioKartSuperCircuitRecomp-linux-x86_64-v0.1.8.AppImage (18,3 MB). Builds locais do autor: tools/make_release.ps1 monta o zip sem pasta raiz (exe, DLLs do MinGW/SDL2, assets/ do launcher recomp-ui com a capa americana oficial, aceita pela regra de arte, mods/packages só com dados, overlay_toolchain/ (TCC), LICENSE, licenças e README) e recusa ROM, BIOS, saves e arquivos de configuração; tools/linux/build_appimage.sh monta o AppImage com o mesmo conteúdo e bibliotecas.",
+    "Como em toda recompilação estática, o executável contém o código do jogo traduzido. O make_release.ps1 exige o bios_recompiled.cpp do gbarecomp e o README do Linux diz que 'a BIOS real do GBA é recompilada e executada': o exe também traz a BIOS do GBA recompilada (gerada na máquina do mantenedor, não publicada no repositório); o jogo continua exigindo e validando o dump da BIOS do próprio usuário.",
+    "No Linux o AppRun cria ~/.local/share/MarioKartSuperCircuitRecomp (ou $XDG_DATA_HOME/MarioKartSuperCircuitRecomp, ou $MARIOKARTSUPERCIRCUITRECOMP_HOME) e roda o jogo de lá; os caminhos do manifesto assumem o padrão ~/.local/share. O save do cartucho é saves/mario_kart_super_circuit_usa.sav (src/main.cpp). doneWhen=rom.cfg não foi confirmado em execução.",
+    "O mod de 60 FPS é uma troca de instrução feita pelo próprio código (src/mods/mksc_track_60fps_plugin.cpp), sem patch de ROM embutido. O submódulo third_party/mksc (decomp) só fornece nomes de símbolos e não entra no build.",
+    "Prévia experimental: menus, copas, corridas e resultados funcionam; escalas 8x/16x são experimentais e lentas; o netplay exige a mesma versão nos dois lados."
+  ],
+  "_sources": [
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/releases",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/releases/expanded_assets/v0.1.8",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/blob/HEAD/README.md",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/blob/HEAD/baserom.md",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/blob/HEAD/tools/linux/build_appimage.sh",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/blob/HEAD/tools/linux/AppRun",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/blob/HEAD/tools/linux/README.md",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/blob/HEAD/src/main.cpp",
+    "https://github.com/mstan/MarioKartSuperCircuitRecomp/blob/HEAD/src/mods/mksc_track_60fps_plugin.cpp",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/bios/README.md",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/launcher_seam.h"
+  ]
+}
