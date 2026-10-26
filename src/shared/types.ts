@@ -302,6 +302,7 @@ export type AppErrorCode =
   | 'RATE_LIMITED'
   | 'NETWORK'
   | 'GITHUB_ERROR'
+  | 'GITLAB_ERROR'
   | 'INVALID_CONFIG'
   | 'CONFIG_NOT_EDITABLE'
   | 'NO_BACKUP'

@@ -1,0 +1,86 @@
+{
+  "id": "bloody-roar-ii",
+  "name": "Bloody Roar II Recompiled",
+  "originalGame": "Bloody Roar II (PS1)",
+  "description": "Recompilação estática de Bloody Roar II para PC, feita com o PSXRecomp, com widescreen, mods e netplay para dois jogadores. Você precisa da imagem do seu próprio disco europeu (SLES-01722) ou americano (SCUS-94424).",
+  "category": "playstation",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/novapowers0/BloodyRoar2Recomp",
+  "accentColor": "#d2691e",
+  "executables": {
+    "win32": ["BloodyRoar2_Recompiled.exe"],
+    "linux": ["BloodyRoar2_Recompiled"]
+  },
+  "detectFiles": ["BloodyRoar2_Recompiled.exe", "BloodyRoar2_Recompiled", "mods/bundled/br2.enhancement.widescreen/1.0.0/manifest.toml"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Bloody Roar II (Europa ou EUA, arquivo .bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          { "sha1": "c6021ee7817cdd3dba3e2cf8238054a7943aa5be", "label": "Europa SLES-01722, Track 01 .bin" },
+          { "sha1": "75a13364ae026fe555e9c666c7c3434e5b403cc8", "label": "EUA SCUS-94424, Track 01 .bin" }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir o seu dump. O disco é escolhido no launcher do próprio jogo (passo seguinte). Use um dump .cue + .bin do seu disco; o jogo também aceita .iso e .chd. A versão japonesa (SLPS-01842) é experimental."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o disco no launcher do jogo",
+      "doneWhen": ["disc.cfg"],
+      "helpText": "Abra o jogo. Na primeira execução o launcher pede a imagem do disco (escolha o .cue e deixe o .bin na mesma pasta) e, se quiser, um BIOS. O BIOS livre OpenBIOS já vem no pacote; um SCPH-1001.BIN seu ao lado do executável é usado se existir. A escolha fica salva em disc.cfg, ao lado do executável. No Linux o seletor de arquivos precisa do zenity ou kdialog."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "settings.toml",
+      "format": "text",
+      "label": "Configurações (settings.toml)",
+      "editable": true
+    },
+    {
+      "path": "input.ini",
+      "format": "ini",
+      "label": "Controles (input.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "novapowers0/BloodyRoar2Recomp",
+    "assetPatterns": {
+      "win32": "BloodyRoar2-v*.zip",
+      "linux": "BloodyRoar2-linux-x64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["saves/**", "disc.cfg", "bios.cfg", "settings.toml", "input.ini", "keybinds.ini", "config.ini", "overlay_captures.json", "scph*.bin"],
+    "_todo": "Os dois zips têm uma pasta raiz BloodyRoar2/. Releases antigas (até v0.6.2) usavam nomes por região (BloodyRoar2-EU-v*.zip, BloodyRoar2-US-v*.zip), que não casam com estes padrões; desde a v0.7.0 há um executável universal."
+  },
+  "_todo": [
+    "Conteúdo dos zips conferido em scripts/package_release.ps1, scripts/package_release_linux.sh e nos workflows windows-full-build.yml / linux-full-build.yml (que recusam .cue/.iso/.chd, memory cards e C gerado): executável universal, bios/openbios.bin (OpenBIOS, MIT), assets/ do launcher, mods/bundled, game.toml, game_options.toml e README.txt. O C gerado do jogo vem de um repositório privado só no CI e não é publicado; o exe contém o código do jogo recompilado, como nas outras recompilações PSX do catálogo.",
+    "Os workflows de build são manuais (workflow_dispatch) e só geram artifacts; os zips da release são enviados à mão pelo autor (tamanhos plausíveis: 19,7 MB Windows, 18,7 MB Linux).",
+    "disc.cfg, settings.toml, input.ini e os saves (memcard_dir = \"saves\" no game.toml) ficam ao lado do executável (psxrecomp do autor, runtime/src/main.cpp: exe_dir_from_argv/sidecar_cfg_path, conferido no commit 219a362 fixado no submódulo).",
+    "Os SHA-1 vêm do baserom.md do projeto e são da faixa 1 (.bin de dados); não confirmei se batem com o .bin da faixa 1 de um dump Redump multi-faixa.",
+    "Netplay usa por padrão o lobby netplay.retcomm.net (serviço de terceiros, opcional). O zip do Linux não foi listado por dentro; o bit de execução do binário pode se perder na extração."
+  ],
+  "_sources": [
+    "https://github.com/novapowers0/BloodyRoar2Recomp",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/releases",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/releases/expanded_assets/v0.7.1",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/issues?q=is%3Aissue",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/blob/HEAD/README.md",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/blob/HEAD/baserom.md",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/blob/HEAD/game.toml",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/blob/HEAD/scripts/package_release.ps1",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/blob/HEAD/scripts/package_release_linux.sh",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/blob/HEAD/.github/workflows/windows-full-build.yml",
+    "https://github.com/novapowers0/BloodyRoar2Recomp/blob/HEAD/.github/workflows/linux-full-build.yml",
+    "https://raw.githubusercontent.com/novapowers0/psxrecomp/219a3627f817c5ad60b852d368c1bebc4f584b71/runtime/src/main.cpp"
+  ]
+}

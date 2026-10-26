@@ -1,0 +1,91 @@
+{
+  "id": "super-mario-world",
+  "name": "SuperMarioWorldRecomp",
+  "originalGame": "Super Mario World (SNES)",
+  "description": "Recompilação estática de Super Mario World para PC, feita com o snesrecomp, com widescreen adaptativo, co-op experimental e suporte a MSU-1. Você precisa da sua própria ROM americana do jogo.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "gameKey": "super-mario-world",
+  "repoUrl": "https://github.com/mstan/SuperMarioWorldRecomp",
+  "accentColor": "#e52521",
+  "executables": {
+    "win32": ["SuperMarioWorldSNESRecomp.exe"],
+    "linux": ["SuperMarioWorldRecomp.AppImage"]
+  },
+  "detectFiles": [
+    "SuperMarioWorldSNESRecomp.exe",
+    "SuperMarioWorldRecomp.AppImage",
+    "smw-falcon-cache.exe",
+    "mods/preloaded/packages/super-mario-world.enhancement.widescreen/1.0.0/manifest.toml"
+  ],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Super Mario World (SNES, EUA)",
+      "optional": true,
+      "extensions": ["sfc", "smc"],
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "6b47bb75d16514b6a476aa0c73a683a2a4c18765",
+            "label": "EUA (sem cabeçalho)"
+          }
+        ]
+      },
+      "copyToGameDir": true,
+      "helpText": "Opcional: confere a versão e pode copiar a ROM para a pasta do jogo. No Linux o AppImage acha sozinho uma ROM que esteja ao lado dele; no Windows o jogo pede o arquivo na primeira abertura. Só a versão americana sem modificações é aceita."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Escolher a ROM no launcher do jogo",
+      "doneWhen": ["rom.cfg"],
+      "helpText": "Abra o jogo e escolha a sua ROM no seletor de arquivos. O caminho fica salvo em rom.cfg, ao lado do executável (no Linux, ao lado do AppImage). O mod opcional do Captain Falcon pede também a sua ROM de Super Smash Bros. (EUA, v1.0)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.ini",
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybinds.ini",
+      "format": "ini",
+      "label": "Teclas (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/SuperMarioWorldRecomp",
+    "assetPatterns": {
+      "win32": "SuperMarioWorldRecomp-windows-x64-*.zip",
+      "linux": "SuperMarioWorldRecomp-linux-*-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["rom.cfg", "config.ini", "keybinds.ini", "saves/**", "*.sfc", "*.smc"],
+    "_todo": "Os padrões não casam com a variante de co-op (SuperMarioWorldCoopSNESRecomp-*), caso volte a ser publicada separadamente."
+  },
+  "_todo": [
+    "O zip do Windows é montado por tools/make_release.ps1 com os arquivos na raiz: SuperMarioWorldSNESRecomp.exe, smw-falcon-cache.exe (gera o cache do Falcon a partir da ROM de Smash do usuário), assets/ do recomp-ui, mods/preloaded (manifestos), lua/, config.ini, README e DLLs. O script afirma que ROMs e o C gerado a partir da ROM nunca entram no pacote; o executável contém o código recompilado do jogo, como as outras recompilações estáticas do catálogo.",
+    "O AppImage do Linux (tools/build-linux.sh) guarda config.ini, keybinds.ini, rom.cfg, saves/ e mods/ ao lado do arquivo .AppImage e passa automaticamente uma ROM que esteja na mesma pasta.",
+    "SHA-1 tirado do snesrev/smw (assets/util.py, SMW_SHA1_US); este projeto documenta só o SHA-256 0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b (manifest.toml do mod MSU-1). Arquivos .smc com cabeçalho de 512 bytes têm outro hash.",
+    "Não confirmado se o executável do Windows também procura uma ROM na própria pasta; por isso o passo de primeira execução.",
+    "README: só os mundos 1 e 2 foram verificados de ponta a ponta; mundos 4-7, Star Road e Special World ainda não. Co-op é protótipo experimental."
+  ],
+  "_sources": [
+    "https://github.com/mstan/SuperMarioWorldRecomp",
+    "https://raw.githubusercontent.com/mstan/SuperMarioWorldRecomp/HEAD/README.md",
+    "https://github.com/mstan/SuperMarioWorldRecomp/releases",
+    "https://github.com/mstan/SuperMarioWorldRecomp/releases/expanded_assets/v0.15.1",
+    "https://github.com/mstan/SuperMarioWorldRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/SuperMarioWorldRecomp/blob/HEAD/tools/build-linux.sh",
+    "https://github.com/mstan/SuperMarioWorldRecomp/blob/HEAD/.gitignore",
+    "https://github.com/mstan/SuperMarioWorldRecomp/blob/HEAD/mods/preloaded/packages/super-mario-world.enhancement.msu1/1.0.0/manifest.toml",
+    "https://github.com/snesrev/smw/blob/HEAD/assets/util.py"
+  ]
+}

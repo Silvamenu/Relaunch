@@ -1,0 +1,113 @@
+{
+  "id": "pokemon-leafgreen",
+  "name": "LeafGreenRecomp",
+  "originalGame": "Pokémon LeafGreen (Game Boy Advance)",
+  "description": "Recompilação estática de Pokémon LeafGreen para PC, feita com o gbarecomp, com overworld widescreen opcional (prévia em desenvolvimento). Você precisa da sua própria ROM americana (v1.0) do jogo e do dump da BIOS do seu GBA.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/FireRedLeafGreenRecomp",
+  "accentColor": "#3a9a48",
+  "executables": {
+    "win32": ["LeafGreenRecomp.exe"]
+  },
+  "detectFiles": ["LeafGreenRecomp.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Pokémon LeafGreen (GBA, EUA, v1.0)",
+      "optional": true,
+      "extensions": ["gba"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "574fa542ffebb14be69902d1d36f1ec0a4afd71e",
+            "label": "Pokémon LeafGreen (USA) v1.0"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita. O jogo não recebe o arquivo por aqui; a ROM é escolhida no launcher do próprio jogo (passo seguinte) e ele recusa ROMs com SHA-1 diferente."
+    },
+    {
+      "id": "bios",
+      "type": "userFile",
+      "label": "O dump da BIOS do seu Game Boy Advance (gba_bios.bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "300c20df6731a33952ded8c436f7f186d25d3492",
+            "label": "BIOS do GBA"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir o arquivo. A BIOS é pedida pelo launcher do jogo na primeira execução."
+    },
+    {
+      "id": "select-files",
+      "type": "firstRun",
+      "label": "Escolher a ROM e a BIOS no launcher do jogo",
+      "doneWhen": ["rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM de Pokémon LeafGreen (EUA, v1.0) e o seu gba_bios.bin. Os caminhos ficam guardados em rom.cfg e bios.cfg ao lado do executável; saves, save states e o cache de código também ficam na pasta do jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.ini",
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybinds.ini",
+      "format": "ini",
+      "label": "Controles (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/FireRedLeafGreenRecomp",
+    "assetPatterns": {
+      "win32": "LeafGreenRecomp-windows-x64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "recomp_cache/**",
+      "rom.cfg",
+      "bios.cfg",
+      "config.ini",
+      "keybinds.ini",
+      "game.toml",
+      "mods/state.toml",
+      "*.gba",
+      "*.sav",
+      "*.state*",
+      "gba_bios.bin"
+    ],
+    "_todo": "O mesmo release traz os zips de FireRed e LeafGreen; o padrão pega só LeafGreenRecomp-windows-x64-*.zip. SHA256SUMS.txt não casa."
+  },
+  "_todo": [
+    "Só há build para Windows x64. v0.0.5 (23/10/2026): LeafGreenRecomp-windows-x64-v0.0.5.zip (63,8 MB). O zip é montado por tools/make_release.ps1 sem pasta raiz: LeafGreenRecomp.exe, LICENSE, 4 DLLs MinGW/SDL2, assets/ do launcher recomp-ui (fontes livres, ícones, desenho do controle de GBA e a capa oficial do jogo em assets/img; como as duas variantes são compiladas na mesma pasta, a capa da outra versão pode vir junto), mods/ (pacote Adaptive Overworld, só dados), overlay_toolchain/ (TCC) e um README.",
+    "As capas oficiais (variants/*/launcher/boxart.tga) vêm no pacote; arte oficial foi liberada pelo dono do projeto nesta rodada. Do pret/pokefirered só entram metadados de símbolos no repositório, nada no pacote. Como em toda recompilação estática, o executável contém o código do jogo traduzido; o gbarecomp também compila nele a BIOS do GBA recompilada (gerada na máquina do mantenedor), mas o jogo continua exigindo o dump da BIOS do próprio usuário.",
+    "Diferente dos outros gbarecomp, este make_release.ps1 não tem a checagem final que recusa .gba/.sav/gba_bios.bin no pacote; pelo script, só entram os itens listados acima.",
+    "SHA-1 da ROM tirado de variants/leafgreen/game.toml; SHA-1 da BIOS do mesmo arquivo e do bios/README.md do gbarecomp. rom.cfg/bios.cfg/config.ini/keybinds.ini ficam ao lado do executável (gbarecomp launcher_seam.h); doneWhen=rom.cfg não foi confirmado em execução.",
+    "README: prévia em desenvolvimento ('playable bring-up'): o jogo chega à jogabilidade, mas nem todo código está recompilado estaticamente (interpretador + JIT na primeira vez) e o conteúdo não foi testado por inteiro. v0.0.4 só teve o boot verificado numa rota."
+  ],
+  "_sources": [
+    "https://github.com/mstan/FireRedLeafGreenRecomp",
+    "https://github.com/mstan/FireRedLeafGreenRecomp/releases",
+    "https://github.com/mstan/FireRedLeafGreenRecomp/releases/expanded_assets/v0.0.5",
+    "https://github.com/mstan/FireRedLeafGreenRecomp/blob/HEAD/README.md",
+    "https://github.com/mstan/FireRedLeafGreenRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/FireRedLeafGreenRecomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/mstan/FireRedLeafGreenRecomp/blob/HEAD/variants/leafgreen/game.toml",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/bios/README.md",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/launcher_seam.h"
+  ]
+}

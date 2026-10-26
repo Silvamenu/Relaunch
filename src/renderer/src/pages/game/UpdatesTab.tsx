@@ -47,7 +47,7 @@ export function UpdatesTab({ item }: { item: LibraryItem }) {
     )
   }
 
-  if (!manifest || !updates || updates.source !== 'github-releases') {
+  if (!manifest || !updates || updates.source === 'none') {
     return (
       <Card className="max-w-[760px] p-5">
         <div className="text-[14px] font-medium">{t('upd.noBinaries.title')}</div>
@@ -253,7 +253,7 @@ export function UpdatesTab({ item }: { item: LibraryItem }) {
             <div className="max-h-[420px] overflow-y-auto border-t border-line px-[18px] py-4">
               <Markdown>{latest.body}</Markdown>
               <button type="button" className="mt-4 text-[12.5px] text-link hover:underline" onClick={() => void window.api.app.openExternal(latest.htmlUrl)}>
-                {t('upd.viewOnGithub')}
+                {t(updates.source === 'gitlab-releases' ? 'upd.viewOnGitlab' : 'upd.viewOnGithub')}
               </button>
             </div>
           )}
@@ -288,7 +288,7 @@ export function UpdatesTab({ item }: { item: LibraryItem }) {
             ))}
           </div>
           <p className="mt-3 text-[11.5px] text-faint">
-            <GlossaryText>{t('upd.source', { repo: updates.repo })}</GlossaryText>
+            <GlossaryText>{t(updates.source === 'gitlab-releases' ? 'upd.sourceGitlab' : 'upd.source', { repo: updates.repo })}</GlossaryText>
           </p>
           {rateLimit && <p className="mt-1 text-[11.5px] text-faint">{formatRateLimit(rateLimit, t, locale)}</p>}
         </div>

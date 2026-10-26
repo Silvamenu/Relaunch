@@ -43,7 +43,7 @@ function AboutTab({ item }: { item: LibraryItem }) {
   )
   const rows: [string, ReactNode][] = [
     [t('about.original'), m.originalGame ?? '—'],
-    [t('about.repo'), link(m.repoUrl, m.repoUrl.replace('https://github.com/', ''))],
+    [t('about.repo'), link(m.repoUrl, m.repoUrl.replace(/^https:\/\/(github|gitlab)\.com\//, ''))],
     ...(m.website ? ([[t('about.website'), link(m.website, m.website.replace('https://', ''))]] as [string, ReactNode][]) : []),
     // Jogo via emulador: quem abre é o emulador (o executável e os argumentos são os dele).
     ...(runner

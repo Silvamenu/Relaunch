@@ -1,0 +1,65 @@
+{
+  "id": "chris-sawyers-locomotion",
+  "name": "OpenLoco",
+  "originalGame": "Chris Sawyer's Locomotion (PC, 2004)",
+  "description": "Reimplementação de código aberto de Chris Sawyer's Locomotion, com correções e melhorias. Usa os arquivos da sua cópia do Locomotion (Steam ou GOG).",
+  "category": "pc",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/OpenLoco/OpenLoco",
+  "accentColor": "#2e7d32",
+  "executables": {
+    "win32": ["OpenLoco.exe"],
+    "linux": ["openloco.AppImage"]
+  },
+  "detectFiles": ["OpenLoco.exe", "openloco.AppImage", "data/language/en-GB.yml"],
+  "requirements": [
+    {
+      "id": "loco-data",
+      "type": "firstRun",
+      "label": "Indicar a pasta do seu Chris Sawyer's Locomotion",
+      "helpText": "Na primeira execução o OpenLoco procura sozinho a sua instalação do Locomotion (pastas padrão da GOG e da Steam no Windows; Steam, Steam Flatpak e Heroic no Linux). A pasta certa é a que contém Data/g1.DAT. No Windows, se não encontrar, ele abre uma janela para você escolher a pasta. No Linux essa pergunta só aparece no terminal: se a detecção falhar, informe a pasta na linha loco_install_path do arquivo openloco.yml (em ~/.config/OpenLoco). A escolha fica salva no openloco.yml."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "{appData}/OpenLoco/openloco.yml",
+      "format": "text",
+      "label": "Configurações (openloco.yml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "OpenLoco/OpenLoco",
+    "assetPatterns": {
+      "win32": "OpenLoco-*-windows-portable-x64.zip",
+      "linux": "OpenLoco-*-linux-x64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": []
+  },
+  "_todo": [
+    "Release v26.09 (2026-09-18): OpenLoco-v26.09-windows-portable-x64.zip (15,3 MB) e OpenLoco-v26.09-linux-x64.AppImage (16,9 MB). Os padrões ignoram win32, macOS e os zips de símbolos (*-symbols.zip).",
+    "O zip do Windows vem do artefato do CI (.github/workflows/ci.yml: Copy-Item build\\...\\Release\\* + CHANGELOG.md, CONTRIBUTORS.md, LICENSE, sem .pdb). Não confirmei se o zip publicado tem pasta raiz; o executável OpenLoco.exe fica na raiz do conteúdo nos dois casos.",
+    "A pasta data/ do pacote só tem as traduções do projeto e os objetos do OpenGraphics (gráficos novos, licença MIT, baixados de OpenLoco/OpenGraphics no build). O CI usa um repositório privado com os arquivos da GOG apenas para testes, depois de enviar o artefato; nada disso entra no pacote.",
+    "Config, saves, cenários e capturas ficam fora da pasta do jogo: %APPDATA%\\OpenLoco no Windows e ~/.config/OpenLoco no Linux (Platform::getUserDirectory).",
+    "Sem doneWhen: o openloco.yml só é gravado depois que a pasta do Locomotion é encontrada, mas não confirmei se ele é criado antes em outros casos. Também aceita --locomotion_path <pasta> na linha de comando (usado no CI), mas o caminho é de cada usuário.",
+    "No Linux a escolha manual da pasta é feita por std::cin (Platform.Posix.cpp promptDirectory); sem terminal, o usuário precisa da detecção automática ou editar o openloco.yml.",
+    "Multijogador está indisponível na versão atual (notas da v26.09)."
+  ],
+  "_sources": [
+    "https://github.com/OpenLoco/OpenLoco",
+    "https://github.com/OpenLoco/OpenLoco/releases/latest",
+    "https://github.com/OpenLoco/OpenLoco/releases/expanded_assets/v26.09",
+    "https://raw.githubusercontent.com/OpenLoco/OpenLoco/HEAD/README.md",
+    "https://raw.githubusercontent.com/OpenLoco/OpenLoco/HEAD/CHANGELOG.md",
+    "https://raw.githubusercontent.com/OpenLoco/OpenLoco/HEAD/.github/workflows/ci.yml",
+    "https://raw.githubusercontent.com/OpenLoco/OpenLoco/HEAD/CMakeLists.txt",
+    "https://raw.githubusercontent.com/OpenLoco/OpenLoco/HEAD/src/OpenLoco/src/Environment.cpp",
+    "https://raw.githubusercontent.com/OpenLoco/OpenLoco/HEAD/src/OpenLoco/src/Config.cpp",
+    "https://raw.githubusercontent.com/OpenLoco/OpenLoco/HEAD/src/Platform/src/Platform.Windows.cpp",
+    "https://raw.githubusercontent.com/OpenLoco/OpenLoco/HEAD/src/Platform/src/Platform.Posix.cpp",
+    "https://raw.githubusercontent.com/OpenLoco/OpenGraphics/HEAD/README.md"
+  ]
+}

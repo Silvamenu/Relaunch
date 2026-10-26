@@ -4,6 +4,8 @@
   "originalGame": "Diddy Kong Racing (N64)",
   "description": "Recompilação estática de Diddy Kong Racing para PC, com widescreen, alta taxa de quadros, mods e modo online. Precisa da sua própria ROM americana do N64 (v1.0 ou Rev A/v1.1).",
   "category": "nintendo",
+  "compatibility": "playable",
+  "gameKey": "diddy-kong-racing",
   "repoUrl": "https://github.com/ThatGuyMcd/DKR-R",
   "accentColor": "#f2b21c",
   "executables": {
@@ -21,8 +23,14 @@
       "copyToGameDir": false,
       "validation": {
         "sha1": [
-          { "sha1": "0cb115d8716dbbc2922fda38e533b9fe63bb9670", "label": "EUA v1.0 (v77)" },
-          { "sha1": "6d96743d46f8c0cd0edb0ec5600b003c89b93755", "label": "EUA Rev A / v1.1 (v80)" }
+          {
+            "sha1": "0cb115d8716dbbc2922fda38e533b9fe63bb9670",
+            "label": "EUA v1.0 (v77)"
+          },
+          {
+            "sha1": "6d96743d46f8c0cd0edb0ec5600b003c89b93755",
+            "label": "EUA Rev A / v1.1 (v80)"
+          }
         ]
       },
       "helpText": "Opcional: a ROM é adicionada dentro do próprio programa (Play > Add a ROM…). Só as versões americanas v1.0 e Rev A/v1.1, sem modificações, são aceitas. A verificação por SHA-1 vale para o formato .z64; arquivos .v64/.n64 também funcionam no programa, que os converte."

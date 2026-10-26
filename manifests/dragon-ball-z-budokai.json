@@ -1,0 +1,46 @@
+{
+  "id": "dragon-ball-z-budokai",
+  "name": "Dragon Ball Z Budokai HD Recompiled",
+  "originalGame": "Dragon Ball Z: Budokai (Budokai HD Collection, Xbox 360)",
+  "description": "Recompilação não oficial do Dragon Ball Z: Budokai da coletânea Budokai HD Collection de Xbox 360, feita com o ReXGlue SDK. Usa a pasta DBZ1 dos arquivos da sua própria cópia americana da coletânea.",
+  "category": "xbox",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/WistfulHopes/DBZ1",
+  "accentColor": "#f28c28",
+  "executables": {
+    "win32": ["dbz1.exe"]
+  },
+  "detectFiles": ["dbz1.exe"],
+  "requirements": [
+    {
+      "id": "assets",
+      "type": "file",
+      "label": "Arquivos do Budokai 1 da sua coletânea (pasta assets)",
+      "patterns": ["assets/default.xex"],
+      "helpText": "Extraia os arquivos da sua cópia americana (US) do Dragon Ball Z: Budokai HD Collection de Xbox 360. Crie uma pasta assets ao lado do dbz1.exe, copie para ela o conteúdo da pasta DBZ1 da coletânea e renomeie yae1_xenon.xex para default.xex."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "WistfulHopes/DBZ1",
+    "assetPatterns": {
+      "win32": "dbz1.exe"
+    },
+    "includePrereleases": false,
+    "preserve": ["assets/**", "dbz1.toml"]
+  },
+  "_todo": [
+    "Release v0.0.2 (Latest, 2026-02-22) tem só dbz1.exe (20,2 MB, SHA-256 a2a5a42344b4da7b240911b12cdcba466c195f9f9579e9aba8017ee7772ef46e) como asset. Não foi possível baixar: não se sabe se o exe roda sozinho ou se precisa de DLLs do ReXGlue (rexruntime.dll) que não estão na release.",
+    "O repositório tem só 2 commits e é praticamente o modelo gerado pelo \"rexglue init\" (src/main.cpp, dbz1_config.toml, CMakeLists.txt); o autor avisou na 0.0.1 que haveria bugs, alguns que impedem o progresso. Sem atualizações desde fevereiro de 2026.",
+    "src/main.cpp usa <pasta do exe>/assets como pasta do jogo quando não recebe argumento; as instruções da release pedem a versão US. A 0.0.2 limita o FPS e cita lentidão em placas NVIDIA (sugere Max Frame Rate 1000 no painel da NVIDIA).",
+    "O nome do arquivo de configuração do ReXGlue (dbz1.toml) foi presumido pelo padrão do SDK."
+  ],
+  "_sources": [
+    "https://github.com/WistfulHopes/DBZ1",
+    "https://github.com/WistfulHopes/DBZ1/releases",
+    "https://github.com/WistfulHopes/DBZ1/releases/expanded_assets/v0.0.2",
+    "https://raw.githubusercontent.com/WistfulHopes/DBZ1/HEAD/README.md",
+    "git: src/main.cpp, dbz1_config.toml, CMakeLists.txt"
+  ]
+}

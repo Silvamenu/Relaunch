@@ -1,0 +1,61 @@
+{
+  "id": "tony-hawks-project-8",
+  "name": "Project8Recomp",
+  "originalGame": "Tony Hawk's Project 8 (Xbox 360)",
+  "description": "Recompilação estática não oficial da versão de Xbox 360 de Tony Hawk's Project 8, com launcher próprio. Os arquivos do jogo saem do ISO do seu próprio disco (versão de varejo de 2006).",
+  "category": "xbox",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/theokyr/Project8Recomp",
+  "accentColor": "#c8102e",
+  "executables": {
+    "win32": ["Project8Recomp.exe"],
+    "linux": ["Project8Recomp"]
+  },
+  "detectFiles": ["Project8Recomp.exe", "thps_p8.exe", "thps_p8_identify.exe", "Project8Recomp", "thps_p8", "thps_p8_identify"],
+  "requirements": [
+    {
+      "id": "iso",
+      "type": "firstRun",
+      "label": "Instalar o jogo a partir do ISO do seu disco de Tony Hawk's Project 8 (Xbox 360)",
+      "doneWhen": ["config/install.toml"],
+      "helpText": "Abra o jogo: na primeira vez o launcher pede uma imagem de disco. Escolha o .iso (ou .img) do seu próprio disco de Tony Hawk's Project 8. O launcher confere o default.xex (só a versão de varejo de 2006, World v1.0, é aceita) e copia cerca de 4,7 GB para a pasta game, ao lado do executável. Depois disso o jogo abre direto."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config/settings.toml",
+      "format": "text",
+      "label": "Configurações do launcher (settings.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "theokyr/Project8Recomp",
+    "assetPatterns": {
+      "win32": "Project8Recomp-*-windows-x86_64.zip",
+      "linux": "Project8Recomp-*-linux-x86_64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["game/**", "saves/**", "config/**", "logs/**"]
+  },
+  "_todo": [
+    "v0.3.0: os zips são montados por tools/package_release.sh com uma única pasta raiz Project8Recomp-<versão>-<plataforma>/ contendo Project8Recomp(.exe), thps_p8, thps_p8_gui, thps_p8_launch, thps_p8_identify, rexruntime e rexgpu-xenos, SDL3, assets/ (UI do launcher), LICENSE, NOTICE, CHANGELOG.md, README.txt, BUILDINFO.txt e SHA256SUMS. O script recusa empacotar .xex/.xzp/.pak/.bik/.xma/.fsb/.iso. Tamanhos: Windows 20,7 MB, Linux 24,6 MB.",
+    "O build do jogo não roda no CI (precisa do default.xex); a release é gerada pelo mantenedor e anexada à mão. O CI só compila o launcher.",
+    "Windows é experimental: compilado de forma cruzada no Linux e testado só no Proton; um relato da v0.1.0 no Windows 10 teve uso de CPU e ritmo ruins (mitigação na v0.2.0, não confirmada em hardware Windows). Por isso compatibility = experimental. Linux é a plataforma principal e verificada.",
+    "Deixe o limite de FPS ligado (padrão): sem ele as cenas dentro das fases rodam 3 a 5 vezes mais rápido.",
+    "Project8Recomp é um wrapper que pede Play ao thps_p8_gui; com --gui abre a tela inicial do launcher (configurações, pastas de saves/logs).",
+    "Tudo fica na pasta do jogo (game/, saves/, config/, logs/); nada é gravado fora dela, segundo docs/SETUP.md. Binários sem assinatura: o SmartScreen avisa no Windows."
+  ],
+  "_sources": [
+    "https://github.com/theokyr/Project8Recomp",
+    "https://github.com/theokyr/Project8Recomp/releases",
+    "https://github.com/theokyr/Project8Recomp/releases/expanded_assets/v0.3.0",
+    "https://raw.githubusercontent.com/theokyr/Project8Recomp/HEAD/README.md",
+    "https://github.com/theokyr/Project8Recomp/blob/main/docs/SETUP.md",
+    "https://github.com/theokyr/Project8Recomp/blob/main/docs/KNOWN_ISSUES.md",
+    "https://github.com/theokyr/Project8Recomp/blob/main/tools/package_release.sh",
+    "https://github.com/theokyr/Project8Recomp/blob/main/.github/workflows/launcher.yml"
+  ]
+}

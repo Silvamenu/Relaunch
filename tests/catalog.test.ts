@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { groupCatalog, matchesSearch, normalizeSearch, type CatalogEntry } from '../src/shared/catalog'
+import { groupCatalog, isMostComplete, matchesSearch, normalizeSearch, type CatalogEntry } from '../src/shared/catalog'
 
 const entries: CatalogEntry[] = [
   { name: 'God of War III Remastered', originalGame: 'PlayStation 4', category: 'playstation' },
@@ -27,5 +27,18 @@ describe('catálogo', () => {
     ])
     expect(groupCatalog(entries, 'playstation').map((g) => g.category)).toEqual(['playstation', 'emulators'])
     expect(groupCatalog(entries, 'nada disso')).toEqual([])
+  })
+
+  it('o selo "Mais completo" só aparece no recomendado quando há outro projeto do mesmo jogo', () => {
+    const mm = [
+      { id: 'zelda64recomp', gameKey: 'majoras-mask', recommended: true },
+      { id: '2ship', gameKey: 'majoras-mask' },
+      { id: 'sozinho', gameKey: 'outro-jogo', recommended: true },
+      { id: 'sem-chave', recommended: true }
+    ]
+    expect(isMostComplete(mm[0], mm)).toBe(true)
+    expect(isMostComplete(mm[1], mm)).toBe(false)
+    expect(isMostComplete(mm[2], mm)).toBe(false)
+    expect(isMostComplete(mm[3], mm)).toBe(false)
   })
 })

@@ -1,0 +1,73 @@
+{
+  "id": "donkey-kong-country-2-diddys-kong-quest",
+  "name": "DKC2Recomp",
+  "originalGame": "Donkey Kong Country 2: Diddy's Kong Quest (SNES)",
+  "description": "Recompilação estática de Donkey Kong Country 2 para PC, feita com o snesrecomp, com co-op simultâneo, widescreen, filtros CRT e música MSU-1 opcional. Você precisa da sua própria ROM americana v1.0 do jogo.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/elliotttate/DKC2Recomp",
+  "accentColor": "#7a3e9d",
+  "executables": {
+    "win32": ["DKC2Recomp.exe", "DKC2RecompSDL.exe"]
+  },
+  "detectFiles": ["DKC2Recomp.exe", "DKC2RecompSDL.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Donkey Kong Country 2 (SNES, EUA v1.0)",
+      "optional": true,
+      "extensions": ["sfc", "smc"],
+      "validation": {
+        "sizes": [4194304, 4194816]
+      },
+      "copyToGameDir": false,
+      "helpText": "Opcional: serve só para conferir o tamanho do arquivo (4 MiB, com ou sem cabeçalho de 512 bytes). O jogo não recebe o arquivo por aqui; ele é escolhido no launcher do próprio jogo (passo seguinte). Só a versão norte-americana v1.0 sem modificações é aceita (SHA-256 35421a9af9dd011b40b91f792192af9f99c93201d8d394026bdfb42cbf2d8633)."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Escolher a ROM no launcher do jogo",
+      "doneWhen": ["rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM e clique em Play. O caminho fica salvo em rom.cfg, na pasta do jogo; a ROM não é copiada. Pacotes de personagens e de música MSU-1 são opcionais e também ficam por sua conta."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "launcher.cfg",
+      "format": "ini",
+      "label": "Vídeo, áudio e controles (launcher.cfg)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "elliotttate/DKC2Recomp",
+    "assetPatterns": {
+      "win32": "DKC2Recomp-*-Windows-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["saves/**", "rom.cfg", "launcher.cfg", "kongs.cfg", "msu1.cfg", "keybinds.ini", "*.sfc", "*.smc"],
+    "_todo": "Cada release traz também o zip do macOS (arm64) e arquivos .sha256; o padrão só casa com o zip do Windows."
+  },
+  "_todo": [
+    "Build local do autor (scripts/make_release.ps1), sem CI. O zip (11,1 MB, sem pasta raiz) traz DKC2Recomp.exe, DKC2RecompSDL.exe, DLLs do SDL2/MinGW, assets/ do launcher recomp-ui (fontes Lato, ícones, arte do controle do SNES e a capa americana do jogo em assets/img/boxart.tga, aceita pela regra de arte oficial), README, CHANGELOG, licenças, guias de personagens/MSU-1 e scripts/import_project_kongs.py. O script de empacotamento recusa ROMs, saves, PNG, áudio (.wav/.pcm) e pacotes de personagens.",
+    "O repositório é um fork de mstan/DKC2Recomp; o original foi arquivado e aponta este fork como o oficial.",
+    "O projeto não documenta SHA-1 da ROM (só CRC32 006364DB e SHA-256), por isso a validação é só por tamanho.",
+    "Não há build de Linux; o build de macOS arm64 está parado na v0.0.6.",
+    "Limites declarados na v0.0.8: co-op do jogo inteiro, cordas horizontais e transições incomuns de animais não verificados."
+  ],
+  "_sources": [
+    "https://github.com/elliotttate/DKC2Recomp",
+    "https://github.com/elliotttate/DKC2Recomp/releases",
+    "https://github.com/elliotttate/DKC2Recomp/releases/expanded_assets/v0.0.8",
+    "https://raw.githubusercontent.com/elliotttate/DKC2Recomp/HEAD/README.md",
+    "https://github.com/elliotttate/DKC2Recomp/blob/HEAD/RELEASE-NOTES-v0.0.8.md",
+    "https://github.com/elliotttate/DKC2Recomp/blob/HEAD/scripts/make_release.ps1",
+    "https://github.com/elliotttate/DKC2Recomp/blob/HEAD/recomp/launcher/README.md",
+    "https://github.com/elliotttate/DKC2Recomp/blob/HEAD/runner/desktop_launcher.c",
+    "https://github.com/elliotttate/DKC2Recomp/blob/HEAD/ISSUES.md",
+    "https://github.com/mstan/DKC2Recomp"
+  ]
+}

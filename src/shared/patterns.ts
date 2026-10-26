@@ -108,12 +108,70 @@ export function isAllowedAssetUrl(url: string, repo: string): boolean {
   return parsed.pathname.toLowerCase().startsWith(prefix) && !parsed.pathname.includes('/../')
 }
 
-/** Destinos de redirecionamento aceitos (CDN de releases do GitHub). */
-export function isAllowedRedirectHost(url: string): boolean {
+/**
+ * Projeto no gitlab.com: só arquivos de pacote e anexos do próprio projeto, via HTTPS. Links de release
+ * que apontam para outros sites ficam de fora.
+ */
+export function isAllowedGitlabAssetUrl(url: string, project: string): boolean {
+  let parsed: URL
+  try {
+    parsed = new URL(url)
+  } catch {
+    return false
+  }
+  if (parsed.protocol !== 'https:' || parsed.hostname.toLowerCase() !== 'gitlab.com') return false
+  if (parsed.username || parsed.password || parsed.port) return false
+  const pathname = parsed.pathname.toLowerCase()
+  if (pathname.includes('/../')) return false
+  const own = `/${project.toLowerCase()}/`
+  return (
+    pathname.startsWith(`${own}-/package_files/`) ||
+    pathname.startsWith(`${own}-/releases/`) ||
+    pathname.startsWith(`${own}uploads/`) ||
+    pathname.startsWith(`/api/v4/projects/${encodeURIComponent(project).toLowerCase()}/packages/generic/`)
+  )
+}
+
+/**
+ * Nome do arquivo informado pelo servidor (Content-Disposition), sem pastas. Os links de release do
+ * GitLab nem sempre têm a extensão no nome, e é por ela que o app sabe como abrir o pacote.
+ */
+export function fileNameFromDisposition(header: string | null): string | null {
+  if (!header) return null
+  let name: string | null = null
+  const encoded = /filename\*\s*=\s*UTF-8''([^;]+)/i.exec(header)
+  if (encoded) {
+    try {
+      name = decodeURIComponent(encoded[1].trim())
+    } catch {
+      name = null
+    }
+  }
+  if (!name) {
+    const plain = /filename\s*=\s*(?:"([^"]*)"|([^;]+))/i.exec(header)
+    name = plain ? (plain[1] ?? plain[2]).trim() : null
+  }
+  const base = name?.split(/[\\/]/).pop()?.trim()
+  return base && base !== '.' && base !== '..' ? base : null
+}
+
+/** De onde vêm as versões: o repositório declarado no manifesto, no GitHub ou no gitlab.com. */
+export interface ReleaseSource {
+  source: 'github-releases' | 'gitlab-releases'
+  repo: string
+}
+
+export function isAllowedReleaseAssetUrl(url: string, from: ReleaseSource): boolean {
+  return from.source === 'gitlab-releases' ? isAllowedGitlabAssetUrl(url, from.repo) : isAllowedAssetUrl(url, from.repo)
+}
+
+/** Destinos de redirecionamento aceitos: CDN de releases do GitHub; no GitLab, só o próprio gitlab.com. */
+export function isAllowedRedirectHost(url: string, source: ReleaseSource['source'] = 'github-releases'): boolean {
   try {
     const parsed = new URL(url)
     if (parsed.protocol !== 'https:') return false
     const host = parsed.hostname.toLowerCase()
+    if (source === 'gitlab-releases') return host === 'gitlab.com'
     return host === 'github.com' || host === 'objects.githubusercontent.com' || host === 'release-assets.githubusercontent.com'
   } catch {
     return false

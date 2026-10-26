@@ -1,0 +1,112 @@
+{
+  "id": "bomberman-hero",
+  "name": "Bomberman Hero: Recompiled",
+  "originalGame": "Bomberman Hero (Nintendo 64)",
+  "description": "Recompilação estática de Bomberman Hero para PC (N64: Recompiled + RT64), com widescreen, alta taxa de quadros e mods. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/RevoSucks/BMHeroRecomp",
+  "accentColor": "#e0442f",
+  "executables": {
+    "win32": ["BMHeroRecompiled.exe"],
+    "linux": ["BMHeroRecompiled"]
+  },
+  "detectFiles": ["BMHeroRecompiled.exe", "BMHeroRecompiled", "recompcontrollerdb.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Bomberman Hero (N64, EUA 1.0)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão americana 1.0 do N64 é aceita; arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["bmhero.z64", "{localAppData}/BMHeroRecompiled/bmhero.z64", "{home}/.config/BMHeroRecompiled/bmhero.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\BMHeroRecompiled no Windows ou ~/.config/BMHeroRecompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/BMHeroRecompiled/general.json"],
+        "linux": ["general.json", "{home}/.config/BMHeroRecompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/BMHeroRecompiled/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/BMHeroRecompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/BMHeroRecompiled/controls.json"],
+        "linux": ["controls.json", "{home}/.config/BMHeroRecompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/BMHeroRecompiled/sound.json"],
+        "linux": ["sound.json", "{home}/.config/BMHeroRecompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "RevoSucks/BMHeroRecomp",
+    "assetPatterns": {
+      "win32": "BMHeroRecompiled-Windows-*.zip",
+      "linux": "BMHeroRecompiled-Linux-X64-*.zip"
+    },
+    "includePrereleases": true,
+    "preserve": [
+      "portable.txt",
+      "saves/**",
+      "mods/**",
+      "mod_config/**",
+      "mods.json",
+      "general.json",
+      "graphics.json",
+      "controls.json",
+      "sound.json",
+      "cheats.json",
+      "*.z64",
+      "*.n64",
+      "*.v64"
+    ],
+    "_todo": "O .zip do Linux traz um BMHeroRecompiled.tar.gz dentro (arquivo aninhado, extraído pelo instalador). Os zips de AppImage, Linux ARM64, Flatpak, macOS e PDB não são selecionados."
+  },
+  "_todo": [
+    "O projeto só publica prereleases (\"stable beta\" v0.6.2 a v0.7.1); por isso includePrereleases é true.",
+    "Zips feitos pelo CI (validate.yml, GitHub Actions; ROM vinda de repositório privado por secret): Windows = BMHeroRecompiled.exe, dxcompiler.dll, dxil.dll, SDL2.dll, assets/ (interface) e recompcontrollerdb.txt; Linux = BMHeroRecompiled.tar.gz com BMHeroRecompiled, assets/ e recompcontrollerdb.txt. assets/ traz SVGs de interface herdados do Banjo: Recompiled (Banjo.svg, Kazooie.svg, Jiggy*.svg). Não conferi o zip baixado.",
+    "Nome da ROM guardada (bmhero.z64) deduzido do game_id \"bmhero\" + \".z64\"; pasta de dados = program_id \"BMHeroRecompiled\" (include/banjo_config.h; recompui::file::get_app_folder_path). Nomes dos .json de config supostos pelo padrão do RecompFrontend.",
+    "Problemas conhecidos: skybox desalinhado em todas as fases (vem do jogo original), transições de câmera em cutscenes ainda erradas, falhas de 1 quadro em demos/cutscenes."
+  ],
+  "_sources": [
+    "https://github.com/RevoSucks/BMHeroRecomp",
+    "https://github.com/RevoSucks/BMHeroRecomp/releases",
+    "https://github.com/RevoSucks/BMHeroRecomp/releases/expanded_assets/v0.7.1",
+    "https://github.com/RevoSucks/BMHeroRecomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/RevoSucks/BMHeroRecomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/RevoSucks/BMHeroRecomp/blob/HEAD/include/banjo_config.h"
+  ]
+}

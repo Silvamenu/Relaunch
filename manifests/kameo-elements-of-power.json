@@ -1,0 +1,58 @@
+{
+  "id": "kameo-elements-of-power",
+  "name": "Kameo: RePowered",
+  "originalGame": "Kameo: Elements of Power (Xbox 360)",
+  "description": "Recompilação estática não oficial de Kameo: Elements of Power para Windows e Linux, feita com o ReXGlue SDK, com teclado e mouse. Usa os arquivos extraídos da ISO do seu próprio disco de Xbox 360.",
+  "category": "xbox",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/birabittoh/KameoRePowered",
+  "accentColor": "#3a8fd6",
+  "executables": {
+    "win32": ["kameorepowered.exe"],
+    "linux": ["kameorepowered"]
+  },
+  "detectFiles": ["kameorepowered.exe", "kameorepowered"],
+  "requirements": [
+    {
+      "id": "assets",
+      "type": "file",
+      "label": "Arquivos extraídos do seu disco de Kameo (pasta assets)",
+      "patterns": ["assets/default.xex"],
+      "helpText": "Extraia a ISO do seu disco de Kameo: Elements of Power (Xbox 360) com um extrator de XISO (por exemplo o extract-xiso) para uma pasta chamada assets dentro da pasta do jogo, de modo que exista assets/default.xex."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "kameorepowered.toml",
+      "format": "text",
+      "label": "Opções (kameorepowered.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "birabittoh/KameoRePowered",
+    "assetPatterns": {
+      "win32": "kameorepowered-v*-windows-x64.zip",
+      "linux": "kameorepowered-v*-linux-x64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["assets/**", "kameorepowered.toml", "logs/**"]
+  },
+  "_todo": [
+    "Release estável mais nova: v0.2.1 (2026-06-23, Latest) com kameorepowered-v0.2.1-windows-x64.zip (23,6 MB), kameorepowered-v0.2.1-linux-x64.tar.gz (80,5 MB) e as variantes -tu- (build feito sobre o Title Update). As v0.3.x de outubro são pré-releases e ficam de fora. Os padrões não casam com as variantes -tu-.",
+    "Pelo workflow (.github/workflows/_build.yml) e scripts/build.py (do_package), os arquivos são montados no CI do GitHub e têm só o executável e as bibliotecas do SDK (.dll/.so) na raiz, sem pasta; o default.xex usado no codegen vem de um repositório privado e não entra no pacote. O download do GitHub está bloqueado aqui, então a listagem não foi conferida.",
+    "O ícone do exe (icon/app.ico) é um recorte da arte oficial do rosto da Kameo; é o único material do jogo no pacote.",
+    "O README diz que o código recompilado \"não é redistribuível\" e pede para não compartilhar binários, embora o próprio autor publique os binários nas releases (como todo projeto de recompilação).",
+    "A versão de disco exigida não está documentada (o exemplo do README é a ISO USA). Saves e DLCs ficam em Documentos/kameorepowered (Windows) ou ~/.local/share/kameorepowered (Linux); DLCs precisam ser extraídas com scripts/extract_dlc.py (Python), o que o app não faz."
+  ],
+  "_sources": [
+    "https://github.com/birabittoh/KameoRePowered",
+    "https://github.com/birabittoh/KameoRePowered/releases",
+    "https://github.com/birabittoh/KameoRePowered/releases/expanded_assets/v0.2.1",
+    "https://raw.githubusercontent.com/birabittoh/KameoRePowered/HEAD/README.md",
+    "https://raw.githubusercontent.com/birabittoh/KameoRePowered/HEAD/icon/app.ico",
+    "git: .github/workflows/_build.yml, scripts/build.py, kameorepowered_manifest.toml, src/kameorepowered_app.h, src/main.cpp"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "id": "banjo-kazooie",
+  "name": "Lighthouse",
+  "originalGame": "Banjo-Kazooie (Nintendo 64)",
+  "description": "Port de Banjo-Kazooie para PC baseado na decompilação, da equipe Harbour Masters, com multijogador online (Anchor), romhacks, pacotes de idioma e randomizer. Precisa da sua própria ROM do N64 em .z64.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "gameKey": "banjo-kazooie",
+  "repoUrl": "https://github.com/HarbourMasters/Lighthouse",
+  "website": "https://www.harbourmasters.org/",
+  "accentColor": "#d64933",
+  "executables": {
+    "win32": ["Lighthouse.exe"],
+    "linux": ["lighthouse.appimage"]
+  },
+  "detectFiles": ["Lighthouse.exe", "lighthouse.appimage", "lighthouse.o2r"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Banjo-Kazooie (N64, .z64)",
+      "optional": true,
+      "extensions": ["z64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "1fe1632098865f639e22c11b9a81ee8f29c75d7a",
+            "label": "EUA 1.0"
+          },
+          {
+            "sha1": "ded6ee166e740ad1bc810fd678a84b48e245ab80",
+            "label": "EUA 1.1"
+          },
+          {
+            "sha1": "90726d7e7cd5bf6cdfd38f45c9acbf4d45bd9fd8",
+            "label": "Japão"
+          },
+          {
+            "sha1": "bb359a75941df74bf7290212c89fbc6e2c5601fe",
+            "label": "Europa (PAL)"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve para conferir se o seu dump é uma das versões aceitas. A ROM precisa estar no formato .z64 (big-endian); .n64/.v64 precisam ser convertidos antes. O próprio jogo pede o arquivo na primeira execução."
+    },
+    {
+      "id": "generate-o2r",
+      "type": "firstRun",
+      "label": "Gerar os dados do jogo a partir da sua ROM (bk.o2r)",
+      "doneWhen": ["bk.o2r", "{home}/.local/share/lighthouse/bk.o2r"],
+      "helpText": "Abra o jogo e escolha sua ROM quando ele pedir: ele extrai os dados para bk.o2r (uma vez só). No Linux, saves, configurações, mods e bk.o2r ficam em ~/.local/share/lighthouse/. ROMs de outras regiões podem ser extraídas depois como pacotes de idioma (menu General > Languages)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "lighthouse.cfg.json",
+        "linux": ["lighthouse.cfg.json", "{home}/.local/share/lighthouse/lighthouse.cfg.json"]
+      },
+      "format": "json",
+      "label": "Configurações (lighthouse.cfg.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "HarbourMasters/Lighthouse",
+    "assetPatterns": {
+      "win32": "Lighthouse-*-Win64.zip",
+      "linux": ["lighthouse*.appimage", "Lighthouse-*-Linux.zip"]
+    },
+    "includePrereleases": false,
+    "preserve": ["bk.o2r", "mods/**", "lighthouse.cfg.json", "imgui.ini", "logs/**", "Save/**", "saves/**", "*.z64"],
+    "_todo": "Até a 1.1.0 o Linux vinha em Lighthouse-*-Linux.zip; desde a 1.2.0 é o lighthouse.appimage solto (o workflow release.yml atual publica só o AppImage). O zip do macOS não é selecionado."
+  },
+  "_todo": [
+    "Zip do Windows (main.yml/release.yml, GitHub Actions, sem pasta raiz): Lighthouse.exe, lighthouse.o2r (fontes, botões, o logo/modelo do farol e shaders do próprio port, empacotados de port/ pelo Torch), debug/*.pdb, readme.txt, config.yml e assets/yaml (mapas de extração do Torch, sem dados do jogo).",
+    "port/textures/intro/xylophone (131 KB) é uma textura de substituição para tirar o logo da Nintendo do xilofone da abertura (src/port/Enhancements/Cutscenes/IntroLogos.cpp); não conferi se foi redesenhada ou editada a partir da original.",
+    "Nome da pasta de saves no Windows não conferido (Save/** e saves/** no preserve são suposições no padrão dos ports Harbour Masters).",
+    "As releases 1.0.1 a 1.1.0 tinham links de download apontando para IsleOPorts/Lighthouse; a 1.2.0 está no próprio HarbourMasters/Lighthouse."
+  ],
+  "_sources": [
+    "https://github.com/HarbourMasters/Lighthouse",
+    "https://github.com/HarbourMasters/Lighthouse/releases",
+    "https://github.com/HarbourMasters/Lighthouse/releases/expanded_assets/1.2.0",
+    "https://github.com/HarbourMasters/Lighthouse/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/HarbourMasters/Lighthouse/blob/HEAD/.github/workflows/main.yml",
+    "https://github.com/HarbourMasters/Lighthouse/blob/HEAD/README.md",
+    "https://github.com/HarbourMasters/Lighthouse/tree/HEAD/port"
+  ]
+}

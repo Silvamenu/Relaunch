@@ -1,0 +1,64 @@
+{
+  "id": "sega-superstars-tennis",
+  "name": "Sega Superstars Tennis ReMatch",
+  "originalGame": "Sega Superstars Tennis (Xbox 360)",
+  "description": "Port nativo não oficial da versão de Xbox 360 de Sega Superstars Tennis, recompilado com o ReXGlue SDK e com renderizador próprio (D3D12 no Windows, Vulkan no Linux), telas widescreen e teclado e mouse. Usa os arquivos extraídos do seu próprio disco.",
+  "category": "xbox",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/m1ndcrap/Sega-Superstars-Tennis-ReMatch",
+  "accentColor": "#f5a623",
+  "executables": {
+    "win32": ["sst_rematch.exe"],
+    "linux": ["sst_rematch"]
+  },
+  "detectFiles": ["sst_rematch.exe", "sst_rematch", "sst_rematch.sh"],
+  "requirements": [
+    {
+      "id": "assets",
+      "type": "file",
+      "label": "Arquivos extraídos do seu disco de Sega Superstars Tennis (pasta assets)",
+      "patterns": ["assets/default.xex"],
+      "helpText": "Extraia a ISO do seu disco de Sega Superstars Tennis (Xbox 360) com um extrator de XISO (por exemplo o extract-xiso) para uma pasta chamada assets dentro da pasta do jogo, de modo que exista assets/default.xex."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "sst_settings.ini",
+      "format": "ini",
+      "label": "Vídeo (sst_settings.ini)",
+      "editable": true
+    },
+    {
+      "path": "sst_keys.ini",
+      "format": "ini",
+      "label": "Teclas (sst_keys.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "m1ndcrap/Sega-Superstars-Tennis-ReMatch",
+    "assetPatterns": {
+      "win32": "sst_rematch_windows.zip",
+      "linux": "sst_rematch_linux.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["assets/**", "sst_settings.ini", "sst_keys.ini", "cache/**", "logs/**", "user/**"]
+  },
+  "_todo": [
+    "Release v0.6.1 (Latest, 2026-10-24) tem sst_rematch_windows.zip (178 MB) e sst_rematch_linux.tar.gz (82,4 MB); a v0.6 (Linux nativo) é prerelease. O download do GitHub está bloqueado aqui: o conteúdo do tar.gz vem de packaging/linux/package.cmake (pasta raiz com sst_rematch, bibliotecas .so, shaders/*.pack, sst_rematch.sh, install-desktop-entry.sh, README.txt e sst_rematch.png). O zip de Windows não tem script de empacotamento no repositório (build local); o nome sst_rematch.exe vem do README.",
+    "Os shaders do jogo vêm pré-compilados: tools/shader_bake lê os ShaderCache dos arquivos do jogo, traduz com XenosRecomp e embute os pacotes DXIL/SPIR-V no exe (Windows) ou em shaders/*.pack (Linux). São traduções compiladas dos shaders do jogo, não o microcódigo original; o mesmo tipo de material aceito na rodada 1 (simpsons-game-recomp). Vale revisar.",
+    "O ícone (icon/icon.ico, packaging/linux/sst_rematch.png) é o ícone do jogo ampliado. Os ícones de botões PlayStation/teclado são montados em tempo de execução a partir das texturas do próprio jogo do usuário.",
+    "No Linux o README do pacote diz que tudo (configurações, saves, logs e cache) fica na pasta do jogo; no Windows só está documentado que sst_settings.ini e sst_keys.ini ficam ao lado do exe. A pasta de saves (user/** no preserve) não foi conferida. O Linux pede glibc 2.38 ou mais nova; o exe Linux depende de achar as próprias .so (o sst_rematch.sh só faz cd para a pasta).",
+    "O online está desativado (ONLINE PLAY fica cinza). A região exigida não está documentada. 70 commits, sem licença declarada; o README declara uso de IA (nível 3 da PCGamingWiki)."
+  ],
+  "_sources": [
+    "https://github.com/m1ndcrap/Sega-Superstars-Tennis-ReMatch",
+    "https://github.com/m1ndcrap/Sega-Superstars-Tennis-ReMatch/releases",
+    "https://github.com/m1ndcrap/Sega-Superstars-Tennis-ReMatch/releases/expanded_assets/v0.6.1",
+    "https://raw.githubusercontent.com/m1ndcrap/Sega-Superstars-Tennis-ReMatch/HEAD/README.md",
+    "https://raw.githubusercontent.com/m1ndcrap/Sega-Superstars-Tennis-ReMatch/HEAD/packaging/linux/sst_rematch.png",
+    "git: packaging/linux/package.cmake, packaging/linux/README.txt, packaging/linux/sst_rematch.sh, src/sst_rematch_app.h, src/gpu/native/prompts.cpp, tools/shader_bake/"
+  ]
+}

@@ -3,7 +3,7 @@ import { promises as fs } from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { AppError, toErrorShape } from '../shared/errors'
-import { parseManifest, type GithubUpdates, type Manifest } from '../shared/manifest'
+import { parseManifest, type Manifest, type ReleaseUpdates } from '../shared/manifest'
 import { assetPatternsFor, executablesFor } from '../shared/manifestUtils'
 import { pickAsset } from '../shared/patterns'
 import type { GameEntry, GameUpdateState, LibraryItem, ReleaseInfo, RepoInspection, UpdateProgress } from '../shared/types'
@@ -11,6 +11,7 @@ import { isNewerRelease } from '../shared/version'
 import type { AppContext } from './context'
 import { mainText } from './i18n'
 import { GitHubClient } from './github'
+import { GitLabClient } from './gitlab'
 import type { LibraryService } from './library'
 import { readSmallTextFile, writeFileAtomic } from './fsutil'
 import { isAnyRunning } from './processes'
@@ -22,13 +23,14 @@ export const FIRST_CHECK_DELAY_MS = 5_000
 
 const electronFetch = ((input: string | URL | Request, init?: RequestInit) => net.fetch(input instanceof URL ? input.toString() : input, init)) as typeof fetch
 
-function githubUpdatesOf(manifest: Manifest | null): GithubUpdates | null {
-  return manifest?.updates.source === 'github-releases' ? manifest.updates : null
+function releaseUpdatesOf(manifest: Manifest | null): ReleaseUpdates | null {
+  return manifest && manifest.updates.source !== 'none' ? manifest.updates : null
 }
 
-/** Verificação periódica e aplicação de atualizações dos jogos a partir dos GitHub Releases. */
+/** Verificação periódica e aplicação de atualizações dos jogos a partir dos releases (GitHub ou gitlab.com). */
 export class GameUpdateService {
   private readonly client: GitHubClient
+  private readonly gitlab = new GitLabClient(electronFetch)
   private readonly controllers = new Map<string, AbortController>()
   /** Atualizações e restaurações em andamento: ao fechar, o app espera a limpeza delas. */
   private readonly running = new Set<Promise<unknown>>()
@@ -83,7 +85,11 @@ export class GameUpdateService {
     }
   }
 
-  private acceptRelease(updates: GithubUpdates) {
+  private releasesOf(updates: ReleaseUpdates): GitHubClient | GitLabClient {
+    return updates.source === 'gitlab-releases' ? this.gitlab : this.client
+  }
+
+  private acceptRelease(updates: ReleaseUpdates) {
     const patterns = assetPatternsFor(updates, this.ctx.platform)
     return (release: ReleaseInfo) => pickAsset(release.assets, patterns) !== null
   }
@@ -100,11 +106,11 @@ export class GameUpdateService {
 
   private async doCheck(entryId?: string): Promise<LibraryItem[]> {
     const entries = this.ctx.store.getEntries().filter((e) => !entryId || e.id === entryId)
-    const byRepo = new Map<string, { updates: GithubUpdates; entries: GameEntry[] }>()
+    const byRepo = new Map<string, { updates: ReleaseUpdates; entries: GameEntry[] }>()
     for (const entry of entries) {
-      const updates = githubUpdatesOf(this.ctx.getManifest(entry.manifestId))
+      const updates = releaseUpdatesOf(this.ctx.getManifest(entry.manifestId))
       if (!updates) continue
-      const key = `${updates.repo.toLowerCase()}|${updates.includePrereleases}|${assetPatternsFor(updates, this.ctx.platform).join(',')}`
+      const key = `${updates.source}|${updates.repo.toLowerCase()}|${updates.includePrereleases}|${assetPatternsFor(updates, this.ctx.platform).join(',')}`
       const group = byRepo.get(key) ?? { updates, entries: [] }
       group.entries.push(entry)
       byRepo.set(key, group)
@@ -115,7 +121,7 @@ export class GameUpdateService {
       let latest: ReleaseInfo | null = null
       let error: ReturnType<typeof toErrorShape> | undefined
       try {
-        latest = await this.client.getLatestRelease(updates.repo, updates.includePrereleases, this.acceptRelease(updates))
+        latest = await this.releasesOf(updates).getLatestRelease(updates.repo, updates.includePrereleases, this.acceptRelease(updates))
         if (!latest) error = { code: 'NO_RELEASE', message: 'Nenhum release com binário para esta plataforma' }
       } catch (err) {
         error = toErrorShape(err)
@@ -146,9 +152,9 @@ export class GameUpdateService {
 
   async releases(entryId: string): Promise<ReleaseInfo[]> {
     const entry = this.ctx.store.getEntry(entryId)
-    const updates = githubUpdatesOf(entry ? this.ctx.getManifest(entry.manifestId) : null)
+    const updates = releaseUpdatesOf(entry ? this.ctx.getManifest(entry.manifestId) : null)
     if (!updates) throw new AppError('UPDATES_DISABLED')
-    const list = await this.client.listReleases(updates.repo, 30)
+    const list = await this.releasesOf(updates).listReleases(updates.repo, 30)
     return list.filter((r) => updates.includePrereleases || !r.prerelease)
   }
 
@@ -189,9 +195,9 @@ export class GameUpdateService {
    * terminar, o cadastro e a pasta vazia são desfeitos.
    */
   async install(manifest: Manifest, parent: string, opts: { onInstalled?: (entryId: string) => Promise<void> } = {}): Promise<LibraryItem> {
-    const updates = githubUpdatesOf(manifest)
+    const updates = releaseUpdatesOf(manifest)
     if (!updates) throw new AppError('UPDATES_DISABLED')
-    const latest = await this.client.getLatestRelease(updates.repo, updates.includePrereleases, this.acceptRelease(updates))
+    const latest = await this.releasesOf(updates).getLatestRelease(updates.repo, updates.includePrereleases, this.acceptRelease(updates))
     if (!latest) throw new AppError('NO_RELEASE')
     const item = await this.library.prepareInstall(parent, manifest)
     const entryId = item.entry.id
@@ -306,7 +312,7 @@ export class GameUpdateService {
   private async runStart(entryId: string, opts: { automatic?: boolean; fresh?: boolean }): Promise<void> {
     let entry = this.library.requireEntry(entryId)
     const manifest = this.ctx.getManifest(entry.manifestId)
-    const updates = githubUpdatesOf(manifest)
+    const updates = releaseUpdatesOf(manifest)
     if (!manifest || !updates) throw new AppError('UPDATES_DISABLED')
     if (this.library.isBusy(entryId)) throw new AppError('BUSY')
 
@@ -389,7 +395,7 @@ export class GameUpdateService {
     const backup = backups[0]
     if (!backup) throw new AppError('NO_BACKUP')
 
-    const preserve = githubUpdatesOf(manifest)?.preserve ?? []
+    const preserve = releaseUpdatesOf(manifest)?.preserve ?? []
     const base = { entryId, name: entry.customName || manifest.name, kind: 'rollback' as const, version: backup.meta.version }
     this.library.setBusy(entryId, true)
     await this.library.broadcast()

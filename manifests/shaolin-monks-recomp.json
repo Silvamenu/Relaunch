@@ -1,0 +1,71 @@
+{
+  "id": "shaolin-monks-recomp",
+  "name": "OpenShao",
+  "originalGame": "Mortal Kombat: Shaolin Monks (Xbox)",
+  "description": "Port para PC de Mortal Kombat: Shaolin Monks feito por recompilação estática da versão de Xbox (antes chamado Shaolin Monks Recomp). Você fornece a ISO, o ZIP ou a pasta extraída do seu próprio disco americano ou europeu.",
+  "category": "xbox",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/OAleex/OpenShao",
+  "accentColor": "#b8860b",
+  "executables": {
+    "win32": ["OpenShao.exe"],
+    "linux": ["OpenShao"]
+  },
+  "detectFiles": ["OpenShao.exe", "OpenShao", "licenses/XboxXBERecomp-MIT.txt"],
+  "requirements": [
+    {
+      "id": "select-game",
+      "type": "firstRun",
+      "label": "Selecionar seu jogo (Xbox, EUA ou Europa) no launcher do port",
+      "doneWhen": ["{localAppData}/OpenShao/game-source.toml", "{home}/.local/share/OpenShao/game-source.toml"],
+      "helpText": "Abra o jogo e escolha a ISO/XISO do seu próprio disco, um ZIP dela, a pasta extraída ou o default.xbe; depois clique em Play. ISO e XISO são lidas direto, então mantenha o arquivo ou a pasta no lugar (dá para trocar na página Files). Só as versões de Xbox dos EUA e da Europa funcionam; imagens renomeadas ou convertidas de outras versões não são aceitas."
+    },
+    {
+      "id": "linux-libs",
+      "type": "firstRun",
+      "label": "Linux: glibc 2.38 ou mais nova e libcurl do sistema",
+      "optional": true,
+      "helpText": "No Linux, o executável exige glibc 2.38 ou mais nova e usa a libcurl do sistema para baixar mods e atualizações. O renderizador usa Vulkan."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "{localAppData}/OpenShao/settings.toml",
+        "linux": "{home}/.local/share/OpenShao/settings.toml"
+      },
+      "format": "text",
+      "label": "Configurações (settings.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "OAleex/OpenShao",
+    "assetPatterns": {
+      "win32": "OpenShao-*-Windows-x64.zip",
+      "linux": "OpenShao-*-Linux-x64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [],
+    "_todo": "O projeto foi renomeado de ShaolinMonksRecomp para OpenShao na 0.3.0: o repositório agora é OAleex/OpenShao (o endereço antigo redireciona) e os assets passaram a se chamar OpenShao-<versão>-Windows-x64.zip e OpenShao-<versão>-Linux-x64.tar.gz. O checksums.txt fica de fora."
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a release atual é a v0.3.0 (25/10/2026, Latest), a única que aparece na página; a 0.2.0 do rascunho da rodada 1 sumiu. O histórico do repositório foi reescrito num commit \"introduce OpenShao 0.3.0\" (a página mostra 5 commits). Pacotes conferidos pelo tools/package_release.py: o zip de Windows (9,65 MB) tem OpenShao.exe, readme.txt e licenses/ na raiz; o tar.gz de Linux (11,3 MB) tem a pasta OpenShao/ com o executável OpenShao, readme.txt e licenses/. Nenhum dado do jogo; o modo Survival restaurado é código (src/survival5_recovery_hooks.cpp).",
+    "Dados (configurações, logs, cache, mods, game-source.toml) ficam em %LOCALAPPDATA%\\OpenShao ou ~/.local/share/OpenShao (src/runtime_paths.cpp, kDataFolder), e os saves na pasta Jogos Salvos do Windows ou em .../OpenShao/saves no Linux. A pasta de dados da versão anterior (Shaolin Monks Recomp) é renomeada automaticamente. Se o usuário mudar as pastas (paths.toml), o doneWhen não detecta.",
+    "O launcher do port verifica atualizações ao iniciar (com SHA-256) e baixa mods e pacotes de idioma do catálogo OAleex/OpenShao-Mods. Só aceita assets de releases de repositórios github.com/OAleex/ (src/mods/catalog.cpp, OfficialRelease). O atualizador do próprio jogo pode conflitar com o do app.",
+    "Problemas conhecidos (README): os extras Mortal Kombat II e a demo de The Suffering não rodam; cenas novas podem travar um pouco na primeira vez, enquanto os shaders são compilados.",
+    "Desenvolvimento com ajuda declarada de IA (README); o mantenedor é o grupo de tradução OAleex Traduções. As releases são montadas localmente (sem CI)."
+  ],
+  "_sources": [
+    "https://github.com/OAleex/OpenShao",
+    "https://github.com/OAleex/ShaolinMonksRecomp/releases",
+    "https://github.com/OAleex/ShaolinMonksRecomp/releases/expanded_assets/v0.3.0",
+    "https://github.com/OAleex/OpenShao/blob/main/tools/package_release.py",
+    "https://github.com/OAleex/OpenShao/blob/main/src/runtime_paths.cpp",
+    "https://github.com/OAleex/OpenShao/blob/main/src/data_home.h",
+    "https://github.com/OAleex/OpenShao/blob/main/src/mods/catalog.cpp",
+    "https://github.com/OAleex/OpenShao/blob/main/README.md"
+  ]
+}

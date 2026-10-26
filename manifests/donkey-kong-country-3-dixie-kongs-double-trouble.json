@@ -1,0 +1,69 @@
+{
+  "id": "donkey-kong-country-3-dixie-kongs-double-trouble",
+  "name": "DKC3Recomp",
+  "originalGame": "Donkey Kong Country 3: Dixie Kong's Double Trouble! (SNES)",
+  "description": "Recompilação estática de Donkey Kong Country 3 para PC, feita com o snesrecomp, com widescreen até 21:9 (projeto em fase inicial). Você precisa da sua própria ROM norte-americana (En,Fr) do jogo.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/elliotttate/DKC3Recomp",
+  "accentColor": "#2f8f5b",
+  "executables": {
+    "win32": ["DKC3Recomp.exe"]
+  },
+  "detectFiles": ["DKC3Recomp.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Donkey Kong Country 3 (SNES, EUA, En/Fr)",
+      "optional": true,
+      "extensions": ["sfc", "smc"],
+      "validation": {
+        "sizes": [4194304]
+      },
+      "copyToGameDir": false,
+      "helpText": "Opcional: serve só para conferir o tamanho do arquivo (4 MiB, sem cabeçalho). O jogo não recebe o arquivo por aqui; ele é escolhido no launcher do próprio jogo (passo seguinte). Só a versão norte-americana (En,Fr) sem modificações é aceita (SHA-256 2277a2d8dddb01fe5cb0ae9a0fa225d42b3a11adccaeafa18e3c339b3794a32b)."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Escolher a ROM no launcher do jogo",
+      "doneWhen": ["rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM. O caminho fica salvo em rom.cfg, na pasta do jogo; a ROM não é copiada."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "launcher.cfg",
+      "format": "ini",
+      "label": "Vídeo, áudio e controles (launcher.cfg)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "elliotttate/DKC3Recomp",
+    "assetPatterns": {
+      "win32": "DKC3Recomp-*-windows-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["saves/**", "rom.cfg", "launcher.cfg", "keybinds.ini", "*.sfc", "*.smc"],
+    "_todo": "Cada release traz também o zip do macOS (arm64) e arquivos .sha256; o padrão só casa com o zip do Windows."
+  },
+  "_todo": [
+    "Build local do autor, sem CI nem script de empacotamento no repositório. Pelas notas da v0.0.6 e pelo README, o zip (5,73 MB) traz DKC3Recomp.exe (o host SDL renomeado), SDL2.dll e assets/ do launcher recomp-ui; o recomp/launcher/boxart.tga embutido é um cartão com o nome do jogo, não a capa oficial. As notas dizem que não há ROM, saves, C gerado nem capturas. A lista exata de arquivos (e se há pasta raiz) não foi conferida.",
+    "O projeto não documenta SHA-1 da ROM (só SHA-256), por isso a validação é só por tamanho.",
+    "Fase de bring-up: boot, launcher, save states e Lakeside Limbo testados; o jogo completo não foi validado. Não há build de Linux."
+  ],
+  "_sources": [
+    "https://github.com/elliotttate/DKC3Recomp",
+    "https://github.com/elliotttate/DKC3Recomp/releases",
+    "https://github.com/elliotttate/DKC3Recomp/releases/expanded_assets/v0.0.6",
+    "https://github.com/elliotttate/DKC3Recomp/blob/HEAD/README.md",
+    "https://github.com/elliotttate/DKC3Recomp/blob/HEAD/docs/releases/v0.0.6.md",
+    "https://github.com/elliotttate/DKC3Recomp/blob/HEAD/recomp/launcher/README.md",
+    "https://github.com/elliotttate/DKC3Recomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/elliotttate/DKC3Recomp/blob/HEAD/runner/desktop_launcher.c"
+  ]
+}

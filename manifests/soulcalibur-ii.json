@@ -1,0 +1,66 @@
+{
+  "id": "soulcalibur-ii",
+  "name": "Ring Out",
+  "originalGame": "Soulcalibur II (GameCube)",
+  "description": "Port nativo de Soulcalibur II para PC: o executável do jogo é recompilado estaticamente a partir do seu disco e roda num runtime derivado do Dolphin. Você precisa da imagem do seu próprio disco de GameCube (qualquer região).",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/jackpoison-prog/RingOut",
+  "accentColor": "#c9a227",
+  "executables": {
+    "win32": ["RingOut.exe"],
+    "linux": ["RingOut"]
+  },
+  "detectFiles": ["RingOut.exe", "bin/moderngekko-run.exe", "bin/moderngekko-run"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Soulcalibur II (GameCube)",
+      "optional": true,
+      "extensions": ["iso", "gcm", "rvz", "wbfs", "gcz", "wia"],
+      "copyToGameDir": false,
+      "helpText": "Opcional aqui: o disco é escolhido pelo próprio jogo na primeira execução (passo seguinte). Discos americano (GRSEAF), japonês e europeu funcionam; o mod comunitário Soulcalibur II Plus (GRSEPS) também."
+    },
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Primeira execução: escolher o disco e recompilar",
+      "doneWhen": ["bin/g*_recomp.dll", "bin/g*_recomp.so"],
+      "helpText": "Abra o jogo: ele pede a imagem do seu disco, extrai o disco para a pasta do jogo e recompila o executável na sua máquina (leva alguns minutos; no Linux abre um terminal para acompanhar). No Windows o compilador já vem no pacote. No Linux instale antes cmake, ninja, clang (ou gcc) e python3 pelo gerenciador de pacotes da sua distro; o setup diz o comando certo se faltar algo. Depois de uma atualização o jogo pode pedir o disco de novo para recompilar."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "jackpoison-prog/RingOut",
+    "assetPatterns": {
+      "win32": "RingOut-*-windows-x64.zip",
+      "linux": "RingOut-*-linux-x86_64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["userdata/**", "game/**", "art/**"],
+    "_todo": "O módulo recompilado (bin/g<DISCID>_recomp.dll/.so) não é preservado de propósito: versões novas costumam exigir recompilar (ex.: 1.6.3 recusa instalações antigas com 'CPU ABI mismatch'). Sem o módulo, o launcher do jogo pede o disco de novo e refaz o setup. O instalador RingOut-*-windows-x64-setup.exe, o pacote do Steam Deck e a pre-release contínua 'windows-latest' (zip pgo-instrument) não casam com os padrões."
+  },
+  "_todo": [
+    "Os zips não foram listados por dentro (download do github.com bloqueado aqui). Conteúdo conferido nos scripts: .github/scripts/package-windows.ps1 (pasta RingOut-<versão>/ com RingOut.exe compilado de dist/RingOut-1.0-dist/windows/launcher/RingOut.c, bin/moderngekko-run.exe, tools/dolrecomp.exe, setup.ps1, toolchain llvm-mingw fixado + cmake + ninja + Python embutido, ffmpeg LGPL, module-src com perfis PGO, userdata/GameSettings/GRSEAF.ini) e package-dist.sh (Linux: pasta RingOut-<versão>-linux/ com o script bash RingOut, setup.sh, bin/moderngekko-run, lib/). Nenhum dado do jogo vai no pacote; o banner e o ícone do memory card são extraídos do disco do usuário (tools/gc-art.py), e o build falha se houver *_recomp.so, .gci ou .iso no pacote.",
+    "No Windows o RingOut.exe roda setup.ps1 com 'powershell -ExecutionPolicy Bypass' para dirigir cmake/ninja com o toolchain incluído (zip de ~231 MB). O README chama o Windows de 'test build' (testado num notebook fraco); Linux e Steam Deck são as plataformas principais.",
+    "No Linux o executável é um script bash (RingOut) que usa kdialog/zenity para escolher o disco e abre konsole/x-terminal-emulator para o setup; depende de cmake, ninja, clang/gcc e python3 do sistema e de um driver Vulkan.",
+    "Código escrito em grande parte com ajuda de IA (Claude), segundo o próprio README; 229 commits, releases do Windows feitas no CI (workflow_dispatch). Saves, replays, mods e texturas HD ficam em userdata/ dentro da pasta do jogo.",
+    "compatibility 'playable': o README diz 'playable start to finish' com netplay funcionando; o ajuste de desempenho no Windows ainda é recente."
+  ],
+  "_sources": [
+    "https://github.com/jackpoison-prog/RingOut",
+    "https://github.com/jackpoison-prog/RingOut/releases",
+    "https://github.com/jackpoison-prog/RingOut/releases?page=2",
+    "https://github.com/jackpoison-prog/RingOut/releases/expanded_assets/v1.6.10",
+    "https://github.com/jackpoison-prog/RingOut/blob/HEAD/README.md",
+    "https://github.com/jackpoison-prog/RingOut/blob/HEAD/.github/scripts/package-windows.ps1",
+    "https://github.com/jackpoison-prog/RingOut/blob/HEAD/.github/scripts/package-dist.sh",
+    "https://github.com/jackpoison-prog/RingOut/blob/HEAD/.github/workflows/windows.yml",
+    "https://github.com/jackpoison-prog/RingOut/blob/HEAD/.github/workflows/deck.yml",
+    "https://github.com/jackpoison-prog/RingOut/blob/HEAD/dist/RingOut-1.0-dist/RingOut",
+    "https://github.com/jackpoison-prog/RingOut/blob/HEAD/dist/RingOut-1.0-dist/setup.sh",
+    "https://github.com/jackpoison-prog/RingOut/blob/HEAD/dist/RingOut-1.0-dist/windows/launcher/RingOut.c"
+  ]
+}

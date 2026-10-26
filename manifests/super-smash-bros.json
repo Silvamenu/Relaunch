@@ -1,0 +1,75 @@
+{
+  "id": "super-smash-bros",
+  "name": "BattleShip",
+  "originalGame": "Super Smash Bros. (Nintendo 64)",
+  "description": "Port nativo para PC de Super Smash Bros. feito a partir da decompilação do jogo, com libultraship (a mesma base do Ship of Harkinian). Na primeira abertura ele extrai os recursos da sua própria ROM americana (v1.0).",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/JRickey/BattleShip",
+  "accentColor": "#d4372c",
+  "executables": {
+    "win32": ["BattleShip.exe"],
+    "linux": ["BattleShip-x86_64.AppImage"]
+  },
+  "detectFiles": ["BattleShip.exe", "BattleShip-x86_64.AppImage", "f3d.o2r", "torch.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Super Smash Bros. (N64, EUA, v1.0)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "e2929e10fccc0aa84e5776227e798abc07cedabf",
+            "label": "NTSC-U v1.0 (NALE, .z64)"
+          }
+        ]
+      },
+      "copyToGameDir": false,
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão certa. Só a ROM americana v1.0 funciona nesta versão (a japonesa usa outro download do projeto). Arquivos .n64/.v64 têm SHA-1 diferente do .z64."
+    },
+    {
+      "id": "extract",
+      "type": "firstRun",
+      "label": "Extrair os recursos da ROM no assistente do jogo",
+      "doneWhen": ["{appData}/BattleShip/BattleShip.o2r", "{localAppData}/BattleShip/BattleShip.o2r"],
+      "helpText": "Abra o jogo: o assistente de primeira execução pede a sua ROM (ou procura baserom.us.z64 na pasta do jogo e na pasta de dados) e gera o arquivo BattleShip.o2r com o torch.exe que vem no pacote. Depois disso a ROM não é mais lida. Os dados ficam em %APPDATA%\\BattleShip no Windows ou ~/.local/share/BattleShip no Linux."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "JRickey/BattleShip",
+    "assetPatterns": {
+      "win32": "BattleShip-windows.zip",
+      "linux": "BattleShip-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["baserom.us.z64", "baserom.us.n64", "baserom.us.v64"],
+    "_todo": [
+      "Os nomes dos assets não têm versão; os padrões são exatos e não casam com as builds japonesas (BattleShip-JP-windows.zip, BattleShip-JP-x86_64.AppImage), Android (.apk) nem macOS (.dmg).",
+      "O próprio BattleShip tem verificador/baixador de atualizações embutido (port/enhancements/Updater.cpp), que procura os mesmos assets na release mais recente."
+    ]
+  },
+  "_todo": [
+    "O zip do Windows é gerado no CI (scripts/package-windows.ps1) com os arquivos na raiz: BattleShip.exe, torch.exe, f3d.o2r (shaders abertos do Fast3D), DLLs, config.yml, yamls/us, .tcc (TinyCC para mods em C), fontes OFL e licenças. Nenhum dado da Nintendo vai no pacote; o BattleShip.o2r é gerado da ROM do usuário.",
+    "As notas da v1.4.1-hotfix avisam que a DLL do TinyCC incluída pode ser marcada pelo Windows Defender (sem instrução para desativar o antivírus).",
+    "Pasta de dados = SDL_GetPrefPath(NULL, \"BattleShip\") (port/port.cpp); o caminho exato do BattleShip.o2r vem de Ship::Context::GetPathRelativeToAppDirectory e não foi conferido no libultraship.",
+    "O APK de Android (124 MB) não foi inspecionado; não é usado por este manifesto.",
+    "Projeto feito com ajuda de IA no início (README); 1.0+ sem rótulo de beta, jogo online ainda em desenvolvimento."
+  ],
+  "_sources": [
+    "https://github.com/JRickey/BattleShip",
+    "https://raw.githubusercontent.com/JRickey/BattleShip/HEAD/README.md",
+    "https://github.com/JRickey/BattleShip/releases",
+    "https://github.com/JRickey/BattleShip/releases/expanded_assets/v1.6",
+    "https://github.com/JRickey/BattleShip/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/JRickey/BattleShip/blob/HEAD/scripts/package-windows.ps1",
+    "https://github.com/JRickey/BattleShip/blob/HEAD/port/first_run.cpp",
+    "https://github.com/JRickey/BattleShip/blob/HEAD/port/app_paths.cpp",
+    "https://github.com/JRickey/BattleShip/blob/HEAD/port/port.cpp",
+    "https://github.com/JRickey/BattleShip/blob/HEAD/port/enhancements/Updater.cpp"
+  ]
+}

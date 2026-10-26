@@ -1,0 +1,85 @@
+{
+  "id": "street-fighter-iii-3rd-strike-3sxw",
+  "name": "3SXW",
+  "originalGame": "Street Fighter III: 3rd Strike (PS2)",
+  "description": "Fork do 3SX (port nativo feito a partir da decompilação da versão de PS2) com saves corrigidos, tudo guardado na pasta do jogo, configurador próprio, bezels e scanlines. Você precisa da ISO do seu próprio Street Fighter III: 3rd Strike ou Street Fighter Anniversary Collection de PS2.",
+  "category": "playstation",
+  "compatibility": "ingame",
+  "gameKey": "street-fighter-iii-3rd-strike",
+  "repoUrl": "https://github.com/guimaraf/3sxw",
+  "accentColor": "#d9481c",
+  "executables": {
+    "win32": ["SF3.exe", "bin/SF3.exe"]
+  },
+  "detectFiles": ["SF3.exe", "bin/SF3.exe", "sf3config.exe", "data/img/bezel2.png"],
+  "requirements": [
+    {
+      "id": "afs",
+      "type": "firstRun",
+      "label": "Extrair o SF33RD.AFS da ISO do seu jogo",
+      "doneWhen": ["resources/SF33RD.AFS", "bin/resources/SF33RD.AFS"],
+      "helpText": "Abra o jogo. Na primeira vez ele abre um seletor de arquivo: escolha a ISO do seu Street Fighter III: 3rd Strike ou Street Fighter Anniversary Collection de PS2. O jogo copia o arquivo SF33RD.AFS (pasta THIRD do disco) para a pasta resources ao lado do SF3.exe e confere o SHA-256. Também dá para copiar esse arquivo do disco para lá à mão."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": ["data/config", "bin/data/config"],
+      "format": "text",
+      "label": "Configuração (data/config)",
+      "editable": true,
+      "_todo": "Também pode ser editado pelo sf3config.exe, que vem no pacote."
+    },
+    {
+      "path": ["data/keymap", "bin/data/keymap"],
+      "format": "text",
+      "label": "Mapeamento de teclas (data/keymap)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "guimaraf/3sxw",
+    "assetPatterns": {
+      "win32": "3SX*-windows.zip"
+    },
+    "includePrereleases": true,
+    "preserve": [
+      "resources/**",
+      "data/config",
+      "data/keymap",
+      "data/saves/**",
+      "prints/**",
+      "bin/resources/**",
+      "bin/data/config",
+      "bin/data/keymap",
+      "bin/data/saves/**",
+      "bin/prints/**"
+    ],
+    "_todo": [
+      "O release.yml recria a release 'rolling-pre-release' a cada push na main e a marca como pre-release, trocando os assets (nome com o hash curto do commit, ex.: 3SXW-1dd8515-windows.zip; o workflow atual gera 3SX-<hash>-windows.zip, o padrão cobre os dois). Hoje ela aparece como Latest (Version 1.1, 20 ago); a outra release (tag 'game', 3sxw1.0.zip) não casa com o padrão. Por isso includePrereleases=true. Como a tag não muda, o app pode não perceber versões novas.",
+      "O tarball Linux (3SX*-linux.tar.gz) ficou de fora: o CMakeLists instala só lib/libSDL3.so (normalmente um link simbólico; o executável procura libSDL3.so.0, que não vai no pacote) e as .so do FFmpeg por glob (links de soname são ignorados pelo instalador); o próprio autor diz que Linux/macOS não foram testados. O .dmg do macOS também não casa."
+    ]
+  },
+  "_todo": [
+    "A release não foi baixada (download do github.com bloqueado aqui). Pelo .github/workflows/release.yml e pelo CMakeLists.txt, o zip do Windows é 'cmake --install' em dist/ compactado: tudo dentro de bin/ (SF3.exe, sf3config.exe, DLLs do FFmpeg/SDL3/MinGW, licenses/ e data/img com 4 bezels PNG). Uma pasta de topo única (bin) vira a raiz da instalação; os caminhos com bin/ cobrem o caso contrário. Tamanho 14,7 MB.",
+    "Arte oficial no pacote, aceita pela regra nova: bezels decorativos (bezel.png e bezel-pixel-perfect.png com ilustração oficial dos personagens; bezel2/bezel3 com o logo do jogo e retratos dos personagens) e ícones Hugo/Gill/sf3 embutidos nos executáveis. Os bezels são opcionais (bezel = false por padrão) e não fazem parte dos dados que o jogo precisa; nenhum dado do jogo vem no pacote: o jogo lê só o SF33RD.AFS que o usuário extrai da própria ISO.",
+    "Tudo o que o jogo gera fica ao lado do SF3.exe (data/saves, data/config, data/keymap, data/error.log, prints/ e resources/), segundo o README e src/port/paths.c (SDL_GetBasePath).",
+    "Hard fork do crowded-street/3sx (manifesto street-fighter-iii-3rd-strike-3sx): Windows é a plataforma testada; Gill liberado desde o início; release com aviso de pre-release ('expect bugs'). Por isso compatibility=ingame, igual ao 3SX."
+  ],
+  "_sources": [
+    "https://github.com/guimaraf/3sxw",
+    "https://github.com/guimaraf/3sxw/releases",
+    "https://github.com/guimaraf/3sxw/releases/expanded_assets/rolling-pre-release",
+    "https://github.com/guimaraf/3sxw/releases/expanded_assets/game",
+    "https://raw.githubusercontent.com/guimaraf/3sxw/HEAD/README.md",
+    "https://raw.githubusercontent.com/guimaraf/3sxw/HEAD/CMakeLists.txt",
+    "https://raw.githubusercontent.com/guimaraf/3sxw/rolling-pre-release/CMakeLists.txt",
+    "https://raw.githubusercontent.com/guimaraf/3sxw/HEAD/.github/workflows/release.yml",
+    "https://raw.githubusercontent.com/guimaraf/3sxw/HEAD/appConfig/CMakeLists.txt",
+    "https://raw.githubusercontent.com/guimaraf/3sxw/HEAD/scripts/build/build-deps-common.sh",
+    "https://raw.githubusercontent.com/guimaraf/3sxw/HEAD/src/port/paths.c",
+    "https://raw.githubusercontent.com/guimaraf/3sxw/HEAD/src/port/resources.c",
+    "https://github.com/guimaraf/3sxw/tree/main/img"
+  ]
+}

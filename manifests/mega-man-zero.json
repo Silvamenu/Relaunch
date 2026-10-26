@@ -1,0 +1,103 @@
+{
+  "id": "mega-man-zero",
+  "name": "MegaManZeroRecomp",
+  "originalGame": "Mega Man Zero (Game Boy Advance)",
+  "description": "Recompilação estática de Mega Man Zero para PC, feita com o gbarecomp, com widescreen opcional (prévia em desenvolvimento). Você precisa da sua própria ROM americana do jogo e do dump da BIOS do seu GBA.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/MegaManZeroRecomp",
+  "accentColor": "#c8102e",
+  "executables": {
+    "win32": ["MegaManZeroRecomp.exe"]
+  },
+  "detectFiles": ["MegaManZeroRecomp.exe", "mods/packages/mega-man-zero.enhancement.adaptive-view/1.0.0/manifest.toml"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Mega Man Zero (GBA, EUA)",
+      "optional": true,
+      "extensions": ["gba"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "193b14120119162518a73c70876f0b8bffdbd96e",
+            "label": "Mega Man Zero (USA), revisão 0"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita. O jogo não recebe o arquivo por aqui; a ROM é escolhida no launcher do próprio jogo (passo seguinte). Só a versão americana sem modificações é aceita."
+    },
+    {
+      "id": "bios",
+      "type": "userFile",
+      "label": "O dump da BIOS do seu Game Boy Advance (gba_bios.bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "300c20df6731a33952ded8c436f7f186d25d3492",
+            "label": "BIOS do GBA"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir o arquivo. A BIOS é obrigatória para jogar e também é escolhida no launcher do próprio jogo."
+    },
+    {
+      "id": "select-files",
+      "type": "firstRun",
+      "label": "Escolher a ROM e a BIOS no launcher do jogo",
+      "doneWhen": ["rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM de Mega Man Zero (EUA) e o seu gba_bios.bin. Os caminhos ficam guardados em rom.cfg e bios.cfg, ao lado do executável; saves (saves/), save states e o cache de código ficam na pasta do jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.ini",
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybinds.ini",
+      "format": "ini",
+      "label": "Controles (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/MegaManZeroRecomp",
+    "assetPatterns": {
+      "win32": "MegaManZeroRecomp-windows-x64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["saves/**", "recomp_cache/**", "rom.cfg", "bios.cfg", "config.ini", "keybinds.ini", "game.toml", "*.gba", "*.sav", "gba_bios.bin"]
+  },
+  "_todo": [
+    "Só há build para Windows x64 (v0.0.7, 18/10/2026: MegaManZeroRecomp-windows-x64-v0.0.7.zip, 18,1 MB, e SHA256SUMS.txt). O zip é montado por tools/make_release.ps1 sem pasta raiz: MegaManZeroRecomp.exe, 4 DLLs do MinGW/SDL2, assets/ do launcher recomp-ui (fontes Lato/Noto/OpenMoji, ícones da interface, desenho do controle de GBA e a capa oficial do jogo em assets/img), mods/ (pacote Adaptive Widescreen, só dados), overlay_toolchain/ (TCC usado na autocorreção de código) e um README. O script recusa .gba, .sav, gba_bios.bin, game.toml, rom.cfg e bios.cfg no pacote.",
+    "A capa oficial (recomp/launcher/boxart.tga) vem no zip; arte oficial foi liberada pelo dono do projeto nesta rodada.",
+    "Como em toda recompilação estática, o executável contém o código do jogo traduzido para C++. O gbarecomp também compila a BIOS do GBA recompilada no executável (src/runtime/generated_bios/bios_recompiled.cpp, gerado na máquina do mantenedor e não publicado no repositório), mas o jogo continua exigindo o dump da BIOS do próprio usuário.",
+    "rom.cfg/bios.cfg/config.ini/keybinds.ini ficam ao lado do executável (gbarecomp launcher_seam.h e runtime.cpp); o save é saves/megaman_zero_usa.sav (src/main.cpp) e os save states usam a extensão .state<N> ao lado do save. doneWhen=rom.cfg não foi confirmado em execução.",
+    "SHA-1 da BIOS tirado do bios/README.md do gbarecomp (o runtime valida a BIOS).",
+    "Status do README: prévia em desenvolvimento; a missão de abertura tem cobertura estática completa, o resto do jogo usa o interpretador quando encontra código não coberto. v0.0.6 lista dessincronização do widescreen ao carregar save state e um dispatch miss em 0x08002424 na largura de 288 px."
+  ],
+  "_sources": [
+    "https://github.com/mstan/MegaManZeroRecomp",
+    "https://github.com/mstan/MegaManZeroRecomp/releases",
+    "https://github.com/mstan/MegaManZeroRecomp/releases/expanded_assets/v0.0.7",
+    "https://github.com/mstan/MegaManZeroRecomp/blob/HEAD/README.md",
+    "https://github.com/mstan/MegaManZeroRecomp/blob/HEAD/baserom.md",
+    "https://github.com/mstan/MegaManZeroRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/MegaManZeroRecomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/mstan/MegaManZeroRecomp/blob/HEAD/src/main.cpp",
+    "https://github.com/mstan/recomp-ui/blob/HEAD/cmake/recomp_ui_assets.cmake",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/bios/README.md",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/launcher_seam.h",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/generated_bios/.gitignore"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "id": "bomberman-64",
+  "name": "Bomberman 64: Recompiled",
+  "originalGame": "Bomberman 64 (Nintendo 64)",
+  "description": "Recompilação estática de Bomberman 64 para PC (N64: Recompiled + RT64), com widescreen, alta taxa de quadros e mods. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/RevoSucks/BM64Recomp",
+  "accentColor": "#3a6fd8",
+  "executables": {
+    "win32": ["BM64Recompiled.exe"],
+    "linux": ["BM64Recompiled"]
+  },
+  "detectFiles": ["BM64Recompiled.exe", "BM64Recompiled", "recompcontrollerdb.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Bomberman 64 (N64, EUA 1.0)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão americana 1.0 do N64 é aceita; arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["bm64_us.z64", "{localAppData}/BM64Recompiled/bm64_us.z64", "{home}/.config/BM64Recompiled/bm64_us.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\BM64Recompiled no Windows ou ~/.config/BM64Recompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/BM64Recompiled/general.json"],
+        "linux": ["general.json", "{home}/.config/BM64Recompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/BM64Recompiled/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/BM64Recompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/BM64Recompiled/controls.json"],
+        "linux": ["controls.json", "{home}/.config/BM64Recompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/BM64Recompiled/sound.json"],
+        "linux": ["sound.json", "{home}/.config/BM64Recompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "RevoSucks/BM64Recomp",
+    "assetPatterns": {
+      "win32": "BM64Recompiled-Windows-*.zip",
+      "linux": "BM64Recompiled-Linux-X64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "portable.txt",
+      "saves/**",
+      "mods/**",
+      "mod_config/**",
+      "mods.json",
+      "general.json",
+      "graphics.json",
+      "controls.json",
+      "sound.json",
+      "cheats.json",
+      "*.z64",
+      "*.n64",
+      "*.v64"
+    ],
+    "_todo": "O .zip do Linux traz um BM64Recompiled.tar.gz dentro (arquivo aninhado, extraído pelo instalador). Os zips de AppImage, Linux ARM64, Flatpak, macOS e PDB não são selecionados."
+  },
+  "_todo": [
+    "Zips feitos pelo CI (validate.yml, GitHub Actions; a ROM vem de um repositório privado por secret e só é usada para recompilar): Windows = BM64Recompiled.exe, dxcompiler.dll, dxil.dll, SDL2.dll, assets/ (interface RmlUi) e recompcontrollerdb.txt; Linux = BM64Recompiled.tar.gz com BM64Recompiled, assets/ e recompcontrollerdb.txt. As releases são subidas à mão a partir desses artefatos; não conferi o zip baixado.",
+    "Nome da ROM guardada (bm64_us.z64) deduzido do game_id \"bm64_us\" + \".z64\" (padrão do N64ModernRuntime); pasta de dados = program_id \"BM64Recompiled\" (include/zelda_config.h, src/game/config.cpp). Não conferido num jogo instalado.",
+    "Uma única release (v1.0.0, 22/03/2026). Problemas conhecidos: recorte na tela de créditos e falha de 1-2 quadros nos nomes de itens na tela Custom Bomberman."
+  ],
+  "_sources": [
+    "https://github.com/RevoSucks/BM64Recomp",
+    "https://github.com/RevoSucks/BM64Recomp/releases",
+    "https://github.com/RevoSucks/BM64Recomp/releases/expanded_assets/v1.0.0",
+    "https://github.com/RevoSucks/BM64Recomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/RevoSucks/BM64Recomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/RevoSucks/BM64Recomp/blob/HEAD/src/game/config.cpp",
+    "https://github.com/RevoSucks/BM64Recomp/blob/HEAD/include/zelda_config.h"
+  ]
+}

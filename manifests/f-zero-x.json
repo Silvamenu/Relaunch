@@ -1,0 +1,115 @@
+{
+  "id": "f-zero-x",
+  "name": "G-Diffuser",
+  "originalGame": "F-Zero X (Nintendo 64)",
+  "description": "Port nativo para PC de F-Zero X feito a partir da decompilação do jogo, com widescreen, alta taxa de quadros e o Expansion Kit do 64DD. Você precisa da sua própria ROM americana (rev0, .z64), da imagem do disco do Expansion Kit e do IPL do 64DD.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/Zorkats/G-Diffuser",
+  "accentColor": "#d62f2f",
+  "executables": {
+    "win32": ["G-Diffuser.exe"],
+    "linux": ["G-Diffuser"]
+  },
+  "detectFiles": ["G-Diffuser.exe", "G-Diffuser", "gdx-extract.exe", "gdx-extract", "gdiffuser.o2r"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de F-Zero X (N64, EUA rev0, .z64)",
+      "optional": true,
+      "extensions": ["z64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [{ "sha1": "5f658e88ffa9de23cba6986a8fd3d3a90d7b4340", "label": "EUA rev0 (.z64)" }]
+      },
+      "helpText": "Opcional: serve só para conferir o seu dump. Só a versão americana rev0 em .z64 (big-endian) é aceita; arquivos .n64/.v64 precisam ser convertidos antes, pois o jogo não inverte os bytes. A ROM é escolhida no assistente da primeira execução (passo seguinte)."
+    },
+    {
+      "id": "disk",
+      "type": "userFile",
+      "label": "A imagem do seu disco do Expansion Kit do 64DD (.ndd)",
+      "optional": true,
+      "extensions": ["ndd"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [{ "sha1": "fde9fa6f29a52be0144bda74caf8583c036c20ce", "label": "Expansion Kit com a tradução em inglês" }]
+      },
+      "helpText": "Opcional aqui, mas obrigatório para o jogo: sem o disco do Expansion Kit a configuração não termina. O jogo espera a imagem do seu disco com a tradução de fãs para o inglês (Zoinkity/LuigiBlood); o disco japonês original só é aceito em builds compilados com essa opção."
+    },
+    {
+      "id": "ipl",
+      "type": "userFile",
+      "label": "O IPL do seu 64DD (N64DDIPLROM.n64)",
+      "optional": true,
+      "extensions": ["n64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          { "sha1": "bf861922dcb78c316360e3e742f4f70ff63c9bc3", "label": "IPL do 64DD (Japão)" },
+          { "sha1": "3c5b93ca231550c68693a14f03cea8d5dbd1be9e", "label": "IPL do 64DD (protótipo EUA)" }
+        ]
+      },
+      "helpText": "Opcional aqui, mas obrigatório para o jogo: o dump do IPL do seu 64DD (cerca de 4 MB) fornece a fonte do drive. O dump do protótipo americano é aceito com o nome 64DD_IPL_US_MJR.n64."
+    },
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Gerar os dados do jogo no assistente da primeira execução",
+      "doneWhen": ["fzerox.o2r"],
+      "helpText": "Abra o jogo. O assistente detecta os arquivos que já estão na pasta do jogo (baserom.us.rev0.z64, baserom.translated.ek.ndd e N64DDIPLROM.n64) ou deixa você escolher cada um com Browse; ele copia a ROM com o nome certo. Clique em \"Build game data and continue\": o gdx-extract gera o fzerox.o2r a partir dos seus arquivos. Tudo (dados, saves e configurações) fica na pasta do jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "gdiffuser.cfg.json",
+      "format": "json",
+      "label": "Configurações (gdiffuser.cfg.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Zorkats/G-Diffuser",
+    "assetPatterns": {
+      "win32": "G-Diffuser-*-windows-x64.zip",
+      "linux": "G-Diffuser-*-linux-x64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "mods/**",
+      "gdiffuser.cfg.json",
+      "baserom*.z64",
+      "*.ndd",
+      "*.n64",
+      "fzerox*.o2r",
+      "n64ddipl.o2r",
+      "gdx_firstboot.cfg",
+      "gdx_extract_state.cfg"
+    ],
+    "_todo": "As builds nightly (tag nightly, pre-release) ficam de fora com includePrereleases=false; os pacotes macOS e o SHA256SUMS não casam com os padrões. O pacote também traz um atualizador próprio (gdx-update), que verifica as releases do GitHub."
+  },
+  "_todo": [
+    "Os pacotes (tools/package_windows.ps1 e tools/package_linux.sh, gerados no GitHub Actions) trazem só G-Diffuser, gdx-extract, gdx-update, gdiffuser.o2r (shaders Fast3D, MIT), gamecontrollerdb.txt, fonts/ (OFL), decomp-recipes/ (metadados CC0), shaders/ e licenças, dentro de uma pasta única G-Diffuser. Não baixei os zips para listar (download do GitHub bloqueado aqui); tamanhos 6,98 MB (win) e 9,9 MB (linux) batem com isso.",
+    "O SHA-1 da ROM vem da constante kExpectedRomSha1Fallback (port/gdx_extract_launch.cpp), que espelha o decomp-recipes/config.yml; os SHA-1 do disco e do IPL vêm de port/gdx_firstboot.cpp.",
+    "O README diz que o disco japonês original (baserom.jp.ek.ndd) também é aceito, mas o código recusa dumps japoneses quando GDX_ALLOW_JP_INPUTS está desligado (padrão).",
+    "Notas da v1.1.0: crash intermitente ao entrar numa corrida (cerca de 1 em 13) em investigação; versão japonesa não testada. Por isso compatibility=ingame, embora o README diga que todo o conteúdo do cartucho e do Expansion Kit é jogável do início ao fim.",
+    "Linux exige glibc 2.35 ou mais nova; bibliotecas extras vêm em lib/ ao lado do executável.",
+    "O projeto declara uso de LLM (cerca de 30% do código), revisado pelo autor."
+  ],
+  "_sources": [
+    "https://github.com/Zorkats/G-Diffuser",
+    "https://github.com/Zorkats/G-Diffuser/releases",
+    "https://github.com/Zorkats/G-Diffuser/releases/expanded_assets/v1.1.0",
+    "https://raw.githubusercontent.com/Zorkats/G-Diffuser/HEAD/README.md",
+    "https://github.com/Zorkats/G-Diffuser/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/Zorkats/G-Diffuser/blob/HEAD/.github/workflows/release-windows.yml",
+    "https://github.com/Zorkats/G-Diffuser/blob/HEAD/tools/package_windows.ps1",
+    "https://github.com/Zorkats/G-Diffuser/blob/HEAD/tools/package_linux.sh",
+    "https://github.com/Zorkats/G-Diffuser/blob/HEAD/port/gdx_firstboot.cpp",
+    "https://github.com/Zorkats/G-Diffuser/blob/HEAD/port/gdx_extract_launch.cpp",
+    "https://github.com/Zorkats/G-Diffuser/blob/HEAD/docs/STATUS.md"
+  ]
+}

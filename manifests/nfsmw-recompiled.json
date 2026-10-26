@@ -1,0 +1,65 @@
+{
+  "id": "nfsmw-recompiled",
+  "name": "NFSMW Recompiled",
+  "originalGame": "Need for Speed: Most Wanted (Xbox 360, 2005)",
+  "description": "Port nativo da versão de Xbox 360 de Need for Speed: Most Wanted (2005), feito por recompilação estática e com renderizador Vulkan. Usa a ISO ou a pasta extraída do seu próprio disco (edição PAL espanhola ou EUA).",
+  "category": "xbox",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/madelrandel-blip/NFSMW-Recompiled",
+  "website": "https://madelrandel-blip.github.io/NFSMW-Recompiled/",
+  "accentColor": "#7fb800",
+  "executables": {
+    "win32": ["NFSMW Recomp.exe"]
+  },
+  "detectFiles": ["NFSMW Recomp.exe", "data/nfsmw.exe", "data/nfsmw_usa.exe"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "firstRun",
+      "label": "Escolher a ISO ou a pasta do seu jogo no launcher integrado",
+      "doneWhen": ["data/nfsmw_shaders.nfsp", "data/nfsmw_shaders_usa.nfsp"],
+      "helpText": "Abra o jogo: o launcher que aparece na janela pede a sua cópia de Need for Speed: Most Wanted de Xbox 360, como arquivo .iso (extraído uma vez para data/game_root) ou como pasta já extraída com o default.xex. Só as edições PAL espanhola e EUA são aceitas; a edição é detectada pelo SHA-256 do default.xex. Depois clique em Play: na primeira vez o launcher gera a biblioteca de shaders a partir do seu disco."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "data/nfsmw.toml",
+      "format": "text",
+      "label": "Configurações (nfsmw.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "madelrandel-blip/NFSMW-Recompiled",
+    "assetPatterns": {
+      "win32": "NFSMW-Recomp-*-Windows-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/nfsmw.toml", "data/game_root/**", "data/saves/**", "data/*.nfsp", "data/nfsmw_trucos.txt", "data/logs/**"]
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): continua com uma única release, a v1.0.1 (24/10/2026, Latest), com NFSMW-Recomp-1.0.1-Windows-x64.zip (46,5 MB), o mesmo pacote listado na rodada 1. As notas não listam problemas conhecidos; os relatos vão para o Discord. O projeto tem dois dias de histórico público, por isso a compatibilidade ficou como experimental.",
+    "Release v1.0.1 verificada: o zip tem uma pasta raiz \"NFSMW Recomp/\" com \"NFSMW Recomp.exe\" (stub que só inicia data\\nfsmw.exe; fonte em app/stub/main.cpp) e data/ com nfsmw.exe (PAL espanhola), nfsmw_usa.exe, rexruntime.dll, rexgpu-xenos.dll, dxcompiler/dxil e as DLLs do VC++ runtime. Nenhum dado do jogo.",
+    "O README fala em rodar nfsmw.exe; as notas da v1.0.1 e o pacote usam \"NFSMW Recomp.exe\". Como o stub encerra logo após abrir data\\nfsmw.exe, o app pode marcar o jogo como fechado enquanto ele ainda roda.",
+    "data/nfsmw.toml vem no release, mas o jogo grava nele o caminho do jogo (nfsmw_juego) e os ajustes; por isso está em preserve (novos padrões de versões futuras não são aplicados sobre ele).",
+    "Saves: no diretório de usuário do ReXGlue e uma cópia legível em data/saves.",
+    "Repositório novo: criado em 24/10/2026, 13 commits (o primeiro já com todo o projeto), 174 estrelas e 30 forks em dois dias. O código-fonte é extenso e coerente com o pacote (alvos CMake nfsmw, nfsmw_usa e \"NFSMW Recomp\"); a conta tem outros projetos. O release v1.0.1 foi compilado fora do CI (o workflow de release foi adicionado depois).",
+    "Só Windows por enquanto (as notas dizem que outros sistemas virão depois)."
+  ],
+  "_sources": [
+    "https://github.com/madelrandel-blip/NFSMW-Recompiled",
+    "https://github.com/madelrandel-blip/NFSMW-Recompiled/commits/main",
+    "https://github.com/madelrandel-blip/NFSMW-Recompiled/releases",
+    "https://github.com/madelrandel-blip/NFSMW-Recompiled/releases/expanded_assets/v1.0.1",
+    "https://github.com/madelrandel-blip/NFSMW-Recompiled/releases/download/v1.0.1/NFSMW-Recomp-1.0.1-Windows-x64.zip",
+    "https://raw.githubusercontent.com/madelrandel-blip/NFSMW-Recompiled/HEAD/README.md",
+    "https://raw.githubusercontent.com/madelrandel-blip/NFSMW-Recompiled/HEAD/app/CMakeLists.txt",
+    "https://raw.githubusercontent.com/madelrandel-blip/NFSMW-Recompiled/HEAD/app/stub/main.cpp",
+    "https://raw.githubusercontent.com/madelrandel-blip/NFSMW-Recompiled/HEAD/app/src/lanzador/lanzador.cpp",
+    "https://raw.githubusercontent.com/madelrandel-blip/NFSMW-Recompiled/HEAD/app/src/edicion.cpp",
+    "https://github.com/madelrandel-blip",
+    "https://github.com/madelrandel-blip/NFSMW-Recompiled/releases/expanded_assets/v1.0.1"
+  ]
+}

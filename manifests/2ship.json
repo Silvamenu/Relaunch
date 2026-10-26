@@ -4,6 +4,8 @@
   "originalGame": "The Legend of Zelda: Majora's Mask",
   "description": "Port para PC de Majora's Mask baseado na decompilação do jogo, com melhorias e suporte a mods.",
   "category": "nintendo",
+  "compatibility": "playable",
+  "gameKey": "majoras-mask",
   "repoUrl": "https://github.com/2ship2harkinian/2ship2harkinian",
   "accentColor": "#7b3fa0",
   "executables": {

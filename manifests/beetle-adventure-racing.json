@@ -1,0 +1,75 @@
+{
+  "id": "beetle-adventure-racing",
+  "name": "Beetle Adventure Racing Recomp",
+  "originalGame": "Beetle Adventure Racing! (Nintendo 64)",
+  "description": "Recompilação estática de Beetle Adventure Racing! para PC (N64Recomp + RT64), em alfa, com widescreen, distância de visão maior e multijogador local. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp",
+  "accentColor": "#e8b31c",
+  "executables": {
+    "win32": ["beetle-adventure-racing-recomp.exe"]
+  },
+  "detectFiles": ["beetle-adventure-racing-recomp.exe", "THIRD_PARTY_NOTICES.md", "licenses/bar-decomp-LICENSE.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Beetle Adventure Racing! (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [{ "sha1": "e5ab4d226c08d22f68a2edcc48870203e67454b8", "label": "EUA (.z64)" }]
+      },
+      "helpText": "Opcional: serve só para conferir o seu dump. Só a versão americana é aceita; a verificação por SHA-1 vale para o formato .z64. O próprio jogo pede o arquivo na primeira execução."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Escolher sua ROM quando o jogo pedir",
+      "doneWhen": ["bar.n64.us.z64", "{localAppData}/beetle-adventure-racing-recomp/bar.n64.us.z64"],
+      "helpText": "Na primeira execução o jogo abre um seletor \"Open ROM\". Ele confere a ROM e guarda uma cópia em %LOCALAPPDATA%\\beetle-adventure-racing-recomp (ou na pasta do jogo, se existir um portable.txt); depois disso não pede mais."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": ["graphics.json", "{localAppData}/beetle-adventure-racing-recomp/graphics.json"],
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": ["input.json", "{localAppData}/beetle-adventure-racing-recomp/input.json"],
+      "format": "json",
+      "label": "Controles (input.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "danielgomesvieira2000/beetle-adventure-racing-recomp",
+    "assetPatterns": {
+      "win32": "beetle-adventure-racing-recomp-*-windows-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "*.z64", "saves/**", "graphics.json", "input.json", "hud.json", "controls.json", "general.json", "sound.json"],
+    "_todo": "O padrão não pega o zip -debug-symbols. As tags terminam em -alpha, mas as releases não estão marcadas como prerelease no GitHub."
+  },
+  "_todo": [
+    "Sem CI de release: o zip é feito na máquina do autor por scripts/package-release.ps1, que copia só o exe, SDL2/dxcompiler/dxil.dll, assets/ (interface), COPYING, README, THIRD_PARTY_NOTICES.md e licenses/, e recusa empacotar .z64/.n64/.v64/.bin, saves ou configs. Sem pasta raiz. Não conferi o zip baixado.",
+    "Nome da ROM guardada (bar.n64.us.z64) deduzido do game_id \"bar.n64.us\" + \".z64\" (padrão do N64ModernRuntime); configs/saves em %LOCALAPPDATA%\\beetle-adventure-racing-recomp segundo src/main/main.cpp. Os nomes graphics.json/input.json vêm dos comentários do código; não conferi um jogo instalado.",
+    "O repositório continua o port original bryankruman/BeetleRecomp (creditado no README; o original não publica build para Windows) e é feito com Claude Code (\"vibe coded\"). Problemas conhecidos da v0.4.2-alpha: travamento intermitente na abertura (~2 em 6), congelamento ao sair da tela de resultados, distância de visão 2x/4x instável. Linux ainda não tem build."
+  ],
+  "_sources": [
+    "https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp",
+    "https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp/releases",
+    "https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp/releases/expanded_assets/v0.4.2-alpha",
+    "https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp/blob/HEAD/scripts/package-release.ps1",
+    "https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp/blob/HEAD/README.md",
+    "https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp/blob/HEAD/docs/KNOWN_ISSUES.md",
+    "https://github.com/bryankruman/BeetleRecomp"
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": "pokemon-ruby",
+  "name": "RubyRecomp",
+  "originalGame": "Pokémon Ruby (Game Boy Advance)",
+  "description": "Recompilação estática de Pokémon Ruby para PC, feita com o gbarecomp, com overworld widescreen e relógio RTC opcionais (prévia em desenvolvimento). Você precisa da sua própria ROM americana (revisão 1) do jogo e do dump da BIOS do seu GBA.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/RubySapphireRecomp",
+  "accentColor": "#c8203a",
+  "executables": {
+    "win32": ["RubyRecomp.exe"]
+  },
+  "detectFiles": ["RubyRecomp.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Pokémon Ruby (GBA, EUA, revisão 1)",
+      "optional": true,
+      "extensions": ["gba"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "610b96a9c9a7d03d2bafb655e7560ccff1a6d894",
+            "label": "Pokémon Ruby (USA), revisão 1"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita (só a revisão 1 americana). O jogo não recebe o arquivo por aqui; a ROM é escolhida no launcher do próprio jogo (passo seguinte) e ele recusa ROMs com SHA-1 diferente."
+    },
+    {
+      "id": "bios",
+      "type": "userFile",
+      "label": "O dump da BIOS do seu Game Boy Advance (gba_bios.bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "300c20df6731a33952ded8c436f7f186d25d3492",
+            "label": "BIOS do GBA"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir o arquivo. A BIOS é pedida pelo launcher do jogo na primeira execução."
+    },
+    {
+      "id": "select-files",
+      "type": "firstRun",
+      "label": "Escolher a ROM e a BIOS no launcher do jogo",
+      "doneWhen": ["rom.cfg"],
+      "helpText": "Abra o jogo e, no launcher dele, selecione a sua ROM de Pokémon Ruby (EUA, revisão 1) e o seu gba_bios.bin. Os caminhos ficam guardados em rom.cfg e bios.cfg ao lado do executável; saves, save states e o cache de código também ficam na pasta do jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.ini",
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybinds.ini",
+      "format": "ini",
+      "label": "Controles (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/RubySapphireRecomp",
+    "assetPatterns": {
+      "win32": "RubyRecomp-windows-x64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "recomp_cache/**",
+      "rom.cfg",
+      "bios.cfg",
+      "config.ini",
+      "keybinds.ini",
+      "game.toml",
+      "mods/state.toml",
+      "*.gba",
+      "*.sav",
+      "*.state*",
+      "gba_bios.bin"
+    ],
+    "_todo": "O mesmo release traz os zips de Ruby e Sapphire; o padrão pega só RubyRecomp-windows-x64-*.zip. SHA256SUMS.txt não casa."
+  },
+  "_todo": [
+    "Só há build para Windows x64. v0.0.6 (23/10/2026): RubyRecomp-windows-x64-v0.0.6.zip (59,3 MB). O zip é montado por tools/make_release.ps1 sem pasta raiz: RubyRecomp.exe, LICENSE, 4 DLLs MinGW/SDL2, assets/ do launcher recomp-ui (fontes livres, ícones, desenho do controle de GBA e a capa oficial do jogo em assets/img; como Ruby e Sapphire são compilados na mesma pasta, a capa da outra versão pode vir junto), mods/ (Adaptive Overworld e Absolute RTC, só dados), overlay_toolchain/ (TCC) e um README.",
+    "A capa oficial (variants/ruby/launcher/boxart.tga) vem no pacote; arte oficial foi liberada pelo dono do projeto nesta rodada. Do pret/pokeruby só entram metadados de símbolos no repositório, nada no pacote. Como em toda recompilação estática, o executável contém o código do jogo traduzido; o gbarecomp também compila nele a BIOS do GBA recompilada (gerada na máquina do mantenedor), mas o jogo continua exigindo o dump da BIOS do próprio usuário.",
+    "Diferente do Emerald/Mega Man Zero, este make_release.ps1 não tem a checagem final que recusa .gba/.sav/gba_bios.bin no pacote; pelo script, só entram os itens listados acima.",
+    "SHA-1 da ROM tirado do README e de variants/ruby/config/ruby_usa.toml; SHA-1 da BIOS de variants/ruby/game.toml e do bios/README.md do gbarecomp. rom.cfg/bios.cfg/config.ini/keybinds.ini ficam ao lado do executável (gbarecomp launcher_seam.h); doneWhen=rom.cfg não foi confirmado em execução.",
+    "README: prévia em desenvolvimento ('playable bring-up'): o jogo chega à jogabilidade, mas nem todo código está recompilado estaticamente (interpretador + JIT na primeira vez) e o conteúdo não foi testado por inteiro. v0.0.5 só teve o boot verificado numa rota."
+  ],
+  "_sources": [
+    "https://github.com/mstan/RubySapphireRecomp",
+    "https://github.com/mstan/RubySapphireRecomp/releases",
+    "https://github.com/mstan/RubySapphireRecomp/releases/expanded_assets/v0.0.6",
+    "https://github.com/mstan/RubySapphireRecomp/blob/HEAD/README.md",
+    "https://github.com/mstan/RubySapphireRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/RubySapphireRecomp/blob/HEAD/variants/ruby/game.toml",
+    "https://github.com/mstan/RubySapphireRecomp/blob/HEAD/variants/ruby/config/ruby_usa.toml",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/bios/README.md",
+    "https://github.com/mstan/gbarecomp/blob/HEAD/src/runtime/launcher_seam.h"
+  ]
+}

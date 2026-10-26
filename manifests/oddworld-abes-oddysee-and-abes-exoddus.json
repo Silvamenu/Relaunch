@@ -1,0 +1,54 @@
+{
+  "id": "oddworld-abes-oddysee-and-abes-exoddus",
+  "name": "R.E.L.I.V.E.",
+  "originalGame": "Oddworld: Abe's Oddysee e Abe's Exoddus (PC)",
+  "description": "Reimplementação de código aberto do motor de Abe's Oddysee e Abe's Exoddus, com correções e telas modernas. Usa os arquivos da sua cópia para PC de um dos dois jogos.",
+  "category": "pc",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/AliveTeam/alive_reversing",
+  "website": "https://aliveteam.github.io/",
+  "accentColor": "#4f7a3a",
+  "executables": {
+    "win32": ["relive.exe"]
+  },
+  "detectFiles": ["relive.exe"],
+  "requirements": [
+    {
+      "id": "game-files",
+      "type": "file",
+      "label": "Arquivos do seu Abe's Exoddus ou Abe's Oddysee para PC (arquivos .LVL)",
+      "patterns": ["st.lvl", "mi.lvl", "s1.lvl", "r1.lvl", "ST.LVL", "MI.LVL", "S1.LVL", "R1.LVL"],
+      "helpText": "Copie todo o conteúdo da pasta de instalação do seu jogo para PC (Steam, GOG ou CD) para a pasta do jogo, ao lado do relive.exe. O R.E.L.I.V.E. escolhe o jogo pelos arquivos que encontrar: ST.LVL e MI.LVL abrem o Abe's Exoddus, S1.LVL e R1.LVL abrem o Abe's Oddysee. Se a pasta tiver os arquivos dos dois jogos, abre o Exoddus. As versões New 'n' Tasty e de console não servem."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "AliveTeam/alive_reversing",
+    "assetPatterns": {
+      "win32": "Windows64-*-relive-binaries.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["*.sav", "*.ini", "*.lvl", "*.ddv"],
+    "_todo": [
+      "Windows64-Debug-relive-binaries.zip tem só relive.exe e SDL2.dll na raiz (workflow ci.yml: Copy-Item relive.exe e SDL2.dll para relive_binaries/, enviado como artefato). Os arquivos *-symbols.zip (PDB), o pacote de 32 bits e o Linux-Debug-relive.deb.zip (um .deb dentro de um zip, sem build portátil) ficam de fora.",
+      "A pré-release v0.0.1-beta (motor reescrito, instável segundo o próprio projeto) é ignorada porque includePrereleases é false."
+    ]
+  },
+  "_todo": [
+    "Só Windows: o Linux sai apenas como pacote .deb (dentro de um zip), que não é portátil.",
+    "É uma build Debug (CONFIGURATION: Debug no CI) com CRT estático (/MT); abre também uma janela de console de depuração junto com o jogo.",
+    "O jogo procura ST.LVL/MI.LVL (Exoddus) ou S1.LVL/R1.LVL (Oddysee) no diretório de trabalho (Source/relive/Exe.cpp, CheckRequiredGameFilesExist) e mostra um erro se não achar. Para forçar o Oddysee com os dois jogos na mesma pasta seria preciso o argumento AO, que o manifesto não passa.",
+    "Os arquivos do usuário ficam dentro da pasta do jogo; o pacote só traz relive.exe e SDL2.dll, então uma atualização não toca neles. Os padrões de preserve servem só de proteção extra.",
+    "A licença ainda não está definida no repositório (o README diz que o código será licenciado sob uma licença compatível com a GPL, provavelmente MIT)."
+  ],
+  "_sources": [
+    "https://github.com/AliveTeam/alive_reversing",
+    "https://github.com/AliveTeam/alive_reversing/releases",
+    "https://github.com/AliveTeam/alive_reversing/releases/expanded_assets/github-v1.0.9",
+    "https://raw.githubusercontent.com/AliveTeam/alive_reversing/HEAD/README.md",
+    "https://github.com/AliveTeam/alive_reversing/blob/github-v1.0.9/.github/workflows/ci.yml",
+    "https://github.com/AliveTeam/alive_reversing/blob/github-v1.0.9/Source/relive/Exe.cpp",
+    "https://github.com/AliveTeam/alive_reversing/blob/github-v1.0.9/CMakeLists.txt"
+  ]
+}

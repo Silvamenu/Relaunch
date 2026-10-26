@@ -7,6 +7,22 @@ O conteúdo de cada versão é usado como nota do release no GitHub (`npm run re
 
 ## [Não lançado]
 
+## [0.1.5] - 2026-10-26
+
+### Novidades
+
+- Catálogo com **205 projetos**: 86 novos, vindos da lista pública do Quiver Launcher e conferidos um a um pelas regras do Relaunch (código aberto, download só do release oficial do projeto e nada do jogo original no pacote além de capas e imagens). Todos usam a sua própria cópia do jogo.
+  - Nintendo (51): Super Mario 64 (Ghostship), Mario Kart 64, Star Fox 64, Banjo-Kazooie (Lighthouse), Diddy Kong Racing (Golden Balloon), Super Smash Bros., F-Zero X, Harvest Moon 64, Goemon, Snowboard Kids 2, Road Rash 64, Super Mario World, Super Metroid, Donkey Kong Country 2 e 3, The Minish Cap, Metroid Prime Hunters, Mega Man 64, X2 e Zero, os Pokémon de Game Boy, Game Boy Color e Game Boy Advance, os jogos de luta livre da AKI (como WWF No Mercy) e outros.
+  - PlayStation (9): Street Fighter III: 3rd Strike (dois projetos), Tomba! 1 e 2, Mega Man X5, Bloody Roar II, Jackie Chan Stuntmaster, Crash Twinsanity e Killzone.
+  - Xbox (15): Dead Rising 2: Case Zero e Case West, Forza Horizon, Forza Motorsport 3 e 4, Need for Speed: Most Wanted, Skate 2, Kameo, Mortal Kombat: Shaolin Monks, Tony Hawk's Project 8, WWE 2K14, Dragon Ball Z: Budokai e Burst Limit, Destroy All Humans! Path of the Furon e Sega Superstars Tennis.
+  - PC e outros (11): Carmageddon, Cave Story, Chris Sawyer's Locomotion, Heroes of Might and Magic III (VCMI), Civilization III (OpenCiv3), Oddworld, Jazz Jackrabbit, Taisei, Doom II RPG, Wolfenstein RPG e OutRun.
+- Quando um jogo tem mais de um projeto, o selo **Mais completo** mostra o mais completo e estável hoje (por exemplo, o SpaghettiKart em Mario Kart 64). Todos mostram também o selo **Jogável**, **Roda com falhas** ou **Experimental**.
+- Downloads também pelo **GitLab**, com a mesma proteção do GitHub: só do projeto declarado na ficha, por HTTPS. Mario Kart 64: Recompiled, Starfox 64: Recompiled e Extreme-G vêm de lá.
+
+### Melhorias
+
+- Os textos do app que diziam que tudo vem só do GitHub agora citam também o GitLab.
+
 ## [0.1.4] - 2026-10-26
 
 ### Melhorias

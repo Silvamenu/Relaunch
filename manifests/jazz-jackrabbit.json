@@ -1,0 +1,54 @@
+{
+  "id": "jazz-jackrabbit",
+  "name": "OpenJazz",
+  "originalGame": "Jazz Jackrabbit (PC, 1994)",
+  "description": "Reimplementação de código aberto da engine de Jazz Jackrabbit. Usa os arquivos de dados da sua cópia do jogo (CD, Complete, Holiday Hare ou os episódios shareware).",
+  "category": "pc",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/AlisterT/openjazz",
+  "accentColor": "#2e8b57",
+  "executables": {
+    "win32": ["OpenJazz.exe"],
+    "linux": ["OpenJazz"]
+  },
+  "detectFiles": ["OpenJazz.exe", "OpenJazz", "licenses.txt"],
+  "requirements": [
+    {
+      "id": "data",
+      "type": "file",
+      "label": "Arquivos do seu Jazz Jackrabbit na pasta do jogo",
+      "patterns": ["PANEL.000"],
+      "helpText": "Copie para a pasta do jogo, ao lado do OpenJazz, todos os arquivos da pasta de instalação do seu Jazz Jackrabbit 1 (por exemplo PANEL.000, MENU.000, FONTS.000, SOUNDS.000 e os arquivos de fase). Funcionam o CD, a versão Complete, Holiday Hare e os episódios shareware."
+    }
+  ],
+  "configFiles": [],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "AlisterT/openjazz",
+    "assetPatterns": {
+      "win32": "openjazz-windows-*x86_64.zip",
+      "linux": "openjazz-linux-*x86_64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["*.[0-9][0-9][0-9]", "openjazz.cfg", "openjazz.log"]
+  },
+  "_todo": [
+    "Release 20260301 (Latest; a \"continuous\" é pré-release automática): openjazz-windows-mingw-x86_64.zip (3,5 MB) e openjazz-linux-glibc2.35-x86_64.zip (807 KB). Montados no CI (.github/workflows/ci.yml + builds/ci/dir2zip): cada zip tem uma pasta raiz OJ-<versão>/ com OpenJazz(.exe), manual, README, COPYING e licenses.txt; no Windows também as DLLs do MinGW/SDL2 instaladas pelo cmake --install.",
+    "O binário de Linux usa o SDL2 do sistema (é preciso ter libSDL2 instalada) e foi compilado no Ubuntu 22.04 (glibc 2.35 ou mais nova).",
+    "O OpenJazz procura os dados na pasta do executável, no diretório atual e em pastas da plataforma (src/main.cpp startUp); também aceita a pasta do jogo como argumento, mas o caminho é de cada usuário. O openjazz.cfg é gravado num caminho de configuração (diretório atual ou pasta da plataforma, como XDG no Linux) que não confirmei, por isso não há configFiles.",
+    "A versão estável 20260301 ainda não grava jogos salvos (só carrega); salvar chegou na build continuous de setembro de 2026. Por isso compatibility = ingame.",
+    "O preserve guarda os arquivos de dados do jogo (extensões numéricas .000, .001 etc.) para que uma atualização não os apague."
+  ],
+  "_sources": [
+    "https://github.com/AlisterT/openjazz",
+    "https://github.com/AlisterT/openjazz/releases",
+    "https://github.com/AlisterT/openjazz/releases/expanded_assets/20260301",
+    "https://raw.githubusercontent.com/AlisterT/openjazz/HEAD/README.md",
+    "https://github.com/AlisterT/openjazz/blob/master/.github/workflows/ci.yml",
+    "https://github.com/AlisterT/openjazz/blob/master/builds/ci/dir2zip",
+    "https://github.com/AlisterT/openjazz/blob/master/res/unix/OpenJazz.6.adoc",
+    "https://github.com/AlisterT/openjazz/blob/master/src/main.cpp",
+    "http://alister.eu/jazz/oj/ (site do projeto, só http; não usado como website)"
+  ]
+}

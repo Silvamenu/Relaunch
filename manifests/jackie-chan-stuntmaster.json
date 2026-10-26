@@ -1,0 +1,89 @@
+{
+  "id": "jackie-chan-stuntmaster",
+  "name": "ReChan",
+  "originalGame": "Jackie Chan Stuntmaster (PS1)",
+  "description": "Reimplementação em C++ de Jackie Chan Stuntmaster para PC, com widescreen, alta resolução e teclado/mouse. Você precisa da imagem .bin ou .iso do seu próprio disco americano (SLUS-00684).",
+  "category": "playstation",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/SilverwireGames/ReChan",
+  "website": "https://silverwiregames.com/rechan",
+  "accentColor": "#d9a400",
+  "executables": {
+    "win32": ["rechan.exe"],
+    "linux": ["rechan"]
+  },
+  "detectFiles": ["rechan.exe", "rechan", "pc/textures/frontend/jcslogo.png"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "file",
+      "label": "A imagem do seu disco de Jackie Chan Stuntmaster (EUA, SLUS-00684) na pasta discimage",
+      "patterns": ["discimage/*.bin", "discimage/*.iso", "license.tim"],
+      "helpText": "Crie a pasta discimage dentro da pasta do jogo e coloque nela uma única imagem .bin ou .iso do seu próprio disco americano (SLUS-00684). A versão PAL não é suportada. Depois que os arquivos forem extraídos, a imagem pode ser apagada."
+    },
+    {
+      "id": "extract",
+      "type": "firstRun",
+      "label": "Extrair os arquivos do jogo na primeira execução",
+      "doneWhen": ["license.tim"],
+      "helpText": "Na primeira vez que abrir, o ReChan confere a versão do disco e extrai do seu disco os arquivos de que precisa (pastas fe, tim, xc, sound etc.) para a pasta do jogo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "userfiles/game.ini",
+      "format": "ini",
+      "label": "Configurações (game.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "SilverwireGames/ReChan",
+    "assetPatterns": {
+      "win32": "rechan-win64*.zip",
+      "linux": "rechan-linux64*.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "userfiles/**",
+      "~mods/**",
+      "discimage/**",
+      "minidumps/**",
+      "fe/**",
+      "rchars/**",
+      "rtarget/**",
+      "scr/**",
+      "sound/**",
+      "tim/**",
+      "xc/**",
+      "license.tim",
+      "license_data.dat",
+      "loadanim.con",
+      "postdemo.tim",
+      "predemo.tim",
+      "runfirst.tim"
+    ],
+    "_todo": "A v1.0.2 (13/10/2026) é pre-release e fica de fora com includePrereleases=false; a estável é a v1.0.1. O próprio jogo tem um atualizador que baixa a release mais recente do mesmo repositório (curl na API do GitHub)."
+  },
+  "_todo": [
+    "Release montada na máquina do autor (sem CI no repositório): scripts/pack-win64.ps1 e pack-linux64.sh põem só rechan(.exe), SHA256SUM.txt e a pasta pc/ (fontes, textos de menu e texturas novas do projeto) na raiz do pacote, sem pasta de topo. Os arquivos não foram listados por dentro (download do github.com bloqueado aqui); tamanhos de 7,5 MB (win) e 7,1 MB (linux) batem com isso.",
+    "As texturas de pc/textures (retrato do Jackie, logotipo, colecionáveis) foram conferidas: não são a capa nem imagens do disco (comparadas com as capas NTSC-U/PAL); o README declara que são arquivos novos do projeto. A fonte 'Europa Grotesk SH DemBol.ttf' é comercial e a licença de redistribuição não foi verificada.",
+    "Arquivos extraídos, saves (userfiles/jcsSAVE*.sav) e game.ini ficam relativos à pasta de trabalho, que o app define como a pasta do jogo (src/pc/apppaths.h, src/extra/psxdiscextractor.cpp).",
+    "Há 21 issues abertas, 7 delas de crash; uma issue relata jogo zerado do começo ao fim."
+  ],
+  "_sources": [
+    "https://github.com/SilverwireGames/ReChan",
+    "https://github.com/SilverwireGames/ReChan/releases",
+    "https://github.com/SilverwireGames/ReChan/releases/expanded_assets/v1.0.1",
+    "https://github.com/SilverwireGames/ReChan/issues",
+    "https://raw.githubusercontent.com/SilverwireGames/ReChan/HEAD/README.md",
+    "https://raw.githubusercontent.com/SilverwireGames/ReChan/HEAD/scripts/pack-win64.ps1",
+    "https://raw.githubusercontent.com/SilverwireGames/ReChan/HEAD/scripts/pack-linux64.sh",
+    "https://raw.githubusercontent.com/SilverwireGames/ReChan/HEAD/src/pc/apppaths.h",
+    "https://raw.githubusercontent.com/SilverwireGames/ReChan/HEAD/src/extra/psxdiscextractor.cpp",
+    "https://raw.githubusercontent.com/SilverwireGames/ReChan/HEAD/src/extra/autoupdater.cpp",
+    "https://raw.githubusercontent.com/libretro-thumbnails/Sony_-_PlayStation/master/Named_Boxarts/Jackie%20Chan%20Stuntmaster%20(USA).png"
+  ]
+}

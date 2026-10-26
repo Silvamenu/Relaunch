@@ -1,0 +1,70 @@
+{
+  "id": "virtual-pro-wrestling-64",
+  "name": "Virtual Pro Wrestling 64: Recompiled",
+  "originalGame": "Virtual Pro Wrestling 64 (Nintendo 64)",
+  "description": "Recompilação estática de Virtual Pro Wrestling 64 para PC (beta), feita com o N64Recomp e o RT64. O jogo é em japonês e precisa da sua própria ROM japonesa.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/jessetbh/VPW64Recomp",
+  "accentColor": "#b8860b",
+  "executables": {
+    "win32": ["Vpw64Recompiled.exe"]
+  },
+  "detectFiles": ["Vpw64Recompiled.exe", "recompcontrollerdb.txt", "assets/rt_lights.json"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Virtual Pro Wrestling 64 (N64, Japão)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "f9e9fa2ed819c3a39db5cb6afeca186f021db5ed",
+            "label": "NTSC-J (.z64)"
+          }
+        ]
+      },
+      "copyToGameDir": false,
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita (Japão, sem modificações). O jogo não recebe o arquivo por aqui; ele é escolhido no launcher do próprio jogo (passo seguinte). Arquivos .n64/.v64 têm SHA-1 diferente do .z64."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Carregar a ROM no launcher do jogo",
+      "doneWhen": ["vpw.vpw64.jp.z64", "{localAppData}/Vpw64Recompiled/vpw.vpw64.jp.z64"],
+      "helpText": "Abra o jogo, clique em \"Load ROM\" e escolha a sua ROM. O launcher confere a ROM e guarda uma cópia própria em %LOCALAPPDATA%\\Vpw64Recompiled (ou na pasta do jogo, se existir um arquivo portable.txt); depois o arquivo original pode ser movido. Saves e configurações ficam na mesma pasta."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "jessetbh/VPW64Recomp",
+    "assetPatterns": {
+      "win32": "Vpw64Recompiled-*-Windows.zip"
+    },
+    "includePrereleases": true,
+    "preserve": ["portable.txt", "saves/**", "mods/**", "*.json", "*.z64"],
+    "_todo": "O projeto só publica pre-releases (betas), por isso includePrereleases=true. O zip pode trazer assets/rt_lights.json, que é do pacote: o preserve \"*.json\" só pega arquivos na raiz (configurações do modo portátil)."
+  },
+  "_todo": [
+    "Zip gerado no CI (.github/workflows/validate.yml + release.yml): Vpw64Recompiled.exe, assets/ (fontes, ícones SVG, rt_lights.json e os mods .nrm do projeto), recompcontrollerdb.txt, DLLs (SDL2, dxil, dxcompiler, librashader, VC++), crt/, COPYING e README.txt, com os arquivos na raiz. O passo \"Assert no stray files\" recusa .z64/.n64/.v64 no pacote. A ROM fica num repositório privado só para o CI gerar o código recompilado (como nas outras recompilações estáticas do catálogo).",
+    "O executável embute o logotipo do jogo (icons/logo.png, mostrado no launcher) e um ícone com esse logotipo (icons/app.png/app.ico); é arte de marca do jogo, não extraída de dentro da ROM pelo que se vê (imagem em alta resolução). Avaliar antes de publicar.",
+    "Nome da cópia da ROM (vpw.vpw64.jp.z64) segue o padrão do N64ModernRuntime (game_id + .z64, como no Zelda64Recomp); não conferido no código do runtime.",
+    "Só Windows por enquanto (Linux planejado). Requer GPU com Direct3D 12 (SM6) ou Vulkan 1.2 e CPU com SSE4.1; o exe não é assinado (aviso do SmartScreen).",
+    "Notas da v0.1.0 dizem que é totalmente jogável; README: beta, multiplayer com mais de um controle pouco testado, pode fechar com erro ao sair no meio da luta, mensagem estranha de Rumble Pak na tela título.",
+    "Jogo lançado só no Japão; os textos do jogo ficam em japonês (o projeto não traz tradução embutida)."
+  ],
+  "_sources": [
+    "https://github.com/jessetbh/VPW64Recomp",
+    "https://raw.githubusercontent.com/jessetbh/VPW64Recomp/HEAD/README.md",
+    "https://github.com/jessetbh/VPW64Recomp/releases",
+    "https://github.com/jessetbh/VPW64Recomp/releases/expanded_assets/v0.2.0",
+    "https://github.com/jessetbh/VPW64Recomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/jessetbh/VPW64Recomp/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/jessetbh/VPW64Recomp/blob/HEAD/.github/release-readme.txt",
+    "https://github.com/jessetbh/VPW64Recomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/jessetbh/VPW64Recomp/blob/HEAD/CMakeLists.txt"
+  ]
+}

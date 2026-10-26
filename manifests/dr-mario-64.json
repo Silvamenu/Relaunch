@@ -1,0 +1,84 @@
+{
+  "id": "dr-mario-64",
+  "name": "Dr. Mario 64 Recomp Plus",
+  "originalGame": "Dr. Mario 64 (Nintendo 64)",
+  "description": "Recompilação estática de Dr. Mario 64 para PC (N64: Recompiled + RT64), com 60+ FPS, efeitos CRT e suporte a 4 controles. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/theboy181/drmario64_recomp_plus",
+  "accentColor": "#d93a3a",
+  "executables": {
+    "win32": ["drmario64_recomp.exe"]
+  },
+  "detectFiles": ["drmario64_recomp.exe", "assets/launcher.rml"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Dr. Mario 64 (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Use uma ROM americana sem modificações; arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 (0x960e3703f29d996d) e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["drmario64.us.z64", "{localAppData}/drmario64_recomp/drmario64.us.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em %LOCALAPPDATA%\\drmario64_recomp (ou na pasta do jogo, se existir um arquivo portable.txt)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": ["general.json", "{localAppData}/drmario64_recomp/general.json"],
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": ["graphics.json", "{localAppData}/drmario64_recomp/graphics.json"],
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": ["controls.json", "{localAppData}/drmario64_recomp/controls.json"],
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": ["sound.json", "{localAppData}/drmario64_recomp/sound.json"],
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "theboy181/drmario64_recomp_plus",
+    "assetPatterns": {
+      "win32": "*Recompiled-*-Windows.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "saves/**", "mods/**", "general.json", "graphics.json", "controls.json", "sound.json", "*.z64", "*.n64", "*.v64"]
+  },
+  "_todo": [
+    "Uma única release (1.0.0, 18/12/2025) com Dr.Mario.64.Recompiled-v1.0.0-Windows.zip (23,1 MB), feita na máquina do autor (o repositório não tem workflow de release; .github/linux é o modelo do Zelda64Recomp). Não conferi o conteúdo: nome do exe (drmario64_recomp.exe, alvo do CMakeLists.txt) e pasta raiz são suposições; o tamanho é compatível com exe + DLLs + assets/ de interface.",
+    "Fork com melhorias do AngheloAlf/drmario64_recomp, que foi arquivado em 06/10/2026 e diz que nunca teria release; este é o único que publica builds.",
+    "Nome da ROM guardada (drmario64.us.z64) deduzido do game_id \"drmario64.us\" + \".z64\"; pasta de dados = program_id \"drmario64_recomp\" (include/zelda_config.h, padrão do Zelda64Recomp). O README só diz \"very lightly tested overall\"."
+  ],
+  "_sources": [
+    "https://github.com/theboy181/drmario64_recomp_plus",
+    "https://github.com/theboy181/drmario64_recomp_plus/releases",
+    "https://github.com/theboy181/drmario64_recomp_plus/releases/expanded_assets/1.0.0",
+    "https://github.com/AngheloAlf/drmario64_recomp",
+    "https://github.com/theboy181/drmario64_recomp_plus/blob/HEAD/README.md",
+    "https://github.com/theboy181/drmario64_recomp_plus/blob/HEAD/CMakeLists.txt",
+    "https://github.com/theboy181/drmario64_recomp_plus/blob/HEAD/include/zelda_config.h",
+    "https://github.com/theboy181/drmario64_recomp_plus/blob/HEAD/src/main/main.cpp"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "id": "mega-man-64",
+  "name": "Mega Man 64: Recompiled",
+  "originalGame": "Mega Man 64 (Nintendo 64)",
+  "description": "Recompilação estática de Mega Man 64 para PC, feita com o N64Recomp, com renderização moderna (RT64), widescreen e alta taxa de quadros. Você precisa da sua própria ROM americana do jogo.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/MegaMan64Recomp/MegaMan64Recompiled",
+  "accentColor": "#1e6fd9",
+  "executables": {
+    "win32": ["MegaMan64Recompiled.exe"],
+    "linux": ["MegaMan64Recompiled", "MegaMan64Recompiled-*.AppImage"]
+  },
+  "detectFiles": ["MegaMan64Recompiled.exe", "MegaMan64Recompiled", "assets/MegaMan64.svg"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Mega Man 64 (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, na tela inicial. Só a versão americana do N64 é aceita (o jogo confere o arquivo pelo próprio hash); arquivos .n64/.v64 são convertidos pelo jogo."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": [
+        "megaman.n64.us.1.0.z64",
+        "{localAppData}/MegaMan64Recompiled/megaman.n64.us.1.0.z64",
+        "{home}/.config/MegaMan64Recompiled/megaman.n64.us.1.0.z64"
+      ],
+      "helpText": "Abra o jogo e use \"Setup ROM\" para escolher sua ROM. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\MegaMan64Recompiled no Windows ou ~/.config/MegaMan64Recompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt). Saves e configurações ficam na mesma pasta."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/MegaMan64Recompiled/general.json"],
+        "linux": ["general.json", "{home}/.config/MegaMan64Recompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/MegaMan64Recompiled/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/MegaMan64Recompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/MegaMan64Recompiled/controls.json"],
+        "linux": ["controls.json", "{home}/.config/MegaMan64Recompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/MegaMan64Recompiled/sound.json"],
+        "linux": ["sound.json", "{home}/.config/MegaMan64Recompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "MegaMan64Recomp/MegaMan64Recompiled",
+    "assetPatterns": {
+      "win32": "MegaMan64Recompiled-*-Windows.zip",
+      "linux": "MegaMan64Recompiled-*-Linux-X64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "saves/**", "general.json", "graphics.json", "controls.json", "sound.json", "*.z64", "*.n64", "*.v64"],
+    "_todo": "Linux ARM64, Flatpak e macOS (MegaMan64Recompiled-*-Linux-ARM64.zip, -Flatpak-X64.zip, -macOS.zip) não são selecionados."
+  },
+  "_todo": [
+    "v0.9.1 (30/04/2026): MegaMan64Recompiled-v0.9.1-Windows.zip (23,6 MB) e MegaMan64Recompiled-v0.9.1-Linux-X64.zip (13,4 MB). Feitos pelo CI padrão do N64Recomp (.github/workflows/validate.yml; a ROM vem de um repositório privado por secret e só é usada para recompilar): Windows = MegaMan64Recompiled.exe, dxcompiler.dll, dxil.dll, SDL2.dll, assets/ (interface RmlUi, fontes e o logo MegaMan64.svg, aceito pela regra de arte oficial) e recompcontrollerdb.txt; Linux = artefato com MegaMan64Recompiled.tar.gz (binário, assets/ e recompcontrollerdb.txt), ou o AppImage do mesmo workflow. As releases são subidas à mão a partir desses artefatos; não conferi os zips baixados, por isso o executável Linux aceita os dois formatos.",
+    "O Quiver cria portable.txt ao lado do executável para guardar ROM, saves e configurações na pasta do jogo; o app não cria esse arquivo. Sem ele, os dados ficam em %LOCALAPPDATA%\\MegaMan64Recompiled ou ~/.config/MegaMan64Recompiled (src/game/config.cpp).",
+    "Nome da ROM guardada (megaman.n64.us.1.0.z64) deduzido do game_id \"megaman.n64.us.1.0\" + \".z64\" (padrão do N64ModernRuntime); o jogo valida por hash XXH3 (0x0c74c7489d01643b), sem SHA-1 documentado.",
+    "Notas da v0.9.0: emendas na geometria, widescreen parcial e dessincronia em cutscenes; v0.9.1 corrigiu um crash na luta contra Gesellschaft e problemas de interpolação. Sem atividade desde abril de 2026."
+  ],
+  "_sources": [
+    "https://github.com/MegaMan64Recomp/MegaMan64Recompiled",
+    "https://github.com/MegaMan64Recomp/MegaMan64Recompiled/releases",
+    "https://github.com/MegaMan64Recomp/MegaMan64Recompiled/releases/expanded_assets/v0.9.1",
+    "https://github.com/MegaMan64Recomp/MegaMan64Recompiled/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/MegaMan64Recomp/MegaMan64Recompiled/blob/HEAD/.github/linux/appimage.sh",
+    "https://github.com/MegaMan64Recomp/MegaMan64Recompiled/blob/HEAD/include/zelda_config.h",
+    "https://github.com/MegaMan64Recomp/MegaMan64Recompiled/blob/HEAD/src/game/config.cpp",
+    "https://github.com/MegaMan64Recomp/MegaMan64Recompiled/blob/HEAD/src/main/main.cpp"
+  ]
+}

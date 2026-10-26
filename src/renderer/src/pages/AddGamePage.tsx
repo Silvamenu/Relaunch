@@ -1,6 +1,6 @@
-import { Check, ChevronDown, Download, FolderGit2, FolderOpen, LoaderCircle, Plus, Search, ShieldCheck } from 'lucide-react'
+import { Award, Check, ChevronDown, Download, FolderGit2, FolderOpen, LoaderCircle, Plus, Search, ShieldCheck } from 'lucide-react'
 import { useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { groupCatalog, type Category, type Compatibility } from '../../../shared/catalog'
+import { groupCatalog, isMostComplete, type Category, type Compatibility } from '../../../shared/catalog'
 import type { Manifest } from '../../../shared/manifest'
 import { installableOn } from '../../../shared/manifestUtils'
 import type { DetectionCandidate, LibraryItem, RepoInspection } from '../../../shared/types'
@@ -38,7 +38,9 @@ function ManifestRow({
   action?: ReactNode
 }) {
   const { t } = useI18n()
+  const { manifests } = useAppState()
   const runnerName = useRunnerName(manifest)
+  const mostComplete = isMostComplete(manifest, manifests.manifests)
   const Tag = onSelect ? 'button' : 'div'
   const details = [
     manifest.originalGame,
@@ -65,6 +67,15 @@ function ManifestRow({
               {t(`compat.${manifest.compatibility}`)}
             </span>
           )}
+          {mostComplete && (
+            <span
+              title={t('compat.mostCompleteHint')}
+              className="flex shrink-0 items-center gap-1 rounded-md border border-[#3B82F6]/50 px-1.5 text-[10.5px] text-accent-fg"
+            >
+              <Award size={11} aria-hidden />
+              {t('compat.mostComplete')}
+            </span>
+          )}
         </span>
         <span className="block truncate text-[12px] text-subtle">{details.join(' · ')}</span>
         {hint && <span className="mt-0.5 block truncate font-mono text-[11px] text-faint">{hint}</span>}
@@ -77,7 +88,7 @@ function ManifestRow({
 
 /**
  * Ações ao lado de cada projeto: Abrir (já na biblioteca), Baixar (instala do repositório oficial) ou,
- * nos jogos via emulador, Instalar o emulador / Adicionar o jogo (o arquivo do usuário). E o GitHub.
+ * nos jogos via emulador, Instalar o emulador / Adicionar o jogo (o arquivo do usuário). E o link do projeto (GitHub ou GitLab).
  */
 function ProjectActions({ manifest }: { manifest: Manifest }) {
   const { items, info, manifests, navigate, toast } = useAppState()
@@ -173,7 +184,7 @@ function ProjectActions({ manifest }: { manifest: Manifest }) {
       )}
       {main}
       <button type="button" className="text-[12.5px] text-link hover:underline" onClick={() => void window.api.app.openExternal(manifest.repoUrl)}>
-        GitHub
+        {/^https:\/\/gitlab\.com\//i.test(manifest.repoUrl) ? 'GitLab' : 'GitHub'}
       </button>
     </span>
   )

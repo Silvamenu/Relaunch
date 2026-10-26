@@ -1,0 +1,71 @@
+{
+  "id": "fm4-recomp",
+  "name": "Forza Motorsport 4 Recompiled",
+  "originalGame": "Forza Motorsport 4 (Xbox 360)",
+  "description": "Recompilação estática experimental de Forza Motorsport 4 para Windows, feita com o ReXGlue. Exige os arquivos extraídos do Disco 1 da sua própria cópia de Forza Motorsport 4 Game of the Year (Europa).",
+  "category": "xbox",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/Alexbeav/fm4-recomp",
+  "accentColor": "#3b6fb6",
+  "executables": {
+    "win32": ["fm4.exe"]
+  },
+  "detectFiles": ["fm4.exe", "fm4_XMediaFacade_default.dll", "fm4_SpeechFacade_default.dll", "PACKAGE-MANIFEST.json"],
+  "requirements": [
+    {
+      "id": "game",
+      "type": "file",
+      "label": "Os arquivos extraídos do Disco 1 do seu Forza Motorsport 4 GOTY (Europa)",
+      "patterns": ["game/default.xex"],
+      "helpText": "Copie para a pasta game (ao lado do fm4.exe) todo o conteúdo extraído do Disco 1 da sua própria cópia de Forza Motorsport 4 Game of the Year, edição europeia (Title ID 4D530910, Media ID 42C67824): a pasta Media inteira e, direto dentro de game, os arquivos default.xex, XMediaFacade_default.xex e SpeechFacade_default.xex. Só uma imagem ISO não serve: os arquivos precisam estar extraídos."
+    },
+    {
+      "id": "disc2",
+      "type": "file",
+      "label": "Os pacotes de conteúdo do seu Disco 2 (opcional)",
+      "optional": true,
+      "patterns": ["disc2-content/*"],
+      "helpText": "Opcional: coloque na pasta disc2-content os quatro pacotes de conteúdo extraídos do Disco 2 da sua cópia. O jogo confere e instala os pacotes na inicialização."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "fm4.toml",
+      "format": "text",
+      "label": "Configurações (fm4.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": {
+    "win32": ["--game_data_root=\\\\?\\{gameDir}\\game", "--user_data_root=\\\\?\\{gameDir}\\user", "--cache_root=\\\\?\\{gameDir}\\user\\cache"]
+  },
+  "updates": {
+    "source": "github-releases",
+    "repo": "Alexbeav/fm4-recomp",
+    "assetPatterns": {
+      "win32": "fm4-recomp-[0-9]*-win-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["game/**", "user/**", "disc2-content/**", "fm4.log"]
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a última release continua sendo a v0.1.0-alpha.2 (15/10/2026, Latest, sem flag de prerelease). Assets: fm4-recomp-0.1.0-alpha.2-win-x64.zip (52,2 MB) e .sha256, mais o kit de código-fonte fm4-recomp-source-0.1.0-alpha.2-win-x64.zip (42,8 MB) e .sha256. O padrão fm4-recomp-[0-9]*-win-x64.zip foi testado com o picomatch do app e só casa com o zip do player.",
+    "As notas da release não citam nenhum download em tempo de execução para jogar. Só o build local a partir do kit de código-fonte baixa e compila o fork fixado do ReXGlue SDK (Alexbeav/rexglue-sdk f16992c), e o app não usa esse kit. Repositório com 8 commits; outros projetos da mesma conta (kits de setup de MGS e RE3) foram descartados na rodada 1.",
+    "Release v0.1.0-alpha.2 verificada: fm4-recomp-0.1.0-alpha.2-win-x64.zip (52 MB) tem os arquivos na raiz: fm4.exe, fm4_XMediaFacade_default.dll, fm4_SpeechFacade_default.dll, rexruntime.dll, rexgpu-xenos.dll, TracyClient.dll, runtime MSVC, fm4.toml, PACKAGE-MANIFEST.json (hashes), README.md, LICENSE, licenses/, as pastas vazias game/ e disc2-content/ e \"Launch FM4.bat\" (texto simples que confere os três XEX e roda fm4.exe com os argumentos abaixo). Nenhum arquivo do jogo.",
+    "Os launchArgs reproduzem o \"Launch FM4.bat\" oficial: --game_data_root, --user_data_root e --cache_root com prefixo \\\\?\\ apontando para game/, user/ e user/cache dentro da pasta do jogo. Assume que {gameDir} é um caminho absoluto do Windows com barras invertidas.",
+    "O padrão de asset começa por dígito para não pegar o kit de código-fonte (fm4-recomp-source-*-win-x64.zip) nem os .sha256.",
+    "Saves e caches ficam em user/ dentro da pasta do jogo (README da release: manter essa pasta ao atualizar).",
+    "Requisitos: Windows 11 x64 (outros não testados), CPU com AVX2 e GPU Direct3D 12. Alpha: campanha validada só até a entrada no nível Sportsman; cerca de 30 FPS em cenas pesadas.",
+    "Os SHA-256 esperados dos três XEX estão no README da release; o app só valida SHA-1 de userFile, então não há validação aqui. O builder local verifica as identidades em release/release-policy.json.",
+    "Existem outros projetos de FM4 (0herculabs/hl360-forza4, GabrielCRadu/fm4-recomp), que foram descartados; este é o que tem SDK fixado e kit de código-fonte reproduzível (fork Alexbeav/rexglue-sdk, commit f16992c)."
+  ],
+  "_sources": [
+    "https://github.com/Alexbeav/fm4-recomp",
+    "https://github.com/Alexbeav/fm4-recomp/releases",
+    "https://github.com/Alexbeav/fm4-recomp/releases/expanded_assets/v0.1.0-alpha.2",
+    "https://github.com/Alexbeav/fm4-recomp/releases/download/v0.1.0-alpha.2/fm4-recomp-0.1.0-alpha.2-win-x64.zip",
+    "https://github.com/Alexbeav/fm4-recomp/commits/main",
+    "https://raw.githubusercontent.com/Alexbeav/fm4-recomp/HEAD/README.md",
+    "https://github.com/Alexbeav/fm4-recomp/releases/expanded_assets/v0.1.0-alpha.2"
+  ]
+}

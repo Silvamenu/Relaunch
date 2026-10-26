@@ -61,11 +61,13 @@ Para gerar o app instalável: `npm run dist` (instalador do Windows) ou `npm run
 
 ## Jogos suportados
 
-O app traz **119 projetos** em listas por plataforma, as mesmas da tela **Adicionar jogo**, com busca. Há três tipos:
+O app traz **205 projetos** em listas por plataforma, as mesmas da tela **Adicionar jogo**, com busca. Há três tipos:
 
 - **Port ou recompilação**: o jogo refeito para rodar direto no PC. O app baixa o port do repositório oficial; o conteúdo do jogo vem da sua ROM ou do seu disco.
 - **Emulador**: o programa que imita o console. O app instala o emulador uma vez, do repositório oficial dele.
 - **Jogo via emulador**: jogos grandes de console (como **God of War III Remastered**). O app abre o emulador com o **seu** jogo, o dump da sua cópia. O selo mostra quão bem ele roda hoje, pela lista de compatibilidade oficial do emulador: **Jogável**, **Roda com falhas** ou **Experimental**.
+
+Quando um jogo tem mais de um projeto (por exemplo, Mario Kart 64), todos aparecem e o selo **Mais completo** marca o mais completo e estável hoje. Nos ports, o selo **Jogável**, **Roda com falhas** ou **Experimental** mostra o quanto o projeto já está pronto.
 
 ![Tela Adicionar jogo com a busca "god of war": a lista PlayStation aberta mostra oito jogos: sete via emulador, com o selo de compatibilidade, e o port nativo SpartanPort](docs/screenshots/catalogo.png)
 
@@ -73,154 +75,240 @@ O app traz **119 projetos** em listas por plataforma, as mesmas da tela **Adicio
 > O Relaunch nunca baixa jogos, ROMs, BIOS ou firmware. Os jogos via emulador pedem um PC forte (processador recente e placa de vídeo com Vulkan).
 
 <details>
-<summary><strong>Nintendo</strong> (27)</summary>
+<summary><strong>Nintendo</strong> (78)</summary>
 
-| Projeto                                                                              | Jogo original                                  | Como roda                                             |
-| ------------------------------------------------------------------------------------ | ---------------------------------------------- | ----------------------------------------------------- |
-| [2 Ship 2 Harkinian](https://github.com/2ship2harkinian/2ship2harkinian)             | The Legend of Zelda: Majora's Mask             | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Animal Crossing PC Port](https://github.com/flyngmt/ACGC-PC-Port)                   | Animal Crossing (GameCube)                     | Port nativo · instalação pelo app (Windows)           |
-| [Banjo: Recompiled](https://github.com/BanjoRecomp/BanjoRecomp)                      | Banjo-Kazooie                                  | Port nativo · instalação pelo app (Windows e Linux)   |
-| [BlueWake](https://github.com/chrissotraidis/bluewake)                               | The Legend of Zelda: The Wind Waker (GameCube) | Port nativo · instalação pelo app (Windows)           |
-| [DKR-R (Diddy Kong Racing Recompiled)](https://github.com/ThatGuyMcd/DKR-R)          | Diddy Kong Racing (N64)                        | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Donkey Kong 64: Recompiled](https://github.com/Rainchus/Donkey-Kong-64-Recompiled)  | Donkey Kong 64                                 | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Dusklight](https://github.com/TwilitRealm/dusklight)                                | The Legend of Zelda: Twilight Princess         | Port nativo · instalação pelo app (Windows e Linux)   |
-| [GoldenEye 007 PC Port](https://github.com/jkdansereau/goldeneye-pc-port)            | GoldenEye 007 (N64)                            | Port nativo · instalação pelo app (Windows e Linux)   |
-| [LAS Recomp](https://github.com/peiikai/LASRecomp)                                   | The Legend of Zelda: Link's Awakening (Switch) | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Luigi's Mansion Recompiled](https://github.com/rob646464/luigis-mansion-recompiled) | Luigi's Mansion (GameCube)                     | Port nativo · instalação pelo app (Windows e Linux)   |
-| Mario Kart 8                                                                         | Nintendo Wii U                                 | via Cemu · Jogável                                    |
-| [melee-pc](https://github.com/999sian/melee-pc)                                      | Super Smash Bros. Melee (GameCube)             | Port nativo · instalação pelo app (Windows e Linux)   |
-| [MetroidPrimePort](https://github.com/Odrannnn/MetroidPrimePort)                     | Metroid Prime (GameCube)                       | Port nativo · instalação pelo app (Windows e Linux)   |
-| [PaperBoat](https://github.com/HarbourMasters/PaperBoat)                             | Paper Mario (N64)                              | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Perfect Dark (PC Port)](https://github.com/perfect-dark-pc-port/perfect_dark)       | Perfect Dark                                   | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Ship of Harkinian](https://github.com/HarbourMasters/Shipwright)                    | The Legend of Zelda: Ocarina of Time           | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Snap64 Recomp](https://github.com/JackandBeans/Snap64Recomp)                        | Pokémon Snap (N64)                             | Port nativo · instalação pelo app (Windows e Linux)   |
-| [SpaghettiKart](https://github.com/HarbourMasters/SpaghettiKart)                     | Mario Kart 64                                  | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Starship](https://github.com/HarbourMasters/Starship)                               | Star Fox 64                                    | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Strikers](https://github.com/new-coke/strikers)                                     | Super Mario Strikers (GameCube)                | Port nativo · instalação pelo app (Windows e Linux)   |
-| Super Mario 3D World                                                                 | Nintendo Wii U                                 | via Cemu · Jogável                                    |
-| [Super Mario 64 PC Port](https://github.com/sm64-port/sm64-port)                     | Super Mario 64                                 | Port nativo · instale pelo projeto e adicione a pasta |
-| The Legend of Zelda: Breath of the Wild                                              | Nintendo Wii U                                 | via Cemu · Jogável                                    |
-| Xenoblade Chronicles X                                                               | Nintendo Wii U                                 | via Cemu · Jogável                                    |
-| [Zelda 64: Recompiled](https://github.com/Zelda64Recomp/Zelda64Recomp)               | The Legend of Zelda: Majora's Mask             | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Zelda Wind Waker HD Recomp](https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp)     | The Legend of Zelda: The Wind Waker HD (Wii U) | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Zelda3](https://github.com/snesrev/zelda3)                                          | The Legend of Zelda: A Link to the Past        | Port nativo · instalação pelo app (Windows)           |
-
-</details>
-
-<details>
-<summary><strong>PlayStation</strong> (50)</summary>
-
-| Projeto                                                                                         | Jogo original                                | Como roda                                           |
-| ----------------------------------------------------------------------------------------------- | -------------------------------------------- | --------------------------------------------------- |
-| [Ape Escape Recompiled](https://github.com/mstan/ApeEscapeRecomp)                               | Ape Escape (PS1)                             | Port nativo · instalação pelo app (Windows e Linux) |
-| [bbport](https://github.com/deadinside28/bloodborne_pc)                                         | Bloodborne (PS4)                             | Port nativo · instalação pelo app (Linux)           |
-| Bloodborne                                                                                      | PlayStation 4                                | via shadPS4 · Roda com falhas                       |
-| [Crash Bandicoot Launcher](https://github.com/Matteo842/CrashBandicoot-Launcher)                | Crash Bandicoot (PS1)                        | Port nativo · instalação pelo app (Windows)         |
-| [CTR Native](https://github.com/CTR-tools/ctr-native)                                           | Crash Team Racing (PS1)                      | Port nativo · instalação pelo app (Windows e Linux) |
-| [CTR-NitroFueled-PC](https://github.com/GetLostIn/CTR-NitroFueled-PC)                           | Crash Team Racing Nitro-Fueled (PS4)         | Port nativo · instalação pelo app (Windows)         |
-| Dark Souls                                                                                      | PlayStation 3                                | via RPCS3 · Jogável                                 |
-| [Def Jam Vendetta Recompiled](https://github.com/jcsix694/def-jam-vendetta-recomp)              | Def Jam Vendetta (PS2)                       | Port nativo · instalação pelo app (Windows)         |
-| Demon's Souls                                                                                   | PlayStation 3                                | via RPCS3 · Jogável                                 |
-| [Dragon's Crown Pro PC Port](https://github.com/saulob/dragons-crown-pro-pc)                    | Dragon's Crown Pro (PS4)                     | Port nativo · instalação pelo app (Windows e Linux) |
-| [Drakengard 3 Recompiled](https://github.com/soyjxck/dod3-recomp)                               | Drakengard 3 (PS3)                           | Port nativo · instalação pelo app (Windows)         |
-| Final Fantasy VII                                                                               | PlayStation (PS1)                            | via DuckStation · Jogável                           |
-| Final Fantasy VIII Remastered                                                                   | PlayStation 4                                | via shadPS4 · Jogável                               |
-| Final Fantasy X                                                                                 | PlayStation 2                                | via PCSX2 · Jogável                                 |
-| [Fukami](https://github.com/danisandoval/fukami)                                                | Ridge Racer V (PS2)                          | Port nativo · instalação pelo app (Windows e Linux) |
-| God of War                                                                                      | PlayStation 2                                | via PCSX2 · Jogável                                 |
-| God of War Collection                                                                           | PlayStation 3                                | via RPCS3 · Jogável                                 |
-| God of War II                                                                                   | PlayStation 2                                | via PCSX2 · Jogável                                 |
-| God of War III                                                                                  | PlayStation 3                                | via RPCS3 · Roda com falhas                         |
-| God of War III Remastered                                                                       | PlayStation 4                                | via shadPS4 · Roda com falhas                       |
-| God of War: Chains of Olympus                                                                   | PSP (PlayStation Portable)                   | via PPSSPP · Jogável                                |
-| God of War: Ghost of Sparta                                                                     | PSP (PlayStation Portable)                   | via PPSSPP · Jogável                                |
-| [Gravity Rush 2 PC](https://github.com/HayatoG/gr2_pc)                                          | Gravity Rush 2 (PS4)                         | Port nativo · instalação pelo app (Windows e Linux) |
-| [ico-pc](https://github.com/nathanialf/ico-pc)                                                  | ICO (PS2)                                    | Port nativo · instalação pelo app (Windows e Linux) |
-| [MediEvil (PS4) for PC](https://github.com/bc160201983/medievil_2019_pc_port)                   | MediEvil (PS4, 2019)                         | Port nativo · instalação pelo app (Windows)         |
-| [MediEvil Recomp](https://github.com/BlackLabelHQ/MediEvilRecomp)                               | MediEvil (PS1)                               | Port nativo · instalação pelo app (Windows e Linux) |
-| [Mega Man X4 Recompiled](https://github.com/mstan/MegaManX4Recomp)                              | Mega Man X4 (PS1)                            | Port nativo · instalação pelo app (Windows e Linux) |
-| Metal Gear Rising: Revengeance                                                                  | PlayStation 3                                | via RPCS3 · Jogável                                 |
-| Metal Gear Solid                                                                                | PlayStation (PS1)                            | via DuckStation · Jogável                           |
-| Metal Gear Solid 3: Snake Eater                                                                 | PlayStation 2                                | via PCSX2 · Jogável                                 |
-| Need for Speed: Hot Pursuit Remastered                                                          | PlayStation 4                                | via shadPS4 · Jogável                               |
-| [OpenGOAL: Jak 3](https://github.com/open-goal/jak-project)                                     | Jak 3 (PS2)                                  | Port nativo · instalação pelo app (Windows e Linux) |
-| [OpenGOAL: Jak and Daxter](https://github.com/open-goal/jak-project)                            | Jak and Daxter: The Precursor Legacy (PS2)   | Port nativo · instalação pelo app (Windows e Linux) |
-| [OpenGOAL: Jak II](https://github.com/open-goal/jak-project)                                    | Jak II (PS2)                                 | Port nativo · instalação pelo app (Windows e Linux) |
-| [OpenRAC](https://github.com/OpenRAC/OpenRAC)                                                   | Ratchet & Clank (PS2)                        | Port nativo · instalação pelo app (Linux)           |
-| [REDRIVER2](https://github.com/OpenDriver2/REDRIVER2)                                           | Driver 2 (PlayStation)                       | Port nativo · instalação pelo app (Windows)         |
-| Resident Evil 2                                                                                 | PlayStation (PS1)                            | via DuckStation · Jogável                           |
-| [Severed Chains](https://github.com/Legend-of-Dragoon-Modding/Severed-Chains)                   | The Legend of Dragoon (PS1)                  | Port nativo · instalação pelo app (Linux)           |
-| Shadow of the Colossus                                                                          | PlayStation 2                                | via PCSX2 · Jogável                                 |
-| [Shadow of the Colossus PC](https://github.com/AjncSystem/ShadowOfTheColossus-PC)               | Shadow of the Colossus (PS4)                 | Port nativo · instalação pelo app (Windows)         |
-| [SpartanPort](https://github.com/FelipePrado0/SpartanPort)                                      | God of War III Remastered (PS4)              | Port nativo · instalação pelo app (Windows e Linux) |
-| [SymphonyRecomp](https://github.com/BlackLabelHQ/SymphonyRecomp)                                | Castlevania: Symphony of the Night (PS1)     | Port nativo · instalação pelo app (Windows e Linux) |
-| [Tenkaichi3Decomp](https://github.com/z3xox/Tenkaichi3Decomp)                                   | Dragon Ball Z: Budokai Tenkaichi 3 (PS2)     | Port nativo · instalação pelo app (Windows e Linux) |
-| [The Last Guardian PC](https://github.com/HayatoG/tlg_pc)                                       | The Last Guardian (PS4)                      | Port nativo · instalação pelo app (Windows e Linux) |
-| [The Order: 1886 PC Native Port](https://github.com/mateussmeneses/theorder1886-port)           | The Order: 1886 (PS4)                        | Port nativo · instalação pelo app (Windows)         |
-| [UFC 3 native port](https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS)                       | EA Sports UFC 3 (PS4)                        | Port nativo · instalação pelo app (Windows e Linux) |
-| [Uncharted: The Nathan Drake Collection for Windows](https://github.com/Supermedo/uncharted_pc) | Uncharted: The Nathan Drake Collection (PS4) | Port nativo · instalação pelo app (Windows)         |
-| [Unicorn Overlord PC (vwport)](https://github.com/hachi23/unicorn_overlord_pc)                  | Unicorn Overlord (PS4)                       | Port nativo · instalação pelo app (Windows e Linux) |
-| [Yakumo](https://github.com/TeamGDB/Yakumo)                                                     | Monster Hunter Portable 3rd HD Ver. (PS3)    | Port nativo · instalação pelo app (Windows e Linux) |
-| Yakuza 0                                                                                        | PlayStation 4                                | via shadPS4 · Roda com falhas                       |
+| Projeto                                                                                                   | Jogo original                                                                 | Como roda                                                                         |
+| --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [2 Ship 2 Harkinian](https://github.com/2ship2harkinian/2ship2harkinian)                                  | The Legend of Zelda: Majora's Mask                                            | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [AeroGauge: Recompiled](https://github.com/alondero/aerogauge-recomp)                                     | AeroGauge (Nintendo 64)                                                       | Port nativo · instalação pelo app (Windows e Linux) · Experimental                |
+| [Animal Crossing PC Port](https://github.com/flyngmt/ACGC-PC-Port)                                        | Animal Crossing (GameCube)                                                    | Port nativo · instalação pelo app (Windows)                                       |
+| [Automobili Lamborghini: Recompiled](https://github.com/alondero/automobililamborghini-recomp)            | Automobili Lamborghini (Nintendo 64)                                          | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [Banjo-Tooie: Scurvy Dog Port](https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port)            | Banjo-Tooie (N64)                                                             | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [Banjo: Recompiled](https://github.com/BanjoRecomp/BanjoRecomp)                                           | Banjo-Kazooie                                                                 | Port nativo · instalação pelo app (Windows e Linux) · Jogável · **Mais completo** |
+| [BattleShip](https://github.com/JRickey/BattleShip)                                                       | Super Smash Bros. (Nintendo 64)                                               | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [Beetle Adventure Racing Recomp](https://github.com/danielgomesvieira2000/beetle-adventure-racing-recomp) | Beetle Adventure Racing! (Nintendo 64)                                        | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [BlueWake](https://github.com/chrissotraidis/bluewake)                                                    | The Legend of Zelda: The Wind Waker (GameCube)                                | Port nativo · instalação pelo app (Windows)                                       |
+| [Bomberman 64: Recompiled](https://github.com/RevoSucks/BM64Recomp)                                       | Bomberman 64 (Nintendo 64)                                                    | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [Bomberman Hero: Recompiled](https://github.com/RevoSucks/BMHeroRecomp)                                   | Bomberman Hero (Nintendo 64)                                                  | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [BombermanRecomp](https://github.com/elliotttate/BombermanRecomp)                                         | Super Bomberman (Super Nintendo)                                              | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [Chameleon Twist Recompiled](https://github.com/Rainchus/ChameleonTwist1-JP-Recomp)                       | Chameleon Twist (Nintendo 64, Japão)                                          | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [DKC2Recomp](https://github.com/elliotttate/DKC2Recomp)                                                   | Donkey Kong Country 2: Diddy's Kong Quest (SNES)                              | Port nativo · instalação pelo app (Windows) · Roda com falhas                     |
+| [DKC3Recomp](https://github.com/elliotttate/DKC3Recomp)                                                   | Donkey Kong Country 3: Dixie Kong's Double Trouble! (SNES)                    | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [DKR-R (Diddy Kong Racing Recompiled)](https://github.com/ThatGuyMcd/DKR-R)                               | Diddy Kong Racing (N64)                                                       | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [Donkey Kong 64: Recompiled](https://github.com/Rainchus/Donkey-Kong-64-Recompiled)                       | Donkey Kong 64                                                                | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [Dr. Mario 64 Recomp Plus](https://github.com/theboy181/drmario64_recomp_plus)                            | Dr. Mario 64 (Nintendo 64)                                                    | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [DragonBallZBuusFuryRecomp](https://github.com/mstan/DragonBallZBuusFuryRecomp)                           | Dragon Ball Z: Buu's Fury (Game Boy Advance)                                  | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [Duke Nukem Zero Hour: Recompiled](https://github.com/sonicdcer/DNZHRecomp)                               | Duke Nukem: Zero Hour (Nintendo 64)                                           | Port nativo · instalação pelo app (Windows e Linux) · Experimental                |
+| [Dusklight](https://github.com/TwilitRealm/dusklight)                                                     | The Legend of Zelda: Twilight Princess                                        | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [EmeraldRecomp](https://github.com/mstan/EmeraldRecomp)                                                   | Pokémon Emerald (Game Boy Advance)                                            | Port nativo · instalação pelo app (Windows e Linux) · Experimental                |
+| [Extreme-G: Recompiled](https://gitlab.com/sonicdcer/ExtremeGRecomp)                                      | Extreme-G (Nintendo 64)                                                       | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [FireRedRecomp](https://github.com/mstan/FireRedLeafGreenRecomp)                                          | Pokémon FireRed (Game Boy Advance)                                            | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [G-Diffuser](https://github.com/Zorkats/G-Diffuser)                                                       | F-Zero X (Nintendo 64)                                                        | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [G1R Deluxe (Gen1Recomp)](https://github.com/bryanthaboi/pokemon-gen1-recomp-project)                     | Pokémon Red, Blue, Yellow, Gold, Silver e Crystal (Game Boy / Game Boy Color) | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [Ghostship](https://github.com/HarbourMasters/Ghostship)                                                  | Super Mario 64 (Nintendo 64)                                                  | Port nativo · instalação pelo app (Windows e Linux) · Jogável · **Mais completo** |
+| [Goemon 64: Recompiled](https://github.com/klorfmorf/Goemon64Recomp)                                      | Mystical Ninja Starring Goemon (Nintendo 64)                                  | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [Golden Balloon](https://github.com/akratch/goldenballoon)                                                | Diddy Kong Racing (Nintendo 64)                                               | Port nativo · instalação pelo app (Windows e Linux) · Jogável · **Mais completo** |
+| [GoldenEye 007 PC Port](https://github.com/jkdansereau/goldeneye-pc-port)                                 | GoldenEye 007 (N64)                                                           | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [Harvest Moon 64: Recompiled](https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp)                 | Harvest Moon 64 (Nintendo 64)                                                 | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [LAS Recomp](https://github.com/peiikai/LASRecomp)                                                        | The Legend of Zelda: Link's Awakening (Switch)                                | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [LeafGreenRecomp](https://github.com/mstan/FireRedLeafGreenRecomp)                                        | Pokémon LeafGreen (Game Boy Advance)                                          | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [Lighthouse](https://github.com/HarbourMasters/Lighthouse)                                                | Banjo-Kazooie (Nintendo 64)                                                   | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [LodRecomp](https://github.com/fliperama86/cvlod_recomp)                                                  | Castlevania: Legacy of Darkness (Nintendo 64)                                 | Port nativo · instalação pelo app (Windows e Linux) · Experimental                |
+| [Luigi's Mansion Recompiled](https://github.com/rob646464/luigis-mansion-recompiled)                      | Luigi's Mansion (GameCube)                                                    | Port nativo · instalação pelo app (Windows e Linux)                               |
+| Mario Kart 8                                                                                              | Nintendo Wii U                                                                | via Cemu · Jogável                                                                |
+| [MarioKart 64: Recompiled](https://gitlab.com/sonicdcer/MarioKart64Recomp)                                | Mario Kart 64 (Nintendo 64)                                                   | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [MarioKartSuperCircuitRecomp](https://github.com/mstan/MarioKartSuperCircuitRecomp)                       | Mario Kart: Super Circuit (Game Boy Advance)                                  | Port nativo · instalação pelo app (Windows e Linux) · Experimental                |
+| [Mega Man 64: Recompiled](https://github.com/MegaMan64Recomp/MegaMan64Recompiled)                         | Mega Man 64 (Nintendo 64)                                                     | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [MegaManX2SNESRecomp](https://github.com/mstan/MegaManX2Recomp)                                           | Mega Man X2 (SNES)                                                            | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [MegaManZeroRecomp](https://github.com/mstan/MegaManZeroRecomp)                                           | Mega Man Zero (Game Boy Advance)                                              | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [melee-pc](https://github.com/999sian/melee-pc)                                                           | Super Smash Bros. Melee (GameCube)                                            | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [MetroidPrimeHuntersRecomp](https://github.com/mstan/MetroidPrimeHuntersRecomp)                           | Metroid Prime Hunters (Nintendo DS)                                           | Port nativo · instalação pelo app (Windows e Linux) · Experimental                |
+| [MetroidPrimePort](https://github.com/Odrannnn/MetroidPrimePort)                                          | Metroid Prime (GameCube)                                                      | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [PaperBoat](https://github.com/HarbourMasters/PaperBoat)                                                  | Paper Mario (N64)                                                             | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [Perfect Dark (PC Port)](https://github.com/perfect-dark-pc-port/perfect_dark)                            | Perfect Dark                                                                  | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [Pilotwings 64: Recompiled](https://github.com/danielgomesvieira2000/pilotwings-64-recomp)                | Pilotwings 64 (Nintendo 64)                                                   | Port nativo · instalação pelo app (Windows e Linux) · Experimental                |
+| [Project Picori](https://github.com/999sian/tmc)                                                          | The Legend of Zelda: The Minish Cap (Game Boy Advance)                        | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [Quest 64: Recompiled](https://github.com/Rainchus/Quest64-Recomp)                                        | Quest 64 (Nintendo 64)                                                        | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [Ring Out](https://github.com/jackpoison-prog/RingOut)                                                    | Soulcalibur II (GameCube)                                                     | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [Road Rash 64 Recompiled](https://github.com/linkssy2/RoadRash64Recompiled)                               | Road Rash 64 (Nintendo 64)                                                    | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [RubyRecomp](https://github.com/mstan/RubySapphireRecomp)                                                 | Pokémon Ruby (Game Boy Advance)                                               | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [SapphireRecomp](https://github.com/mstan/RubySapphireRecomp)                                             | Pokémon Sapphire (Game Boy Advance)                                           | Port nativo · instalação pelo app (Windows) · Experimental                        |
+| [Ship of Harkinian](https://github.com/HarbourMasters/Shipwright)                                         | The Legend of Zelda: Ocarina of Time                                          | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [smw (snesrev)](https://github.com/snesrev/smw)                                                           | Super Mario World (SNES)                                                      | Port nativo · instalação pelo app (Windows) · Jogável · **Mais completo**         |
+| [Snap64 Recomp](https://github.com/JackandBeans/Snap64Recomp)                                             | Pokémon Snap (N64)                                                            | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [Snowboard Kids 2: Recompiled](https://github.com/cdlewis/snowboardkids2-recomp)                          | Snowboard Kids 2 (Nintendo 64)                                                | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [SpaghettiKart](https://github.com/HarbourMasters/SpaghettiKart)                                          | Mario Kart 64                                                                 | Port nativo · instalação pelo app (Windows e Linux) · Jogável · **Mais completo** |
+| [Starfox 64: Recompiled](https://gitlab.com/sonicdcer/Starfox64Recomp)                                    | Star Fox 64 (Nintendo 64)                                                     | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [Starship](https://github.com/HarbourMasters/Starship)                                                    | Star Fox 64                                                                   | Port nativo · instalação pelo app (Windows e Linux) · Jogável · **Mais completo** |
+| [Strikers](https://github.com/new-coke/strikers)                                                          | Super Mario Strikers (GameCube)                                               | Port nativo · instalação pelo app (Windows e Linux)                               |
+| Super Mario 3D World                                                                                      | Nintendo Wii U                                                                | via Cemu · Jogável                                                                |
+| [Super Mario 64 PC Port](https://github.com/sm64-port/sm64-port)                                          | Super Mario 64                                                                | Port nativo · instale pelo projeto e adicione a pasta · Jogável                   |
+| [Super Mario Bros. Remastered](https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public)          | Super Mario Bros. (NES)                                                       | Port nativo · instalação pelo app (Windows e Linux) · Jogável                     |
+| [SuperMarioWorldRecomp](https://github.com/mstan/SuperMarioWorldRecomp)                                   | Super Mario World (SNES)                                                      | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| [SuperMetroidRecomp](https://github.com/mstan/SuperMetroidRecomp)                                         | Super Metroid (SNES)                                                          | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas             |
+| The Legend of Zelda: Breath of the Wild                                                                   | Nintendo Wii U                                                                | via Cemu · Jogável                                                                |
+| [Trouble Makers](https://github.com/ThiagoLira/trouble-makers-pc-recomp)                                  | Mischief Makers (Nintendo 64)                                                 | Port nativo · instalação pelo app (Windows e Linux) · Experimental                |
+| [Virtual Pro Wrestling 2: Recompiled](https://github.com/jessetbh/VPW2Recomp)                             | Virtual Pro Wrestling 2: Ōdō Keishō (Nintendo 64)                             | Port nativo · instalação pelo app (Windows) · Roda com falhas                     |
+| [Virtual Pro Wrestling 64: Recompiled](https://github.com/jessetbh/VPW64Recomp)                           | Virtual Pro Wrestling 64 (Nintendo 64)                                        | Port nativo · instalação pelo app (Windows) · Roda com falhas                     |
+| [WCW vs. nWo World Tour: Recompiled](https://github.com/jessetbh/WCWvsNWOWorldTourRecomp)                 | WCW vs. nWo World Tour (Nintendo 64)                                          | Port nativo · instalação pelo app (Windows) · Jogável                             |
+| [WCW/nWo Revenge: Recompiled](https://github.com/jessetbh/WCWnWoRevengeRecomp)                            | WCW/nWo Revenge (Nintendo 64)                                                 | Port nativo · instalação pelo app (Windows) · Roda com falhas                     |
+| [WWF No Mercy: Recompiled](https://github.com/jessetbh/WWFNoMercyRecomp)                                  | WWF No Mercy (Nintendo 64)                                                    | Port nativo · instalação pelo app (Windows) · Roda com falhas                     |
+| Xenoblade Chronicles X                                                                                    | Nintendo Wii U                                                                | via Cemu · Jogável                                                                |
+| [Zelda 64: Recompiled](https://github.com/Zelda64Recomp/Zelda64Recomp)                                    | The Legend of Zelda: Majora's Mask                                            | Port nativo · instalação pelo app (Windows e Linux) · Jogável · **Mais completo** |
+| [Zelda Wind Waker HD Recomp](https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp)                          | The Legend of Zelda: The Wind Waker HD (Wii U)                                | Port nativo · instalação pelo app (Windows e Linux)                               |
+| [Zelda3](https://github.com/snesrev/zelda3)                                                               | The Legend of Zelda: A Link to the Past                                       | Port nativo · instalação pelo app (Windows)                                       |
 
 </details>
 
 <details>
-<summary><strong>Xbox</strong> (18)</summary>
+<summary><strong>PlayStation</strong> (59)</summary>
 
-| Projeto                                                                               | Jogo original                                | Como roda                                           |
-| ------------------------------------------------------------------------------------- | -------------------------------------------- | --------------------------------------------------- |
-| [AC6Recomp](https://github.com/sal063/AC6_recomp)                                     | Ace Combat 6: Fires of Liberation (Xbox 360) | Port nativo · instalação pelo app (Windows)         |
-| [Black - XBE Recomp](https://github.com/TGP482/BLACK-XBERecomp)                       | Black (Xbox)                                 | Port nativo · instalação pelo app (Windows)         |
-| [CoD3Recomp](https://github.com/FrankHUN88453/CoD3Recomp)                             | Call of Duty 3 (Xbox 360)                    | Port nativo · instalação pelo app (Windows)         |
-| [Estacado](https://github.com/invinceble55-wq/Estacado-The-Darkness-Recomp)           | The Darkness (Xbox 360)                      | Port nativo · instalação pelo app (Windows)         |
-| [Fable 2 Recompiled](https://github.com/himdo/Fable-2-Recomp)                         | Fable II (Xbox 360)                          | Port nativo · instalação pelo app (Windows)         |
-| Gears of War 2                                                                        | Xbox 360                                     | via Xenia Canary · Jogável                          |
-| Gears of War 3                                                                        | Xbox 360                                     | via Xenia Canary · Jogável                          |
-| Halo 3                                                                                | Xbox 360                                     | via Xenia Canary · Jogável                          |
-| [JSRF Unleashed](https://github.com/JuMatt/JetSetRadioFuture-Unleashed)               | Jet Set Radio Future (Xbox)                  | Port nativo · instalação pelo app (Windows e Linux) |
-| [Lost Odyssey Recomp](https://github.com/freefrank/LostOdysseyRecomp)                 | Lost Odyssey (Xbox 360)                      | Port nativo · instalação pelo app (Windows e Linux) |
-| [Ninja Gaiden Black Recompiled](https://github.com/gamboozino/ngbrecomp)              | Ninja Gaiden Black (Xbox)                    | Port nativo · instalação pelo app (Windows e Linux) |
-| [re:Blue](https://github.com/zolaware/reblue)                                         | Blue Dragon (Xbox 360)                       | Port nativo · instalação pelo app (Windows e Linux) |
-| Red Dead Redemption                                                                   | Xbox 360                                     | via Xenia Canary · Jogável                          |
-| [reNut](https://github.com/masterspike52/reNut)                                       | Banjo-Kazooie: Nuts & Bolts (Xbox 360)       | Port nativo · instalação pelo app (Windows e Linux) |
-| [SSX Tricky: PC Port](https://github.com/MatiasRiveraC/SSX-Tricky-PC)                 | SSX Tricky (Xbox)                            | Port nativo · instalação pelo app (Windows)         |
-| [Takedawn](https://github.com/xenophobentx/takedawn)                                  | Burnout 3: Takedown (Xbox)                   | Port nativo · instalação pelo app (Linux)           |
-| [The Simpsons Game Recompiled](https://github.com/YesterMester/TheSimpsonsGameRecomp) | The Simpsons Game (Xbox 360, 2007)           | Port nativo · instalação pelo app (Windows e Linux) |
-| [Unleashed Recompiled](https://github.com/hedge-dev/UnleashedRecomp)                  | Sonic Unleashed (Xbox 360)                   | Port nativo · instalação pelo app (Windows)         |
+| Projeto                                                                                         | Jogo original                                | Como roda                                                                                 |
+| ----------------------------------------------------------------------------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [3SX](https://github.com/crowded-street/3sx)                                                    | Street Fighter III: 3rd Strike (PS2)         | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas · **Mais completo** |
+| [3SXW](https://github.com/guimaraf/3sxw)                                                        | Street Fighter III: 3rd Strike (PS2)         | Port nativo · instalação pelo app (Windows) · Roda com falhas                             |
+| [Ape Escape Recompiled](https://github.com/mstan/ApeEscapeRecomp)                               | Ape Escape (PS1)                             | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [bbport](https://github.com/deadinside28/bloodborne_pc)                                         | Bloodborne (PS4)                             | Port nativo · instalação pelo app (Linux)                                                 |
+| Bloodborne                                                                                      | PlayStation 4                                | via shadPS4 · Roda com falhas                                                             |
+| [Bloody Roar II Recompiled](https://github.com/novapowers0/BloodyRoar2Recomp)                   | Bloody Roar II (PS1)                         | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas                     |
+| [Crash Bandicoot Launcher](https://github.com/Matteo842/CrashBandicoot-Launcher)                | Crash Bandicoot (PS1)                        | Port nativo · instalação pelo app (Windows)                                               |
+| [Crash Twinsanity for Windows](https://github.com/GioPixelGH/Crash-Twinsanity-Windows)          | Crash Twinsanity (PS2)                       | Port nativo · instalação pelo app (Windows) · Jogável                                     |
+| [CTR Native](https://github.com/CTR-tools/ctr-native)                                           | Crash Team Racing (PS1)                      | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [CTR-NitroFueled-PC](https://github.com/GetLostIn/CTR-NitroFueled-PC)                           | Crash Team Racing Nitro-Fueled (PS4)         | Port nativo · instalação pelo app (Windows)                                               |
+| Dark Souls                                                                                      | PlayStation 3                                | via RPCS3 · Jogável                                                                       |
+| [Def Jam Vendetta Recompiled](https://github.com/jcsix694/def-jam-vendetta-recomp)              | Def Jam Vendetta (PS2)                       | Port nativo · instalação pelo app (Windows)                                               |
+| Demon's Souls                                                                                   | PlayStation 3                                | via RPCS3 · Jogável                                                                       |
+| [Dragon's Crown Pro PC Port](https://github.com/saulob/dragons-crown-pro-pc)                    | Dragon's Crown Pro (PS4)                     | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [Drakengard 3 Recompiled](https://github.com/soyjxck/dod3-recomp)                               | Drakengard 3 (PS3)                           | Port nativo · instalação pelo app (Windows)                                               |
+| Final Fantasy VII                                                                               | PlayStation (PS1)                            | via DuckStation · Jogável                                                                 |
+| Final Fantasy VIII Remastered                                                                   | PlayStation 4                                | via shadPS4 · Jogável                                                                     |
+| Final Fantasy X                                                                                 | PlayStation 2                                | via PCSX2 · Jogável                                                                       |
+| [Fukami](https://github.com/danisandoval/fukami)                                                | Ridge Racer V (PS2)                          | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| God of War                                                                                      | PlayStation 2                                | via PCSX2 · Jogável                                                                       |
+| God of War Collection                                                                           | PlayStation 3                                | via RPCS3 · Jogável                                                                       |
+| God of War II                                                                                   | PlayStation 2                                | via PCSX2 · Jogável                                                                       |
+| God of War III                                                                                  | PlayStation 3                                | via RPCS3 · Roda com falhas                                                               |
+| God of War III Remastered                                                                       | PlayStation 4                                | via shadPS4 · Roda com falhas                                                             |
+| God of War: Chains of Olympus                                                                   | PSP (PlayStation Portable)                   | via PPSSPP · Jogável                                                                      |
+| God of War: Ghost of Sparta                                                                     | PSP (PlayStation Portable)                   | via PPSSPP · Jogável                                                                      |
+| [Gravity Rush 2 PC](https://github.com/HayatoG/gr2_pc)                                          | Gravity Rush 2 (PS4)                         | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [ico-pc](https://github.com/nathanialf/ico-pc)                                                  | ICO (PS2)                                    | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [KillzoneRecomp](https://github.com/drakolordx7/KillzoneRecomp)                                 | Killzone (PS2)                               | Port nativo · instalação pelo app (Windows) · Experimental                                |
+| [MediEvil (PS4) for PC](https://github.com/bc160201983/medievil_2019_pc_port)                   | MediEvil (PS4, 2019)                         | Port nativo · instalação pelo app (Windows)                                               |
+| [MediEvil Recomp](https://github.com/BlackLabelHQ/MediEvilRecomp)                               | MediEvil (PS1)                               | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [Mega Man X4 Recompiled](https://github.com/mstan/MegaManX4Recomp)                              | Mega Man X4 (PS1)                            | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [Mega Man X5 Recompiled](https://github.com/mstan/MegaManX5Recomp)                              | Mega Man X5 (PS1)                            | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas                     |
+| Metal Gear Rising: Revengeance                                                                  | PlayStation 3                                | via RPCS3 · Jogável                                                                       |
+| Metal Gear Solid                                                                                | PlayStation (PS1)                            | via DuckStation · Jogável                                                                 |
+| Metal Gear Solid 3: Snake Eater                                                                 | PlayStation 2                                | via PCSX2 · Jogável                                                                       |
+| Need for Speed: Hot Pursuit Remastered                                                          | PlayStation 4                                | via shadPS4 · Jogável                                                                     |
+| [OpenGOAL: Jak 3](https://github.com/open-goal/jak-project)                                     | Jak 3 (PS2)                                  | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [OpenGOAL: Jak and Daxter](https://github.com/open-goal/jak-project)                            | Jak and Daxter: The Precursor Legacy (PS2)   | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [OpenGOAL: Jak II](https://github.com/open-goal/jak-project)                                    | Jak II (PS2)                                 | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [OpenRAC](https://github.com/OpenRAC/OpenRAC)                                                   | Ratchet & Clank (PS2)                        | Port nativo · instalação pelo app (Linux)                                                 |
+| [ReChan](https://github.com/SilverwireGames/ReChan)                                             | Jackie Chan Stuntmaster (PS1)                | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas                     |
+| [REDRIVER2](https://github.com/OpenDriver2/REDRIVER2)                                           | Driver 2 (PlayStation)                       | Port nativo · instalação pelo app (Windows)                                               |
+| Resident Evil 2                                                                                 | PlayStation (PS1)                            | via DuckStation · Jogável                                                                 |
+| [Severed Chains](https://github.com/Legend-of-Dragoon-Modding/Severed-Chains)                   | The Legend of Dragoon (PS1)                  | Port nativo · instalação pelo app (Linux)                                                 |
+| Shadow of the Colossus                                                                          | PlayStation 2                                | via PCSX2 · Jogável                                                                       |
+| [Shadow of the Colossus PC](https://github.com/AjncSystem/ShadowOfTheColossus-PC)               | Shadow of the Colossus (PS4)                 | Port nativo · instalação pelo app (Windows)                                               |
+| [SpartanPort](https://github.com/FelipePrado0/SpartanPort)                                      | God of War III Remastered (PS4)              | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [SymphonyRecomp](https://github.com/BlackLabelHQ/SymphonyRecomp)                                | Castlevania: Symphony of the Night (PS1)     | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [Tenkaichi3Decomp](https://github.com/z3xox/Tenkaichi3Decomp)                                   | Dragon Ball Z: Budokai Tenkaichi 3 (PS2)     | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [The Last Guardian PC](https://github.com/HayatoG/tlg_pc)                                       | The Last Guardian (PS4)                      | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [The Order: 1886 PC Native Port](https://github.com/mateussmeneses/theorder1886-port)           | The Order: 1886 (PS4)                        | Port nativo · instalação pelo app (Windows)                                               |
+| [Tomba2Recomp](https://github.com/mstan/Tomba2Recomp)                                           | Tomba! 2: The Evil Swine Return (PS1)        | Port nativo · instalação pelo app (Windows e Linux) · Experimental                        |
+| [TombaRecomp](https://github.com/mstan/TombaRecomp)                                             | Tomba! (PS1)                                 | Port nativo · instalação pelo app (Windows) · Roda com falhas                             |
+| [UFC 3 native port](https://github.com/GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS)                       | EA Sports UFC 3 (PS4)                        | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [Uncharted: The Nathan Drake Collection for Windows](https://github.com/Supermedo/uncharted_pc) | Uncharted: The Nathan Drake Collection (PS4) | Port nativo · instalação pelo app (Windows)                                               |
+| [Unicorn Overlord PC (vwport)](https://github.com/hachi23/unicorn_overlord_pc)                  | Unicorn Overlord (PS4)                       | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| [Yakumo](https://github.com/TeamGDB/Yakumo)                                                     | Monster Hunter Portable 3rd HD Ver. (PS3)    | Port nativo · instalação pelo app (Windows e Linux)                                       |
+| Yakuza 0                                                                                        | PlayStation 4                                | via shadPS4 · Roda com falhas                                                             |
 
 </details>
 
 <details>
-<summary><strong>Sega</strong> (2)</summary>
+<summary><strong>Xbox</strong> (33)</summary>
 
-| Projeto                                                                                | Jogo original                   | Como roda                                           |
-| -------------------------------------------------------------------------------------- | ------------------------------- | --------------------------------------------------- |
-| [Sonic 3 A.I.R.](https://github.com/Eukaryot/sonic3air)                                | Sonic 3 & Knuckles (Mega Drive) | Port nativo · instalação pelo app (Windows e Linux) |
-| [Sonic CD (RSDKv3 Decompilation)](https://github.com/RSDKModding/RSDKv3-Decompilation) | Sonic CD (Sega CD)              | Port nativo · instalação pelo app (Windows e Linux) |
+| Projeto                                                                                               | Jogo original                                            | Como roda                                                             |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------- |
+| [AC6Recomp](https://github.com/sal063/AC6_recomp)                                                     | Ace Combat 6: Fires of Liberation (Xbox 360)             | Port nativo · instalação pelo app (Windows)                           |
+| [Black - XBE Recomp](https://github.com/TGP482/BLACK-XBERecomp)                                       | Black (Xbox)                                             | Port nativo · instalação pelo app (Windows)                           |
+| [CaseWestRecomp](https://github.com/wivi514/Dead_Rising_2_Case_West_Xenon_Recomp)                     | Dead Rising 2: Case West (Xbox 360)                      | Port nativo · instalação pelo app (Windows e Linux) · Jogável         |
+| [CaseZeroRecomp](https://github.com/wivi514/Dead_Rising_2_Case_Zero_Xenon_Recomp)                     | Dead Rising 2: Case Zero (Xbox 360)                      | Port nativo · instalação pelo app (Windows e Linux) · Jogável         |
+| [CoD3Recomp](https://github.com/FrankHUN88453/CoD3Recomp)                                             | Call of Duty 3 (Xbox 360)                                | Port nativo · instalação pelo app (Windows)                           |
+| [Dragon Ball Z Budokai HD Recompiled](https://github.com/WistfulHopes/DBZ1)                           | Dragon Ball Z: Budokai (Budokai HD Collection, Xbox 360) | Port nativo · instalação pelo app (Windows) · Experimental            |
+| [Dragon Ball Z: Burst Limit Recompiled](https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled) | Dragon Ball Z: Burst Limit (Xbox 360)                    | Port nativo · instalação pelo app (Windows) · Roda com falhas         |
+| [Estacado](https://github.com/invinceble55-wq/Estacado-The-Darkness-Recomp)                           | The Darkness (Xbox 360)                                  | Port nativo · instalação pelo app (Windows)                           |
+| [Fable 2 Recompiled](https://github.com/himdo/Fable-2-Recomp)                                         | Fable II (Xbox 360)                                      | Port nativo · instalação pelo app (Windows)                           |
+| [Forza Horizon 1: ReImagined](https://github.com/Dyotson/ForzaHorizon1-ReImagined)                    | Forza Horizon (Xbox 360)                                 | Port nativo · instalação pelo app (Linux) · Roda com falhas           |
+| [Forza Motorsport 3 Native (hl360-forza3)](https://github.com/0herculabs/hl360-forza3)                | Forza Motorsport 3: Ultimate Collection (Xbox 360)       | Port nativo · instalação pelo app (Windows) · Roda com falhas         |
+| [Forza Motorsport 4 Recompiled](https://github.com/Alexbeav/fm4-recomp)                               | Forza Motorsport 4 (Xbox 360)                            | Port nativo · instalação pelo app (Windows) · Experimental            |
+| Gears of War 2                                                                                        | Xbox 360                                                 | via Xenia Canary · Jogável                                            |
+| Gears of War 3                                                                                        | Xbox 360                                                 | via Xenia Canary · Jogável                                            |
+| Halo 3                                                                                                | Xbox 360                                                 | via Xenia Canary · Jogável                                            |
+| [JSRF Unleashed](https://github.com/JuMatt/JetSetRadioFuture-Unleashed)                               | Jet Set Radio Future (Xbox)                              | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [Kameo: RePowered](https://github.com/birabittoh/KameoRePowered)                                      | Kameo: Elements of Power (Xbox 360)                      | Port nativo · instalação pelo app (Windows e Linux) · Experimental    |
+| [Lost Odyssey Recomp](https://github.com/freefrank/LostOdysseyRecomp)                                 | Lost Odyssey (Xbox 360)                                  | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [NFSMW Recompiled](https://github.com/madelrandel-blip/NFSMW-Recompiled)                              | Need for Speed: Most Wanted (Xbox 360, 2005)             | Port nativo · instalação pelo app (Windows) · Experimental            |
+| [Ninja Gaiden Black Recompiled](https://github.com/gamboozino/ngbrecomp)                              | Ninja Gaiden Black (Xbox)                                | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [OpenShao](https://github.com/OAleex/OpenShao)                                                        | Mortal Kombat: Shaolin Monks (Xbox)                      | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas |
+| [Project8Recomp](https://github.com/theokyr/Project8Recomp)                                           | Tony Hawk's Project 8 (Xbox 360)                         | Port nativo · instalação pelo app (Windows e Linux) · Experimental    |
+| [re:Blue](https://github.com/zolaware/reblue)                                                         | Blue Dragon (Xbox 360)                                   | Port nativo · instalação pelo app (Windows e Linux)                   |
+| Red Dead Redemption                                                                                   | Xbox 360                                                 | via Xenia Canary · Jogável                                            |
+| [ReDahm](https://github.com/masterspike52/redahm)                                                     | Destroy All Humans! Path of the Furon (Xbox 360)         | Port nativo · instalação pelo app (Windows) · Experimental            |
+| [reNut](https://github.com/masterspike52/reNut)                                                       | Banjo-Kazooie: Nuts & Bolts (Xbox 360)                   | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [Sega Superstars Tennis ReMatch](https://github.com/m1ndcrap/Sega-Superstars-Tennis-ReMatch)          | Sega Superstars Tennis (Xbox 360)                        | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas |
+| [Skate 2 PC](https://github.com/christianortel/skate2-recompile-pc)                                   | Skate 2 (Xbox 360)                                       | Port nativo · instalação pelo app (Windows) · Roda com falhas         |
+| [SSX Tricky: PC Port](https://github.com/MatiasRiveraC/SSX-Tricky-PC)                                 | SSX Tricky (Xbox)                                        | Port nativo · instalação pelo app (Windows)                           |
+| [Takedawn](https://github.com/xenophobentx/takedawn)                                                  | Burnout 3: Takedown (Xbox)                               | Port nativo · instalação pelo app (Linux)                             |
+| [The Simpsons Game Recompiled](https://github.com/YesterMester/TheSimpsonsGameRecomp)                 | The Simpsons Game (Xbox 360, 2007)                       | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [Unleashed Recompiled](https://github.com/hedge-dev/UnleashedRecomp)                                  | Sonic Unleashed (Xbox 360)                               | Port nativo · instalação pelo app (Windows)                           |
+| [WWE 2K14: Native PC Recompilation](https://github.com/Jarrodfeng/wwe2k14-recomp)                     | WWE 2K14 (Xbox 360)                                      | Port nativo · instalação pelo app (Windows) · Roda com falhas         |
 
 </details>
 
 <details>
-<summary><strong>PC clássicos</strong> (15)</summary>
+<summary><strong>Sega</strong> (3)</summary>
 
-| Projeto                                                                   | Jogo original                    | Como roda                                             |
-| ------------------------------------------------------------------------- | -------------------------------- | ----------------------------------------------------- |
-| [Arx Libertatis](https://github.com/arx/ArxLibertatis)                    | Arx Fatalis                      | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Augustus](https://github.com/Keriew/augustus)                            | Caesar III                       | Port nativo · instalação pelo app (Windows e Linux)   |
-| [CorsixTH](https://github.com/CorsixTH/CorsixTH)                          | Theme Hospital                   | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Daggerfall Unity](https://github.com/Interkarma/daggerfall-unity)        | The Elder Scrolls II: Daggerfall | Port nativo · instalação pelo app (Windows e Linux)   |
-| [DevilutionX](https://github.com/diasurgical/devilutionX)                 | Diablo e Diablo: Hellfire        | Port nativo · instalação pelo app (Windows e Linux)   |
-| [dhewm 3](https://github.com/dhewm/dhewm3)                                | Doom 3 e Resurrection of Evil    | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Fallout 2 Community Edition](https://github.com/alexbatalov/fallout2-ce) | Fallout 2                        | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Fallout Community Edition](https://github.com/alexbatalov/fallout1-ce)   | Fallout                          | Port nativo · instalação pelo app (Windows e Linux)   |
-| [fheroes2](https://github.com/ihhub/fheroes2)                             | Heroes of Might and Magic II     | Port nativo · instalação pelo app (Windows e Linux)   |
-| [FreeSpace 2 Open](https://github.com/scp-fs2open/fs2open.github.com)     | FreeSpace 2                      | Port nativo · instalação pelo app (Windows e Linux)   |
-| [Julius](https://github.com/bvschaik/julius)                              | Caesar III                       | Port nativo · instalação pelo app (Windows e Linux)   |
-| [OpenMW](https://github.com/OpenMW/openmw)                                | The Elder Scrolls III: Morrowind | Port nativo · instale pelo projeto e adicione a pasta |
-| [OpenRCT2](https://github.com/OpenRCT2/OpenRCT2)                          | RollerCoaster Tycoon 2           | Port nativo · instalação pelo app (Windows e Linux)   |
-| [UZDoom](https://github.com/UZDoom/UZDoom)                                | DOOM e DOOM II                   | Port nativo · instalação pelo app (Windows e Linux)   |
-| [vkQuake](https://github.com/Novum/vkQuake)                               | Quake                            | Port nativo · instalação pelo app (Windows e Linux)   |
+| Projeto                                                                                | Jogo original                   | Como roda                                             |
+| -------------------------------------------------------------------------------------- | ------------------------------- | ----------------------------------------------------- |
+| [CannonBall DX](https://github.com/Endprodukt/cannonball-dx)                           | OutRun (Arcade)                 | Port nativo · instalação pelo app (Windows) · Jogável |
+| [Sonic 3 A.I.R.](https://github.com/Eukaryot/sonic3air)                                | Sonic 3 & Knuckles (Mega Drive) | Port nativo · instalação pelo app (Windows e Linux)   |
+| [Sonic CD (RSDKv3 Decompilation)](https://github.com/RSDKModding/RSDKv3-Decompilation) | Sonic CD (Sega CD)              | Port nativo · instalação pelo app (Windows e Linux)   |
+
+</details>
+
+<details>
+<summary><strong>PC clássicos</strong> (25)</summary>
+
+| Projeto                                                                   | Jogo original                                | Como roda                                                             |
+| ------------------------------------------------------------------------- | -------------------------------------------- | --------------------------------------------------------------------- |
+| [Arx Libertatis](https://github.com/arx/ArxLibertatis)                    | Arx Fatalis                                  | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [Augustus](https://github.com/Keriew/augustus)                            | Caesar III                                   | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [CorsixTH](https://github.com/CorsixTH/CorsixTH)                          | Theme Hospital                               | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [Daggerfall Unity](https://github.com/Interkarma/daggerfall-unity)        | The Elder Scrolls II: Daggerfall             | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [Dethrace](https://github.com/dethrace-labs/dethrace)                     | Carmageddon (PC, 1997)                       | Port nativo · instalação pelo app (Windows e Linux) · Jogável         |
+| [DevilutionX](https://github.com/diasurgical/devilutionX)                 | Diablo e Diablo: Hellfire                    | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [dhewm 3](https://github.com/dhewm/dhewm3)                                | Doom 3 e Resurrection of Evil                | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [DoomIIRPG-RE](https://github.com/Erick194/DoomIIRPG-RE)                  | Doom II RPG (iPhone, 2010)                   | Port nativo · instalação pelo app (Windows) · Experimental            |
+| [doukutsu-rs](https://github.com/doukutsu-rs/doukutsu-rs)                 | Cave Story (PC, 2004)                        | Port nativo · instalação pelo app (Windows) · Jogável                 |
+| [Fallout 2 Community Edition](https://github.com/alexbatalov/fallout2-ce) | Fallout 2                                    | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [Fallout Community Edition](https://github.com/alexbatalov/fallout1-ce)   | Fallout                                      | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [fheroes2](https://github.com/ihhub/fheroes2)                             | Heroes of Might and Magic II                 | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [FreeSpace 2 Open](https://github.com/scp-fs2open/fs2open.github.com)     | FreeSpace 2                                  | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [Julius](https://github.com/bvschaik/julius)                              | Caesar III                                   | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [OpenCiv3](https://github.com/C7-Game/OpenCiv3)                           | Sid Meier's Civilization III (PC, 2001)      | Port nativo · instalação pelo app (Windows e Linux) · Experimental    |
+| [OpenJazz](https://github.com/AlisterT/openjazz)                          | Jazz Jackrabbit (PC, 1994)                   | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas |
+| [OpenLoco](https://github.com/OpenLoco/OpenLoco)                          | Chris Sawyer's Locomotion (PC, 2004)         | Port nativo · instalação pelo app (Windows e Linux) · Jogável         |
+| [OpenMW](https://github.com/OpenMW/openmw)                                | The Elder Scrolls III: Morrowind             | Port nativo · instale pelo projeto e adicione a pasta                 |
+| [OpenRCT2](https://github.com/OpenRCT2/OpenRCT2)                          | RollerCoaster Tycoon 2                       | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [R.E.L.I.V.E.](https://github.com/AliveTeam/alive_reversing)              | Oddworld: Abe's Oddysee e Abe's Exoddus (PC) | Port nativo · instalação pelo app (Windows) · Jogável                 |
+| [Taisei](https://github.com/taisei-project/taisei)                        | Taisei (PC)                                  | Port nativo · instalação pelo app (Windows e Linux) · Jogável         |
+| [UZDoom](https://github.com/UZDoom/UZDoom)                                | DOOM e DOOM II                               | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [VCMI](https://github.com/vcmi/vcmi)                                      | Heroes of Might and Magic III (PC, 1999)     | Port nativo · instalação pelo app (Windows e Linux) · Jogável         |
+| [vkQuake](https://github.com/Novum/vkQuake)                               | Quake                                        | Port nativo · instalação pelo app (Windows e Linux)                   |
+| [WolfensteinRPG-RE](https://github.com/Erick194/WolfensteinRPG-RE)        | Wolfenstein RPG (iOS)                        | Port nativo · instalação pelo app (Windows e Linux) · Roda com falhas |
 
 </details>
 
@@ -348,6 +436,8 @@ Cada projeto suportado é descrito por um arquivo `manifests/<id>.json`. **Adici
 | `accentColor`              | não         | Cor da capa gerada, no formato `#RRGGBB`.                                                      |
 | `category`                 | não         | Lista do catálogo: `nintendo`, `playstation`, `xbox`, `sega`, `pc`, `emulators` ou `custom`.   |
 | `compatibility`            | não         | Quão bem roda hoje: `playable`, `ingame` ou `experimental`.                                    |
+| `gameKey`                  | não         | Liga projetos do **mesmo jogo** (a mesma chave em todos). Só quando há dois ou mais.           |
+| `recommended`              | não         | O mais completo entre os de mesma `gameKey`: ganha o selo **Mais completo** no catálogo.       |
 | `runner`                   | não         | Jogo que abre num emulador instalado pelo app. Veja [Jogos via emulador](#jogos-via-emulador). |
 | `executables`              | sim\*       | Executáveis por plataforma.                                                                    |
 | `detectFiles`              | sim\*       | Arquivos que identificam a pasta do projeto.                                                   |
@@ -487,14 +577,14 @@ Jogos grandes de console (ex.: God of War III Remastered) rodam num emulador, qu
 #### `updates`
 
 - `{ "source": "none" }` para projetos sem binários publicados; o app mostra só o link do repositório.
-- `{ "source": "github-releases", … }` para projetos que publicam releases:
+- `{ "source": "github-releases", … }` para projetos que publicam releases no GitHub, ou `{ "source": "gitlab-releases", … }` no gitlab.com:
 
-| Campo                | O que faz                                                                                                                                                                                                                                                       |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `repo`               | No formato `dono/repositorio`. Os downloads só são aceitos desse repositório.                                                                                                                                                                                   |
-| `assetPatterns`      | Globs por plataforma, testados em ordem. Se nenhum casar, o app avisa e não baixa nada. Se o asset for um binário solto (AppImage/exe), ele é salvo com o nome do primeiro executável da plataforma que não seja um glob.                                       |
-| `includePrereleases` | Usa a lista de releases em vez de `/releases/latest`.                                                                                                                                                                                                           |
-| `preserve`           | O que **nunca é sobrescrito** na atualização. Padrão sem `/` casa pelo nome do arquivo em qualquer pasta (ex.: `imgui.ini`, `*.sav`); com `/`, é relativo à raiz (ex.: `Save/**`, `mods/`). Arquivos preservados que ainda não existem são criados normalmente. |
+| Campo                | O que faz                                                                                                                                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `repo`               | No formato `dono/repositorio` (no GitLab, o caminho do projeto, com subgrupos se houver). Os downloads só são aceitos desse repositório: no GitLab, só arquivos de pacote, downloads de release e anexos do próprio projeto; links para outros sites são ignorados. |
+| `assetPatterns`      | Globs por plataforma, testados em ordem. Se nenhum casar, o app avisa e não baixa nada. Se o asset for um binário solto (AppImage/exe), ele é salvo com o nome do primeiro executável da plataforma que não seja um glob.                                           |
+| `includePrereleases` | Usa a lista de releases em vez de `/releases/latest`.                                                                                                                                                                                                               |
+| `preserve`           | O que **nunca é sobrescrito** na atualização. Padrão sem `/` casa pelo nome do arquivo em qualquer pasta (ex.: `imgui.ini`, `*.sav`); com `/`, é relativo à raiz (ex.: `Save/**`, `mods/`). Arquivos preservados que ainda não existem são criados normalmente.     |
 
 </details>
 
@@ -640,6 +730,8 @@ Cada PR e cada push na `main` passam por verificações automáticas.
 ## Créditos
 
 Os jogos e projetos listados pertencem aos seus respectivos autores e comunidades. O Relaunch é um launcher independente e não é afiliado a nenhum deles.
+
+Parte do catálogo partiu da lista pública de projetos do [Quiver Launcher](https://github.com/tgeorgiadis/quiver-launcher). Cada projeto foi conferido de novo pelas regras do Relaunch antes de entrar.
 
 As fontes Geist e Geist Mono são distribuídas sob a SIL Open Font License.
 

@@ -142,10 +142,25 @@ describe('manifestos embutidos', () => {
   it('projetos com binários publicados declaram assets e preservam dados do usuário', async () => {
     const { manifests } = await loadManifests([{ dir, origin: 'builtin' }])
     // Guardam configurações e saves fora da pasta do jogo (Documentos, %LOCALAPPDATA%, ~/.local/share) ou num AppImage.
-    const dataOutside = new Set(['openrct2', 'bloodborne-pc', 'fukami', 'jsrf-unleashed', 'openrac', 'takedawn', 'ufc3-pc'])
+    const dataOutside = new Set([
+      'openrct2',
+      'bloodborne-pc',
+      'fukami',
+      'jsrf-unleashed',
+      'openrac',
+      'takedawn',
+      'ufc3-pc',
+      'banjo-tooie-port',
+      'chris-sawyers-locomotion',
+      'forza-horizon-reimagined',
+      'shaolin-monks-recomp',
+      'street-fighter-iii-3rd-strike-3sx',
+      'taisei',
+      'wwe2k14-recomp'
+    ])
     for (const m of manifests) {
       const updates = m.updates
-      if (updates.source !== 'github-releases') continue
+      if (updates.source === 'none') continue
       // Alguns ports só publicam builds de Linux; cada plataforma com asset precisa de um executável.
       const platforms = (['win32', 'linux'] as const).filter((p) => assetPatternsFor(updates, p).length > 0)
       expect(platforms.length, m.id).toBeGreaterThan(0)
@@ -154,12 +169,33 @@ describe('manifestos embutidos', () => {
       // Binários podem vir de outro repositório do mesmo dono (ex.: RPCS3/rpcs3-binaries-win).
       const owner = (repo: string) => repo.toLowerCase().split('/')[0]
       expect(owner(new URL(m.repoUrl).pathname.slice(1)), m.id).toBe(owner(updates.repo))
+      // Projeto do GitLab: o link do projeto e a origem dos downloads são o mesmo projeto no gitlab.com.
+      if (updates.source === 'gitlab-releases') expect(m.repoUrl.toLowerCase(), m.id).toBe(`https://gitlab.com/${updates.repo.toLowerCase()}`)
+      else expect(new URL(m.repoUrl).hostname, m.id).toBe('github.com')
     }
     const soh = manifests.find((m) => m.id === 'soh')!
     // soh.o2r pertence ao port e PRECISA ser atualizado; só os arquivos gerados da ROM são preservados.
     if (soh.updates.source === 'github-releases') {
       expect(soh.updates.preserve).toContain('oot.o2r')
       expect(soh.updates.preserve).not.toContain('*.o2r')
+    }
+  })
+
+  it('jogos com mais de um projeto: todos têm a mesma chave e exatamente um é o mais completo', async () => {
+    const { manifests } = await loadManifests([{ dir, origin: 'builtin' }])
+    const groups = new Map<string, typeof manifests>()
+    for (const m of manifests) {
+      if (m.recommended) expect(m.gameKey, `${m.id}: "recommended" sem "gameKey"`).toBeTruthy()
+      if (m.gameKey) groups.set(m.gameKey, [...(groups.get(m.gameKey) ?? []), m])
+    }
+    for (const [key, list] of groups) {
+      expect(list.length, `${key}: a chave só serve para ligar dois ou mais projetos`).toBeGreaterThan(1)
+      expect(
+        list.filter((m) => m.recommended).map((m) => m.id),
+        key
+      ).toHaveLength(1)
+      // O selo vale para escolher entre projetos: todos mostram o quão bem rodam.
+      for (const m of list) expect(m.compatibility, m.id).toBeTruthy()
     }
   })
 

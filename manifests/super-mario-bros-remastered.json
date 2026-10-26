@@ -1,0 +1,64 @@
+{
+  "id": "super-mario-bros-remastered",
+  "name": "Super Mario Bros. Remastered",
+  "originalGame": "Super Mario Bros. (NES)",
+  "description": "Remake feito por fãs em Godot de Super Mario Bros., The Lost Levels e outras versões, com física revisada, pacotes de recursos e editor de fases. Precisa da sua própria ROM de Super Mario Bros. do NES.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public",
+  "accentColor": "#e4000f",
+  "executables": {
+    "win32": ["SMB1R.exe"],
+    "linux": ["SMB1R.x86_64"]
+  },
+  "detectFiles": ["SMB1R.exe", "SMB1R.x86_64", "SMB1R.pck"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Super Mario Bros. (NES)",
+      "optional": true,
+      "extensions": ["nes"],
+      "copyToGameDir": true,
+      "helpText": "Opcional: o jogo procura sozinho qualquer arquivo .nes na própria pasta; também dá para arrastar a ROM para a janela ou usar o botão de seleção na primeira abertura. O jogo confere a ROM pelo conteúdo (hash próprio, não SHA-1) e guarda uma cópia como baserom.nes na pasta de dados."
+    },
+    {
+      "id": "verify-rom",
+      "type": "firstRun",
+      "label": "Validar a ROM na primeira abertura",
+      "doneWhen": ["{appData}/SMB1R/baserom.nes", "{localAppData}/SMB1R/baserom.nes", "config/baserom.nes"],
+      "helpText": "Abra o jogo: ele verifica a ROM (da pasta do jogo, arrastada ou escolhida) e copia para baserom.nes em %APPDATA%\\SMB1R no Windows ou ~/.local/share/SMB1R no Linux (ou na subpasta config/ ao lado do executável, se existir um arquivo portable.txt). Arquivos compactados (.zip, .7z) são recusados."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "JHDev2006/Super-Mario-Bros.-Remastered-Public",
+    "assetPatterns": {
+      "win32": "Windows.zip",
+      "linux": "Linux.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "config/**", "*.nes"],
+    "_todo": "As snapshots de desenvolvimento (tags 1.1-26wNNx) e os release candidates não são marcados como pre-release no GitHub; se uma snapshot sair depois da última estável, o app pode pegá-la como atualização."
+  },
+  "_todo": [
+    "Nomes dos executáveis: SMB1R.exe confirmado por um script de instalação do Lutris (via busca); SMB1R.x86_64 vem do export_presets.cfg (export_path ../Exports/Linux/SMB1R.x86_64) e não foi conferido no Linux.zip. Os zips são enviados manualmente (o workflow feature-build.yml só gera builds de teste com outro nome), e não foi possível listá-los aqui; não se sabe se têm pasta raiz.",
+    "Jurídico: o README diz que nenhum asset original está no código, exceto o que os próprios autores fizeram; credits.txt atribui sprites, músicas (arranjos) e efeitos sonoros a artistas da comunidade, e os sprites originais são extraídos da ROM do usuário (Scripts/Classes/RomAssetRipper.gd, Resources/AssetRipper/*.json só com coordenadas/paletas). As fases recriam o desenho das fases originais. É um remake de fãs de uma série da Nintendo: avaliar o risco antes de publicar.",
+    "O jogo tem navegador de mods/pacotes do GameBanana embutido (opcional, iniciado pelo usuário) e Discord Rich Presence.",
+    "Dados do usuário: Godot user:// com use_custom_user_dir e nome SMB1R (Scripts/Classes/Singletons/Global.gd, get_config_path); modo portátil com portable.txt grava em config/ ao lado do executável."
+  ],
+  "_sources": [
+    "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public",
+    "https://raw.githubusercontent.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/HEAD/README.md",
+    "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/blob/HEAD/credits.txt",
+    "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/blob/HEAD/project.godot",
+    "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/blob/HEAD/export_presets.cfg",
+    "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/blob/HEAD/Scripts/UI/RomVerifier.gd",
+    "https://raw.githubusercontent.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/HEAD/Scripts/Classes/Singletons/Global.gd",
+    "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/blob/HEAD/.github/workflows/feature-build.yml",
+    "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/releases",
+    "https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/releases/expanded_assets/1.1-stable",
+    "https://lutris.net/games/install/39503/view"
+  ]
+}

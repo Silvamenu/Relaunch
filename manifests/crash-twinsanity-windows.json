@@ -1,0 +1,70 @@
+{
+  "id": "crash-twinsanity-windows",
+  "name": "Crash Twinsanity for Windows",
+  "originalGame": "Crash Twinsanity (PS2)",
+  "description": "Port nativo para Windows de Crash Twinsanity, feito a partir da decompilação da versão PAL do jogo de PS2. Você precisa da imagem do seu próprio disco PAL (SLES-52568).",
+  "category": "playstation",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/GioPixelGH/Crash-Twinsanity-Windows",
+  "accentColor": "#e8731c",
+  "executables": {
+    "win32": ["CrashTwinsanity.exe"]
+  },
+  "detectFiles": ["CrashTwinsanity.exe", "fonts/LuckiestGuy-Regular.ttf"],
+  "requirements": [
+    {
+      "id": "disc-image",
+      "type": "firstRun",
+      "label": "Escolher a imagem do seu disco PAL na primeira execução",
+      "doneWhen": ["{appData}/Crash Twinsanity/disc_image.txt", "User/disc_image.txt"],
+      "helpText": "Gere uma imagem (.iso, .bin ou .img) do seu próprio disco de Crash Twinsanity de PS2, versão PAL (Europa/Austrália, SLES-52568); as versões americana e japonesa não funcionam. Na primeira execução, o jogo abre uma janela para escolher a imagem, confere se é a versão PAL e guarda o caminho. Os dados são lidos da imagem a cada início, então não mova nem apague o arquivo depois (se mover, o jogo pede de novo)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": ["{appData}/Crash Twinsanity/options.txt", "User/options.txt"],
+      "format": "text",
+      "label": "Opções (options.txt)",
+      "editable": true
+    },
+    {
+      "path": ["{appData}/Crash Twinsanity/bindings.txt", "User/bindings.txt"],
+      "format": "text",
+      "label": "Controles (bindings.txt)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "GioPixelGH/Crash-Twinsanity-Windows",
+    "assetPatterns": {
+      "win32": "Crash-Twinsanity-Windows*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["User/**", "portable.txt", "*.iso", "*.bin", "*.img"],
+    "_todo": [
+      "Asset da v1.0.18: Crash-Twinsanity-Windows.zip (sem versão no nome; SHA-256 2f8fa896...dec7f3 igual ao das notas). Pasta raiz única 'Crash Twinsanity/' com CrashTwinsanity.exe, SDL3.dll, avcodec/avutil, fonts/ e licenses/; nenhum arquivo do jogo.",
+      "Modo portátil (Options > Gameplay): usa a pasta User/ e portable.txt ao lado do exe, que não vêm no zip; a imagem do disco também pode ficar na pasta do jogo nesse modo."
+    ]
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a última release continua sendo a v1.0.18 (25/10/2026, Latest, não prerelease), com o mesmo Crash-Twinsanity-Windows.zip (13,6 MB, SHA-256 2f8fa896...dec7f3) listado na rodada 1. O README diz que o jogo foi jogado do começo aos créditos e que as 131 áreas foram testadas (native/sweep/results_windows.md); as v1.0.17 e v1.0.18 corrigem pulos de cena que travavam o jogo (issue #9).",
+    "Só Windows x64: não há build de Linux na release (o README diz para compilar; native/LINUX.md).",
+    "Caminhos de settings/saves (%APPDATA%\\Crash Twinsanity: disc_image.txt, options.txt, bindings.txt, memorycard/) vêm de native/PLAYING_WINDOWS.md, não conferidos no código-fonte.",
+    "Projeto pequeno e recente (28 estrelas, 68 commits), feito com ajuda declarada de IA; a build é local (sem CI), com SHA-256 publicado e link do VirusTotal.",
+    "O código de base (decompilação do Smartkin e port de Mac do HAB3X) foi publicado sem licença; o repositório o inclui com créditos, e só as mudanças próprias são MIT."
+  ],
+  "_sources": [
+    "https://github.com/GioPixelGH/Crash-Twinsanity-Windows",
+    "https://github.com/GioPixelGH/Crash-Twinsanity-Windows/releases",
+    "https://github.com/GioPixelGH/Crash-Twinsanity-Windows/releases/tag/v1.0.18",
+    "https://github.com/GioPixelGH/Crash-Twinsanity-Windows/releases/expanded_assets/v1.0.18",
+    "https://github.com/GioPixelGH/Crash-Twinsanity-Windows/releases/download/v1.0.18/Crash-Twinsanity-Windows.zip",
+    "https://raw.githubusercontent.com/GioPixelGH/Crash-Twinsanity-Windows/HEAD/README.md",
+    "https://raw.githubusercontent.com/GioPixelGH/Crash-Twinsanity-Windows/HEAD/native/PLAYING_WINDOWS.md",
+    "https://github.com/HAB3X/Crash-Twinsanity-Mac",
+    "https://github.com/GioPixelGH",
+    "https://github.com/GioPixelGH/Crash-Twinsanity-Windows/releases/expanded_assets/v1.0.18"
+  ]
+}

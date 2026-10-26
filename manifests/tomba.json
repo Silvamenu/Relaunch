@@ -1,0 +1,99 @@
+{
+  "id": "tomba",
+  "name": "TombaRecomp",
+  "originalGame": "Tomba! (PS1)",
+  "description": "Recompilação estática de Tomba! para PC, feita com o PSXRecomp (prévia alfa), com widescreen opcional e carregamento sem telas de espera. Você precisa da imagem do seu próprio disco americano (SCUS-94236).",
+  "category": "playstation",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/mstan/TombaRecomp",
+  "accentColor": "#e8559a",
+  "executables": {
+    "win32": ["TombaRecomp.exe"]
+  },
+  "detectFiles": ["TombaRecomp.exe", "AOT_CACHE_AUDIT.json"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Tomba! (EUA, arquivo .bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "c259ec7ff6ef4163913991f4e4db2eff71702818",
+            "label": "Tomba! (USA) SCUS-94236, faixa de dados (Track 01) MODE2/2352"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se o seu dump é o esperado. O jogo não recebe o arquivo por aqui; o disco é escolhido no launcher do próprio jogo (passo seguinte). Use um dump .cue + .bin (ou .chd) do seu disco americano; não converta para .iso de 2048 bytes (perde os vídeos e o áudio XA). Os discos europeus (Tombi!) e japonês usam downloads próprios do projeto, que não são instalados por aqui."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o disco no launcher do jogo",
+      "doneWhen": ["disc.cfg"],
+      "helpText": "Abra o jogo. Na janela do launcher, defina a linha \"Disc\" com o arquivo .cue do seu disco (deixe o .bin na mesma pasta) e clique em Launch. O BIOS livre OpenBIOS já vem no pacote; usar o seu próprio SCPH1001.BIN é opcional. A escolha fica salva em disc.cfg, ao lado do executável. Mantenha o disco no lugar: os vídeos e outros dados continuam sendo lidos dele."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "input.ini",
+      "format": "ini",
+      "label": "Controles (input.ini)",
+      "editable": true
+    },
+    {
+      "path": "keybinds.ini",
+      "format": "ini",
+      "label": "Teclado (keybinds.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/TombaRecomp",
+    "assetPatterns": {
+      "win32": "TombaRecomp-*-USA-windows-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "disc.cfg",
+      "bios.cfg",
+      "settings.toml",
+      "game_options.toml",
+      "input.ini",
+      "keybinds.ini",
+      "config.ini",
+      "launcher-window.ini",
+      "overlay_captures.json",
+      "artwork/**",
+      "mods/texture-packs/**"
+    ],
+    "_todo": "As tags são todas -alpha mas não marcadas como pre-release no GitHub (só o teste v0.22.0-alpha.pr49.1 é). O padrão pega só o zip americano: o zip japonês (TombaRecomp-*-Japan-SLPS01144-*) vem antes na lista de assets, e os europeus se chamam TombiRecomp-*. Tomba-HD-texture-example.zip e os .sha256 não casam. A pasta cache/ não é preservada de propósito: cada versão traz módulos nativos novos nela."
+  },
+  "_todo": [
+    "A release (v0.23.0-alpha) não traz disco, BIOS comercial nem dados do jogo; o TombaRecomp.exe e os .dll em cache/ contêm código do jogo recompilado (MIPS traduzido para nativo), como nas outras recompilações estáticas do mstan no catálogo. O pacote traz também a capa do jogo (launcher_assets/img/boxart.tga, usada pelo launcher), como o ApeEscapeRecomp.",
+    "O zip não foi baixado (download do github.com bloqueado aqui): o nome TombaRecomp.exe, os arquivos na raiz do zip (sem pasta de topo) e o conteúdo (assets/, bios/ com OpenBIOS, mods/bundled/, cache/, overlay_toolchain/ para compilar overlays a partir do disco do usuário, licenses/, AOT_CACHE_AUDIT.json, START_HERE.txt) vêm de tools/package_regions.py e psxrecomp/tools/create_release_zip.py.",
+    "packaging/SETUP_HOST_MIGRATION.txt diz que o título vai migrar para releases 'setup-host' (sem código do jogo, com geração e compilação local); nesse modelo o launcher do PSXRecomp baixa um compilador de um repositório de terceiros (releases/latest, sem hash). Se uma versão futura mudar para esse formato, reavaliar antes de manter o manifesto.",
+    "disc.cfg/settings.toml/input.ini/keybinds.ini ficam ao lado do executável (psxrecomp 3db41f8, runtime/src/main.cpp: exe_dir_from_argv/sidecar_cfg_path).",
+    "O SHA-1 é o da faixa de dados (Track 01) em game.toml [prepare_disc] (tamanho 280193760 bytes); se o dump tiver mais de um .bin, confira o primeiro.",
+    "Linux: a v0.23.0-alpha só tem builds Windows; versões anteriores (até v0.20.x) tinham AppImage experimental. Rede: o runtime tem netplay opcional (lobby online), desligado até o jogador usar."
+  ],
+  "_sources": [
+    "https://github.com/mstan/TombaRecomp",
+    "https://github.com/mstan/TombaRecomp/releases",
+    "https://github.com/mstan/TombaRecomp/releases/expanded_assets/v0.23.0-alpha",
+    "https://raw.githubusercontent.com/mstan/TombaRecomp/HEAD/README.md",
+    "https://github.com/mstan/TombaRecomp/blob/HEAD/game.toml",
+    "https://github.com/mstan/TombaRecomp/blob/HEAD/tools/package_regions.py",
+    "https://github.com/mstan/TombaRecomp/blob/HEAD/packaging/release/START_HERE.txt",
+    "https://github.com/mstan/TombaRecomp/blob/HEAD/packaging/SETUP_HOST_MIGRATION.txt",
+    "https://github.com/mstan/TombaRecomp/blob/HEAD/docs/HD_TEXTURE_PACKS.md",
+    "https://raw.githubusercontent.com/mstan/psxrecomp/3db41f83f8ebb3b1f535632b091272fbcc86a42d/runtime/src/main.cpp",
+    "https://raw.githubusercontent.com/mstan/psxrecomp/3db41f83f8ebb3b1f535632b091272fbcc86a42d/tools/create_release_zip.py"
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "skate2-recomp",
+  "name": "Skate 2 PC",
+  "originalGame": "Skate 2 (Xbox 360)",
+  "description": "Port não oficial para Windows da versão de Xbox 360 de Skate 2, feito por recompilação estática com o ReXGlue. Você precisa dos arquivos extraídos do seu próprio disco (default.xex e a pasta data).",
+  "category": "xbox",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/christianortel/skate2-recompile-pc",
+  "accentColor": "#d1495b",
+  "executables": {
+    "win32": ["Launch Skate 2.exe", "skate2.exe"]
+  },
+  "detectFiles": ["skate2.exe", "Launch Skate 2.exe", "scripts/Launch-Skate2.ps1"],
+  "requirements": [
+    {
+      "id": "import",
+      "type": "firstRun",
+      "label": "Importar os arquivos extraídos do seu Skate 2 (Xbox 360)",
+      "doneWhen": ["game/default.xex"],
+      "helpText": "Na pasta do jogo, abra \"Import Game Files.cmd\" e escolha a pasta extraída do seu próprio disco que contém default.xex e a pasta data (não a pasta acima dela; .iso e arquivos compactados não são aceitos, extraia antes). O importador confere o SHA-256 do default.xex (116ba3ee37fcf0d8db60b7d47c971fdb6d3eb2a7a4d3cfc3611a06704a588ae5; Title ID 4541087F, Media ID 6ADB5821, versão 0.0.0.2) e copia tudo para a pasta game (cerca de 6,8 GB). Outras revisões são recusadas."
+    },
+    {
+      "id": "vcredist",
+      "type": "firstRun",
+      "label": "Microsoft Visual C++ Redistributable x64 (só se o jogo pedir)",
+      "optional": true,
+      "helpText": "O launcher exige o runtime Visual C++ x64 14.44.35211.0 ou mais recente. Se ele avisar que está faltando, abra \"Install Visual C++ Runtime.url\" na pasta do jogo (leva ao instalador oficial da Microsoft), instale e abra o jogo de novo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "skate2.toml",
+      "format": "text",
+      "label": "Configurações de PC (skate2.toml)",
+      "editable": true,
+      "_todo": "O arquivo só aparece depois de usar F4 > Save to config no jogo; caminho na raiz do pacote inferido de docs/INSTALL.md (o zip exclui game, userdata, cache e skate2.toml)."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "christianortel/skate2-recompile-pc",
+    "assetPatterns": {
+      "win32": "Skate2-PC-*-Windows-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["game/**", "userdata/**", "cache/**", "skate2.toml", "logs/**"]
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a última release continua sendo a v0.1.1 (12/10/2026, Latest), com os mesmos assets: Skate2-PC-v0.1.1-Windows-x64.zip (22,2 MB), Skate2-PC-v0.1.0-Runtime-Source.zip (56,1 MB) e SHA256SUMS.txt. O repositório segue com 6 commits. Testado só num PC: free skate, progresso na campanha, replay e salvar/carregar funcionam; a campanha completa e outros hardwares não foram verificados, e não há ultrawide de verdade.",
+    "Repositório novo: os 6 commits são todos de 12/10/2026, mesmo dia das releases v0.1.0 e v0.1.1, e os binários foram compilados localmente (sem CI). O código do jogo (skate2/src, launcher/src, scripts) está no repo e o runtime ReXGlue modificado vem como Skate2-PC-v0.1.0-Runtime-Source.zip na release. Conta do autor com 34 repositórios e perfil real.",
+    "Launch Skate 2.exe é um launcher nativo que chama scripts/Launch-Skate2.ps1 (Windows PowerShell 5.1 com -ExecutionPolicy Bypass só no processo filho) e aplica o perfil padrão 2x / FPS ilimitado; abrir skate2.exe direto pula esse perfil. Os .cmd/.ps1 do zip têm o mesmo tamanho em bytes dos arquivos do repositório (299, 319, 4473, 6196, 1396), lidos no GitHub: só importam/validam os arquivos e iniciam o jogo.",
+    "O importador é um script (Import Game Files.cmd -> scripts/Import-Skate2Data.ps1) com seletor de pasta próprio; o app não consegue passar a pasta do usuário para ele, por isso é um passo manual. Ele recusa sobrescrever uma pasta game já existente.",
+    "Só Windows x64 (D3D12). Saves em userdata/ e cache em cache/ ao lado do skate2.exe.",
+    "Release v0.1.1 verificada: Skate2-PC-v0.1.1-Windows-x64.zip (22,2 MB) não tem pasta raiz única; traz skate2.exe, rexruntime.dll, rexgpu-xenos.dll, Launch Skate 2.exe, os .cmd, scripts/*.ps1, docs/ e licenses/. Nenhum arquivo do jogo, nenhum instalador e nada baixado em tempo de execução. O padrão não casa com Skate2-PC-v0.1.0-Runtime-Source.zip nem com SHA256SUMS.txt."
+  ],
+  "_sources": [
+    "https://github.com/christianortel/skate2-recompile-pc",
+    "https://github.com/christianortel/skate2-recompile-pc/commits/main",
+    "https://github.com/christianortel/skate2-recompile-pc/releases",
+    "https://github.com/christianortel/skate2-recompile-pc/releases/expanded_assets/v0.1.1",
+    "https://github.com/christianortel/skate2-recompile-pc/releases/download/v0.1.1/Skate2-PC-v0.1.1-Windows-x64.zip",
+    "https://github.com/christianortel/skate2-recompile-pc/releases/download/v0.1.1/SHA256SUMS.txt",
+    "https://github.com/christianortel",
+    "https://raw.githubusercontent.com/christianortel/skate2-recompile-pc/HEAD/README.md",
+    "https://raw.githubusercontent.com/christianortel/skate2-recompile-pc/HEAD/docs/INSTALL.md",
+    "https://raw.githubusercontent.com/christianortel/skate2-recompile-pc/HEAD/docs/BUILD.md",
+    "https://raw.githubusercontent.com/christianortel/skate2-recompile-pc/HEAD/docs/RUNTIME_REBUILD.md",
+    "https://raw.githubusercontent.com/christianortel/skate2-recompile-pc/HEAD/Import%20Game%20Files.cmd",
+    "https://raw.githubusercontent.com/christianortel/skate2-recompile-pc/HEAD/scripts/Import-Skate2Data.ps1",
+    "https://raw.githubusercontent.com/christianortel/skate2-recompile-pc/HEAD/scripts/Launch-Skate2.ps1",
+    "https://raw.githubusercontent.com/christianortel/skate2-recompile-pc/HEAD/scripts/Check-Skate2Runtime.ps1",
+    "https://github.com/christianortel/skate2-recompile-pc/releases/expanded_assets/v0.1.1"
+  ]
+}

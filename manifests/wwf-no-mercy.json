@@ -1,0 +1,75 @@
+{
+  "id": "wwf-no-mercy",
+  "name": "WWF No Mercy: Recompiled",
+  "originalGame": "WWF No Mercy (Nintendo 64)",
+  "description": "Recompilação estática de WWF No Mercy para PC (N64Recomp + RT64), com widescreen, 60/120 fps e mods (beta, só Windows). Precisa da sua própria ROM americana Rev 1 do cartucho.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/jessetbh/WWFNoMercyRecomp",
+  "accentColor": "#c8102e",
+  "executables": {
+    "win32": ["NoMercyRecompiled.exe"]
+  },
+  "detectFiles": ["NoMercyRecompiled.exe", "assets/mods/aki_quickmatch.nrm"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de WWF No Mercy (N64, EUA Rev 1)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [{ "sha1": "91cee3d096f4a76644d8b35b9aead6448909abd1", "label": "EUA Rev 1 (.z64)" }]
+      },
+      "helpText": "Opcional: serve só para conferir o seu dump. A ROM é escolhida no próprio jogo (passo seguinte). Só a versão americana Rev 1 é aceita; a Rev 0 e outras regiões são recusadas."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Carregar sua ROM no launcher do jogo",
+      "doneWhen": ["wwf.nomercy.us.z64", "{localAppData}/NoMercyRecompiled/wwf.nomercy.us.z64"],
+      "helpText": "Abra o jogo, clique em \"Load ROM\" e escolha sua ROM. O jogo confere e guarda uma cópia em %LOCALAPPDATA%\\NoMercyRecompiled (ou ao lado do exe, se existir um arquivo portable.txt); depois é só clicar em \"Start Game\". O exe não é assinado, então o Windows pode mostrar o aviso do SmartScreen."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/NoMercyRecompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "jessetbh/WWFNoMercyRecomp",
+    "assetPatterns": {
+      "win32": "NoMercyRecompiled-*-Windows.zip"
+    },
+    "includePrereleases": true,
+    "preserve": ["portable.txt", "*.json", "*.z64", "saves/**", "mods/**", "texture_dump/**", "NoMercyRecompiled.log"],
+    "_todo": "O projeto só publica pre-releases (v0.1.0, v0.1.1, v0.2.0). O zip é plano (sem pasta raiz), montado pelo release.yml com o conteúdo de package/. O arquivo SHA256SUMS não casa com o padrão."
+  },
+  "_todo": [
+    "Conteúdo do zip conferido pelo .github/workflows/validate.yml (passo Package): NoMercyRecompiled.exe, assets/ (fontes, ícones, rt_lights.json e 3 mods .nrm do próprio projeto), crt/, recompcontrollerdb.txt, SDL2/dxil/dxcompiler/librashader e runtime VC++; o passo 'Assert no stray files' recusa .z64/.n64/.v64. Sem ROM nem assets do jogo; o código do jogo vai recompilado dentro do exe, como nas outras recompilações N64 do catálogo. Zip de 22 MB.",
+    "A ROM do CI vem de um repositório privado (secret NOMERCY_ROM_REPO), como no Zelda64Recomp.",
+    "O nome da cópia guardada (wwf.nomercy.us.z64) vem de game_id em src/main/main.cpp + GameEntry::stored_filename() do N64ModernRuntime do autor; não foi testado na prática.",
+    "Saves, mods/, configs .json e o log ficam em %LOCALAPPDATA%\\NoMercyRecompiled; só ficam na pasta do jogo com portable.txt. Só graphics.json foi confirmado no README; os demais .json de configuração não.",
+    "Inclui cliente RetroAchievements (rcheevos) opcional."
+  ],
+  "_sources": [
+    "https://github.com/jessetbh/WWFNoMercyRecomp",
+    "https://github.com/jessetbh/WWFNoMercyRecomp/releases",
+    "https://github.com/jessetbh/WWFNoMercyRecomp/releases/expanded_assets/v0.2.0",
+    "https://github.com/jessetbh/WWFNoMercyRecomp/issues?q=is%3Aissue",
+    "https://github.com/jessetbh/WWFNoMercyRecomp/blob/HEAD/README.md",
+    "https://github.com/jessetbh/WWFNoMercyRecomp/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/jessetbh/WWFNoMercyRecomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/jessetbh/WWFNoMercyRecomp/blob/HEAD/.github/release-readme.txt",
+    "https://github.com/jessetbh/WWFNoMercyRecomp/blob/HEAD/src/main/main.cpp",
+    "https://raw.githubusercontent.com/jessetbh/N64ModernRuntime/HEAD/librecomp/src/recomp.cpp"
+  ]
+}

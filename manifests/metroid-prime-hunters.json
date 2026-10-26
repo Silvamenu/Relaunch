@@ -1,0 +1,84 @@
+{
+  "id": "metroid-prime-hunters",
+  "name": "MetroidPrimeHuntersRecomp",
+  "originalGame": "Metroid Prime Hunters (Nintendo DS)",
+  "description": "Recompilação de Metroid Prime Hunters para PC, feita com o ndsrecomp, com widescreen, controles estilo Prime e multiplayer online experimental (alpha pública). Você precisa da sua própria ROM americana do jogo (.nds).",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/MetroidPrimeHuntersRecomp",
+  "accentColor": "#d9731a",
+  "executables": {
+    "win32": ["MetroidPrimeHuntersRecomp.exe"],
+    "linux": ["MetroidPrimeHuntersRecomp.AppImage"]
+  },
+  "detectFiles": ["MetroidPrimeHuntersRecomp.exe", "nds_runner.exe", "bank-manifest.txt", "MetroidPrimeHuntersRecomp.AppImage"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Metroid Prime Hunters (Nintendo DS, EUA, .nds)",
+      "extensions": ["nds", "srl"],
+      "copyToGameDir": true,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "90164d1ac127ee5f9815ea4ae7de798c7b5fc629",
+            "label": "Metroid Prime Hunters (USA), revisão 0"
+          }
+        ]
+      },
+      "helpText": "Só a versão americana revisão 0 (AMHE) é aceita. O jogo procura o arquivo .nds na pasta do jogo (ao lado do executável ou do AppImage); também é possível escolher a ROM no launcher do próprio jogo. BIOS e firmware do DS não são necessários (o pacote usa FreeBIOS e um firmware gerado)."
+    },
+    {
+      "id": "bios",
+      "type": "file",
+      "label": "Dumps da BIOS e do firmware do seu Nintendo DS (opcional)",
+      "optional": true,
+      "patterns": ["bios/biosnds9.rom"],
+      "helpText": "Opcional: para usar os dumps do seu próprio DS em vez do FreeBIOS, coloque biosnds9.rom, biosnds7.rom e firmware.bin na pasta bios/ do jogo. O jogo confere os hashes e recusa arquivos diferentes."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "{appData}/MetroidPrimeHuntersRecomp/mods.ini",
+        "linux": "{home}/.config/MetroidPrimeHuntersRecomp/mods.ini"
+      },
+      "format": "ini",
+      "label": "Configurações do launcher (mods.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/MetroidPrimeHuntersRecomp",
+    "assetPatterns": {
+      "win32": "MetroidPrimeHuntersRecomp-windows-x64-*.zip",
+      "linux": "MetroidPrimeHuntersRecomp-linux-*-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["*.nds", "*.srl", "*.sav", "savestates/**", "bios/**", "diagnostics/**"],
+    "_todo": "O release estável mais recente é v0.7.3-alpha (10/09/2026, marcado Latest). v0.7.4 a v0.7.9-alpha são pre-releases (as mais novas só para Windows) e ficam de fora com includePrereleases=false, embora o README aponte v0.7.9 (Windows) e v0.7.6 (Linux) como downloads atuais. Os arquivos .sha256 não casam com os padrões."
+  },
+  "_todo": [
+    "Zip do Windows (v0.7.3: MetroidPrimeHuntersRecomp-windows-x64-v0.7.3.zip, 126 MB) montado por tools/make_release.ps1 sem pasta raiz: MetroidPrimeHuntersRecomp.exe (launcher recomp-ui), nds_runner.exe, assets/ do launcher (fontes livres, ícones, desenho do controle e logo do DS e a capa oficial do jogo), game.toml, README/LICENSE/licenses, bios/README.txt (sem BIOS), SOURCE.txt, bank-manifest.txt, DLLs MinGW/SDL, overlay_toolchain/ (Python embutido, TCC, nds_recompile.exe) e live-shard-cache/ (código nativo pré-compilado das áreas cobertas). O script e a checagem final recusam .nds, .rom, .bin, .sav, biosnds9/7.rom e firmware.bin.",
+    "A capa oficial (launcher/recomp-ui/assets/boxart.tga) vem no pacote; arte oficial foi liberada pelo dono do projeto nesta rodada. O executável e o live-shard-cache contêm o código do jogo recompilado, como nas outras recompilações estáticas do catálogo.",
+    "AppImage do Linux (115 MB) montado por tools/build-linux.sh com o mesmo conteúdo; o AppRun usa a pasta do AppImage como pasta de dados (ROM .nds, bios/, savestates/, live-shard-cache/). Não foi listado por dentro.",
+    "Configurações do launcher (incluindo o caminho da ROM escolhida) ficam em %APPDATA%\\MetroidPrimeHuntersRecomp\\mods.ini ou ~/.config/MetroidPrimeHuntersRecomp/mods.ini (launcher_main.cpp). Não foi confirmado onde o runner grava o save do cartucho; *.sav está no preserve por precaução.",
+    "README: alpha pública, campanha não validada do início ao fim, travamentos e problemas gráficos/de áudio esperados; online via Wiimmfi experimental."
+  ],
+  "_sources": [
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/releases",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/releases/expanded_assets/v0.7.3-alpha",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/blob/HEAD/README.md",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/blob/HEAD/game.toml",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/blob/HEAD/tools/make_release.ps1",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/blob/HEAD/tools/build-linux.sh",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/blob/HEAD/launcher/recomp-ui/CMakeLists.txt",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/blob/HEAD/launcher/recomp-ui/launcher_main.cpp",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/blob/HEAD/packaging/BIOS_README.txt",
+    "https://github.com/mstan/MetroidPrimeHuntersRecomp/blob/HEAD/docs/RELEASE-0.7.3-alpha.md"
+  ]
+}

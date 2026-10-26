@@ -33,6 +33,14 @@ export function matchesSearch(entry: CatalogEntry, query: string): boolean {
   return words.every((word) => haystack.includes(word))
 }
 
+/**
+ * Quando há mais de um projeto do mesmo jogo (mesma `gameKey`), o catálogo destaca o mais completo. Sozinho,
+ * um projeto não recebe o selo.
+ */
+export function isMostComplete(entry: { id: string; gameKey?: string; recommended?: boolean }, all: { id: string; gameKey?: string }[]): boolean {
+  return !!entry.recommended && !!entry.gameKey && all.some((other) => other.id !== entry.id && other.gameKey === entry.gameKey)
+}
+
 /** Agrupa por categoria (na ordem de CATEGORIES, por nome dentro de cada uma) só o que casa com a busca. */
 export function groupCatalog<T extends CatalogEntry>(entries: T[], query: string): { category: Category; entries: T[] }[] {
   const matching = entries.filter((entry) => matchesSearch(entry, query))

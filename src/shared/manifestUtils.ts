@@ -1,4 +1,4 @@
-import type { ConfigFileSpec, GithubUpdates, Manifest, Platform } from './manifest'
+import type { ConfigFileSpec, Manifest, Platform, ReleaseUpdates } from './manifest'
 
 /**
  * Leitura de campos de um manifesto já validado. Fica fora de manifest.ts para a interface
@@ -26,7 +26,7 @@ export function configPathCandidates(spec: ConfigFileSpec, platform: Platform): 
   return Array.isArray(value) ? value : [value]
 }
 
-export function assetPatternsFor(updates: GithubUpdates, platform: Platform): string[] {
+export function assetPatternsFor(updates: ReleaseUpdates, platform: Platform): string[] {
   const value = updates.assetPatterns[platform]
   if (!value) return []
   return Array.isArray(value) ? value : [value]
@@ -34,7 +34,7 @@ export function assetPatternsFor(updates: GithubUpdates, platform: Platform): st
 
 /** O projeto publica binários para a plataforma (pode ser baixado e instalado pelo app). */
 export function installableOn(manifest: Manifest, platform: Platform): boolean {
-  return manifest.updates.source === 'github-releases' && assetPatternsFor(manifest.updates, platform).length > 0
+  return manifest.updates.source !== 'none' && assetPatternsFor(manifest.updates, platform).length > 0
 }
 
 export function todosOf(value: { _todo?: string | string[] } | undefined): string[] {

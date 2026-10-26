@@ -4,6 +4,9 @@
   "originalGame": "Banjo-Kazooie",
   "description": "Recompilação estática de Banjo-Kazooie para PC (N64: Recompiled + RT64), com widescreen, alta taxa de quadros e mods. Precisa da sua própria ROM americana do N64.",
   "category": "nintendo",
+  "compatibility": "playable",
+  "gameKey": "banjo-kazooie",
+  "recommended": true,
   "repoUrl": "https://github.com/BanjoRecomp/BanjoRecomp",
   "accentColor": "#e0a526",
   "executables": {

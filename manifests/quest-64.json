@@ -1,0 +1,98 @@
+{
+  "id": "quest-64",
+  "name": "Quest 64: Recompiled",
+  "originalGame": "Quest 64 (Nintendo 64)",
+  "description": "Recompilação estática de Quest 64 para PC (N64Recomp + RT64), ainda em versão inicial bem simples. Precisa da sua própria ROM americana (1.0) do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/Rainchus/Quest64-Recomp",
+  "accentColor": "#3b6fb6",
+  "executables": {
+    "win32": ["Quest64Recompiled.exe", "*/Quest64Recompiled.exe"]
+  },
+  "detectFiles": ["Quest64Recompiled.exe", "*/Quest64Recompiled.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Quest 64 (N64, EUA 1.0)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão americana 1.0 do N64 é aceita; arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 (0x35335bf69fc6515c, src/main/main.cpp) e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["quest64_us.z64", "{localAppData}/Quest64Recompiled/quest64_us.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em %LOCALAPPDATA%\\Quest64Recompiled (ou na pasta do jogo, se existir um arquivo portable.txt ao lado do exe). Nesta versão a janela inicial ainda mostra o nome e o fundo do Star Fox 64: Recompiled (launcher emprestado), mas o jogo carregado é Quest 64.",
+      "_todo": "Nome quest64_us.z64 = game_id \"quest64_us\" + \".z64\" (src/main/main.cpp + N64ModernRuntime upstream, stored_filename). O projeto usa um fork do N64ModernRuntime (sonicdcer) que não está mais no GitHub; não conferido num jogo instalado."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/Quest64Recompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/Quest64Recompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/Quest64Recompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/Quest64Recompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Rainchus/Quest64-Recomp",
+    "assetPatterns": {
+      "win32": "Quest64Recompiled*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "saves/**", "mods/**", "mod_config/**", "mods.json", "general.json", "graphics.json", "controls.json", "sound.json", "*.z64"]
+  },
+  "_todo": [
+    "Só há uma release (v0.1, zip enviado em 2026-01-16, 21,2 MB), descrita pelo autor como 'very bare-bones'; não há build de Linux publicada (o CI só gera artefatos). O zip não foi listado por dentro (download do github.com bloqueado aqui): o nome Quest64Recompiled.exe vem do CMakeLists.txt (add_executable(Quest64Recompiled)); por isso os padrões aceitam também uma subpasta.",
+    "O jogo usa portable.txt ao lado do exe (pasta de trabalho) para guardar saves/config/mods na pasta do jogo; o Quiver cria esse arquivo, aqui não é criado. Sem ele, os dados ficam em %LOCALAPPDATA%\\Quest64Recompiled (README).",
+    "Issue #12 (aberta): os submódulos sonicdcer/N64ModernRuntime e sonicdcer/sf64 não existem mais no GitHub, então o código não compila a partir de um clone hoje; issue #6: título/fundo/versão do Star Fox 64: Recompiled na janela inicial.",
+    "O ícone do app (icons/512.png, quatro gemas dos elementos) parece baseado no HUD do jogo; origem não confirmada. Não há outras imagens ou dados do jogo no repositório."
+  ],
+  "_sources": [
+    "https://github.com/Rainchus/Quest64-Recomp",
+    "https://github.com/Rainchus/Quest64-Recomp/releases",
+    "https://github.com/Rainchus/Quest64-Recomp/releases/expanded_assets/v0.1",
+    "https://github.com/Rainchus/Quest64-Recomp/issues/1",
+    "https://github.com/Rainchus/Quest64-Recomp/issues/6",
+    "https://github.com/Rainchus/Quest64-Recomp/issues/12",
+    "https://github.com/Rainchus/Quest64-Recomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/Rainchus/Quest64-Recomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/Rainchus/Quest64-Recomp/blob/HEAD/src/game/config.cpp",
+    "https://github.com/Rainchus/Quest64-Recomp/blob/HEAD/include/zelda_config.h",
+    "https://github.com/Rainchus/Quest64-Recomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://raw.githubusercontent.com/N64Recomp/N64ModernRuntime/HEAD/librecomp/src/recomp.cpp"
+  ]
+}
