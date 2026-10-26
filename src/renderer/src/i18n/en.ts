@@ -13,6 +13,11 @@ export const en: Record<TranslationKey, string> = {
   'appUpdate.ready': 'Update to v{version}',
   'appUpdate.readyHint': 'Installs the new version: the app closes and opens again by itself.',
   'appUpdate.action': 'Update',
+  'appUpdate.confirmTitle': 'Update Relaunch now?',
+  'appUpdate.confirmBody': 'Relaunch will close, install version {version} and open again by itself in a few seconds. No window shows up while it installs.',
+  'appUpdate.confirmGameOpen': 'Close the open game before updating: with Relaunch closed, the play time of this session would not be recorded.',
+  'appUpdate.confirmAction': 'Restart and update',
+  'appUpdate.later': 'Not now',
 
   'status.ready': 'Ready',
   'status.needsSetup': 'Needs setup',
@@ -101,7 +106,7 @@ export const en: Record<TranslationKey, string> = {
     'Yes. Connect the controller (an Xbox one is the safest bet) and use the D-pad or the left stick to move through games, menus and buttons; a blue outline shows where you are. A confirms, and B closes the open window or menu or goes back to the previous page. In a list of options, A starts choosing, up and down change the option, A confirms and B cancels. Moving the mouse hides the outline.\nWith "{settings}" > "{minimizeOnPlay}" on, as it comes, Relaunch minimizes itself when the game opens and comes back to the front when you close the last game. While you play, it ignores the controller.\nYou still need a mouse or keyboard to type (the search or a profile name) and in the Windows dialogs for choosing a file or folder. If Steam is open with Steam Input on, it may take the controller for itself.',
   'faq.update.q': 'How does Relaunch update itself?',
   'faq.update.a':
-    'Relaunch checks for a new version of itself when it opens and every 3 hours, and downloads it in the background. When the download finishes, a blue bar appears above your profile in the sidebar: click "{updateApp}" to install it. The app closes, installs in the same folder without any installer screens, and opens again by itself.\nIf you don\'t click, nothing is installed, not even when you close the app: the bar stays there until you decide. To check for a new version right away, go to "{settings}" > "{checkNow}".',
+    'Relaunch checks for a new version of itself when it opens and every 3 hours, and downloads it in the background. When the download finishes, a blue bar appears above your profile in the sidebar: click "{updateApp}" and confirm with "{confirmUpdate}". The app closes, installs in the same folder without any installer screens, and opens again by itself in a few seconds. If a game is open, close it first.\nIf you don\'t click, nothing is installed, not even when you close the app: the bar stays there until you decide. To check for a new version right away, go to "{settings}" > "{checkNow}".',
   'faq.wontStart.q': "The game won't open. What should I do?",
   'faq.wontStart.a':
     'Check the "{setupTab}" tab: required items need a ✓. If the game folder moved, use "{locate}".\nThe first time, the port may take a few minutes generating the assets. If the problem persists, the "{aboutTab}" tab has the project\'s link, where each port provides support.',

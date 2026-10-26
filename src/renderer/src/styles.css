@@ -228,6 +228,12 @@
 .gamepad :focus {
   outline: 3px solid #3b82f6;
   outline-offset: 2px;
+  /* Ao rolar até o item, sobra espaço para a borda de fora. */
+  scroll-margin: 8px;
+}
+/* Onde a borda de fora seria cortada (lista com rolagem, caixa de cantos arredondados), ela vai por dentro. */
+.gamepad [data-pad-inset]:focus {
+  outline-offset: -3px;
 }
 /* Lista de opções em escolha pelo controle (cima e baixo trocam a opção). */
 .gamepad select[data-picking]:focus {
