@@ -8,7 +8,7 @@ import { Logo } from './brand'
 import { NavIcon } from './icons'
 import { ProfileAvatar } from './ProfileAvatar'
 import { statusTone, useStatusLabel } from './Status'
-import { Dot, Kbd, ProgressBar } from './ui'
+import { ConfirmModal, Dot, Kbd, ProgressBar } from './ui'
 
 function NavItem({
   active,
@@ -40,38 +40,73 @@ function NavItem({
 }
 
 /**
- * Barra azul acima do perfil: aparece quando há versão nova do launcher. Enquanto baixa mostra o progresso;
- * pronta, vira o botão "Atualizar". Só esse clique instala: fechar o app não instala nada.
+ * Barra azul acima do perfil: aparece quando há versão nova do launcher. Enquanto baixa, vai se enchendo
+ * de azul; pronta, vira o botão "Atualizar", que pergunta antes de fechar o app. Só essa confirmação
+ * instala: fechar o app não instala nada.
  */
 export function AppUpdateBar() {
-  const { appUpdate } = useAppState()
+  const { appUpdate, items } = useAppState()
   const { t } = useI18n()
+  const [confirming, setConfirming] = useState(false)
   const visible = appUpdate.status === 'available' || appUpdate.status === 'downloading' || appUpdate.status === 'downloaded'
   if (!visible) return null
   const version = appUpdate.version ?? ''
   if (appUpdate.status !== 'downloaded') {
     const percent = appUpdate.percent ?? 0
+    const content = (
+      <span className="flex h-9 items-center gap-2 px-3 text-[12.5px]">
+        <ArrowDownToLine size={14} className="shrink-0" />
+        <span className="min-w-0 flex-1 truncate">{t('appUpdate.downloading', { version })}</span>
+        <span className="shrink-0 font-mono text-[11px]">{percent}%</span>
+      </span>
+    )
     return (
       <div role="status" className="update-bar relative w-full overflow-hidden rounded-xl border border-[#3B82F6]/60 text-accent-fg">
-        <span aria-hidden className="absolute inset-y-0 left-0 bg-[#3B82F6]/15 transition-[width] duration-500" style={{ width: `${percent}%` }} />
-        <span className="relative flex h-9 items-center gap-2 px-3 text-[12.5px]">
-          <ArrowDownToLine size={14} className="shrink-0" />
-          <span className="min-w-0 flex-1 truncate">{t('appUpdate.downloading', { version })}</span>
-          <span className="shrink-0 font-mono text-[11px]">{percent}%</span>
+        {content}
+        {/* A parte já baixada: o azul do botão "Atualizar", com o texto em branco por cima. */}
+        <span
+          aria-hidden
+          className="absolute inset-0 bg-[#3B82F6] text-white transition-[clip-path] duration-500"
+          style={{ clipPath: `inset(0 ${100 - percent}% 0 0)` }}
+        >
+          {content}
         </span>
       </div>
     )
   }
+  // Com um jogo aberto, o app fecharia sem registrar o tempo jogado da sessão: só atualiza depois.
+  const gameOpen = items.some((item) => item.running)
   return (
-    <button
-      type="button"
-      title={t('appUpdate.readyHint')}
-      onClick={() => void window.api.appUpdate.install()}
-      className="update-bar update-bar-ready flex h-9 w-full items-center gap-2 rounded-xl bg-[#3B82F6] px-3 text-left text-[13px] font-medium text-white transition hover:brightness-110"
-    >
-      <ArrowDownToLine size={15} strokeWidth={2.4} className="shrink-0" />
-      <span className="min-w-0 flex-1 truncate">{t('appUpdate.ready', { version })}</span>
-    </button>
+    <>
+      <button
+        type="button"
+        title={t('appUpdate.readyHint')}
+        onClick={() => setConfirming(true)}
+        className="update-bar update-bar-ready flex h-9 w-full items-center gap-2 rounded-xl bg-[#3B82F6] px-3 text-left text-[13px] font-medium text-white transition hover:brightness-110"
+      >
+        <ArrowDownToLine size={15} strokeWidth={2.4} className="shrink-0" />
+        <span className="min-w-0 flex-1 truncate">{t('appUpdate.ready', { version })}</span>
+      </button>
+      {confirming && (
+        <ConfirmModal
+          title={t('appUpdate.confirmTitle')}
+          body={
+            <>
+              <p>{t('appUpdate.confirmBody', { version })}</p>
+              {gameOpen && <p className="mt-2 text-warn">{t('appUpdate.confirmGameOpen')}</p>}
+            </>
+          }
+          confirmLabel={t('appUpdate.confirmAction')}
+          cancelLabel={t('appUpdate.later')}
+          confirmDisabled={gameOpen}
+          onConfirm={() => {
+            setConfirming(false)
+            void window.api.appUpdate.install()
+          }}
+          onCancel={() => setConfirming(false)}
+        />
+      )}
+    </>
   )
 }
 

@@ -187,6 +187,7 @@ export function ConfirmModal({
   confirmLabel,
   cancelLabel,
   danger,
+  confirmDisabled,
   onConfirm,
   onCancel
 }: {
@@ -195,6 +196,7 @@ export function ConfirmModal({
   confirmLabel: string
   cancelLabel: string
   danger?: boolean
+  confirmDisabled?: boolean
   onConfirm: () => void
   onCancel: () => void
 }) {
@@ -210,7 +212,7 @@ export function ConfirmModal({
         <Button variant="ghost" onClick={onCancel}>
           {cancelLabel}
         </Button>
-        <Button variant={danger ? 'danger' : 'primary'} onClick={onConfirm}>
+        <Button variant={danger ? 'danger' : 'primary'} disabled={confirmDisabled} onClick={onConfirm}>
           {confirmLabel}
         </Button>
       </ModalFooter>

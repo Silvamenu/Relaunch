@@ -256,7 +256,7 @@ Falta algum? Cada jogo é um arquivo JSON, sem mexer no código: veja [Criar um 
 | **Capa e banner**           | Gerados com a cor do manifesto, ou imagens escolhidas por você: clique no lápis do banner ou passe o mouse sobre a capa.                                                                                                                                                                                                                                                                                               |
 | **Atualizações dos jogos**  | Busca versões novas nos GitHub Releases de cada projeto, faz backup, preserva saves e volta sozinho se algo falhar. Veja [como funciona](#atualizações-dos-jogos).                                                                                                                                                                                                                                                     |
 | **Downloads**               | Atualizações em andamento, disponíveis e concluídas na sessão. O progresso também aparece na barra lateral.                                                                                                                                                                                                                                                                                                            |
-| **Atualização do launcher** | Baixa a versão nova do Relaunch em segundo plano e avisa com uma barra azul na barra lateral. Só instala quando você clica em **Atualizar**. Depois, o popup **Novidades** mostra o que mudou.                                                                                                                                                                                                                         |
+| **Atualização do launcher** | Baixa a versão nova do Relaunch em segundo plano, com uma barra azul que vai se enchendo na barra lateral. Só instala quando você clica em **Atualizar** e confirma. Depois, o popup **Novidades** mostra o que mudou.                                                                                                                                                                                                 |
 | **Dúvidas frequentes**      | Respostas sobre ROMs (o que são e como usar), SHA-1, jogos via emulador, instalar pelo link de um repositório, atualizações e saves, uso de controle, atualização do Relaunch, avisos do Windows, dados e PIN.                                                                                                                                                                                                         |
 | **Configurações**           | Tema escuro, claro ou do sistema; idioma (PT-BR padrão, EN); perfil; minimizar o Relaunch enquanto um jogo está aberto; token do GitHub; notificações; atualização automática por jogo; pastas de manifestos e de dados; reescanear pastas.                                                                                                                                                                            |
 
@@ -294,9 +294,9 @@ Falta algum? Cada jogo é um arquivo JSON, sem mexer no código: veja [Criar um 
 ### Atualização do launcher
 
 - Na versão instalada, o Relaunch procura versões novas dele mesmo **ao abrir e a cada 3 horas**, nos GitHub Releases deste repositório.
-- A versão nova é baixada em segundo plano. Quando o download termina, uma **barra azul** aparece acima do seu perfil, na barra lateral, com o botão **Atualizar para a vX.Y.Z**.
-- A atualização só é instalada quando você clica nesse botão. Fechar o app não instala nada: a barra continua lá até você decidir.
-- Ao clicar, o app fecha, atualiza na mesma pasta sem mostrar as telas do instalador e abre de novo sozinho.
+- A versão nova é baixada em segundo plano: uma **barra** acima do seu perfil, na barra lateral, vai se enchendo de azul. Quando o download termina, ela vira o botão **Atualizar para a vX.Y.Z**.
+- A atualização só é instalada quando você clica nesse botão e confirma em **Reiniciar e atualizar**. Fechar o app não instala nada: a barra continua lá até você decidir. Com um jogo aberto, o Relaunch pede para fechar o jogo antes.
+- Ao confirmar, o app fecha, atualiza na mesma pasta sem mostrar as telas do instalador e abre de novo sozinho em alguns segundos.
 - Depois de atualizar, o popup **Novidades da vX.Y.Z** mostra as notas do `CHANGELOG.md`. Para rever, use **Configurações → Ver novidades**.
 
 ![Popup "Novidades da v0.1.1" com a lista de novidades da versão](docs/screenshots/novidades.png)
@@ -572,7 +572,7 @@ As notas de cada release vêm do `CHANGELOG.md`, a mesma fonte do popup de novid
 
 O workflow [`release.yml`](.github/workflows/release.yml) confere se o commit está na `main` e se a tag bate com a `version` do `package.json` (pelo site, também se essa versão ainda não tem tag em outro commit), roda os testes e `npm run dist`, que gera as notas a partir do `CHANGELOG.md` e o instalador. Depois cria **um** release em **rascunho** com o instalador, o `.blockmap` e o `latest.yml` (e falha se algum deles faltar). Nada chega aos apps instalados antes do passo 4.
 
-Os apps instalados checam os releases ao abrir e a cada 3 horas, baixam em segundo plano e só instalam quando a pessoa clica em **Atualizar** na barra azul.
+Os apps instalados checam os releases ao abrir e a cada 3 horas, baixam em segundo plano e só instalam quando a pessoa clica em **Atualizar** na barra azul e confirma.
 
 > [!NOTE]
 > O `electron-updater` lê os GitHub Releases públicos **deste repositório** (seção `publish` do `electron-builder.yml`). Só releases publicados chegam aos apps instalados: rascunhos e pré-releases são ignorados.

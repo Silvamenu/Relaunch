@@ -12,6 +12,12 @@ export const ptBR = {
   'appUpdate.ready': 'Atualizar para a v{version}',
   'appUpdate.readyHint': 'Instala a versão nova: o app fecha e abre de novo sozinho.',
   'appUpdate.action': 'Atualizar',
+  'appUpdate.confirmTitle': 'Atualizar o Relaunch agora?',
+  'appUpdate.confirmBody':
+    'O Relaunch vai fechar, instalar a versão {version} e abrir de novo sozinho em alguns segundos. Enquanto instala, nenhuma janela aparece.',
+  'appUpdate.confirmGameOpen': 'Feche o jogo aberto antes de atualizar: com o Relaunch fechado, o tempo jogado desta sessão não seria registrado.',
+  'appUpdate.confirmAction': 'Reiniciar e atualizar',
+  'appUpdate.later': 'Agora não',
 
   'status.ready': 'Pronto',
   'status.needsSetup': 'Falta configurar',
@@ -99,7 +105,7 @@ export const ptBR = {
     'Sim. Conecte o controle (o de Xbox é o mais garantido) e use o direcional ou o analógico esquerdo para andar pelos jogos, menus e botões; uma borda azul mostra onde você está. O A confirma, e o B fecha a janela ou o menu aberto ou volta para a página anterior. Numa lista de opções, o A abre a escolha, cima e baixo trocam a opção, o A confirma e o B desiste. Mexer no mouse esconde a borda.\nCom "{settings}" > "{minimizeOnPlay}" ligado, como já vem, o Relaunch se minimiza quando o jogo abre e volta para a frente quando você fecha o último jogo. Enquanto você joga, ele não reage ao controle.\nAinda é preciso mouse ou teclado para escrever (a busca ou o nome de um perfil) e nas janelas do Windows de escolher arquivo ou pasta. Se a Steam estiver aberta com o Steam Input ligado, ela pode tomar o controle para ela.',
   'faq.update.q': 'Como o Relaunch se atualiza?',
   'faq.update.a':
-    'O Relaunch procura uma versão nova dele mesmo ao abrir e a cada 3 horas, e baixa em segundo plano. Quando o download termina, aparece uma barra azul acima do seu perfil, na barra lateral: clique em "{updateApp}" para instalar. O app fecha, instala na mesma pasta, sem telas de instalação, e abre de novo sozinho.\nSe você não clicar, nada é instalado, nem quando você fecha o app: a barra continua lá até você decidir. Para procurar uma versão nova na hora, vá em "{settings}" > "{checkNow}".',
+    'O Relaunch procura uma versão nova dele mesmo ao abrir e a cada 3 horas, e baixa em segundo plano. Quando o download termina, aparece uma barra azul acima do seu perfil, na barra lateral: clique em "{updateApp}" e confirme em "{confirmUpdate}". O app fecha, instala na mesma pasta, sem telas de instalação, e abre de novo sozinho em alguns segundos. Se houver um jogo aberto, feche o jogo antes.\nSe você não clicar, nada é instalado, nem quando você fecha o app: a barra continua lá até você decidir. Para procurar uma versão nova na hora, vá em "{settings}" > "{checkNow}".',
   'faq.wontStart.q': 'O jogo não abre. O que eu faço?',
   'faq.wontStart.a':
     'Confira a aba "{setupTab}": os itens obrigatórios precisam estar com ✓. Se a pasta do jogo mudou de lugar, use "{locate}".\nNa primeira vez, o port pode levar alguns minutos gerando os assets. Se o problema continuar, a aba "{aboutTab}" tem o link do projeto, onde fica o suporte de cada port.',

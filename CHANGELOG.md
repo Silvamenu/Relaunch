@@ -7,6 +7,17 @@ O conteúdo de cada versão é usado como nota do release no GitHub (`npm run re
 
 ## [Não lançado]
 
+## [0.1.4] - 2026-10-26
+
+### Melhorias
+
+- A barra de download da atualização do Relaunch agora vai se enchendo de azul forte, fácil de acompanhar, e vira o botão **Atualizar** quando termina.
+- Antes de atualizar, o Relaunch pergunta se pode fechar e reiniciar. Com um jogo aberto, ele pede para fechar o jogo antes, para não perder o tempo jogado.
+
+### Correções
+
+- Com o controle, a borda azul aparecia cortada em alguns lugares: na lista de jogos da barra lateral, nas **Dúvidas frequentes** e nos grupos do catálogo em **Adicionar jogo**. Agora ela aparece inteira.
+
 ## [0.1.3] - 2026-10-26
 
 ### Novidades

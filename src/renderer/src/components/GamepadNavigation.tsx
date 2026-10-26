@@ -26,6 +26,31 @@ function boxOf(el: Element): Box {
   return { left: r.left, top: r.top, right: r.right, bottom: r.bottom }
 }
 
+/** Quanto a borda de seleção sai para fora do item (espessura + afastamento, no styles.css). */
+const OUTLINE_OUTSIDE = 5
+
+/**
+ * A borda fica por fora do item, mas uma área que corta o que passa da borda dela (lista com rolagem,
+ * caixa de cantos arredondados) a esconderia em parte. Nesses casos, ela é desenhada por dentro. Na
+ * vertical, só contam as caixas sem rolagem entre o item e a primeira área com rolagem: a rolagem
+ * deixa espaço para a borda, e o que fica além dela muda de lugar ao rolar.
+ */
+function markInset(el: EventTarget | null): void {
+  if (!(el instanceof HTMLElement)) return
+  const r = el.getBoundingClientRect()
+  let inset = false
+  let scrolled = false
+  for (let a = el.parentElement; a && !inset; a = a.parentElement) {
+    const cs = getComputedStyle(a)
+    const box = a.getBoundingClientRect()
+    if (cs.overflowX !== 'visible' && (r.left - OUTLINE_OUTSIDE < box.left || r.right + OUTLINE_OUTSIDE > box.right)) inset = true
+    const clipsY = cs.overflowY === 'hidden' || cs.overflowY === 'clip'
+    if (!scrolled && clipsY && (r.top - OUTLINE_OUTSIDE < box.top || r.bottom + OUTLINE_OUTSIDE > box.bottom)) inset = true
+    if (cs.overflowY === 'auto' || cs.overflowY === 'scroll') scrolled = true
+  }
+  el.toggleAttribute('data-pad-inset', inset)
+}
+
 /** Mostra o contorno de seleção só enquanto o controle está em uso; o mouse o esconde. */
 function setPadMode(on: boolean): void {
   document.documentElement.classList.toggle('gamepad', on)
@@ -144,10 +169,12 @@ export function GamepadNavigation() {
       frame = 0
     }
     const mouse = () => setPadMode(false)
+    const focusIn = (e: FocusEvent) => markInset(e.target)
     window.addEventListener('gamepadconnected', start)
     window.addEventListener('gamepaddisconnected', stop)
     window.addEventListener('mousemove', mouse)
     window.addEventListener('mousedown', mouse)
+    document.addEventListener('focusin', focusIn)
     if (navigator.getGamepads().some(Boolean)) start()
     return () => {
       stopPicking(false)
@@ -156,6 +183,7 @@ export function GamepadNavigation() {
       window.removeEventListener('gamepaddisconnected', stop)
       window.removeEventListener('mousemove', mouse)
       window.removeEventListener('mousedown', mouse)
+      document.removeEventListener('focusin', focusIn)
     }
   }, [goBack, onLoginScreen])
 

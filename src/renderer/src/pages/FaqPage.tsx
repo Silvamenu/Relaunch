@@ -65,6 +65,7 @@ export function FaqPage() {
     repoCheck: t('repo.check'),
     pickExecutable: t('req.pickExecutable'),
     updateApp: t('appUpdate.action'),
+    confirmUpdate: t('appUpdate.confirmAction'),
     checkNow: t('settings.checkNow'),
     minimizeOnPlay: t('settings.minimizeOnPlay')
   }
