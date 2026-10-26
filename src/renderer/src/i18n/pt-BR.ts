@@ -63,7 +63,7 @@ export const ptBR = {
     'Formatos de ROM do Nintendo 64: o mesmo jogo, com os bytes em ordem diferente. O .z64 é o mais comum e é nele que o Relaunch consegue conferir o SHA-1.',
   'glossary.release.title': 'Release',
   'glossary.release.text':
-    'Uma versão publicada pelo projeto no GitHub, com os arquivos prontos para baixar. O Relaunch só baixa do repositório oficial de cada projeto.',
+    'Uma versão publicada pelo projeto no GitHub ou no GitLab, com os arquivos prontos para baixar. O Relaunch só baixa do repositório oficial de cada projeto.',
   'glossary.manifest.title': 'Manifesto',
   'glossary.manifest.text':
     'Ficha que ensina o Relaunch a lidar com um projeto: de onde baixá-lo, quais arquivos o jogo precisa e como abri-lo. Os manifestos vêm com o app, e você pode adicionar os seus na pasta de manifestos.',
@@ -87,7 +87,7 @@ export const ptBR = {
     'Não é um emulador. Um port é o jogo refeito por fãs para rodar direto no PC, a partir do código original decompilado ou recompilado. Por isso costuma ter tela widescreen, mais quadros por segundo e suporte a mods.\nO port traz só o programa: o conteúdo do jogo vem da sua ROM.',
   'faq.download.q': 'Por que o Relaunch não baixa o jogo completo?',
   'faq.download.a':
-    'Porque o conteúdo dos jogos tem direitos autorais. O Relaunch só baixa o port publicado pelo próprio projeto, direto do repositório oficial no GitHub e por HTTPS. A ROM e os assets vêm sempre do seu cartucho.',
+    'Porque o conteúdo dos jogos tem direitos autorais. O Relaunch só baixa o port publicado pelo próprio projeto, direto do repositório oficial no GitHub ou no GitLab e por HTTPS. A ROM e os assets vêm sempre do seu cartucho.',
   'faq.emulator.q': 'Como jogo títulos de PS3, PS4 ou Xbox 360, como God of War III Remastered?',
   'faq.emulator.a':
     'Esses jogos rodam num emulador, um programa que imita o console no PC. Em "{addGame}", abra a lista da plataforma e clique em "{installRunner}": o Relaunch baixa o emulador do repositório oficial dele. Depois, em "{addRunnerGame}", escolha o arquivo do seu jogo: o dump do seu disco ou da sua compra digital, feito no seu próprio console. O Relaunch nunca baixa jogos.\nO selo de cada jogo ({playable}, {ingame} ou {experimental}) mostra quão bem ele roda hoje. Jogos grandes pedem um PC forte: processador recente e placa de vídeo com Vulkan.',
@@ -114,7 +114,7 @@ export const ptBR = {
     'Muitos ports são projetos abertos sem assinatura digital, então o Windows SmartScreen pode avisar ao abrir. O Relaunch só baixa do repositório oficial de cada projeto, por HTTPS, e confere a integridade do arquivo quando o projeto publica o checksum.\nMesmo assim, só abra executáveis que vieram do Relaunch ou da página oficial do projeto. Na dúvida, não execute.',
   'faq.data.q': 'Preciso de conta? Onde ficam meus dados?',
   'faq.data.a':
-    'Não precisa de conta. Perfis, biblioteca e configurações ficam só neste computador, na pasta de dados do app ("{settings}" > "{openData}"). O Relaunch não tem servidores: ele só acessa o GitHub para buscar e baixar as versões dos ports e do próprio launcher.',
+    'Não precisa de conta. Perfis, biblioteca e configurações ficam só neste computador, na pasta de dados do app ("{settings}" > "{openData}"). O Relaunch não tem servidores: ele só acessa o GitHub e o GitLab para buscar e baixar as versões dos ports e do próprio launcher.',
   'faq.pin.q': 'Esqueci o PIN do meu perfil.',
   'faq.pin.a':
     'Entre em outro perfil (ou crie um novo), vá em "{settings}" e remova o perfil do PIN esquecido. Depois é só criar o perfil de novo: a biblioteca e os jogos continuam como estão.',
@@ -427,8 +427,9 @@ export const ptBR = {
   'upd.published': 'Publicada em',
   'upd.checked': 'Última verificação',
   'upd.viewOnGithub': 'Ver no GitHub',
+  'upd.viewOnGitlab': 'Ver no GitLab',
   'downloads.title': 'Downloads',
-  'downloads.subtitle': 'Atualizações dos seus jogos, baixadas direto dos GitHub Releases oficiais de cada projeto.',
+  'downloads.subtitle': 'Atualizações dos seus jogos, baixadas direto dos releases oficiais de cada projeto.',
   'downloads.empty': 'Nada sendo baixado agora. Quando houver atualização, ela aparece aqui.',
   'downloads.active': 'Em andamento',
   'downloads.available': 'Atualizações disponíveis',

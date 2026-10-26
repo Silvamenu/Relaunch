@@ -1,0 +1,72 @@
+{
+  "id": "pilotwings-64",
+  "name": "Pilotwings 64: Recompiled",
+  "originalGame": "Pilotwings 64 (Nintendo 64)",
+  "description": "Recompilação estática de Pilotwings 64 para PC (N64Recomp + RT64), feita com IA, com widescreen e alta taxa de quadros. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/danielgomesvieira2000/pilotwings-64-recomp",
+  "accentColor": "#2a8fd6",
+  "executables": {
+    "win32": ["Pilotwings64Recomp.exe"],
+    "linux": ["Pilotwings64Recomp"]
+  },
+  "detectFiles": ["Pilotwings64Recomp.exe", "Pilotwings64Recomp", "Pilotwings64Recomp.sh"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Pilotwings 64 (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64", "zip"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [{ "sha1": "ec771aedf54ee1b214c25404fb4ec51cfd43191a", "label": "EUA (.z64)" }]
+      },
+      "helpText": "Opcional: serve só para conferir o seu dump. A ROM é escolhida no launcher do próprio jogo (passo seguinte). Só a versão americana é aceita; o jogo também aceita .n64, .v64 ou .zip, que têm SHA-1 diferente do .z64."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no launcher do jogo",
+      "doneWhen": [
+        "pilotwings64.us.z64",
+        "{localAppData}/Pilotwings64Recomp/pilotwings64.us.z64",
+        "{home}/.local/share/Pilotwings64Recomp/pilotwings64.us.z64"
+      ],
+      "helpText": "Abra o jogo e escolha sua ROM no launcher. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\Pilotwings64Recomp no Windows ou ~/.local/share/Pilotwings64Recomp no Linux; ou na pasta do jogo, se existir um arquivo portable.txt). No Linux o build usa as bibliotecas do sistema: instale SDL2, Vulkan (com o driver da sua GPU), GTK 3 e FreeType."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "danielgomesvieira2000/pilotwings-64-recomp",
+    "assetPatterns": {
+      "win32": "Pilotwings64Recomp-*-windows-x64.zip",
+      "linux": "Pilotwings64Recomp-*-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "saves/**", "mods/**", "mod_config/**", "mods.json", "*.json", "*.z64"],
+    "_todo": "Os padrões não pegam os pacotes *-debug-symbols (que terminam em -debug-symbols.zip/.tar.gz). O zip do Windows não tem pasta raiz; o tar.gz do Linux tem uma pasta Pilotwings64Recomp-<versão>-linux-x86_64, que vira a raiz da instalação."
+  },
+  "_todo": [
+    "Releases montadas na máquina do autor (sem CI): o Windows com tools/package_release.ps1 e o Linux com tools/package_release.py (sob WSL2). Os scripts colocam só o executável, assets/ (interface), um launcher .sh, README/licenças, e recusam empacotar .z64/.n64/.v64/.bin ou saves. Tamanhos da v0.1.1: 16,2 MB (win) e 5,78 MB (linux). Não baixei os pacotes (download do GitHub bloqueado aqui).",
+    "Projeto declaradamente feito com IA (Claude Code), 16 commits, 2 releases (setembro de 2026). Issues abertas relatam falhas ao iniciar no Windows 11 e no SteamOS, travamento na primeira missão de girocóptero e o build Linux não testado em hardware real.",
+    "O SHA-1 vem do README e de include/pw64/rom.h (mesmo valor fixado pelo Pilotwings64Decomp). O nome da cópia guardada (pilotwings64.us.z64) segue o game_id do projeto e a regra do N64ModernRuntime (game_id + .z64).",
+    "Arquivos de configuração (RecompFrontend) não mapeados: os nomes não foram confirmados."
+  ],
+  "_sources": [
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/releases",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/releases/expanded_assets/v0.1.1",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/issues",
+    "https://github.com/danielgomesvieira2000",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/blob/HEAD/README.md",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/blob/HEAD/tools/package_release.py",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/blob/HEAD/tools/package_release.ps1",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/blob/HEAD/src/main.cpp",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/blob/HEAD/src/frontend.cpp",
+    "https://github.com/danielgomesvieira2000/pilotwings-64-recomp/blob/HEAD/include/pw64/rom.h",
+    "https://raw.githubusercontent.com/N64Recomp/N64ModernRuntime/HEAD/librecomp/src/recomp.cpp"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "super-mario-64",
+  "name": "Ghostship",
+  "originalGame": "Super Mario 64 (Nintendo 64)",
+  "description": "Port para PC de Super Mario 64 da Harbour Masters, baseado na decompilação e no libultraship, com widescreen, alta taxa de quadros, randomizer e mods. Os gráficos e sons são extraídos da ROM do seu próprio cartucho (EUA ou Japão).",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "gameKey": "super-mario-64",
+  "recommended": true,
+  "repoUrl": "https://github.com/HarbourMasters/Ghostship",
+  "website": "https://ghostship.net64.dev",
+  "accentColor": "#d62b2b",
+  "executables": {
+    "win32": ["Ghostship.exe"],
+    "linux": ["ghostship.appimage"]
+  },
+  "detectFiles": ["Ghostship.exe", "ghostship.appimage", "ghostship.o2r"],
+  "requirements": [
+    {
+      "id": "port-data",
+      "type": "file",
+      "label": "Arquivo de dados do port (ghostship.o2r)",
+      "patterns": ["ghostship.o2r"],
+      "helpText": "Vem junto com o download oficial do port (Windows). Se estiver faltando, reinstale ou atualize o jogo.",
+      "_todo": "Marcado como opcional: no Linux o ghostship.o2r pode ir dentro do AppImage (o pacote do CI só lista ghostship.appimage, .tcc, config.yml, assets/, gamecontrollerdb.txt e readme.txt), então ele pode não existir solto na pasta.",
+      "optional": true
+    },
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Super Mario 64 (N64, EUA ou Japão)",
+      "optional": true,
+      "extensions": ["z64"],
+      "copyToGameDir": true,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "9bef1128717f958171a4afac3ed78ee2bb4e86ce",
+            "label": "EUA (.z64)"
+          },
+          {
+            "sha1": "8a20a5c83d6ceb0f0506cfc9fa20d8f438cafe51",
+            "label": "Japão (.z64)"
+          }
+        ]
+      },
+      "helpText": "Opcional: o próprio jogo pede a ROM na primeira execução. Só as versões americana e japonesa no formato .z64 são aceitas (converta .n64 antes)."
+    },
+    {
+      "id": "rom-assets",
+      "type": "firstRun",
+      "label": "Gerar os assets a partir da sua ROM (sm64.o2r)",
+      "doneWhen": ["sm64.o2r"],
+      "helpText": "Abra o jogo uma vez e escolha sua ROM no launcher do próprio jogo: ele gera o arquivo sm64.o2r na pasta do jogo (leva alguns instantes) e depois inicia normalmente. Se uma atualização avisar que o sm64.o2r é incompatível, gere de novo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "ghostship.cfg.json",
+      "format": "json",
+      "label": "Configurações (ghostship.cfg.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "HarbourMasters/Ghostship",
+    "assetPatterns": {
+      "win32": "*-Win64.zip",
+      "linux": "*-Linux.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["sm64.o2r", "sm64.otr", "mods/**", "saves/**", "default.sav", "ghostship.cfg.json", "imgui.ini", "logs/**", "*.z64"],
+    "_todo": "Os nomes dos assets mudam a cada versão com o codinome (Ghostship-Dutchman-Charlie-Win64.zip, Mary-Celeste-Alfa-Win64.zip, Nautilus-Alfa-Win64.zip), por isso os padrões só usam o sufixo da plataforma. Mac, Android, iOS e Switch não casam."
+  },
+  "_todo": [
+    "Os zips não foram listados por dentro (download do github.com bloqueado aqui). Conteúdo conferido em .github/workflows/main.yml: Windows = Ghostship.exe, DLLs, ghostship.o2r (dados próprios do port: fontes, shaders, ícones de conquistas e botões desenhados pelo projeto), .tcc, debug/ (PDBs), config.yml, assets/ (YAMLs de extração), readme.txt e gamecontrollerdb.txt; Linux = ghostship.appimage, .tcc, config.yml, assets/, gamecontrollerdb.txt e readme.txt. Nenhum dado do jogo.",
+    "O README diz que o sm64.o2r fica na mesma pasta do Ghostship.exe/ghostship.appimage; saves em saves/save_N.json e config em ghostship.cfg.json relativos à pasta do app (src/port/data/Saves.cpp, src/port/Engine.cpp). No AppImage a pasta do app não foi conferida.",
+    "Mesmo jogo que sm64-port (catálogo) e sm64coopdx (candidato)."
+  ],
+  "_sources": [
+    "https://github.com/HarbourMasters/Ghostship",
+    "https://github.com/HarbourMasters/Ghostship/releases",
+    "https://github.com/HarbourMasters/Ghostship/releases/expanded_assets/3.0.0",
+    "https://github.com/HarbourMasters/Ghostship/blob/HEAD/README.md",
+    "https://github.com/HarbourMasters/Ghostship/blob/HEAD/.github/workflows/main.yml",
+    "https://github.com/HarbourMasters/Ghostship/blob/HEAD/src/port/Engine.cpp",
+    "https://github.com/HarbourMasters/Ghostship/blob/HEAD/src/port/data/Saves.cpp",
+    "https://github.com/HarbourMasters/Ghostship/tree/HEAD/port/textures/achievements"
+  ]
+}

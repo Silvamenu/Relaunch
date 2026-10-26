@@ -1,0 +1,65 @@
+{
+  "id": "civilization-iii",
+  "name": "OpenCiv3",
+  "originalGame": "Sid Meier's Civilization III (PC, 2001)",
+  "description": "Reimaginação de código aberto de Civilization III feita pela comunidade, em estágio pré-alfa. Usa os gráficos da sua instalação de Civilization III Complete ou Conquests; sem ela, roda no modo independente com gráficos provisórios.",
+  "category": "pc",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/C7-Game/OpenCiv3",
+  "website": "https://www.openciv3.org",
+  "accentColor": "#b8860b",
+  "executables": {
+    "win32": ["OpenCiv3.exe"],
+    "linux": ["OpenCiv3.x86_64"]
+  },
+  "detectFiles": ["OpenCiv3.exe", "OpenCiv3.x86_64", "OpenCiv3.pck"],
+  "requirements": [
+    {
+      "id": "civ3",
+      "type": "firstRun",
+      "optional": true,
+      "label": "Indicar a pasta do seu Civilization III Complete ou Conquests (opcional)",
+      "helpText": "O OpenCiv3 procura o Civilization III no registro do Windows e na pasta padrão da Steam. Se não achar, defina a variável de ambiente CIV3_HOME com a pasta \"Sid Meier's Civilization III Complete\" (a que tem a pasta Conquests) ou informe-a na chave civ3InstallDir da seção [locations] do C7.ini, na pasta do jogo. No Linux a detecção automática não procura a Steam, então use um desses dois caminhos. Sem o Civilization III, use o modo independente (gráficos provisórios)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "C7.ini",
+      "format": "ini",
+      "label": "Configurações (C7.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "C7-Game/OpenCiv3",
+    "assetPatterns": {
+      "win32": "OpenCiv3*Windows*.zip",
+      "linux": "OpenCiv3*Linux*x86_64*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["C7.ini", "log.txt"]
+  },
+  "_todo": [
+    "Release v0.3-dutch-preview-1 (marcada Latest, 07/12, provavelmente 2025): OpenCiv3_0.3-Dutch-Windows.zip (144 MB) e OpenCiv3_0.3-Dutch-Linux-x86_64.zip (134 MB). Os zips vêm do export Godot do CI (.github/workflows/export-c7.yml, disparo manual) com OpenCiv3.exe / OpenCiv3.x86_64 + .pck separado, Text/, Lua/, LICENSE e Assets/. Não confirmei se o zip publicado tem pasta raiz; as notas da release falam em tgz no Linux, mas o asset é zip.",
+    "Assets/ vem do submódulo C7-Game/Assets: arte de mods da comunidade CivFanatics creditada por pasta (ex.: \"Anno Domini advisors\" de R8XFT), texturas provisórias e algumas imagens geradas por IA. O repositório de assets não tem licença única; a política do projeto (CONTRIBUTING.md) proíbe conteúdo derivado de jogos comerciais. Nada da Firaxis é distribuído; os gráficos originais são lidos da instalação do usuário.",
+    "C7.ini e log.txt ficam na pasta do jogo quando ela é gravável (C7/GamePaths.cs, código atual; a release de dezembro pode ser anterior a essa regra). Saves e outros dados do Godot (user://) não foram mapeados.",
+    "Pré-alfa: muitas mecânicas e o fim de jogo faltam, suporte incompleto a BIQ/SAV do Civ3, travamentos possíveis (notas da release)."
+  ],
+  "_sources": [
+    "https://github.com/C7-Game/OpenCiv3",
+    "https://github.com/C7-Game/OpenCiv3/releases",
+    "https://github.com/C7-Game/OpenCiv3/releases/tag/v0.3-dutch-preview-1",
+    "https://github.com/C7-Game/OpenCiv3/releases/expanded_assets/v0.3-dutch-preview-1",
+    "https://raw.githubusercontent.com/C7-Game/OpenCiv3/HEAD/README.md",
+    "https://github.com/C7-Game/OpenCiv3/blob/Development/.github/workflows/export-c7.yml",
+    "https://github.com/C7-Game/OpenCiv3/blob/Development/C7/GamePaths.cs",
+    "https://github.com/C7-Game/OpenCiv3/blob/Development/C7/Util.cs",
+    "https://github.com/C7-Game/OpenCiv3/blob/Development/QueryCiv3/Civ3Location.cs",
+    "https://github.com/C7-Game/OpenCiv3/blob/Development/C7/UIElements/MainMenu/MainMenu.cs",
+    "https://github.com/C7-Game/Assets",
+    "https://github.com/C7-Game/Assets/blob/main/NOTICE.txt",
+    "https://github.com/C7-Game/Assets/blob/main/CONTRIBUTING.md"
+  ]
+}

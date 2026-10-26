@@ -1,0 +1,58 @@
+{
+  "id": "wwe2k14-recomp",
+  "name": "WWE 2K14: Native PC Recompilation",
+  "originalGame": "WWE 2K14 (Xbox 360)",
+  "description": "Recompilação estática não oficial de WWE 2K14 para Windows, feita com o ReXGlue SDK, com launcher próprio, resolução até 4K e 60/120 FPS. Exige os arquivos ou a ISO do seu próprio disco de Xbox 360.",
+  "category": "xbox",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/Jarrodfeng/wwe2k14-recomp",
+  "accentColor": "#b8142a",
+  "executables": {
+    "win32": ["wwe2k14_launcher.exe", "wwe2k14.exe"]
+  },
+  "detectFiles": ["wwe2k14_launcher.exe", "wwe2k14.exe", "shader_list.txt"],
+  "requirements": [
+    {
+      "id": "setup",
+      "type": "firstRun",
+      "label": "Escolher a pasta ou a ISO do seu WWE 2K14 no assistente do launcher",
+      "helpText": "Abra o wwe2k14_launcher.exe: o assistente da primeira execução pede a pasta do jogo ou a imagem .iso feita do seu próprio disco de WWE 2K14 de Xbox 360 (versão 0.0.0.2, Title ID 545408B2, sem title update) e confere o default.xex. A pasta copiada do console precisa ter o default.xex e as pastas pac, movies e sound. DLCs que você comprou podem ir numa pasta dlc ao lado da pasta do jogo (ou da ISO). O Windows SmartScreen pode avisar porque o programa não é assinado."
+    }
+  ],
+  "configFiles": [],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Jarrodfeng/wwe2k14-recomp",
+    "assetPatterns": {
+      "win32": "wwe2k14-recomp-v*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": []
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): saiu a v0.2.7 (26/10/2026, Latest), que traz mapeamento de teclado no launcher e mouse nos menus. O asset é wwe2k14-recomp-v0.2.7.zip (75 MB), mais o .zip.sha256, que o padrão não pega. O tools/release/make_release.ps1 monta uma pasta de stage única (wwe2k14-recomp-<versão>/), roda uma busca por arquivos do jogo proibidos e a compacta. Mesmo layout da v0.2.6 listada na rodada 1.",
+    "Ícone e logotipo do launcher: game_logo.ico vem de um ícone feito por fã (SteamGridDB) e assets/launcher/wwe2k14_logo.png é um traço do logotipo feito pelo autor, embutido como recurso. Não são arquivos tirados do jogo, mas reproduzem a marca WWE 2K14.",
+    "Problemas conhecidos (docs/release/KNOWN_ISSUES.md): limites da linha do tempo da CineCam, travamento com finalizador personalizado ausente no save, partes de 30 Years of WrestleMania não verificadas, renderizador LIGHT pode travar em Intel HD 520, e com 30 FPS o relógio da luta anda pela metade.",
+    "Release v0.2.6 verificada na rodada 1: wwe2k14-recomp-v0.2.6.zip (74,7 MB) tem uma pasta raiz wwe2k14-recomp-v0.2.6/ com wwe2k14_launcher.exe, wwe2k14.exe, rexruntime.dll, rexgpu-xenos.dll, amd_fidelityfx_vk.dll, runtime MSVC, nvidia/ (DLSS/Streamline e licenças), data/ids/arenas.json e characters.json (tabelas de IDs), shader_list.txt, README.md, CHANGELOG.md, LICENSE e THIRD_PARTY_NOTICES.md. Nenhum arquivo do jogo.",
+    "O caminho onde o launcher guarda a pasta/ISO escolhida e as configurações não foi confirmado, por isso o passo de primeira execução não tem doneWhen e preserve está vazio. Saves ficam em Documentos\\wwe2k14 e os takes da CineCam em Documentos\\WWE 2K14\\CineCam (README da release).",
+    "Há pré-releases \"-native-*-playtest\"; ficam de fora com includePrereleases = false. O launcher só avisa de versões novas e abre a página da release (não baixa nada sozinho).",
+    "Projeto novo (desde 18/10/2026, 21 commits, 11 estrelas, BSD-3-Clause), desenvolvido com assistência do Claude; os scripts de build ainda têm caminhos do PC do autor. SDK: ReXGlue v0.10.0 com os patches de patches/rexglue-sdk/ do repositório.",
+    "Outros repositórios de WWE 2K14 (PromethenDev/wwe2k14-recomp e mikeflare007/wwe2k14-recomp) foram descartados; ambos exigem title update, este roda a versão do disco."
+  ],
+  "_sources": [
+    "https://github.com/Jarrodfeng/wwe2k14-recomp",
+    "https://github.com/Jarrodfeng/wwe2k14-recomp/releases",
+    "https://github.com/Jarrodfeng/wwe2k14-recomp/releases/expanded_assets/v0.2.6",
+    "https://github.com/Jarrodfeng/wwe2k14-recomp/releases/download/v0.2.6/wwe2k14-recomp-v0.2.6.zip",
+    "https://github.com/Jarrodfeng/wwe2k14-recomp/commits/main",
+    "https://github.com/Jarrodfeng",
+    "https://raw.githubusercontent.com/Jarrodfeng/wwe2k14-recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/Jarrodfeng/wwe2k14-recomp/HEAD/docs/release/README.md",
+    "https://github.com/boburning/portcove/issues/3179",
+    "https://github.com/Jarrodfeng/wwe2k14-recomp/releases/expanded_assets/v0.2.7",
+    "https://github.com/Jarrodfeng/wwe2k14-recomp/blob/main/tools/release/make_release.ps1",
+    "https://github.com/Jarrodfeng/wwe2k14-recomp/blob/main/docs/release/KNOWN_ISSUES.md",
+    "https://github.com/Jarrodfeng/wwe2k14-recomp/blob/main/CMakeLists.txt"
+  ]
+}

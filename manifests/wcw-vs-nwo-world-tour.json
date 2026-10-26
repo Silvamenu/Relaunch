@@ -1,0 +1,69 @@
+{
+  "id": "wcw-vs-nwo-world-tour",
+  "name": "WCW vs. nWo World Tour: Recompiled",
+  "originalGame": "WCW vs. nWo World Tour (Nintendo 64)",
+  "description": "Recompilação estática de WCW vs. nWo World Tour para PC (beta), feita com o N64Recomp e o RT64, com resolução alta, widescreen e multiplayer local para até 4 jogadores. Precisa da sua própria ROM americana do jogo.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp",
+  "accentColor": "#1b1f6b",
+  "executables": {
+    "win32": ["WCWRecompiled.exe"]
+  },
+  "detectFiles": ["WCWRecompiled.exe", "recompcontrollerdb.txt", "assets/rt_lights.json"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de WCW vs. nWo World Tour (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "5ad2d8359058c8bb71f08e3d3433b7a50d3bb645",
+            "label": "NTSC-U (.z64)"
+          }
+        ]
+      },
+      "copyToGameDir": false,
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita (EUA, sem modificações). O jogo não recebe o arquivo por aqui; ele é escolhido no launcher do próprio jogo (passo seguinte). Arquivos .n64/.v64 têm SHA-1 diferente do .z64."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Carregar a ROM no launcher do jogo",
+      "doneWhen": ["wcw.nwo.worldtour.us.z64", "{localAppData}/WCWRecompiled/wcw.nwo.worldtour.us.z64"],
+      "helpText": "Abra o jogo, clique em \"Load ROM\" e escolha a sua ROM. O launcher confere a ROM e guarda uma cópia própria em %LOCALAPPDATA%\\WCWRecompiled (ou na pasta do jogo, se existir um arquivo portable.txt); depois o arquivo original pode ser movido. Saves e configurações ficam na mesma pasta."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "jessetbh/WCWvsNWOWorldTourRecomp",
+    "assetPatterns": {
+      "win32": "WCWRecompiled-*-Windows.zip"
+    },
+    "includePrereleases": true,
+    "preserve": ["portable.txt", "saves/**", "mods/**", "*.json", "*.z64"],
+    "_todo": "O projeto só publica pre-releases (betas), por isso includePrereleases=true. O zip pode trazer assets/rt_lights.json, que é do pacote: o preserve \"*.json\" só pega arquivos na raiz (configurações do modo portátil)."
+  },
+  "_todo": [
+    "Zip gerado no CI (.github/workflows/validate.yml + release.yml): WCWRecompiled.exe, assets/ (fontes, ícones SVG, rt_lights.json e os mods .nrm do projeto), recompcontrollerdb.txt, DLLs (SDL2, dxil, dxcompiler, librashader, VC++), crt/, COPYING e README.txt, com os arquivos na raiz. O passo \"Assert no stray files\" recusa .z64/.n64/.v64 no pacote. A ROM fica num repositório privado só para o CI gerar o código recompilado (como nas outras recompilações estáticas do catálogo).",
+    "O executável embute o logotipo do jogo (icons/logo.png, mostrado no launcher) e um ícone com esse logotipo (icons/app.png/app.ico); é arte de marca do jogo, não extraída de dentro da ROM pelo que se vê (imagem em alta resolução). Avaliar antes de publicar.",
+    "Nome da cópia da ROM (wcw.nwo.worldtour.us.z64) segue o padrão do N64ModernRuntime (game_id + .z64, como no Zelda64Recomp); não conferido no código do runtime.",
+    "Só Windows por enquanto (Linux planejado). Requer GPU com Direct3D 12 (SM6) ou Vulkan 1.2 e CPU com SSE4.1; o exe não é assinado (aviso do SmartScreen).",
+    "README: beta \"totalmente jogável do início ao fim\"; problemas conhecidos: vibração só no jogador 1, pode fechar com erro ao sair no meio da luta, ~1% dos quadros piscam a 60 fps; interpolação, ray tracing, CRT e HDR são experimentais."
+  ],
+  "_sources": [
+    "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp",
+    "https://raw.githubusercontent.com/jessetbh/WCWvsNWOWorldTourRecomp/HEAD/README.md",
+    "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp/releases",
+    "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp/releases/expanded_assets/v0.2.0",
+    "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp/blob/HEAD/.github/release-readme.txt",
+    "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/jessetbh/WCWvsNWOWorldTourRecomp/blob/HEAD/CMakeLists.txt"
+  ]
+}

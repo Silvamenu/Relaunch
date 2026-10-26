@@ -1,0 +1,84 @@
+{
+  "id": "chameleon-twist",
+  "name": "Chameleon Twist Recompiled",
+  "originalGame": "Chameleon Twist (Nintendo 64, Japão)",
+  "description": "Recompilação estática de Chameleon Twist para PC (N64: Recompiled + RT64), primeira versão jogável. Precisa da sua própria ROM japonesa do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp",
+  "accentColor": "#4caf50",
+  "executables": {
+    "win32": ["ChameleonTwistJPRecompiled.exe"]
+  },
+  "detectFiles": ["ChameleonTwistJPRecompiled.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Chameleon Twist (N64, Japão)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão japonesa do N64 é aceita (não a americana nem a europeia); arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["ChameleonTwistJP.z64", "{localAppData}/ChameleonTwistRecompiled/ChameleonTwistJP.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em %LOCALAPPDATA%\\ChameleonTwistRecompiled (ou na pasta do jogo, se existir um arquivo portable.txt)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": ["general.json", "{localAppData}/ChameleonTwistRecompiled/general.json"],
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": ["graphics.json", "{localAppData}/ChameleonTwistRecompiled/graphics.json"],
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": ["controls.json", "{localAppData}/ChameleonTwistRecompiled/controls.json"],
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": ["sound.json", "{localAppData}/ChameleonTwistRecompiled/sound.json"],
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Rainchus/ChameleonTwist1-JP-Recomp",
+    "assetPatterns": {
+      "win32": "ChameleonTwist*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "saves/**", "general.json", "graphics.json", "controls.json", "sound.json", "*.z64", "*.n64", "*.v64"]
+  },
+  "_todo": [
+    "A única release (v0.1, 14/12/2024) tem um só zip, ChameleonTwistJPRecompiled.zip (22,8 MB), feito na máquina do autor: o workflow do repositório ainda é o modelo do Zelda64Recomp (gera artefatos Zelda64Recompiled-*) e não produziu esse arquivo. Pela issue #3 (\"there is only a windows exe\"), o zip é só para Windows. Não conferi o conteúdo: nome do exe (ChameleonTwistJPRecompiled.exe, nome do alvo no CMakeLists.txt) e se há pasta raiz são suposições; o tamanho é compatível com exe + dxcompiler/dxil/SDL2 + assets/.",
+    "Nome da ROM guardada (ChameleonTwistJP.z64) deduzido do game_id \"ChameleonTwistJP\" + \".z64\"; pasta de dados = program_id \"ChameleonTwistRecompiled\" (include/zelda_config.h, README).",
+    "As notas da v0.1 dizem que é a primeira versão funcional e ainda tem código herdado do Majora's Mask recomp; o README é quase todo o do Zelda64Recomp (o Linux citado nele não existe). Último commit em 10/03/2025."
+  ],
+  "_sources": [
+    "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp",
+    "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp/releases",
+    "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp/releases/expanded_assets/v0.1",
+    "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp/issues/3",
+    "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp/blob/HEAD/README.md",
+    "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/Rainchus/ChameleonTwist1-JP-Recomp/blob/HEAD/include/zelda_config.h"
+  ]
+}

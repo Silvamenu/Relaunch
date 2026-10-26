@@ -1,0 +1,114 @@
+{
+  "id": "extreme-g",
+  "name": "Extreme-G: Recompiled",
+  "originalGame": "Extreme-G (Nintendo 64)",
+  "description": "Recompilação estática de Extreme-G para PC (N64: Recompiled + RT64), com widescreen, 60 FPS e mods. Precisa da sua própria ROM americana 1.0 do N64.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://gitlab.com/sonicdcer/ExtremeGRecomp",
+  "accentColor": "#2bb3c0",
+  "executables": {
+    "win32": ["ExtremeGRecompiled.exe"],
+    "linux": ["ExtremeGRecompiled"]
+  },
+  "detectFiles": ["ExtremeGRecompiled.exe", "ExtremeGRecompiled", "recompcontrollerdb.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Extreme-G (N64, EUA 1.0)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão americana 1.0 do N64 é aceita; arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["eg.n64.us.z64", "{localAppData}/ExtremeGRecompiled/eg.n64.us.z64", "{home}/.config/ExtremeGRecompiled/eg.n64.us.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\ExtremeGRecompiled no Windows ou ~/.config/ExtremeGRecompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/ExtremeGRecompiled/general.json"],
+        "linux": ["general.json", "{home}/.config/ExtremeGRecompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/ExtremeGRecompiled/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/ExtremeGRecompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/ExtremeGRecompiled/controls.json"],
+        "linux": ["controls.json", "{home}/.config/ExtremeGRecompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/ExtremeGRecompiled/sound.json"],
+        "linux": ["sound.json", "{home}/.config/ExtremeGRecompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "gitlab-releases",
+    "repo": "sonicdcer/ExtremeGRecomp",
+    "assetPatterns": {
+      "win32": "ExtremeGRecompiled-*-Windows-*",
+      "linux": "ExtremeGRecompiled-*-Linux-X64-*"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "portable.txt",
+      "saves/**",
+      "mods/**",
+      "mod_config/**",
+      "mods.json",
+      "general.json",
+      "graphics.json",
+      "controls.json",
+      "sound.json",
+      "*.z64",
+      "*.n64",
+      "*.v64"
+    ],
+    "_todo": "Os links da release no GitLab não têm extensão no nome (ex.: ExtremeGRecompiled-v1.0.0-Windows-RelWithDebInfo); o servidor entrega .zip (Content-Disposition), que o app usa. Os arquivos ficam no próprio projeto (/-/package_files/). O .zip do Linux traz um ExtremeGRecompiled.tar.gz dentro (aninhado). Linux ARM64, Flatpak e macOS não são selecionados."
+  },
+  "_todo": [
+    "Conteúdo conferido baixando os pacotes do GitLab: Windows (18,5 MB) = ExtremeGRecompiled.exe, dxcompiler.dll, dxil.dll, SDL2.dll, assets/ (interface, fontes e SVGs herdados do modelo do Banjo: Recompiled: Banjo.svg, Kazooie.svg, Jiggy*.svg, Logo.svg) e recompcontrollerdb.txt, sem pasta raiz; Linux (7,8 MB) = ExtremeGRecompiled.tar.gz com o binário, assets/ e recompcontrollerdb.txt. Sem ROM nem dados do jogo.",
+    "O repositório só existe no GitLab (github.com/sonicdcer/ExtremeGRecomp dá 404). Os workflows em .github/ são do modelo e não rodam no GitLab: a release foi montada fora do CI do projeto.",
+    "Nome da ROM guardada (eg.n64.us.z64) deduzido do game_id \"eg.n64.us\" + \".z64\"; pasta de dados = program_id \"ExtremeGRecompiled\" (include/banjo_config.h; README: %LOCALAPPDATA%\\ExtremeGRecompiled\\saves). Nomes dos .json de config supostos pelo padrão do RecompFrontend.",
+    "Uma única release (v1.0.0, 23/08/2026); o README não lista problemas de jogo, só os de overlays (MSI Afterburner etc.)."
+  ],
+  "_sources": [
+    "https://gitlab.com/sonicdcer/ExtremeGRecomp",
+    "https://gitlab.com/api/v4/projects/sonicdcer%2FExtremeGRecomp",
+    "https://gitlab.com/api/v4/projects/sonicdcer%2FExtremeGRecomp/releases",
+    "https://gitlab.com/sonicdcer/ExtremeGRecomp/-/raw/HEAD/README.md",
+    "https://gitlab.com/sonicdcer/ExtremeGRecomp/-/raw/HEAD/src/main/main.cpp",
+    "https://gitlab.com/sonicdcer/ExtremeGRecomp/-/raw/HEAD/include/banjo_config.h",
+    "https://github.com/sonicdcer/ExtremeGRecomp (404)",
+    "https://gitlab.com/sonicdcer/ExtremeGRecomp/-/package_files/338153139/download (listado e apagado)",
+    "https://gitlab.com/sonicdcer/ExtremeGRecomp/-/package_files/338153275/download (listado e apagado)"
+  ]
+}

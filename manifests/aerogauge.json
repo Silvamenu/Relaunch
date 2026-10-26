@@ -1,0 +1,102 @@
+{
+  "id": "aerogauge",
+  "name": "AeroGauge: Recompiled",
+  "originalGame": "AeroGauge (Nintendo 64)",
+  "description": "Recompilação estática de AeroGauge para PC (N64Recomp + RT64), com widescreen, distância de visão maior e modo para 2 jogadores. Precisa da sua própria ROM americana ou japonesa (Rev A) do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/alondero/aerogauge-recomp",
+  "accentColor": "#2f8fd8",
+  "executables": {
+    "win32": ["aerogauge_modern.exe"],
+    "linux": ["aerogauge_modern"]
+  },
+  "detectFiles": ["aerogauge_modern.exe", "aerogauge_modern", "aerogauge.syms.toml"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de AeroGauge (N64, EUA ou Japão Rev A)",
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": true,
+      "helpText": "Escolha a ROM do seu próprio cartucho para o app copiar para a pasta do jogo. O jogo só procura arquivos com estes nomes exatos: \"AeroGauge (USA).z64\" ou \"AeroGauge (Japan) (Rev A).z64\" (.n64/.v64 também valem para a japonesa). Renomeie a cópia se for preciso. A japonesa original (Rev 0) e outras revisões não funcionam. O projeto valida a ROM por XXH3 e não documenta SHA-1, então o arquivo não é conferido aqui."
+    },
+    {
+      "id": "rom-in-folder",
+      "type": "file",
+      "label": "ROM na pasta do jogo com o nome esperado",
+      "patterns": ["AeroGauge (USA).z64", "AeroGauge*Japan*Rev A*.[zvn]64"],
+      "helpText": "Ao abrir, o jogo lê \"AeroGauge (USA).z64\" na própria pasta; sem ela, procura \"AeroGauge (Japan) (Rev A)\" com extensão .z64, .n64 ou .v64. Se as duas existirem, usa a americana."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/AeroGaugeRecomp/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/AeroGaugeRecomp/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["enhancements.json", "{localAppData}/AeroGaugeRecomp/enhancements.json"],
+        "linux": ["enhancements.json", "{home}/.config/AeroGaugeRecomp/enhancements.json"]
+      },
+      "format": "json",
+      "label": "Melhorias (enhancements.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/AeroGaugeRecomp/controls.json"],
+        "linux": ["controls.json", "{home}/.config/AeroGaugeRecomp/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "alondero/aerogauge-recomp",
+    "assetPatterns": {
+      "win32": "aerogauge-recomp-windows-x64*.zip",
+      "linux": "aerogauge-recomp-linux-x64*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "*.z64",
+      "*.n64",
+      "*.v64",
+      "portable.txt",
+      "saves/**",
+      "mods/**",
+      "mod_config/**",
+      "mods.json",
+      "graphics.json",
+      "enhancements.json",
+      "controls.json"
+    ],
+    "_todo": "Os padrões não pegam o .apk do Android nem o zip linux-arm64."
+  },
+  "_todo": [
+    "Pacote (build-release.yml, GitHub Actions): aerogauge_modern(.exe), SDL2.dll, freetype.dll, dxcompiler.dll, dxil.dll, assets/ (só a interface: fontes, ícones SVG, .rcss), aerogauge.syms.toml e aerogauge.jp.syms.toml (tabelas de símbolos); no Linux também install_linux_launcher.sh e linux-build-info.txt. Sem pasta raiz. O workflow apaga a ROM antes de empacotar; não conferi o conteúdo do zip baixado.",
+    "A ROM é lida pelo nome relativo à pasta de trabalho (src/main.cpp); o app inicia o jogo na pasta de instalação.",
+    "Configs e saves ficam em %LOCALAPPDATA%\\AeroGaugeRecomp (Windows) ou ~/.config/AeroGaugeRecomp (Linux); só ficam na pasta do jogo com um portable.txt, que o app não cria (o Quiver cria).",
+    "Projeto feito com muita ajuda de IA (CLAUDE.md, .claude/skills); as notas de cada versão dizem \"pre-release quality\" (travamentos e falhas de áudio possíveis), apesar de a release não estar marcada como prerelease."
+  ],
+  "_sources": [
+    "https://github.com/alondero/aerogauge-recomp",
+    "https://github.com/alondero/aerogauge-recomp/releases",
+    "https://github.com/alondero/aerogauge-recomp/releases/expanded_assets/v0.6.2",
+    "https://github.com/alondero/aerogauge-recomp/blob/HEAD/.github/workflows/build-release.yml",
+    "https://github.com/alondero/aerogauge-recomp/blob/HEAD/README.md",
+    "https://github.com/alondero/aerogauge-recomp/blob/HEAD/docs/configuration.md",
+    "https://github.com/alondero/aerogauge-recomp/blob/HEAD/docs/reference/rom.md",
+    "https://github.com/alondero/aerogauge-recomp/blob/HEAD/src/main.cpp",
+    "https://github.com/alondero/aerogauge-recomp/blob/HEAD/cmake/Frontend.cmake"
+  ]
+}

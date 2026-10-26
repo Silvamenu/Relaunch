@@ -1,0 +1,95 @@
+{
+  "id": "tomba-2-the-evil-swine-return",
+  "name": "Tomba2Recomp",
+  "originalGame": "Tomba! 2: The Evil Swine Return (PS1)",
+  "description": "Recompilação estática de Tomba! 2 para PC, feita com o PSXRecomp (prévia em desenvolvimento), com widescreen adaptável e carregamento sem telas de espera. Você precisa da imagem do seu próprio disco americano (SCUS-94454).",
+  "category": "playstation",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/mstan/Tomba2Recomp",
+  "accentColor": "#d94f8c",
+  "executables": {
+    "win32": ["Tomba2Recomp.exe"],
+    "linux": ["Tomba2Recomp.AppImage"]
+  },
+  "detectFiles": ["Tomba2Recomp.exe", "Tomba2Recomp.AppImage"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Tomba! 2 (EUA, arquivo .bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "b010e322dcfa8cb3aacaa4a940be2169fffafc6f",
+            "label": "Tomba! 2 (USA) SCUS-94454, .bin com 2 faixas (dados + áudio)"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se o seu dump é o esperado. O jogo não recebe o arquivo por aqui; o disco é escolhido no launcher do próprio jogo (passo seguinte). Use um dump .cue + .bin do seu disco americano; não converta para .iso de 2048 bytes (perde os vídeos, o áudio XA e a faixa de áudio). A versão italiana (Tombi! 2) tem um download próprio do projeto, que não é instalado por aqui."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o disco no launcher do jogo",
+      "doneWhen": ["disc.cfg", "{home}/.local/share/Tomba2Recomp/disc.cfg"],
+      "helpText": "Abra o jogo. Na janela do launcher, defina a linha \"Disc\" com o arquivo .cue do seu disco (deixe o .bin na mesma pasta) e clique em Launch. O BIOS livre OpenBIOS já vem no pacote; usar o seu próprio SCPH1001.BIN é opcional. A escolha fica salva em disc.cfg, ao lado do executável no Windows ou em ~/.local/share/Tomba2Recomp no Linux (AppImage). No primeiro uso o carregamento contínuo prepara dados do seu disco (em %LOCALAPPDATA%\\Tomba2Recomp\\seamless ou ~/.cache/Tomba2Recomp/seamless)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "input.ini",
+        "linux": "{home}/.local/share/Tomba2Recomp/input.ini"
+      },
+      "format": "ini",
+      "label": "Controles (input.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/Tomba2Recomp",
+    "assetPatterns": {
+      "win32": "Tomba2Recomp-*-windows-x64.zip",
+      "linux": "Tomba2Recomp-*-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "disc.cfg",
+      "bios.cfg",
+      "settings.toml",
+      "input.ini",
+      "keybinds.ini",
+      "config.ini",
+      "launcher-window.ini",
+      "overlay_captures.json"
+    ],
+    "_todo": "A v0.3.0 (mod experimental Mario's Hat, só Windows) e as versões italianas (Tombi2Recomp-ita, tags *-ita.*) são pre-releases e ficam de fora com includePrereleases=false; o padrão também não casa com os zips italianos. Os .sha256 não casam. A pasta cache/ não é preservada de propósito: cada versão traz módulos nativos novos nela."
+  },
+  "_todo": [
+    "A release (v0.2.1) não traz disco, BIOS comercial nem dados do jogo; o Tomba2Recomp.exe e os módulos em cache/ contêm código do jogo recompilado (MIPS traduzido para nativo), como nas outras recompilações estáticas do mstan no catálogo. O launcher usa a capa do jogo (recomp/launcher/boxart.tga), como o ApeEscapeRecomp.",
+    "O zip não foi baixado (download do github.com bloqueado aqui): a pasta raiz Tomba2Recomp-windows-x64/, o nome Tomba2Recomp.exe e o conteúdo (bios/openbios.bin, assets/, mods/bundled/, cache/, overlay_toolchain/ com gcc para compilar overlays a partir do disco do usuário, sem downloads em tempo de execução) vêm de tools/package_release.ps1. O AppImage se chama Tomba2Recomp-<versão>-linux-x86_64.AppImage (tools/package_appimage.sh).",
+    "disc.cfg fica ao lado do executável no Windows (psxrecomp 97c9aa4, submódulo psxrecomp-v4, runtime/src/main.cpp: exe_dir_from_argv/sidecar_cfg_path). No Linux o AppRun copia tudo para $XDG_DATA_HOME/Tomba2Recomp (padrão ~/.local/share/Tomba2Recomp, ou TOMBA2_RECOMP_DATA_DIR) e roda de lá; com XDG_DATA_HOME diferente o doneWhen do Linux não é encontrado.",
+    "O SHA-1 do .bin vem do DISC.md do projeto, que diz que foi calculado localmente (conferir com o Redump).",
+    "Compatibilidade: o README diz que cobertura nativa completa e uma partida inteira ainda não foram comprovadas (prévias em desenvolvimento); por isso 'experimental'."
+  ],
+  "_sources": [
+    "https://github.com/mstan/Tomba2Recomp",
+    "https://github.com/mstan/Tomba2Recomp/releases",
+    "https://github.com/mstan/Tomba2Recomp/releases/expanded_assets/v0.2.1",
+    "https://raw.githubusercontent.com/mstan/Tomba2Recomp/HEAD/README.md",
+    "https://github.com/mstan/Tomba2Recomp/blob/HEAD/DISC.md",
+    "https://github.com/mstan/Tomba2Recomp/blob/HEAD/ISSUES.md",
+    "https://github.com/mstan/Tomba2Recomp/blob/HEAD/tools/package_release.ps1",
+    "https://github.com/mstan/Tomba2Recomp/blob/HEAD/tools/package_appimage.sh",
+    "https://github.com/mstan/Tomba2Recomp/blob/HEAD/packaging/release/START_HERE.txt",
+    "https://github.com/mstan/Tomba2Recomp/blob/HEAD/packaging/release/app.conf",
+    "https://github.com/mstan/Tomba2Recomp/blob/HEAD/packaging/linux/AppRun",
+    "https://raw.githubusercontent.com/mstan/psxrecomp/97c9aa4018e57b014cfcb5f0976d0624598cae6a/runtime/src/main.cpp"
+  ]
+}

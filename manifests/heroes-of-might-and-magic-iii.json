@@ -1,0 +1,64 @@
+{
+  "id": "heroes-of-might-and-magic-iii",
+  "name": "VCMI",
+  "originalGame": "Heroes of Might and Magic III (PC, 1999)",
+  "description": "Engine de código aberto que recria Heroes of Might and Magic III, com resoluções altas, multijogador online e suporte a mods. Usa os arquivos da sua cópia de Heroes III (Shadow of Death ou Complete, do CD ou da GOG).",
+  "category": "pc",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/vcmi/vcmi",
+  "website": "https://vcmi.eu",
+  "accentColor": "#a0522d",
+  "executables": {
+    "win32": ["VCMI_launcher.exe"],
+    "linux": ["vcmi.AppImage"]
+  },
+  "detectFiles": ["VCMI_launcher.exe", "VCMI_client.exe", "vcmi.AppImage"],
+  "requirements": [
+    {
+      "id": "h3-data",
+      "type": "firstRun",
+      "label": "Importar os arquivos do seu Heroes of Might and Magic III no launcher do VCMI",
+      "helpText": "Na primeira execução o launcher do VCMI abre um assistente. Indique a pasta de instalação do seu Heroes III (Shadow of Death ou Complete) ou os arquivos do instalador offline da GOG que você comprou; o VCMI copia as pastas Data, Maps e Mp3 para a pasta de dados dele (Documentos\\My Games\\vcmi no Windows, ~/.local/share/vcmi no Linux). Para só testar, o assistente também pode baixar a demo oficial gratuita da Loki."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "{documents}/My Games/vcmi/config/settings.json",
+        "linux": "{appData}/vcmi/settings.json"
+      },
+      "format": "json",
+      "label": "Configurações (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "vcmi/vcmi",
+    "assetPatterns": {
+      "win32": "VCMI-Windows.zip",
+      "linux": "VCMI-Linux-x64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["config/dirs.json"]
+  },
+  "_todo": [
+    "Release 1.7.5: VCMI-Windows.zip (46,5 MB) é o pacote ZIP do CPack da build x64 (no CI, github.yml renomeia *-x64.zip para VCMI-Windows.zip); CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0, então os arquivos ficam na raiz (VCMI_launcher.exe, VCMI_client.exe, VCMI_server.exe, DLLs do Qt, config/, Mods/, scripts/). Os VCMI-Windows-*.exe são instaladores Inno Setup e ficam de fora; pdb-*.zip, ARM64 e x86 também.",
+    "O nome do zip do Windows não tem versão nem arquitetura; se o projeto mudar o nome, o padrão precisa ser revisto.",
+    "Dados do usuário fora da pasta do jogo: Windows Documentos\\My Games\\vcmi (Data, Maps, Mp3, Saves, config\\settings.json; pode ser mudado com config\\dirs.json ao lado do exe, lib/VCMIDirs.cpp); Linux ~/.local/share/vcmi e ~/.config/vcmi. Por isso não há doneWhen: o nome exato dos arquivos importados (maiúsculas no Linux) não foi conferido.",
+    "O launcher pode baixar a demo gratuita oficial do Heroes III (heroes3-demo.run do servidor da Loki Games, com cópia no archive.org) em launcher/demo.cpp; nenhum dado do jogo completo é baixado ou distribuído. Mods da comunidade são baixados do repositório de mods do VCMI, por escolha do usuário.",
+    "O CI usa um pacote de teste de 144 KB (vcmi-mods/vcmi-test-data heroes3.7z), pequeno demais para conter os dados do jogo."
+  ],
+  "_sources": [
+    "https://github.com/vcmi/vcmi",
+    "https://github.com/vcmi/vcmi/releases/latest",
+    "https://github.com/vcmi/vcmi/releases/expanded_assets/1.7.5",
+    "https://github.com/vcmi/vcmi/blob/develop/.github/workflows/github.yml",
+    "https://github.com/vcmi/vcmi/blob/develop/CMakeLists.txt",
+    "https://github.com/vcmi/vcmi/blob/develop/launcher/CMakeLists.txt",
+    "https://github.com/vcmi/vcmi/blob/develop/launcher/demo.cpp",
+    "https://github.com/vcmi/vcmi/blob/develop/lib/VCMIDirs.cpp",
+    "https://github.com/vcmi-mods/vcmi-test-data/releases/expanded_assets/v2.0"
+  ]
+}

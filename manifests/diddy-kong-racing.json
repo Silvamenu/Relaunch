@@ -1,0 +1,60 @@
+{
+  "id": "diddy-kong-racing",
+  "name": "Golden Balloon",
+  "originalGame": "Diddy Kong Racing (Nintendo 64)",
+  "description": "Port nativo de Diddy Kong Racing para PC baseado na decompilação da comunidade, com widescreen, alta taxa de quadros, pacotes de textura e multijogador online (beta). Precisa da sua própria ROM do N64 (EUA 1.1 ou Europa 1.1).",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "gameKey": "diddy-kong-racing",
+  "recommended": true,
+  "repoUrl": "https://github.com/akratch/goldenballoon",
+  "accentColor": "#e6a817",
+  "executables": {
+    "win32": ["GoldenBalloon.exe"],
+    "linux": ["GoldenBalloon.AppImage"]
+  },
+  "detectFiles": ["GoldenBalloon.exe", "GoldenBalloon.AppImage", "RUN_ME.txt", "tools/character_importer.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Diddy Kong Racing (N64, EUA 1.1 ou Europa 1.1)",
+      "optional": true,
+      "extensions": ["z64", "v64", "n64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: o próprio programa pede a ROM. Só as revisões EUA 1.1 e Europa 1.1 funcionam; JP, EUA 1.0 e Europa 1.0 são reconhecidas e recusadas. O projeto não documenta hashes, então o arquivo não é conferido aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Escolher sua ROM no Golden Balloon",
+      "helpText": "Na primeira execução o programa abre um seletor de arquivo (no Linux, arraste a ROM para a janela do launcher ou cole o caminho). Configurações, saves e mods ficam na pasta de dados do usuário, ou ao lado do executável se existir um portable.txt."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "akratch/goldenballoon",
+    "assetPatterns": {
+      "win32": "Golden-Balloon-*-windows-x64.zip",
+      "linux": "Golden-Balloon-*-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "mods/**", "*.z64", "*.v64", "*.n64"],
+    "_todo": "Os padrões terminam em .zip/.AppImage, então não pegam os .provenance.json e .sha256. O tar.gz do Linux e o .dmg do macOS não são selecionados."
+  },
+  "_todo": [
+    "Pacotes feitos pelo CI (.github/workflows/release.yml + tools/package_windows_zip.sh / package_linux_appimage.sh), com .provenance.json e .sha256 por arquivo. O zip do Windows tem pasta raiz GoldenBalloon/ com GoldenBalloon.exe (SDL2 estático), tools/ (character_importer.exe feito com PyInstaller a partir de third_party/character_importer no CI, mdkr-character-lod.exe, gltf_validator.exe), licenças, README.md, RUN_ME.txt, gamecontrollerdb.txt e dist/web (página do controle por celular). O script confere a lista exata de arquivos do zip. Não conferi os arquivos baixados.",
+    "O jogo vem da decompilação DavidSM64/Diddy-Kong-Racing (código C em game/); o README diz que nenhum asset (texturas, áudio, modelos, fases) é distribuído: tudo é lido da ROM em tempo de execução.",
+    "Nome e caminho da pasta de dados do usuário e dos arquivos de config/save não conferidos; por isso não há configFiles nem doneWhen. Em modo portátil (portable.txt, que o app não cria) os dados ficam ao lado do exe e precisariam entrar no preserve.",
+    "O multijogador online usa um serviço de pareamento do autor (services/party); sem relay."
+  ],
+  "_sources": [
+    "https://github.com/akratch/goldenballoon",
+    "https://github.com/akratch/goldenballoon/releases",
+    "https://github.com/akratch/goldenballoon/releases/expanded_assets/v1.8.0",
+    "https://github.com/akratch/goldenballoon/blob/HEAD/README.md",
+    "https://github.com/akratch/goldenballoon/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/akratch/goldenballoon/blob/HEAD/tools/package_windows_zip.sh"
+  ]
+}

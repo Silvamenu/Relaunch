@@ -1,0 +1,69 @@
+{
+  "id": "dead-rising-2-case-west",
+  "name": "CaseWestRecomp",
+  "originalGame": "Dead Rising 2: Case West (Xbox 360)",
+  "description": "Port nativo não oficial do Dead Rising 2: Case West, feito por recompilação estática (XenonRecomp/XenosRecomp) com renderizador Vulkan, 60 FPS e teclado e mouse. Você precisa do pacote XBLA do jogo baixado no seu próprio Xbox 360.",
+  "category": "xbox",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/wivi514/Dead_Rising_2_Case_West_Xenon_Recomp",
+  "accentColor": "#3f6f8f",
+  "executables": {
+    "win32": ["cw_runtime.exe"],
+    "linux": ["CaseWestRecomp-linux-x86_64.AppImage"]
+  },
+  "detectFiles": ["cw_runtime.exe", "CaseWestRecomp-linux-x86_64.AppImage", "vs_recipes.bin", "prewarm.keys"],
+  "requirements": [
+    {
+      "id": "package",
+      "type": "firstRun",
+      "label": "Colocar o pacote XBLA do seu Case West em assets/package e abrir o jogo",
+      "doneWhen": ["assets/game/default.xex"],
+      "helpText": "Copie do armazenamento do seu Xbox 360 o arquivo do jogo (cerca de 1,2 GB, sem extensão), que fica em Content/0000000000000000/58410B00/000D0000/, para a pasta assets/package dentro da pasta do jogo (copiar a pasta 58410B00 inteira também funciona; no launcher do jogo dá para arrastar o arquivo para a janela). Na primeira execução o jogo desempacota o pacote para assets/game, prepara os shaders e gera os ícones de teclas a partir dos seus próprios arquivos."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "{home}/Saved Games/Dead Rising 2 Case West/cw_settings.txt",
+        "linux": "{home}/.local/share/Dead Rising 2 Case West/cw_settings.txt"
+      },
+      "format": "text",
+      "label": "Configurações gráficas (cw_settings.txt)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": "cw_defaults.env"
+      },
+      "format": "text",
+      "label": "Variáveis padrão do build (cw_defaults.env)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "wivi514/Dead_Rising_2_Case_West_Xenon_Recomp",
+    "assetPatterns": {
+      "win32": "CaseWestRecomp-windows-x86_64.zip",
+      "linux": "CaseWestRecomp-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["assets/**", "kbmap.txt", "game_mods/**"]
+  },
+  "_todo": [
+    "Release v1.1.2 (Latest, 2026-10-14, anunciada como o build final) conferida pelos nomes e tamanhos: CaseWestRecomp-windows-x86_64.zip 23,8 MB, CaseWestRecomp-linux-x86_64.AppImage 29,1 MB, .tar.zst 30,4 MB (formato não suportado pelo app), steamdeck .tar.gz e macos .zip. O download do GitHub está bloqueado aqui: o conteúdo vem de tools/release_package_windows.ps1 e tools/release_package_appimage.sh.",
+    "Pelo script, o zip (Compress-Archive da pasta CaseWestRecomp) tem uma pasta raiz CaseWestRecomp/ com cw_runtime.exe, DLLs (SDL2, ffmpeg LGPL, dxcompiler, libcurl, runtime MSVC), prewarm.keys, vs_recipes.bin, kbm_chips/ (26 ícones de teclas feitos pelo projeto), cw_defaults.env, tools/extract_stfs.py, README.md, licenças e assets/package/PUT_YOUR_GAME_HERE.txt. Nenhum dado do jogo.",
+    "Mesma ressalva do Case Zero (mesmo autor e pipeline): vs_recipes.bin leva palavras de instrução de vertex fetch derivadas dos shaders do jogo e prewarm.keys guarda estado de registradores do título; tabelas pequenas de dados funcionais, mantido, mas vale revisar.",
+    "No AppImage a pasta de dados é a pasta onde o .AppImage está (host_paths.cpp, variável APPIMAGE): assets/package e assets/game ficam ao lado dele. O AppImage exige glibc 2.35 ou mais nova.",
+    "Saves e cw_settings.txt ficam fora da pasta do jogo: no Windows na pasta conhecida Saved Games (padrão %USERPROFILE%\\Saved Games), no Linux em $XDG_DATA_HOME ou ~/.local/share/Dead Rising 2 Case West. kbmap.txt fica ao lado do executável. A pasta game_mods/ (overlay de mods da v1.1.2) foi posta no preserve sem conferir onde o runtime a procura.",
+    "Co-op online só pelo launcher XenonLive do mesmo autor (não avaliado); iniciado direto o jogo fica offline e single-player. Desenvolvimento encerrado. Licença PolyForm Noncommercial; código com muito uso de IA (CLAUDE.md no repo)."
+  ],
+  "_sources": [
+    "https://github.com/wivi514/Dead_Rising_2_Case_West_Xenon_Recomp",
+    "https://github.com/wivi514/Dead_Rising_2_Case_West_Xenon_Recomp/releases",
+    "https://github.com/wivi514/Dead_Rising_2_Case_West_Xenon_Recomp/releases/expanded_assets/v1.1.2",
+    "https://raw.githubusercontent.com/wivi514/Dead_Rising_2_Case_West_Xenon_Recomp/HEAD/README.md",
+    "git: tools/release_package_windows.ps1, tools/release_package_appimage.sh, runtime/host/host_paths.cpp, runtime/host/host_paths.h, runtime/kernel/content.cpp, runtime/main.cpp"
+  ]
+}

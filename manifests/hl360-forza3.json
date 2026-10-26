@@ -1,0 +1,76 @@
+{
+  "id": "hl360-forza3",
+  "name": "Forza Motorsport 3 Native (hl360-forza3)",
+  "originalGame": "Forza Motorsport 3: Ultimate Collection (Xbox 360)",
+  "description": "Recompilação estática não oficial de Forza Motorsport 3 para Windows, com launcher próprio que instala e confere os discos. Exige as ISOs dos dois discos da sua própria cópia de Forza Motorsport 3: Ultimate Collection (EUA).",
+  "category": "xbox",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/0herculabs/hl360-forza3",
+  "accentColor": "#c2271d",
+  "executables": {
+    "win32": ["fm3-launcher.exe", "fm3.exe"]
+  },
+  "detectFiles": ["fm3-launcher.exe", "fm3.exe", "fm3tool.exe"],
+  "requirements": [
+    {
+      "id": "disc1",
+      "type": "firstRun",
+      "label": "Importar o Disco 1 (Play Disc) do seu Forza Motorsport 3: Ultimate Collection",
+      "doneWhen": ["game/.fm3-verified", "game/default.xex"],
+      "helpText": "Abra o launcher (fm3-launcher.exe) e, na aba Install, importe a .iso do Disco 1 (Play Disc) da sua própria cópia de Forza Motorsport 3: Ultimate Collection (EUA, Title ID 4D53084D). O launcher extrai cerca de 7 GB para a pasta game e confere cada arquivo por SHA-256. Outras regiões e edições não são suportadas."
+    },
+    {
+      "id": "disc2",
+      "type": "firstRun",
+      "label": "Importar o Disco 2 (Content Install Disc) com os carros e pistas extras",
+      "optional": true,
+      "helpText": "Na mesma aba Install, importe a .iso do Disco 2 da sua cópia. O launcher instala os oito pacotes de conteúdo na pasta de dados do usuário (user). Depois crie ou escolha um perfil local e aperte PLAY."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "fm3.user.toml",
+      "format": "text",
+      "label": "Configurações escolhidas no launcher (fm3.user.toml)",
+      "editable": true
+    },
+    {
+      "path": "fm3.toml",
+      "format": "text",
+      "label": "Configurações padrão do port (fm3.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "0herculabs/hl360-forza3",
+    "assetPatterns": {
+      "win32": "FM3*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["game/**", "user/**", "fm3.user.toml", "launcher.toml", "cover.jpg", "logs/**"]
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a última release continua sendo a 0.1.3 (17/10/2026, Latest), o mesmo FM3.zip listado na rodada 1. Funcionam: menus, vídeos, Free Play e corridas a 60 FPS. A carreira completa, o multiplayer local e outros modos ainda precisam de mais testes; não há Xbox Live; uma atualização interrompida pode deixar a instalação pela metade, sem rollback.",
+    "O mod Project Forza Plus 3 não é baixado pelo launcher: o usuário escolhe o .zip do mod que tiver (launcher/src/main.cpp, seletor de .zip; fm3_plus.cpp só lê esse arquivo).",
+    "Release 0.1.3 verificada: FM3.zip (23,7 MB) tem uma pasta raiz FM3 (caminhos com barra invertida no zip) com fm3-launcher.exe, fm3.exe, fm3tool.exe, rexruntime.dll, rexgpu-xenos.dll, runtime MSVC, fm3.toml, game_files.sha256 (lista de hashes), README.md, CHANGELOG.md, QUICKSTART.txt e licenses/. Nenhum arquivo do jogo.",
+    "O launcher usa por padrão game/ e user/ ao lado do exe (launcher/src/main.cpp: GameDir/UserDir); o usuário pode trocar essas pastas, e aí os doneWhen não são encontrados. Ele grava game/.fm3-verified depois da verificação SHA-256. O caminho da pasta user precisa ser curto (até 96 caracteres; 53 com o Project Forza Plus 3).",
+    "cover.jpg é extraído pelo launcher do asset nxeart do Disco 1 do próprio usuário; não vem na release.",
+    "Só Windows (Direct3D 12). O SDK é o ReXGlue (submódulo) com os patches de patches/sdk/ do próprio repositório. Desenvolvimento recente e assistido por IA (12 commits desde 14/10/2026); a release cita varredura limpa no Microsoft Defender em 17/10/2026.",
+    "O asset FM3.zip não tem versão no nome; o padrão FM3*.zip não casa com FM3-SHA256SUMS.txt."
+  ],
+  "_sources": [
+    "https://github.com/0herculabs/hl360-forza3",
+    "https://github.com/0herculabs/hl360-forza3/releases",
+    "https://github.com/0herculabs/hl360-forza3/releases/expanded_assets/0.1.3",
+    "https://github.com/0herculabs/hl360-forza3/releases/download/0.1.3/FM3.zip",
+    "https://github.com/0herculabs/hl360-forza3/commits/main",
+    "https://github.com/0herculabs",
+    "https://raw.githubusercontent.com/0herculabs/hl360-forza3/HEAD/README.md",
+    "https://raw.githubusercontent.com/0herculabs/hl360-forza3/HEAD/.gitmodules",
+    "https://raw.githubusercontent.com/0herculabs/hl360-forza3/HEAD/launcher/src/main.cpp",
+    "https://raw.githubusercontent.com/0herculabs/hl360-forza3/HEAD/launcher/src/installer.cpp",
+    "https://github.com/0herculabs/hl360-forza3/blob/main/launcher/src/fm3_plus.cpp"
+  ]
+}

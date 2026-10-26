@@ -1,0 +1,72 @@
+{
+  "id": "carmageddon",
+  "name": "Dethrace",
+  "originalGame": "Carmageddon (PC, 1997)",
+  "description": "Reconstrução em C de Carmageddon por engenharia reversa, rodando nativamente em sistemas atuais. Usa os arquivos de dados (pasta DATA) da sua cópia de Carmageddon ou do Splat Pack; as demos gratuitas também funcionam.",
+  "category": "pc",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/dethrace-labs/dethrace",
+  "accentColor": "#b3261e",
+  "executables": {
+    "win32": ["dethrace.exe"],
+    "linux": ["bin/dethrace"]
+  },
+  "detectFiles": ["dethrace.exe", "bin/dethrace"],
+  "requirements": [
+    {
+      "id": "data",
+      "type": "file",
+      "label": "Arquivos do seu Carmageddon (pasta DATA) dentro da pasta do jogo",
+      "patterns": ["DATA/GENERAL.TXT"],
+      "helpText": "Copie para a pasta do jogo (ao lado do dethrace.exe) o conteúdo da pasta de instalação do seu Carmageddon, Carmageddon Max Pack ou Splat Pack: a pasta DATA (com DATA/GENERAL.TXT) e, se existir, a pasta MUSIC com as faixas Track02.ogg, Track03.ogg etc. da versão GOG. Também dá para apontar outra pasta pelo arquivo dethrace.ini (seção [Games])."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "{appData}/dethrace/dethrace.ini",
+        "linux": "{localAppData}/dethrace/dethrace.ini"
+      },
+      "format": "ini",
+      "label": "Configurações (dethrace.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "launchEnv": {
+    "linux": {
+      "DETHRACE_ROOT_DIR": "{gameDir}"
+    }
+  },
+  "updates": {
+    "source": "github-releases",
+    "repo": "dethrace-labs/dethrace",
+    "assetPatterns": {
+      "win32": "dethrace-*-windows-x64.zip",
+      "linux": "dethrace-*-linux-x64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["DATA/**", "MUSIC/**", "*.INI", "*.ini"]
+  },
+  "_todo": [
+    "Pacotes gerados pelo CPack no CI (.github/workflows/workflow.yaml, cmake/InstallConfig.cmake), com uma pasta raiz dethrace-<versão>-<plataforma>-<arq>/. Windows: dethrace.exe, dethrace.pdb, DLLs do SDL (SDL3 e camadas de compatibilidade SDL2/SDL1) e LICENSE na raiz. Linux: bin/dethrace e share/doc/dethrace/LICENSE (GNUInstallDirs). Tamanhos v0.10.1: Windows 8,17 MB, Linux 5,24 MB. Nenhum dado do jogo.",
+    "No Linux o SDL é carregado dinamicamente do sistema (DETHRACE_PLATFORM_SDL_DYNAMIC): é preciso ter SDL3 ou SDL2 instalado.",
+    "Busca da pasta do jogo (src/harness/harness.c): diretório do dethrace.ini, depois DETHRACE_ROOT_DIR, depois a pasta do executável se DATA/GENERAL.TXT existir no diretório atual, senão a pasta de preferências (%APPDATA%\\dethrace no Windows, ~/.local/share/dethrace no Linux). No Linux o executável fica em bin/, então sem DETHRACE_ROOT_DIR ele trocaria para bin/ e não acharia a DATA na raiz; por isso o launchEnv.",
+    "O dethrace.ini é opcional e não é criado sozinho; o caminho mostrado é onde o Dethrace o procura (docs/CONFIGURATION.md).",
+    "O preserve inclui DATA/** e MUSIC/** porque os dados do usuário ficam na pasta do jogo; saves e opções do Carmageddon original ficam dentro de DATA (não confirmado arquivo por arquivo).",
+    "Licença: domínio público para o código, uso não comercial; o README diz que o código só pode ser usado com os arquivos de quem possui Carmageddon."
+  ],
+  "_sources": [
+    "https://github.com/dethrace-labs/dethrace",
+    "https://github.com/dethrace-labs/dethrace/releases",
+    "https://github.com/dethrace-labs/dethrace/releases/expanded_assets/v0.10.1",
+    "https://raw.githubusercontent.com/dethrace-labs/dethrace/HEAD/README.md",
+    "https://github.com/dethrace-labs/dethrace/blob/main/docs/CONFIGURATION.md",
+    "https://github.com/dethrace-labs/dethrace/blob/main/.github/workflows/workflow.yaml",
+    "https://github.com/dethrace-labs/dethrace/blob/main/cmake/InstallConfig.cmake",
+    "https://github.com/dethrace-labs/dethrace/blob/main/src/DETHRACE/CMakeLists.txt",
+    "https://github.com/dethrace-labs/dethrace/blob/main/src/harness/harness.c",
+    "https://github.com/dethrace-labs/dethrace/blob/main/src/harness/os/windows.c",
+    "https://github.com/dethrace-labs/dethrace/blob/main/src/harness/os/linux.c"
+  ]
+}

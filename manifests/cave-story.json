@@ -1,0 +1,59 @@
+{
+  "id": "cave-story",
+  "name": "doukutsu-rs",
+  "originalGame": "Cave Story (PC, 2004)",
+  "description": "Reimplementação da engine de Cave Story (Doukutsu Monogatari) com melhorias de conforto. Usa os arquivos de dados da versão freeware original (Doukutsu.exe e a pasta data) ou da pasta data da sua cópia de Cave Story+.",
+  "category": "pc",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/doukutsu-rs/doukutsu-rs",
+  "website": "https://get.doukutsu.rs",
+  "accentColor": "#c0392b",
+  "executables": {
+    "win32": ["doukutsu-rs.exe"]
+  },
+  "detectFiles": ["doukutsu-rs.exe"],
+  "requirements": [
+    {
+      "id": "data",
+      "type": "file",
+      "label": "Pasta data de Cave Story (freeware ou Cave Story+) dentro da pasta do jogo",
+      "patterns": ["data/npc.tbl", "data/base/npc.tbl", "data/Stage/*.pxm", "data/base/Stage/*.pxm"],
+      "helpText": "Freeware: copie o Doukutsu.exe e a pasta data do Cave Story original para a pasta do jogo, ao lado do doukutsu-rs.exe; na primeira execução o doukutsu-rs extrai do Doukutsu.exe os recursos que faltam para a pasta data. Cave Story+ (Steam, GOG, Epic, Humble): copie a pasta data da sua instalação. A versão remasterizada lançada na Steam em 2026 ainda não é suportada."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": ["user/settings.json", "{localAppData}/doukutsu-rs/data/settings.json"],
+      "format": "json",
+      "label": "Configurações (settings.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "doukutsu-rs/doukutsu-rs",
+    "assetPatterns": {
+      "win32": "doukutsu-rs_windows_*.x86_64.exe"
+    },
+    "includePrereleases": false,
+    "preserve": ["data/**", "user/**", "Doukutsu.exe"]
+  },
+  "_todo": [
+    "A release 1.0.0 traz executáveis soltos: doukutsu-rs_windows_1.0.0.x86_64.exe (8,14 MB) e doukutsu-rs_linux_1.0.0.x86_64.elf (9,7 MB). O instalador não aceita .elf, por isso não há Linux no manifesto (no Linux também existe o Flatpak oficial no Flathub). Builds feitas no CI (.github/workflows/ci.yml).",
+    "Pasta de dados: <pasta do executável>/data, ou a variável CAVESTORY_DATA_DIR (src/game/filesystem_container.rs).",
+    "Saves e settings.json ficam em %LOCALAPPDATA%\\doukutsu-rs\\data (crate directories, data_local_dir) ou, no modo portátil, na pasta user ao lado de data. O caminho exato do settings.json dentro da pasta de usuário foi tirado do README e não conferido no código.",
+    "O executável embute a tabela de ondas do Organya (organya-wavetable-doukutsu.bin, cerca de 25 KB) e uma tabela pequena do PixTone (pixtone_ref.dat, 1,5 KB), dados do motor de som do Cave Story freeware que o Pixel distribuiu gratuitamente (também usados pelo OrgMaker). Os sprites embutidos em builtin_data/headband são sobreposições próprias do projeto (só uma faixa vermelha desenhada), não cópias do jogo.",
+    "Avisos do README: na versão da Epic Games Store, apague o opengl32.dll que vem com o jogo, senão o doukutsu-rs fecha ao abrir. Saves da versão remasterizada (Switch) não são compatíveis com os da original."
+  ],
+  "_sources": [
+    "https://github.com/doukutsu-rs/doukutsu-rs",
+    "https://github.com/doukutsu-rs/doukutsu-rs/releases",
+    "https://github.com/doukutsu-rs/doukutsu-rs/releases/expanded_assets/1.0.0",
+    "https://raw.githubusercontent.com/doukutsu-rs/doukutsu-rs/HEAD/README.md",
+    "https://github.com/doukutsu-rs/doukutsu-rs/blob/master/.github/workflows/ci.yml",
+    "https://github.com/doukutsu-rs/doukutsu-rs/blob/master/src/game/filesystem_container.rs",
+    "https://github.com/doukutsu-rs/doukutsu-rs/blob/master/src/data/builtin_fs.rs",
+    "https://github.com/doukutsu-rs/doukutsu-rs/tree/master/src/data/builtin/builtin_data/headband"
+  ]
+}

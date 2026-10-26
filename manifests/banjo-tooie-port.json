@@ -1,0 +1,64 @@
+{
+  "id": "banjo-tooie-port",
+  "name": "Banjo-Tooie: Scurvy Dog Port",
+  "originalGame": "Banjo-Tooie (N64)",
+  "description": "Port não oficial (alfa) de Banjo-Tooie para PC, feito por recompilação estática (N64Recomp + RT64). Precisa da sua própria ROM americana (NTSC-U 1.0) do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port",
+  "accentColor": "#d9822b",
+  "executables": {
+    "win32": ["BanjoTooieScurvyDogPort.exe"]
+  },
+  "detectFiles": ["BanjoTooieScurvyDogPort.exe", "package-manifest.json"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Banjo-Tooie (N64, EUA 1.0, .z64)",
+      "optional": true,
+      "extensions": ["z64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, na primeira execução. Só a versão americana NTSC-U 1.0 em formato .z64 (big-endian) e sem modificações é aceita; outras regiões, outros formatos e ROMs alteradas são recusados.",
+      "_todo": "O projeto documenta só o SHA-256 da ROM aceita (9ec37fba6890362eba86fb855697a9cff1519275531b172083a1a6a045483583); não há SHA-1 documentado, por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no jogo",
+      "doneWhen": ["{localAppData}/BanjoTooieScurvyDogPort/bt.n64.us.1.0.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM quando ele pedir. O jogo valida e guarda uma cópia na pasta de dados dele (%LOCALAPPDATA%\\BanjoTooieScurvyDogPort), junto com saves, configurações, logs e pacotes de textura (mods). Se o Windows reclamar de DLL faltando, instale o Microsoft Visual C++ x64 Redistributable."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "some-scurvy-dog/banjo-tooie-scurvy-dog-port",
+    "assetPatterns": {
+      "win32": "BanjoTooieScurvyDogPort-*-Windows-x64.zip"
+    },
+    "includePrereleases": true,
+    "preserve": [],
+    "_todo": [
+      "O projeto só publica prereleases (alfas v0.1.0-alpha.*), por isso includePrereleases é true.",
+      "Até a Alpha 4.1 o pacote se chamava BanjoTooieEncore / TooieRecompiled; o padrão só casa com os nomes atuais (BanjoTooieScurvyDogPort-Alpha4.4-Windows-x64.zip). O arquivo .zip.sha256 ao lado não casa com o padrão."
+    ]
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a última release continua sendo a v0.1.0-alpha.4.4 (25/10/2026, prerelease). release/player-windows-files.json define o pacote: BanjoTooieScurvyDogPort.exe, SDL2.dll, dxcompiler.dll, dxil.dll, README.txt, LICENSE, THIRD_PARTY_NOTICES.md, third_party/notices/* e package-manifest.json. Nenhum arquivo do jogo; as capturas de tela de assets/screenshots ficam só no repositório.",
+    "Correção em relação ao rascunho da rodada 1: o player guarda a ROM em <perfil>\\bt.n64.us.1.0.z64, na raiz do perfil %LOCALAPPDATA%\\BanjoTooieScurvyDogPort (tools/baseline/player_startup.cpp: product_folder, rom_name), e não em config/. Na primeira execução, copia uma vez o perfil da Alpha 4/4.1 (%LOCALAPPDATA%\\BanjoTooieEncore).",
+    "Só há build para Windows x64; não existe build para Linux.",
+    "Os binários são publicados pelo dono, sem build de CI no repositório (o workflow source-checks.yml só checa o código). Conta criada em 28/09/2026, com um único repositório (59 commits, 98 estrelas) e código em grande parte gerado por IA, como o README declara.",
+    "Problemas conhecidos (README da release): sombras da mochila e em rampas, correções de menu ainda em teste, sem avanço rápido (F6), e o jogo completo não foi verificado do começo ao fim."
+  ],
+  "_sources": [
+    "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port",
+    "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port/releases",
+    "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port/releases/expanded_assets/v0.1.0-alpha.4.4",
+    "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port/blob/main/release/player-windows-files.json",
+    "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port/blob/main/release/README.txt",
+    "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port/blob/main/tools/baseline/player_startup.cpp",
+    "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port/blob/main/CMakeLists.txt",
+    "https://github.com/some-scurvy-dog/banjo-tooie-scurvy-dog-port/releases/download/v0.1.0-alpha.4.4/BanjoTooieScurvyDogPort-Alpha4.4-Windows-x64.zip (listado na rodada 1)"
+  ]
+}

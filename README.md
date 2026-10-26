@@ -67,6 +67,8 @@ O app traz **119 projetos** em listas por plataforma, as mesmas da tela **Adicio
 - **Emulador**: o programa que imita o console. O app instala o emulador uma vez, do repositório oficial dele.
 - **Jogo via emulador**: jogos grandes de console (como **God of War III Remastered**). O app abre o emulador com o **seu** jogo, o dump da sua cópia. O selo mostra quão bem ele roda hoje, pela lista de compatibilidade oficial do emulador: **Jogável**, **Roda com falhas** ou **Experimental**.
 
+Quando um jogo tem mais de um projeto (por exemplo, Mario Kart 64), todos aparecem e o selo **Mais completo** marca o mais completo e estável hoje. Nos ports, o selo **Jogável**, **Roda com falhas** ou **Experimental** mostra o quanto o projeto já está pronto.
+
 ![Tela Adicionar jogo com a busca "god of war": a lista PlayStation aberta mostra oito jogos: sete via emulador, com o selo de compatibilidade, e o port nativo SpartanPort](docs/screenshots/catalogo.png)
 
 > [!NOTE]
@@ -348,6 +350,8 @@ Cada projeto suportado é descrito por um arquivo `manifests/<id>.json`. **Adici
 | `accentColor`              | não         | Cor da capa gerada, no formato `#RRGGBB`.                                                      |
 | `category`                 | não         | Lista do catálogo: `nintendo`, `playstation`, `xbox`, `sega`, `pc`, `emulators` ou `custom`.   |
 | `compatibility`            | não         | Quão bem roda hoje: `playable`, `ingame` ou `experimental`.                                    |
+| `gameKey`                  | não         | Liga projetos do **mesmo jogo** (a mesma chave em todos). Só quando há dois ou mais.           |
+| `recommended`              | não         | O mais completo entre os de mesma `gameKey`: ganha o selo **Mais completo** no catálogo.       |
 | `runner`                   | não         | Jogo que abre num emulador instalado pelo app. Veja [Jogos via emulador](#jogos-via-emulador). |
 | `executables`              | sim\*       | Executáveis por plataforma.                                                                    |
 | `detectFiles`              | sim\*       | Arquivos que identificam a pasta do projeto.                                                   |
@@ -487,14 +491,14 @@ Jogos grandes de console (ex.: God of War III Remastered) rodam num emulador, qu
 #### `updates`
 
 - `{ "source": "none" }` para projetos sem binários publicados; o app mostra só o link do repositório.
-- `{ "source": "github-releases", … }` para projetos que publicam releases:
+- `{ "source": "github-releases", … }` para projetos que publicam releases no GitHub, ou `{ "source": "gitlab-releases", … }` no gitlab.com:
 
-| Campo                | O que faz                                                                                                                                                                                                                                                       |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `repo`               | No formato `dono/repositorio`. Os downloads só são aceitos desse repositório.                                                                                                                                                                                   |
-| `assetPatterns`      | Globs por plataforma, testados em ordem. Se nenhum casar, o app avisa e não baixa nada. Se o asset for um binário solto (AppImage/exe), ele é salvo com o nome do primeiro executável da plataforma que não seja um glob.                                       |
-| `includePrereleases` | Usa a lista de releases em vez de `/releases/latest`.                                                                                                                                                                                                           |
-| `preserve`           | O que **nunca é sobrescrito** na atualização. Padrão sem `/` casa pelo nome do arquivo em qualquer pasta (ex.: `imgui.ini`, `*.sav`); com `/`, é relativo à raiz (ex.: `Save/**`, `mods/`). Arquivos preservados que ainda não existem são criados normalmente. |
+| Campo                | O que faz                                                                                                                                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `repo`               | No formato `dono/repositorio` (no GitLab, o caminho do projeto, com subgrupos se houver). Os downloads só são aceitos desse repositório: no GitLab, só arquivos de pacote, downloads de release e anexos do próprio projeto; links para outros sites são ignorados. |
+| `assetPatterns`      | Globs por plataforma, testados em ordem. Se nenhum casar, o app avisa e não baixa nada. Se o asset for um binário solto (AppImage/exe), ele é salvo com o nome do primeiro executável da plataforma que não seja um glob.                                           |
+| `includePrereleases` | Usa a lista de releases em vez de `/releases/latest`.                                                                                                                                                                                                               |
+| `preserve`           | O que **nunca é sobrescrito** na atualização. Padrão sem `/` casa pelo nome do arquivo em qualquer pasta (ex.: `imgui.ini`, `*.sav`); com `/`, é relativo à raiz (ex.: `Save/**`, `mods/`). Arquivos preservados que ainda não existem são criados normalmente.     |
 
 </details>
 
@@ -640,6 +644,8 @@ Cada PR e cada push na `main` passam por verificações automáticas.
 ## Créditos
 
 Os jogos e projetos listados pertencem aos seus respectivos autores e comunidades. O Relaunch é um launcher independente e não é afiliado a nenhum deles.
+
+Parte do catálogo partiu da lista pública de projetos do [Quiver Launcher](https://github.com/tgeorgiadis/quiver-launcher). Cada projeto foi conferido de novo pelas regras do Relaunch antes de entrar.
 
 As fontes Geist e Geist Mono são distribuídas sob a SIL Open Font License.
 

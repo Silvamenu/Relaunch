@@ -253,7 +253,7 @@ export function UpdatesTab({ item }: { item: LibraryItem }) {
             <div className="max-h-[420px] overflow-y-auto border-t border-line px-[18px] py-4">
               <Markdown>{latest.body}</Markdown>
               <button type="button" className="mt-4 text-[12.5px] text-link hover:underline" onClick={() => void window.api.app.openExternal(latest.htmlUrl)}>
-                {t('upd.viewOnGithub')}
+                {t(updates.source === 'gitlab-releases' ? 'upd.viewOnGitlab' : 'upd.viewOnGithub')}
               </button>
             </div>
           )}

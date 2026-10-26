@@ -1,0 +1,58 @@
+{
+  "id": "doom-ii-rpg",
+  "name": "DoomIIRPG-RE",
+  "originalGame": "Doom II RPG (iPhone, 2010)",
+  "description": "Port para PC de Doom II RPG feito por engenharia reversa, pelo [GEC]. Usa o arquivo Doom 2 RPG.ipa da sua cópia da versão de iPhone, colocado na pasta do jogo.",
+  "category": "pc",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/Erick194/DoomIIRPG-RE",
+  "accentColor": "#8b1a1a",
+  "executables": {
+    "win32": ["DoomIIRPG.exe"]
+  },
+  "detectFiles": ["DoomIIRPG.exe"],
+  "requirements": [
+    {
+      "id": "ipa",
+      "type": "file",
+      "label": "Arquivo Doom 2 RPG.ipa (sua cópia da versão de iPhone) na pasta do jogo",
+      "patterns": ["Doom 2 RPG.ipa"],
+      "helpText": "Copie para a pasta do jogo, ao lado do DoomIIRPG.exe, o .ipa da sua cópia de Doom II RPG para iPhone, com o nome exato \"Doom 2 RPG.ipa\". O port lê os dados direto desse arquivo."
+    },
+    {
+      "id": "openal",
+      "type": "firstRun",
+      "label": "Instalar o OpenAL no Windows",
+      "helpText": "O port usa OpenAL para o som e, segundo relatos de usuários, não abre sem ele. Se o jogo fechar ao abrir, instale o OpenAL 1.1 para Windows (instalador oficial em openal.org) e tente de novo."
+    }
+  ],
+  "configFiles": [],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Erick194/DoomIIRPG-RE",
+    "assetPatterns": {
+      "win32": "DoomIIRPG*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["Doom 2 RPG.ipa", "Doom2rpg.app/**"]
+  },
+  "_todo": [
+    "Única release: v.0.1 (11/12/2023), asset DoomIIRPG.v0.1.zip de 1,07 MB, compilada na máquina do autor (sem CI). Não consegui listar o zip: pelo tamanho só cabe o executável e bibliotecas (nenhum dado do jogo). Relatos dizem que ele extrai para uma pasta DoomIIRPG com o DoomIIRPG.exe; arquitetura (32 ou 64 bits) não confirmada.",
+    "O código atual (src/Main.cpp) abre \"Doom 2 RPG.ipa\" no diretório de trabalho; o código do repositório (julho de 2025) é mais novo que a release de 2023.",
+    "Saves e configurações ficam na pasta Doom2rpg.app, criada no diretório de trabalho (src/JavaStream.h), ou seja, na pasta do jogo.",
+    "O requisito do OpenAL vem de relatos de usuários (notícia da Vandal e Reddit), não do README; o README só lista SDL2, zlib e OpenAL como dependências de build. Não sei se o zip traz o OpenAL32.dll.",
+    "Só Windows: não há build de Linux na release (relatos de uso no Steam Deck são via Proton 6.3 a 8; o Proton Experimental não funcionou).",
+    "O autor ([GEC], Erick Vásquez García) é conhecido por outros projetos de engenharia reversa de Doom; o repositório tem só o código do port, sem dados do jogo."
+  ],
+  "_sources": [
+    "https://github.com/Erick194/DoomIIRPG-RE",
+    "https://github.com/Erick194/DoomIIRPG-RE/releases",
+    "https://github.com/Erick194/DoomIIRPG-RE/releases/expanded_assets/v.0.1",
+    "https://raw.githubusercontent.com/Erick194/DoomIIRPG-RE/HEAD/README.md",
+    "https://github.com/Erick194/DoomIIRPG-RE/blob/main/src/Main.cpp",
+    "https://github.com/Erick194/DoomIIRPG-RE/blob/main/src/JavaStream.h",
+    "https://github.com/Erick194/DoomIIRPG-RE/blob/main/CMakeLists.txt",
+    "https://vandal.elespanol.com/noticia-amp/1350762209/doom-2-rpg-el-juego-de-moviles-de-2005-por-fin-se-puede-jugar-en-pc-con-un-mod/"
+  ]
+}

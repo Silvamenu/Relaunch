@@ -1,0 +1,112 @@
+{
+  "id": "pokemon-red-blue-yellow-gold-silver-crystal",
+  "name": "G1R Deluxe (Gen1Recomp)",
+  "originalGame": "Pokémon Red, Blue, Yellow, Gold, Silver e Crystal (Game Boy / Game Boy Color)",
+  "description": "Recriação nativa em LÖVE2D dos Pokémon de Game Boy e Game Boy Color (e, em beta, FireRed, LeafGreen, Ruby, Sapphire e Emerald do GBA). Gráficos, textos e dados são extraídos da ROM americana do seu próprio cartucho na primeira execução.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/bryanthaboi/pokemon-gen1-recomp-project",
+  "website": "https://gen1re.com",
+  "accentColor": "#e3350d",
+  "executables": {
+    "win32": ["gen1recomp.exe"],
+    "linux": ["gen1recomp.AppImage"]
+  },
+  "detectFiles": ["gen1recomp.exe", "gen1recomp.AppImage"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Pokémon (cartucho americano)",
+      "optional": true,
+      "extensions": ["gb", "gbc", "gba"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          { "sha1": "ea9bcae617fdf159b045185467ae58b2e4a48b9a", "label": "Red (EUA)" },
+          { "sha1": "d7037c83e1ae5b39bde3c30787637ba1d4c48ce2", "label": "Blue (EUA)" },
+          { "sha1": "cc7d03262ebfaf2f06772c1a480c7d9d5f4a38e1", "label": "Yellow (EUA)" },
+          { "sha1": "d8b8a3600a465308c9953dfa04f0081c05bdcb94", "label": "Gold (EUA)" },
+          { "sha1": "49b163f7e57702bc939d642a18f591de55d92dae", "label": "Silver (EUA)" },
+          { "sha1": "f4cd194bdee0d04ca4eac29e09b8e4e9d818c133", "label": "Crystal 1.0 (EUA)" },
+          { "sha1": "f2f52230b536214ef7c9924f483392993e226cfb", "label": "Crystal 1.1 (EUA)" },
+          { "sha1": "41cb23d8dccc8ebd7c649cd8fbb58eeace6e2fdc", "label": "FireRed 1.0 (EUA, beta)" },
+          { "sha1": "dd5945db9b930750cb39d00c84da8571feebf417", "label": "FireRed 1.1 (EUA, beta)" },
+          { "sha1": "574fa542ffebb14be69902d1d36f1ec0a4afd71e", "label": "LeafGreen 1.0 (EUA, beta)" },
+          { "sha1": "7862c67bdecbe21d1d69ce082ce34327e1c6ed5e", "label": "LeafGreen 1.1 (EUA, beta)" },
+          { "sha1": "f3ae088181bf583e55daf962a92bb46f4f1d07b7", "label": "Emerald 1.0 (EUA, beta)" },
+          { "sha1": "f28b6ffc97847e94a6c21a63cacf633ee5c8df1e", "label": "Ruby 1.0 (EUA, beta)" },
+          { "sha1": "610b96a9c9a7d03d2bafb655e7560ccff1a6d894", "label": "Ruby 1.1 (EUA, beta)" },
+          { "sha1": "5b64eacf892920518db4ec664e62a086dd5f5bc8", "label": "Ruby 1.2 (EUA, beta)" },
+          { "sha1": "3ccbbd45f8553c36463f13b938e833f652b793e4", "label": "Sapphire 1.0 (EUA, beta)" },
+          { "sha1": "4722efb8cd45772ca32555b98fd3b9719f8e60a9", "label": "Sapphire 1.1 (EUA, beta)" },
+          { "sha1": "89b45fb172e6b55d51fc0e61989775187f6fe63c", "label": "Sapphire 1.2 (EUA, beta)" }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se o seu dump é um dos aceitos. Só as ROMs americanas originais (em inglês) são aceitas; ROMs com patch, tradução ou hack são recusadas. A ROM é escolhida dentro do próprio jogo (passo seguinte)."
+    },
+    {
+      "id": "import-rom",
+      "type": "firstRun",
+      "label": "Importar sua ROM no launcher do jogo",
+      "helpText": "Abra o jogo e escolha o arquivo .gb/.gbc/.gba do seu cartucho (ou arraste-o para a janela). A importação leva alguns segundos e gera um cache privado com os dados do jogo; depois a ROM não é pedida de novo. Repita para cada jogo que você tiver: cada um ganha sua aba no launcher."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "bryanthaboi/pokemon-gen1-recomp-project",
+    "assetPatterns": {
+      "win32": "gen1recomp-*-windows.zip",
+      "linux": "gen1recomp-*-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "portable.txt",
+      "save*.lua",
+      "save*.lua.bak",
+      "options.lua",
+      "red/**",
+      "blue/**",
+      "yellow/**",
+      "gold/**",
+      "silver/**",
+      "crystal/**",
+      "firered/**",
+      "leafgreen/**",
+      "emerald/**",
+      "ruby/**",
+      "sapphire/**",
+      "roms/**",
+      "imports/**",
+      "baseroms/**",
+      "shaders/**",
+      "prints/**"
+    ],
+    "_todo": "Os outros assets (linux-arm64 AppImage, flatpak, macOS, Android, iOS, Switch, PS4, Xbox UWP, PortMaster, .love) não casam com os padrões de propósito."
+  },
+  "_todo": [
+    "Sem portable.txt (que o Quiver cria ao lado do exe) o jogo guarda save, opções e o cache gerado da ROM na pasta de dados do LÖVE (identidade 'pokemon-love2d'); o caminho exato do Windows (fundido) e do AppImage no Linux não foi confirmado, por isso o passo de importação não tem doneWhen. Com portable.txt tudo fica ao lado do exe (docs/guides/portable-mode.md), em subpastas por jogo (red/, blue/, ...).",
+    "O jogo tem atualizador próprio: consulta api.github.com/repos/bryanthaboi/gen1recomp/releases/latest (nome antigo deste mesmo repositório) e guarda o pacote em updates/ na pasta de dados do LÖVE. Um download opcional de shaders vem de buildbot.libretro.com (shaders_slang.zip, código aberto).",
+    "O pacote (game.love embutido no exe do LÖVE) leva main.lua, conf.lua, src/, data/, assets/ e tools/save-editor (scripts/build.sh); o build falha se data/generated ou assets/generated (dados da ROM) entrarem. Imagens e vídeos de assets/ conferidos por amostragem: arte própria (logo G1R Deluxe, rótulos de cartucho próprios, skins de controle); o áudio dos vídeos de abertura (splash.ogv, spooky.ogv) não foi conferido.",
+    "O zip do Windows não foi listado por dentro (download do github.com bloqueado aqui); pela build.sh ele tem uma pasta gen1recomp-win64/ com gen1recomp.exe (love.exe + game.love) e as DLLs do LÖVE, gen1tls.dll e librashader_bridge.dll.",
+    "O Windows Defender às vezes marca o exe (Trojan:Win32/Wacatac!ml, issue #621); o README trata como falso positivo do LÖVE com arquivo anexado e publica sha256sums.txt. O AppImage do Linux é um único arquivo; o instalador o salva como gen1recomp.AppImage.",
+    "compatibility 'ingame': Gen 1 é o núcleo mais maduro, mas o README diz que Gen 2 ainda está em construção e os jogos de GBA estão em beta."
+  ],
+  "_sources": [
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/releases",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/releases/latest",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/releases/expanded_assets/v0.3.96",
+    "https://raw.githubusercontent.com/bryanthaboi/pokemon-gen1-recomp-project/HEAD/README.md",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/blob/HEAD/scripts/build.sh",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/blob/HEAD/conf.lua",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/blob/HEAD/docs/guides/portable-mode.md",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/blob/HEAD/src/import/CacheContract.lua",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/blob/HEAD/src/import/CacheFs.lua",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/blob/HEAD/src/update/check_worker.lua",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/blob/HEAD/src/render/ShaderFX.lua",
+    "https://github.com/bryanthaboi/pokemon-gen1-recomp-project/commits/HEAD/assets/launcher/spooky.ogv"
+  ]
+}

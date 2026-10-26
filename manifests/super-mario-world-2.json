@@ -1,0 +1,86 @@
+{
+  "id": "super-mario-world-2",
+  "name": "smw (snesrev)",
+  "originalGame": "Super Mario World (SNES)",
+  "description": "Reimplementação em C de Super Mario World (SNES) feita por engenharia reversa, dos mesmos autores do Zelda3. Só há build para Windows e precisa da sua própria ROM americana.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "gameKey": "super-mario-world",
+  "recommended": true,
+  "repoUrl": "https://github.com/snesrev/smw",
+  "accentColor": "#2e8b3d",
+  "executables": {
+    "win32": ["smw.exe"]
+  },
+  "detectFiles": ["smw.exe", "smw_assets.bps", "smw.ini"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Super Mario World (SNES, EUA)",
+      "optional": true,
+      "extensions": ["sfc", "smc"],
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "6b47bb75d16514b6a476aa0c73a683a2a4c18765",
+            "label": "EUA (sem cabeçalho)"
+          }
+        ]
+      },
+      "copyToGameDir": true,
+      "helpText": "Opcional: escolha sua ROM aqui para o app conferir se é a versão certa (só a americana, sem cabeçalho de 512 bytes, 512 KB). O jogo procura o arquivo smw.sfc na própria pasta: se o seu arquivo tiver outro nome, renomeie para smw.sfc."
+    },
+    {
+      "id": "rom-in-folder",
+      "type": "file",
+      "label": "ROM na pasta do jogo (smw.sfc)",
+      "patterns": ["smw.sfc", "smw_assets.dat"],
+      "helpText": "Coloque sua ROM com o nome smw.sfc na pasta do jogo e deixe-a lá. A cada execução o jogo monta os recursos (fases, gráficos) a partir da sua ROM aplicando o smw_assets.bps; o arquivo smw_assets.dat só existe se você o gerar com as ferramentas do projeto."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "smw.ini",
+      "format": "ini",
+      "label": "Configurações (smw.ini)",
+      "editable": true
+    },
+    {
+      "path": "smw.user.ini",
+      "format": "ini",
+      "label": "Configurações pessoais (smw.user.ini, tem prioridade se existir)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "snesrev/smw",
+    "assetPatterns": {
+      "win32": "smw_*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["smw.sfc", "smw.smc", "smw_assets.dat", "smw.ini", "smw.user.ini", "saves/**"]
+  },
+  "_todo": [
+    "Só existe uma release (v0.1, 16/08/2023, smw_0.1.zip com 1,66 MB, compilada localmente pelo autor, sem script de empacotamento). O conteúdo do zip não pôde ser listado (download do GitHub bloqueado aqui); smw.exe vem de run_with_tcc.bat/Makefile e a nota da release (\"Support bps patching\") indica que o zip traz smw_assets.bps, como o zelda3 v0.3. Conferir o conteúdo antes de publicar.",
+    "O main.c da tag v0.1 lê smw_assets.dat (ou assets/smw_assets.dat); se não existir, aplica smw_assets.bps sobre smw.sfc (ROM sem cabeçalho, 524288 bytes) a cada execução. O arquivo smw.sfc precisa continuar na pasta.",
+    "SHA-1 da ROM EUA tirado de assets/util.py do projeto (SMW_SHA1_US).",
+    "O copyToGameDir do app copia o arquivo com o nome original; o jogo só lê smw.sfc.",
+    "Repositório parado desde agosto de 2023; no Linux é preciso compilar a partir do código-fonte. O suporte a SMB1/SMB Lost Levels (pasta smb1/, smbll/) exige a ROM do Super Mario All-Stars e não é tratado aqui."
+  ],
+  "_sources": [
+    "https://github.com/snesrev/smw",
+    "https://raw.githubusercontent.com/snesrev/smw/HEAD/README.md",
+    "https://github.com/snesrev/smw/blob/HEAD/BUILDING.md",
+    "https://github.com/snesrev/smw/blob/HEAD/Makefile",
+    "https://github.com/snesrev/smw/blob/HEAD/run_with_tcc.bat",
+    "https://github.com/snesrev/smw/blob/HEAD/src/main.c",
+    "https://github.com/snesrev/smw/blob/HEAD/src/config.c",
+    "https://github.com/snesrev/smw/blob/HEAD/assets/util.py",
+    "https://github.com/snesrev/smw/blob/HEAD/other/extract.py",
+    "https://github.com/snesrev/smw/releases",
+    "https://github.com/snesrev/smw/releases/expanded_assets/v0.1"
+  ]
+}

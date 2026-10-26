@@ -1,0 +1,63 @@
+{
+  "id": "dbz-burst-limit-recompiled",
+  "name": "Dragon Ball Z: Burst Limit Recompiled",
+  "originalGame": "Dragon Ball Z: Burst Limit (Xbox 360)",
+  "description": "Port nativo não oficial para Windows de Dragon Ball Z: Burst Limit, feito por recompilação estática com o ReXGlue SDK, com resolução maior, 60 FPS, mods e online. Os arquivos do jogo saem da ISO do seu próprio disco americano.",
+  "category": "xbox",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled",
+  "accentColor": "#e0621b",
+  "executables": {
+    "win32": ["burstlimit.exe"]
+  },
+  "detectFiles": ["burstlimit.exe", "game_data_root/PUT_GAME_FILES_HERE.txt"],
+  "requirements": [
+    {
+      "id": "install",
+      "type": "firstRun",
+      "label": "Instalar os arquivos a partir da ISO do seu disco (EUA)",
+      "doneWhen": ["game_data_root/default.xex"],
+      "helpText": "Na primeira vez, o jogo pede a imagem .iso do seu próprio disco de Dragon Ball Z: Burst Limit de Xbox 360, versão americana (NTSC-U; PAL e japonesa não funcionam). Ele confere o default.xex (SHA-1 aec598f88cf51181fc377b148e0b1ad30db4485c) e copia cerca de 3,3 GB para a pasta game_data_root, ao lado do exe; a ISO não é alterada. Se você já tem o jogo extraído, copie o default.xex e a pasta LONG2DATA para game_data_root."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "burstlimit.toml",
+      "format": "text",
+      "label": "Configurações (burstlimit.toml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "iExplosiveRage/DBZ-Burst-Limit-Recompiled",
+    "assetPatterns": {
+      "win32": "DBZ-Burst-Limit-Recompiled-!(*linux*).zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["burstlimit.toml", "game_data_root/**", "mods/**", "textures/**", "saves/**", "logs/**", "*.log"]
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a última release continua sendo a v0.7.2-alpha (22/10/2026, Latest, sem flag de prerelease). Assets: DBZ-Burst-Limit-Recompiled-v0.7.2-alpha-linux.zip (67,6 MB, vem PRIMEIRO na lista) e DBZ-Burst-Limit-Recompiled-v0.7.2-alpha.zip (63 MB); o padrão com extglob !(*linux*) foi testado com o picomatch do app e só casa com o zip de Windows.",
+    "Ainda é alfa: 13 issues abertas, as salas online exigem a mesma versão nos dois jogadores e os personagens extras de mods só funcionam offline.",
+    "Release v0.7.2-alpha verificada: DBZ-Burst-Limit-Recompiled-v0.7.2-alpha.zip (63 MB) tem uma pasta raiz DBZ-Burst-Limit-Recompiled/ com burstlimit.exe, rexruntime.dll, rexgpu-xenos.dll, DLLs da AMD FidelityFX, nvngx_dlss.dll, runtime MSVC, burstlimit.toml, README.txt, licenses/, game_data_root/ e textures/replace/ (só arquivos .txt de instrução) e três .bat de texto simples (Host_Online.bat, Join_Online.bat, Local_Online_Test.bat) que só chamam burstlimit.exe com variáveis do modo online antigo (Radmin VPN/LAN). Nenhum arquivo do jogo.",
+    "A release \"-linux.zip\" é o mesmo burstlimit.exe de Windows com vkd3d-proton/DXVK e um run_linux.sh que roda tudo pelo Wine; não é build nativa de Linux, por isso o Linux ficou de fora (o padrão do Windows exclui o zip -linux).",
+    "As releases usam tags -alpha mas não são marcadas como pré-release no GitHub (a v0.7.2-alpha é a Latest).",
+    "Saves e a identidade online ficam em Documentos\\burstlimit (README); a exportação de saves vai para saves/ ao lado do exe. O burstlimit.toml da release aponta online_lobby_url para o lobby do projeto (Cloudflare Workers).",
+    "O próprio jogo tem um botão Update na tela inicial que baixa a nova versão e mantém burstlimit.toml, os arquivos do jogo, saves, mods e texturas.",
+    "O repositório não tem arquivo LICENSE na raiz; o README só cita as licenças dos componentes de terceiros. Desenvolvimento assistido por IA (commits com coautoria de \"claude\"), 32 commits desde 28/09/2026."
+  ],
+  "_sources": [
+    "https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled",
+    "https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled/releases",
+    "https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled/releases/expanded_assets/v0.7.2-alpha",
+    "https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled/releases/download/v0.7.2-alpha/DBZ-Burst-Limit-Recompiled-v0.7.2-alpha.zip",
+    "https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled/releases/download/v0.7.2-alpha/DBZ-Burst-Limit-Recompiled-v0.7.2-alpha-linux.zip",
+    "https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled/commits/main",
+    "https://raw.githubusercontent.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled/HEAD/README.md",
+    "https://raw.githubusercontent.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled/HEAD/src/burstlimit_install.cpp",
+    "https://gamerant.com/dragon-ball-z-burst-limit-pc-recomp/",
+    "https://github.com/iExplosiveRage/DBZ-Burst-Limit-Recompiled/releases/expanded_assets/v0.7.2-alpha"
+  ]
+}

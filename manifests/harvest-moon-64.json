@@ -1,0 +1,66 @@
+{
+  "id": "harvest-moon-64",
+  "name": "Harvest Moon 64: Recompiled",
+  "originalGame": "Harvest Moon 64 (Nintendo 64)",
+  "description": "Recompilação estática de Harvest Moon 64 para PC (N64: Recompiled + RT64), com widescreen, alta taxa de quadros e mods. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp",
+  "accentColor": "#5a9e2f",
+  "executables": {
+    "win32": ["HarvestMoon64Recompiled.exe"],
+    "linux": ["HarvestMoon64Recompiled"]
+  },
+  "detectFiles": ["HarvestMoon64Recompiled.exe", "HarvestMoon64Recompiled", "recompcontrollerdb.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Harvest Moon 64 (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão americana do N64 é aceita; arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 (0x68b2c3755c527305, src/main/main.cpp) e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": [
+        "harvest_moon_64.z64",
+        "{localAppData}/HarvestMoon64Recompiled/harvest_moon_64.z64",
+        "{home}/.config/HarvestMoon64Recompiled/harvest_moon_64.z64"
+      ],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\HarvestMoon64Recompiled no Windows ou ~/.config/HarvestMoon64Recompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt). Os saves ficam na subpasta saves."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "HarvestMoon64Recomp/HarvestMoon64Recomp",
+    "assetPatterns": {
+      "win32": "HarvestMoon64Recompiled-*-Windows.zip",
+      "linux": "HarvestMoon64Recompiled-*-Linux-X64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "saves/**", "mods/**", "mod_config/**", "mods.json", "general.json", "graphics.json", "controls.json", "sound.json", "*.z64"],
+    "_todo": "Linux ARM64, Flatpak (Linux-Flatpak-X64.zip) e macOS não são selecionados. O zip Linux-X64 contém um único HarvestMoon64Recompiled.tar.gz (artefato do CI), que o instalador extrai em seguida."
+  },
+  "_todo": [
+    "O Quiver cria um portable.txt ao lado do executável; o app não cria arquivos, então sem ele os dados ficam em %LOCALAPPDATA%\\HarvestMoon64Recompiled ou ~/.config/HarvestMoon64Recompiled (README, FAQ).",
+    "Conteúdo dos pacotes conferido no workflow .github/workflows/validate.yml: Windows = HarvestMoon64Recompiled.exe, dxcompiler.dll, dxil.dll, SDL2.dll, assets/ (UI: fontes e SVGs) e recompcontrollerdb.txt; Linux = tar.gz com HarvestMoon64Recompiled, assets/ e recompcontrollerdb.txt. Não baixei os zips (download do GitHub bloqueado aqui); tamanhos 16,9 MB (win) e 6,91 MB (linux).",
+    "Como no Zelda64Recomp, o CI baixa 'extra dependencies' de um repositório privado (secrets HM64_SECRET_REPO/HM64_SECRET_PAT) para recompilar; o executável contém o código do jogo recompilado, como as outras recompilações estáticas do catálogo, e a release não traz ROM nem assets do jogo.",
+    "Arquivos de configuração não mapeados: a partir da v1.2.0 o projeto usa o RecompFrontend e não confirmei os nomes dos arquivos (general.json etc.)."
+  ],
+  "_sources": [
+    "https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp",
+    "https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp/releases",
+    "https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp/releases/expanded_assets/v1.2.2",
+    "https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp/blob/HEAD/README.md",
+    "https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/HarvestMoon64Recomp/HarvestMoon64Recomp/blob/HEAD/include/harvestmoon64_config.h",
+    "https://raw.githubusercontent.com/N64Recomp/N64ModernRuntime/HEAD/librecomp/src/recomp.cpp"
+  ]
+}

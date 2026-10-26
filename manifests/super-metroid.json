@@ -1,0 +1,80 @@
+{
+  "id": "super-metroid",
+  "name": "SuperMetroidRecomp",
+  "originalGame": "Super Metroid (SNES)",
+  "description": "Recompilação estática de Super Metroid para PC, feita com o snesrecomp, com widescreen e taxa de quadros de apresentação experimentais. Você precisa da sua própria ROM do jogo (Japan, USA), sem modificações.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/mstan/SuperMetroidRecomp",
+  "accentColor": "#c2410c",
+  "executables": {
+    "win32": ["SuperMetroidSNESRecomp.exe"],
+    "linux": ["SuperMetroidSNESRecomp"]
+  },
+  "detectFiles": ["SuperMetroidSNESRecomp.exe", "SuperMetroidSNESRecomp", "release-profile.json", "framework_pins.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Super Metroid (SNES, Japan, USA)",
+      "optional": true,
+      "extensions": ["sfc", "smc"],
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "da957f0d63d14cb441d215462904c4fa8519c613",
+            "label": "Super Metroid (Japan, USA) (En,Ja), sem cabeçalho"
+          }
+        ]
+      },
+      "copyToGameDir": false,
+      "helpText": "Opcional: serve só para conferir se a sua ROM é a versão aceita (a mesma ROM vale para EUA e Japão). O jogo não recebe o arquivo por aqui; ele é escolhido no launcher do próprio jogo (passo seguinte)."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Escolher a ROM no launcher do jogo",
+      "helpText": "Abra o jogo e selecione a sua ROM de Super Metroid sem modificações no launcher dele. Configurações e saves ficam na pasta do jogo (config.ini e saves/)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.ini",
+      "format": "ini",
+      "label": "Configurações (config.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "launchEnv": {
+    "linux": { "LD_LIBRARY_PATH": "{gameDir}" }
+  },
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/SuperMetroidRecomp",
+    "assetPatterns": {
+      "win32": "supermetroid-*-windows-x64.zip",
+      "linux": "supermetroid-*-linux-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["config.ini", "keybinds.ini", "rom.cfg", "saves/**", "*.sfc", "*.smc"],
+    "_todo": "keybinds.ini e rom.cfg estão no preserve por analogia com o SuperMarioWorldRecomp (mesmo framework); não foi conferido onde este jogo grava o caminho da ROM."
+  },
+  "_todo": [
+    "Os zips são gerados no CI (scripts/package_release.sh) com uma pasta raiz supermetroid-<versão>-<plataforma>/, que vira a raiz da instalação: executável, assets/ do launcher, DLLs/libs, config.ini, README, LICENSE, VERSION, framework_pins.txt, release-profile.json, replay_diagnostic.py e docs/. tools/release_payload.py audita o zip; o C gerado da ROM fica num arquivo privado do mantenedor e não é publicado (o executável contém o código recompilado, como nas outras recompilações estáticas do catálogo).",
+    "No Linux o projeto manda abrir Launch.sh, que só define LD_LIBRARY_PATH para a pasta do jogo e chama SuperMetroidSNESRecomp; o manifesto faz o mesmo com launchEnv.",
+    "SHA-1 tirado de rom_identity.txt do projeto (o build confere CRC32/SHA-256: 12b77c4bc9c1832cee8881244659065ee1d84c70c3d29e6eaf92e6798cc2ca72).",
+    "README: Mother Brain, a fuga final e os créditos ainda não foram validados; v0.3.15 lista chiado no áudio e travadinha ao fechar o mapa em Brinstar."
+  ],
+  "_sources": [
+    "https://github.com/mstan/SuperMetroidRecomp",
+    "https://raw.githubusercontent.com/mstan/SuperMetroidRecomp/HEAD/README.md",
+    "https://github.com/mstan/SuperMetroidRecomp/releases",
+    "https://github.com/mstan/SuperMetroidRecomp/releases/expanded_assets/v0.3.15",
+    "https://github.com/mstan/SuperMetroidRecomp/blob/HEAD/scripts/package_release.sh",
+    "https://github.com/mstan/SuperMetroidRecomp/blob/HEAD/.github/workflows/release.yml",
+    "https://github.com/mstan/SuperMetroidRecomp/blob/HEAD/docs/precompiled-releases.md",
+    "https://github.com/mstan/SuperMetroidRecomp/blob/HEAD/rom_identity.txt",
+    "https://github.com/mstan/SuperMetroidRecomp/blob/HEAD/config.ini"
+  ]
+}

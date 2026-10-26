@@ -142,7 +142,22 @@ describe('manifestos embutidos', () => {
   it('projetos com binários publicados declaram assets e preservam dados do usuário', async () => {
     const { manifests } = await loadManifests([{ dir, origin: 'builtin' }])
     // Guardam configurações e saves fora da pasta do jogo (Documentos, %LOCALAPPDATA%, ~/.local/share) ou num AppImage.
-    const dataOutside = new Set(['openrct2', 'bloodborne-pc', 'fukami', 'jsrf-unleashed', 'openrac', 'takedawn', 'ufc3-pc'])
+    const dataOutside = new Set([
+      'openrct2',
+      'bloodborne-pc',
+      'fukami',
+      'jsrf-unleashed',
+      'openrac',
+      'takedawn',
+      'ufc3-pc',
+      'banjo-tooie-port',
+      'chris-sawyers-locomotion',
+      'forza-horizon-reimagined',
+      'shaolin-monks-recomp',
+      'street-fighter-iii-3rd-strike-3sx',
+      'taisei',
+      'wwe2k14-recomp'
+    ])
     for (const m of manifests) {
       const updates = m.updates
       if (updates.source === 'none') continue

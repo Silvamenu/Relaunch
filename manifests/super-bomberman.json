@@ -1,0 +1,60 @@
+{
+  "id": "super-bomberman",
+  "name": "BombermanRecomp",
+  "originalGame": "Super Bomberman (Super Nintendo)",
+  "description": "Recompilação estática de Super Bomberman para Windows, feita com o snesrecomp; ainda em versão inicial. Precisa da sua própria ROM americana (sem header) do cartucho de SNES.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/elliotttate/BombermanRecomp",
+  "accentColor": "#2b6fd6",
+  "executables": {
+    "win32": ["BombermanRecomp.exe", "*/BombermanRecomp.exe"]
+  },
+  "detectFiles": ["BombermanRecomp.exe", "*/BombermanRecomp.exe", "bomberman_headless.exe"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Super Bomberman (SNES, EUA)",
+      "optional": true,
+      "extensions": ["sfc", "smc"],
+      "copyToGameDir": false,
+      "validation": {
+        "sizes": [524288, 524800]
+      },
+      "helpText": "Opcional: serve só para guardar o caminho e conferir o tamanho. Só a versão americana de varejo é aceita (524.288 bytes, ou com header de copiadora de 512 bytes, que o jogo remove); o jogo confere o SHA-256 documentado no README e recusa a ROM 'Sample'."
+    },
+    {
+      "id": "pick-rom",
+      "type": "firstRun",
+      "label": "Escolher a ROM ao abrir o jogo",
+      "helpText": "Ao abrir, o jogo mostra um seletor de arquivos: escolha a sua ROM .sfc/.smc. Nesta versão ele não guarda a escolha, então o seletor aparece a cada execução. O save (SRAM) fica em saves\\save.srm na pasta do jogo."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "elliotttate/BombermanRecomp",
+    "assetPatterns": {
+      "win32": "BombermanRecomp-windows-x64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["saves/**", "*.sfc", "*.smc"]
+  },
+  "_todo": [
+    "O zip (1,19 MB, sem CI: build local do autor) não foi listado por dentro (download do github.com bloqueado aqui). O nome BombermanRecomp.exe vem do CMakeLists.txt e do README; o README diz que releases não trazem a ROM nem o C gerado da ROM. O exe contém o código do jogo recompilado, como as outras recompilações estáticas do catálogo.",
+    "O exe aceita o caminho da ROM como argumento, mas o app não tem como passar o arquivo escolhido pelo usuário (launchArgs são fixos e a cópia para a pasta do jogo mantém o nome original), por isso o seletor do próprio jogo é usado a cada execução.",
+    "Saves: saves/save.srm relativo à pasta de trabalho (snesrecomp fork elliotttate/snesrecomp@5d65126, runner/src/common_rtl.c). Repositório com 3 commits (código publicado de uma vez); o motor snesrecomp é um fork com histórico próprio. Só 2 releases, ambas em 2026-08-26; testado pelo autor até a jogabilidade de batalha num teste de 3.000 quadros."
+  ],
+  "_sources": [
+    "https://github.com/elliotttate/BombermanRecomp",
+    "https://github.com/elliotttate/BombermanRecomp/releases",
+    "https://github.com/elliotttate/BombermanRecomp/releases/expanded_assets/v0.1.1",
+    "https://github.com/elliotttate/BombermanRecomp/blob/HEAD/README.md",
+    "https://github.com/elliotttate/BombermanRecomp/blob/HEAD/CMakeLists.txt",
+    "https://github.com/elliotttate/BombermanRecomp/blob/HEAD/runner/win32_main.c",
+    "https://github.com/elliotttate/snesrecomp/tree/bomberman-hirom",
+    "https://github.com/elliotttate/snesrecomp/blob/bomberman-hirom/runner/src/common_rtl.c",
+    "https://github.com/elliotttate"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "forza-horizon-reimagined",
+  "name": "Forza Horizon 1: ReImagined",
+  "originalGame": "Forza Horizon (Xbox 360)",
+  "description": "Recompilação estática de Forza Horizon (2012) para PC. O launcher do projeto compila o jogo no seu computador a partir da sua própria cópia (imagem de disco, pacote Games on Demand ou pasta extraída).",
+  "category": "xbox",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/Dyotson/ForzaHorizon1-ReImagined",
+  "website": "https://forza.dyotson.dev",
+  "accentColor": "#f26b1d",
+  "executables": {
+    "linux": ["forza-launcher"]
+  },
+  "detectFiles": ["forza-launcher", "project/forza-recomp/forza_manifest.toml", "sdk-overlay/rexglue-overlay-linux-amd64.tar.gz"],
+  "requirements": [
+    {
+      "id": "toolchain",
+      "type": "firstRun",
+      "label": "Ferramentas de compilação C++ do sistema",
+      "helpText": "O jogo é compilado no seu PC. Instale os cabeçalhos C++ pelo gerenciador de pacotes (Debian/Ubuntu: build-essential; Fedora: gcc-c++). Se clang (21 ou mais novo), cmake e ninja não estiverem instalados, o launcher baixa as versões oficiais (o LLVM tem cerca de 2 GB). Reserve cerca de 15 GB de disco. No SteamOS (Steam Deck) este pacote não funciona, porque o sistema não tem os cabeçalhos C++; o projeto recomenda o Flatpak, que o app não instala."
+    },
+    {
+      "id": "build",
+      "type": "firstRun",
+      "label": "Indicar sua cópia de Forza Horizon e compilar (Setup > Build)",
+      "doneWhen": ["{home}/.local/share/forza/runtime/forza"],
+      "helpText": "Abra o launcher e, em Setup > Game files, escolha a imagem do disco 1 do seu Forza Horizon de Xbox 360, o pacote Games on Demand (4D5309C9/00007000) ou uma pasta já extraída com o default.xex (o launcher recusa versões já atualizadas ou de outro jogo). Em Updates & DLC você pode indicar o seu Title Update 4 (pacote em 4D5309C9/000B0000, necessário para Horizon Rally e 1000 Club) e a pasta das suas DLCs; os dois são opcionais. Depois clique em Build: o jogo é gerado e compilado em ~/.local/share/forza (alguns minutos). A cada atualização do launcher é preciso rodar o Build de novo."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Dyotson/ForzaHorizon1-ReImagined",
+    "assetPatterns": {
+      "linux": "ForzaHorizon1-ReImagined-linux-x86_64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": [],
+    "_todo": [
+      "Windows: o release só traz ForzaHorizon1-ReImagined-Setup-*.exe (instalador Inno Setup, per-user, que também instala o VC++ Redistributable); não há build portátil, então o Windows ficou de fora.",
+      "O .flatpak e o JSON de hashes do Windows não são selecionados."
+    ]
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a última release continua sendo a v0.1.36 (25/10/2026, Latest). Os assets são os mesmos da rodada 1: ForzaHorizon1-ReImagined-linux-x86_64.tar.gz (89,9 MB), Setup-0.1.36.exe (instalador), windows-files-0.1.36.json, .flatpak e SHA256SUMS. Continua sem build portátil para Windows.",
+    "A v0.1.35 trouxe pacotes de texturas HD feitos localmente (upscaler Real-ESRGAN baixado no PC do usuário, a partir das texturas da cópia dele) e uma página de mods; nada disso vem no pacote.",
+    "Release v0.1.36 verificada: o .tar.gz tem uma pasta raiz ForzaHorizon1-ReImagined/ com forza-launcher (PyInstaller), _internal/, project/ (código-fonte do próprio projeto), server/ (servidor Forza Live em Python), sdk-overlay/ (partes do ReXGlue SDK), install.sh e um .desktop. Não há código nem dados do jogo.",
+    "O _internal/ tem 21 links simbólicos (libQt6*.so.6, libpyside6, libshiboken6, libs do sdl2dll) apontando para arquivos que também estão no pacote (PySide6/Qt/lib/...). O app ignora links simbólicos ao extrair; não foi testado se o launcher abre sem eles (os módulos do PySide6 devem achar as libs pelo RPATH).",
+    "server/playground_rounds.xml traz 3 presets de modo de jogo transcritos do GameOptionPresets.xml do próprio jogo (valores de configuração, sem textura, áudio ou código).",
+    "Nenhum dado do usuário fica na pasta de instalação: jogo extraído, build, saves e forza.toml ficam em ~/.local/share/forza; a configuração do launcher em ~/.config/forza-reimagined/launcher.json.",
+    "O próprio launcher oferece se atualizar (About > Launcher updates, com 'Update and restart' que troca a pasta inteira e deixa um backup ao lado); isso pode conflitar com o atualizador do app.",
+    "Por padrão o launcher conecta o jogo ao servidor público Forza Live do projeto; há modo Offline em Settings > Online.",
+    "O launcher baixa, só se faltar no sistema, LLVM 23.1.3, CMake 4.4.4 e ninja 1.13.2 oficiais e o nightly fixado do ReXGlue SDK (sha256 conferido, segundo docs/launcher.md)."
+  ],
+  "_sources": [
+    "https://github.com/Dyotson/ForzaHorizon1-ReImagined",
+    "https://github.com/Dyotson/ForzaHorizon1-ReImagined/releases/latest",
+    "https://github.com/Dyotson/ForzaHorizon1-ReImagined/releases/expanded_assets/v0.1.36",
+    "https://github.com/Dyotson/ForzaHorizon1-ReImagined/releases/download/v0.1.36/ForzaHorizon1-ReImagined-linux-x86_64.tar.gz",
+    "https://raw.githubusercontent.com/Dyotson/ForzaHorizon1-ReImagined/HEAD/README.md",
+    "https://raw.githubusercontent.com/Dyotson/ForzaHorizon1-ReImagined/HEAD/docs/launcher.md",
+    "https://raw.githubusercontent.com/Dyotson/ForzaHorizon1-ReImagined/HEAD/launcher/forza_launcher/paths.py",
+    "https://raw.githubusercontent.com/Dyotson/ForzaHorizon1-ReImagined/HEAD/launcher/forza_launcher/game.py",
+    "https://raw.githubusercontent.com/Dyotson/ForzaHorizon1-ReImagined/HEAD/launcher/forza_launcher/builder.py",
+    "https://github.com/Dyotson/ForzaHorizon1-ReImagined/releases",
+    "https://github.com/Dyotson/ForzaHorizon1-ReImagined/releases/expanded_assets/v0.1.36"
+  ]
+}

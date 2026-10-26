@@ -1,0 +1,66 @@
+{
+  "id": "outrun",
+  "name": "CannonBall DX",
+  "originalGame": "OutRun (Arcade)",
+  "description": "Versão do CannonBall (motor de OutRun reescrito para PC) com foco em volantes, fliperamas e telas widescreen, com modos extras. Usa as ROMs da sua placa de OutRun (Revision B).",
+  "category": "sega",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/Endprodukt/cannonball-dx",
+  "accentColor": "#d32f2f",
+  "executables": {
+    "win32": ["cannonball-dx.exe"]
+  },
+  "detectFiles": ["cannonball-dx.exe", "res/tilemap.bin", "roms/roms.txt"],
+  "requirements": [
+    {
+      "id": "roms",
+      "type": "file",
+      "label": "ROMs da sua placa de OutRun (Revision B) na pasta roms",
+      "patterns": ["roms/outrun.zip", "roms/epr-10381b.132", "roms/*.zip"],
+      "helpText": "Coloque na pasta roms (dentro da pasta do jogo) o outrun.zip no formato do MAME (conjunto mesclado, sem extrair) feito a partir da sua placa. Também vale usar os arquivos soltos com os nomes antigos do CannonBall (epr-10381b.132 e os demais listados em roms/roms.txt). Arquivos soltos têm prioridade sobre o zip."
+    },
+    {
+      "id": "vcredist",
+      "type": "firstRun",
+      "label": "Microsoft Visual C++ Redistributable x64 (só se o jogo não abrir)",
+      "optional": true,
+      "helpText": "A build de Windows é feita com o Visual Studio e as DLLs do vcpkg. Se aparecer erro de DLL ausente (MSVCP140.dll, VCRUNTIME140.dll), instale o Microsoft Visual C++ Redistributable x64 do site da Microsoft."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.xml",
+      "format": "text",
+      "label": "Configurações (config.xml)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Endprodukt/cannonball-dx",
+    "assetPatterns": {
+      "win32": "CannonballDX_*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["config.xml", "hiscores*.xml", "roms/**"]
+  },
+  "_todo": [
+    "O zip da release (CannonballDX_1.04.zip, 6,25 MB) é enviado à mão. O workflow windows-build.yml monta dist/cannonball-dx/ com cannonball-dx.exe, as DLLs, res/, docs/, roms/roms.txt e README.txt, mas só como artefato de CI. Não deu para listar o zip (download do GitHub bloqueado aqui); se ele tiver uma pasta intermediária a mais, o exe não fica na raiz e res/ e roms/ (lidos a partir do diretório de trabalho) deixam de ser encontrados.",
+    "Só Windows: o README e o README.txt dizem que a versão DX só foi testada no Windows 10/11 64 bits. Existe um workflow de Linux, mas nenhum pacote de Linux nas releases.",
+    "config.xml é criado no diretório de trabalho (a pasta do jogo) a partir de res/config.xml; o caminho das ROMs (data.rompath) é 'roms/' por padrão (src/main/frontend/config_base.cpp).",
+    "Fork do CannonBall-SE (J1mbo), que vem do CannonBall de Chris White; licença não comercial. O README.txt diz que o trabalho da versão DX foi feito com ajuda do ChatGPT e do Claude. Cinco releases entre 29/08 e 29/09/2026.",
+    "ROM PCM corrigida (opcional, opção sound.fix_samples): aceita o enhanced_203_opr-10188.71 (CRC32 C2DE09B2), o opr-10188.71f (37598616) ou o original (BAD30AD9)."
+  ],
+  "_sources": [
+    "https://github.com/Endprodukt/cannonball-dx",
+    "https://github.com/Endprodukt/cannonball-dx/releases",
+    "https://github.com/Endprodukt/cannonball-dx/releases/expanded_assets/1.04",
+    "https://github.com/Endprodukt/cannonball-dx/blob/master/.github/workflows/windows-build.yml",
+    "https://github.com/Endprodukt/cannonball-dx/blob/master/.github/workflows/linux-build.yml",
+    "https://github.com/Endprodukt/cannonball-dx/blob/1.04/README.txt",
+    "https://github.com/Endprodukt/cannonball-dx/blob/1.04/roms/roms.txt",
+    "https://github.com/Endprodukt/cannonball-dx/blob/1.04/src/main/frontend/config_base.cpp",
+    "https://github.com/Endprodukt/cannonball-dx/blob/1.04/docs/known-bugs.txt"
+  ]
+}

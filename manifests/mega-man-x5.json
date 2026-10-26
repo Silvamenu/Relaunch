@@ -1,0 +1,93 @@
+{
+  "id": "mega-man-x5",
+  "name": "Mega Man X5 Recompiled",
+  "originalGame": "Mega Man X5 (PS1)",
+  "description": "Recompilação estática de Mega Man X5 para PC, feita com o PSXRecomp (prévia alfa). Você precisa da imagem .cue/.bin do seu próprio disco americano (SLUS-01334).",
+  "category": "playstation",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/mstan/MegaManX5Recomp",
+  "accentColor": "#2a8fd8",
+  "executables": {
+    "win32": ["MegaManX5Recomp.exe"],
+    "linux": ["MegaManX5Recomp.AppImage"]
+  },
+  "detectFiles": ["MegaManX5Recomp.exe", "MegaManX5Recomp.AppImage"],
+  "requirements": [
+    {
+      "id": "disc",
+      "type": "userFile",
+      "label": "A imagem do seu disco de Mega Man X5 (EUA, arquivo .bin)",
+      "optional": true,
+      "extensions": ["bin"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "10709231f857636b5ccd3cd9acebc91458dcb5fd",
+            "label": "Mega Man X5 (USA) SLUS-01334, .bin MODE2/2352"
+          }
+        ]
+      },
+      "helpText": "Opcional: serve só para conferir se o seu dump é o esperado. O jogo não recebe o arquivo por aqui; o disco é escolhido no launcher do próprio jogo (passo seguinte). Use um dump .cue + .bin do seu disco; não converta para .iso de 2048 bytes (perde os vídeos e o áudio XA)."
+    },
+    {
+      "id": "select-disc",
+      "type": "firstRun",
+      "label": "Escolher o disco no launcher do jogo",
+      "doneWhen": ["disc.cfg", "{home}/.local/share/MegaManX5Recomp/disc.cfg"],
+      "helpText": "Abra o jogo. Na janela do launcher, defina a linha \"Disc\" com o arquivo .cue do seu disco (deixe o .bin na mesma pasta) e clique em Launch. O BIOS livre OpenBIOS já vem no pacote; usar o seu próprio SCPH1001.BIN é opcional. A escolha fica salva em disc.cfg, ao lado do executável no Windows ou em ~/.local/share/MegaManX5Recomp no Linux (AppImage)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": "input.ini",
+        "linux": "{home}/.local/share/MegaManX5Recomp/input.ini"
+      },
+      "format": "ini",
+      "label": "Controles (input.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "mstan/MegaManX5Recomp",
+    "assetPatterns": {
+      "win32": "MegaManX5Recomp-*-windows-x64.zip",
+      "linux": "MegaManX5Recomp-*-linux-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "saves/**",
+      "disc.cfg",
+      "bios.cfg",
+      "settings.toml",
+      "input.ini",
+      "keybinds.ini",
+      "config.ini",
+      "launcher-window.ini",
+      "overlay_captures.json"
+    ],
+    "_todo": "A prévia de co-op (v0.2.0-coop-alpha-debug) é pre-release e fica de fora com includePrereleases=false. A pasta cache/ não é preservada de propósito: cada versão traz shards nativos novos nela."
+  },
+  "_todo": [
+    "A release (v0.1.0-alpha) não traz disco, BIOS comercial nem dados do jogo; o MegaManX5Recomp.exe e os shards em cache/ contêm código do jogo recompilado (MIPS traduzido para nativo), como nas outras recompilações estáticas do mstan no catálogo. Os mods do pacote (widescreen e interpolação) são só código do projeto, sem assets.",
+    "O zip do Windows não foi baixado (download do github.com bloqueado aqui): a pasta raiz MegaManX5Recomp-windows-x64/ e o nome MegaManX5Recomp.exe vêm de tools/package_release.ps1; o pacote também traz overlay_toolchain/ (gcc) para compilar overlays a partir do disco do usuário, sem downloads em tempo de execução.",
+    "disc.cfg fica ao lado do executável (psxrecomp 070c92c, runtime/src/main.cpp: sidecar_cfg_path/exe_dir_from_argv). No Linux o AppRun copia tudo para $XDG_DATA_HOME/MegaManX5Recomp (padrão ~/.local/share/MegaManX5Recomp, ou MMX5_RECOMP_DATA_DIR) e roda de lá.",
+    "O SHA-1 do .bin vem do DISC.md do projeto (Redump #7437)."
+  ],
+  "_sources": [
+    "https://github.com/mstan/MegaManX5Recomp",
+    "https://github.com/mstan/MegaManX5Recomp/releases",
+    "https://github.com/mstan/MegaManX5Recomp/releases/expanded_assets/v0.1.0-alpha",
+    "https://raw.githubusercontent.com/mstan/MegaManX5Recomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/mstan/MegaManX5Recomp/HEAD/DISC.md",
+    "https://raw.githubusercontent.com/mstan/MegaManX5Recomp/HEAD/ISSUES.md",
+    "https://raw.githubusercontent.com/mstan/MegaManX5Recomp/HEAD/tools/package_release.ps1",
+    "https://raw.githubusercontent.com/mstan/MegaManX5Recomp/HEAD/packaging/release/START_HERE.txt",
+    "https://raw.githubusercontent.com/mstan/MegaManX5Recomp/HEAD/packaging/release/app.conf",
+    "https://raw.githubusercontent.com/mstan/MegaManX5Recomp/HEAD/packaging/linux/AppRun",
+    "https://raw.githubusercontent.com/mstan/psxrecomp/070c92c647e1c7066a7af7329306eba7b56df178/runtime/src/main.cpp"
+  ]
+}

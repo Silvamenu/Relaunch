@@ -64,7 +64,7 @@ export const en: Record<TranslationKey, string> = {
     'Nintendo 64 ROM formats: the same game with its bytes in a different order. .z64 is the most common, and the one Relaunch can check by SHA-1.',
   'glossary.release.title': 'Release',
   'glossary.release.text':
-    "A version published by the project on GitHub, with files ready to download. Relaunch only downloads from each project's official repository.",
+    "A version published by the project on GitHub or GitLab, with files ready to download. Relaunch only downloads from each project's official repository.",
   'glossary.manifest.title': 'Manifest',
   'glossary.manifest.text':
     'A sheet that teaches Relaunch how to handle a project: where to download it, which files the game needs and how to open it. Manifests ship with the app, and you can add your own in the manifests folder.',
@@ -88,7 +88,7 @@ export const en: Record<TranslationKey, string> = {
     "It's not an emulator. A port is the game rebuilt by fans to run natively on PC, from the original code decompiled or recompiled. That's why it usually has widescreen, higher frame rates and mod support.\nThe port only brings the program: the game's content comes from your ROM.",
   'faq.download.q': "Why doesn't Relaunch download the full game?",
   'faq.download.a':
-    "Because the games' content is copyrighted. Relaunch only downloads the port published by the project itself, straight from its official GitHub repository over HTTPS. The ROM and the assets always come from your cartridge.",
+    "Because the games' content is copyrighted. Relaunch only downloads the port published by the project itself, straight from its official GitHub or GitLab repository over HTTPS. The ROM and the assets always come from your cartridge.",
   'faq.emulator.q': 'How do I play PS3, PS4 or Xbox 360 titles, like God of War III Remastered?',
   'faq.emulator.a':
     'These games run on an emulator, a program that mimics the console on your PC. In "{addGame}", open the platform list and click "{installRunner}": Relaunch downloads the emulator from its official repository. Then, in "{addRunnerGame}", pick your game file: the dump of your disc or of your digital purchase, made on your own console. Relaunch never downloads games.\nEach game\'s badge ({playable}, {ingame} or {experimental}) shows how well it runs today. Big games need a strong PC: a recent CPU and a graphics card with Vulkan.',
@@ -115,7 +115,7 @@ export const en: Record<TranslationKey, string> = {
     "Many ports are open projects without a digital signature, so Windows SmartScreen may warn when opening them. Relaunch only downloads from each project's official repository over HTTPS and checks the file's integrity when the project publishes a checksum.\nEven so, only open executables that came from Relaunch or from the project's official page. When in doubt, don't run it.",
   'faq.data.q': 'Do I need an account? Where is my data?',
   'faq.data.a':
-    'No account needed. Profiles, library and settings stay on this computer only, in the app data folder ("{settings}" > "{openData}"). Relaunch has no servers: it only accesses GitHub to look up and download the versions of the ports and of the launcher itself.',
+    'No account needed. Profiles, library and settings stay on this computer only, in the app data folder ("{settings}" > "{openData}"). Relaunch has no servers: it only accesses GitHub and GitLab to look up and download the versions of the ports and of the launcher itself.',
   'faq.pin.q': 'I forgot my profile PIN.',
   'faq.pin.a':
     'Enter another profile (or create a new one), go to "{settings}" and remove the profile with the forgotten PIN. Then just create it again: the library and games stay as they are.',
@@ -428,8 +428,9 @@ export const en: Record<TranslationKey, string> = {
   'upd.published': 'Published',
   'upd.checked': 'Last check',
   'upd.viewOnGithub': 'View on GitHub',
+  'upd.viewOnGitlab': 'View on GitLab',
   'downloads.title': 'Downloads',
-  'downloads.subtitle': "Your games' updates, downloaded straight from each project's official GitHub Releases.",
+  'downloads.subtitle': "Your games' updates, downloaded straight from each project's official releases.",
   'downloads.empty': 'Nothing downloading right now. Updates show up here when available.',
   'downloads.active': 'In progress',
   'downloads.available': 'Available updates',

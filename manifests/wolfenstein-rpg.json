@@ -1,0 +1,52 @@
+{
+  "id": "wolfenstein-rpg",
+  "name": "WolfensteinRPG-RE",
+  "originalGame": "Wolfenstein RPG (iOS)",
+  "description": "Engenharia reversa de Wolfenstein RPG (versão para celular de 2008) rodando nativamente no PC. Usa o arquivo .ipa da sua cópia do jogo para iOS.",
+  "category": "pc",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/Erick194/WolfensteinRPG-RE",
+  "accentColor": "#8b1e1e",
+  "executables": {
+    "win32": ["WolfensteinRPG.exe"],
+    "linux": ["WolfensteinRPG-x86_64.AppImage"]
+  },
+  "detectFiles": ["WolfensteinRPG.exe", "WolfensteinRPG-x86_64.AppImage"],
+  "requirements": [
+    {
+      "id": "ipa",
+      "type": "file",
+      "label": "Seu Wolfenstein RPG para iOS (arquivo \"Wolfenstein RPG.ipa\")",
+      "patterns": ["Wolfenstein RPG.ipa"],
+      "helpText": "Copie o .ipa da sua cópia de Wolfenstein RPG para iOS para a pasta do jogo, com o nome exato \"Wolfenstein RPG.ipa\". O jogo abre esse arquivo direto da pasta (src/Main.cpp) e lê os dados de dentro dele."
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "Erick194/WolfensteinRPG-RE",
+    "assetPatterns": {
+      "win32": "WolfensteinRPG*.zip",
+      "linux": "WolfensteinRPG-x86_64.AppImage"
+    },
+    "includePrereleases": false,
+    "preserve": ["*.ipa"]
+  },
+  "_todo": [
+    "O conteúdo do WolfensteinRPG.v0.1.zip (1,1 MB, enviado à mão) não foi conferido, porque o download do GitHub está bloqueado aqui. Pelo CMake (add_executable(${PROJECT_NAME}) com project(WolfensteinRPG), suporte a MSVC/Windows e appicon.rc) e pelo tamanho, deve ser o WolfensteinRPG.exe com as DLLs do SDL2 e do OpenAL; se o exe estiver em subpasta, ajustar executables.",
+    "O AppImage de Linux (5,07 MB) é feito com make-wolfenstein-rpg-linux-appimage.sh (linuxdeploy + appimagetool) a partir do binário compilado; não há CI.",
+    "Uma única release (v0.1, 23/02/2025), repositório de 6 commits (código enviado de uma vez pelo autor, Erick194/[GEC], conhecido por DOOM 64 EX e DoomRPG-RE). Issue aberta: algumas armas (Panzerfaust, lança-chamas, FG-42, Mauser) não aparecem como drop; há relato de falha de compilação no GCC 13.",
+    "Não foi conferido onde ficam os saves nem que versão do .ipa é aceita (o README não diz; o tópico no Doomworld citado no README não pôde ser aberto daqui)."
+  ],
+  "_sources": [
+    "https://github.com/Erick194/WolfensteinRPG-RE",
+    "https://github.com/Erick194/WolfensteinRPG-RE/releases",
+    "https://github.com/Erick194/WolfensteinRPG-RE/releases/expanded_assets/WolfensteinRPG-v.0.1",
+    "https://github.com/Erick194/WolfensteinRPG-RE/issues",
+    "https://raw.githubusercontent.com/Erick194/WolfensteinRPG-RE/HEAD/README.md",
+    "https://github.com/Erick194/WolfensteinRPG-RE/blob/main/CMakeLists.txt",
+    "https://github.com/Erick194/WolfensteinRPG-RE/blob/main/src/CMakeLists.txt",
+    "https://github.com/Erick194/WolfensteinRPG-RE/blob/main/src/Main.cpp",
+    "https://github.com/Erick194/WolfensteinRPG-RE/blob/main/make-wolfenstein-rpg-linux-appimage.sh"
+  ]
+}

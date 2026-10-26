@@ -1,0 +1,112 @@
+{
+  "id": "star-fox-64",
+  "name": "Starfox 64: Recompiled",
+  "originalGame": "Star Fox 64 (Nintendo 64)",
+  "description": "Recompilação estática de Star Fox 64 para PC (N64Recomp + RT64), com alta taxa de quadros, widescreen e mods. Precisa da sua própria ROM americana 1.1 (Rev A) do N64.",
+  "category": "nintendo",
+  "compatibility": "playable",
+  "gameKey": "star-fox-64",
+  "repoUrl": "https://gitlab.com/sonicdcer/Starfox64Recomp",
+  "accentColor": "#1f5fbf",
+  "executables": {
+    "win32": ["Starfox64Recompiled.exe"],
+    "linux": ["Starfox64Recompiled"]
+  },
+  "detectFiles": ["Starfox64Recompiled.exe", "Starfox64Recompiled", "recompcontrollerdb.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Star Fox 64 (N64, EUA 1.1 / Rev A)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "validation": {
+        "sha1": [
+          {
+            "sha1": "09f0d105f476b00efa5303a3ebc42e60a7753b7a",
+            "label": "US 1.1 / Rev A (.z64)"
+          }
+        ]
+      },
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão americana 1.1 (Rev A) do N64 é aceita; arquivos .n64/.v64 são convertidos pelo jogo (e têm SHA-1 diferente do .z64).",
+      "_todo": "O projeto valida a ROM por XXH3 (0x163fd3fc3813f54e, src/main/main.cpp) e não documenta SHA-1; o SHA-1 é o da US 1.1 usado no manifesto starship (Starship/HarbourMasters)."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["sf64.n64.us.1.1.z64", "{localAppData}/Starfox64Recompiled/sf64.n64.us.1.1.z64", "{home}/.config/Starfox64Recompiled/sf64.n64.us.1.1.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\Starfox64Recompiled no Windows ou ~/.config/Starfox64Recompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt).",
+      "_todo": "Nome sf64.n64.us.1.1.z64 = game_id \"sf64.n64.us.1.1\" + \".z64\" (src/main/main.cpp + N64ModernRuntime, stored_filename); pasta = program_id \"Starfox64Recompiled\" (include/zelda_config.h). O README cita ~/.config/StarfoxRecompiled no Linux, que não bate com o program_id. Não conferido num jogo instalado."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/Starfox64Recompiled/general.json"],
+        "linux": ["general.json", "{home}/.config/Starfox64Recompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/Starfox64Recompiled/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/Starfox64Recompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/Starfox64Recompiled/controls.json"],
+        "linux": ["controls.json", "{home}/.config/Starfox64Recompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/Starfox64Recompiled/sound.json"],
+        "linux": ["sound.json", "{home}/.config/Starfox64Recompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "gitlab-releases",
+    "repo": "sonicdcer/Starfox64Recomp",
+    "assetPatterns": {
+      "win32": "Starfox64Recompiled-*-Windows-*",
+      "linux": "Starfox64Recompiled-*-Linux-X64-*"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "saves/**", "mods/**", "mod_config/**", "mods.json", "general.json", "graphics.json", "controls.json", "sound.json", "*.z64"],
+    "_todo": "Os links do release no GitLab não têm extensão no nome (ex.: Starfox64Recompiled-v1.0.3-Windows-RelWithDebInfo); o servidor entrega .zip (Content-Disposition conferido). O zip do Linux traz um único Starfox64Recompiled.tar.gz dentro (o instalador extrai o pacote aninhado). ARM64, macOS e Flatpak não casam com os padrões."
+  },
+  "_todo": [
+    "Repositório oficial mudou do GitHub (sonicdcer/Starfox64Recomp, que não existe mais) para o gitlab.com; o GitLab tem só a release v1.0.3 (released_at 2025-12-30), com os arquivos hospedados no próprio projeto (/-/package_files/). Os links de playtest do README ainda apontam para nightly.link do GitHub antigo.",
+    "Zips listados: Windows (24,4 MB) = Starfox64Recompiled.exe, SDL2.dll, dxcompiler.dll, dxil.dll, recompcontrollerdb.txt e assets/ (fontes, .rml, ícones e mm-clipped.svg, um desenho vetorial de uma Arwing); Linux = Starfox64Recompiled.tar.gz com o binário (0755), assets/ e recompcontrollerdb.txt. Nenhum dado do jogo.",
+    "Mesmo jogo que o manifesto starship (HarbourMasters/Starship, port baseado na decompilação); os dois projetos se dizem 'irmãos'."
+  ],
+  "_sources": [
+    "https://gitlab.com/sonicdcer/Starfox64Recomp",
+    "https://gitlab.com/api/v4/projects/sonicdcer%2FStarfox64Recomp",
+    "https://gitlab.com/api/v4/projects/83978879/releases",
+    "https://gitlab.com/api/v4/projects/83978879/repository/tree",
+    "https://gitlab.com/sonicdcer/Starfox64Recomp/-/raw/HEAD/README.md",
+    "https://gitlab.com/sonicdcer/Starfox64Recomp/-/raw/HEAD/src/main/main.cpp",
+    "https://gitlab.com/sonicdcer/Starfox64Recomp/-/raw/HEAD/include/zelda_config.h",
+    "https://gitlab.com/sonicdcer/Starfox64Recomp/-/raw/HEAD/.gitmodules",
+    "https://gitlab.com/sonicdcer/Starfox64Recomp/-/package_files/333158626/download",
+    "https://gitlab.com/sonicdcer/Starfox64Recomp/-/package_files/333158722/download",
+    "https://raw.githubusercontent.com/N64Recomp/N64ModernRuntime/HEAD/librecomp/src/recomp.cpp"
+  ]
+}

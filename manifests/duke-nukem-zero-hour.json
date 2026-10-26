@@ -1,0 +1,115 @@
+{
+  "id": "duke-nukem-zero-hour",
+  "name": "Duke Nukem Zero Hour: Recompiled",
+  "originalGame": "Duke Nukem: Zero Hour (Nintendo 64)",
+  "description": "Recompilação estática de Duke Nukem: Zero Hour para PC (N64: Recompiled + RT64), ainda em alfa. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/sonicdcer/DNZHRecomp",
+  "accentColor": "#c8781e",
+  "executables": {
+    "win32": ["DNZHRecompiled.exe"],
+    "linux": ["DNZHRecompiled"]
+  },
+  "detectFiles": ["DNZHRecompiled.exe", "DNZHRecompiled", "recompcontrollerdb.txt"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Duke Nukem: Zero Hour (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão americana do N64 é aceita; arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["dnzh.us.z64", "{localAppData}/DNZHRecompiled/dnzh.us.z64", "{home}/.config/DNZHRecompiled/dnzh.us.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\DNZHRecompiled no Windows ou ~/.config/DNZHRecompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/DNZHRecompiled/general.json"],
+        "linux": ["general.json", "{home}/.config/DNZHRecompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/DNZHRecompiled/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/DNZHRecompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/DNZHRecompiled/controls.json"],
+        "linux": ["controls.json", "{home}/.config/DNZHRecompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/DNZHRecompiled/sound.json"],
+        "linux": ["sound.json", "{home}/.config/DNZHRecompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "sonicdcer/DNZHRecomp",
+    "assetPatterns": {
+      "win32": "DNZHRecompiled-*-Windows-*.zip",
+      "linux": "DNZHRecompiled-*-Linux-X64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": [
+      "portable.txt",
+      "saves/**",
+      "mods/**",
+      "mod_config/**",
+      "mods.json",
+      "general.json",
+      "graphics.json",
+      "controls.json",
+      "sound.json",
+      "*.z64",
+      "*.n64",
+      "*.v64"
+    ],
+    "_todo": "O .zip do Linux traz um DNZHRecompiled.tar.gz dentro (arquivo aninhado, extraído pelo instalador). Linux ARM64, Flatpak e macOS não são selecionados. O dono também publica a mesma release (0.0.3) num espelho em gitlab.com/sonicdcer/DNZHRecomp; o README aponta para o GitHub."
+  },
+  "_todo": [
+    "Conteúdo conferido baixando os pacotes idênticos do espelho no GitLab (mesmo tamanho): Windows = DNZHRecompiled.exe, dxcompiler.dll, dxil.dll, SDL2.dll, assets/ (interface RmlUi, fontes, SVGs) e recompcontrollerdb.txt, sem pasta raiz; Linux = DNZHRecompiled.tar.gz com DNZHRecompiled, assets/ e recompcontrollerdb.txt. Feito pelo CI padrão (validate.yml; ROM vinda de repositório privado por secret).",
+    "assets/ inclui a arte do launcher: foreground.svg (ilustração vetorizada do Duke Nukem de costas) e MID.svg (barris radioativos); origem da arte não informada (fã ou oficial).",
+    "Nome da ROM guardada (dnzh.us.z64) deduzido do game_id \"dnzh.us\" + \".z64\"; pasta de dados = program_id \"DNZHRecompiled\" (include/zelda_config.h, README).",
+    "Alpha 0.0.3 (01/11/2025): jogável, com save por controller pak; widescreen e interpolação ainda não tratados, um framebuffer forçado como contorno de bug; o FPS acompanha a taxa do monitor (≈30 FPS a 60 Hz)."
+  ],
+  "_sources": [
+    "https://github.com/sonicdcer/DNZHRecomp",
+    "https://github.com/sonicdcer/DNZHRecomp/releases",
+    "https://github.com/sonicdcer/DNZHRecomp/releases/expanded_assets/0.0.3",
+    "https://raw.githubusercontent.com/sonicdcer/DNZHRecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/sonicdcer/DNZHRecomp/HEAD/.github/workflows/validate.yml",
+    "https://raw.githubusercontent.com/sonicdcer/DNZHRecomp/HEAD/src/main/main.cpp",
+    "https://raw.githubusercontent.com/sonicdcer/DNZHRecomp/HEAD/include/zelda_config.h",
+    "https://gitlab.com/api/v4/projects/sonicdcer%2FDNZHRecomp/releases",
+    "https://gitlab.com/sonicdcer/DNZHRecomp/-/package_files/333736951/download (listado e apagado)",
+    "https://gitlab.com/sonicdcer/DNZHRecomp/-/package_files/333737109/download (listado e apagado)"
+  ]
+}

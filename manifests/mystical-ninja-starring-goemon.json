@@ -1,0 +1,103 @@
+{
+  "id": "mystical-ninja-starring-goemon",
+  "name": "Goemon 64: Recompiled",
+  "originalGame": "Mystical Ninja Starring Goemon (Nintendo 64)",
+  "description": "Recompilação estática de Mystical Ninja Starring Goemon para PC (N64: Recompiled + RT64), com widescreen, alta taxa de quadros e mods. Precisa da sua própria ROM americana do N64.",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/klorfmorf/Goemon64Recomp",
+  "accentColor": "#2f6fd0",
+  "executables": {
+    "win32": ["Goemon64Recompiled.exe"],
+    "linux": ["Goemon64Recompiled"]
+  },
+  "detectFiles": ["Goemon64Recompiled.exe", "Goemon64Recompiled", "assets/goemon-clipped.svg"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Mystical Ninja Starring Goemon (N64, EUA)",
+      "optional": true,
+      "extensions": ["z64", "n64", "v64"],
+      "copyToGameDir": false,
+      "helpText": "Opcional: a ROM é escolhida dentro do próprio jogo, no menu inicial. Só a versão americana do N64 é aceita; arquivos .n64/.v64 são convertidos pelo jogo.",
+      "_todo": "O projeto valida a ROM por XXH3 (0xDB1BC7EE0E6BEBA1, src/main/main.cpp) e não documenta SHA-1; por isso não há validação por hash aqui."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Selecionar sua ROM no menu do jogo",
+      "doneWhen": ["mnsg.us.z64", "{localAppData}/Goemon64Recompiled/mnsg.us.z64", "{home}/.config/Goemon64Recompiled/mnsg.us.z64"],
+      "helpText": "Abra o jogo e escolha sua ROM no menu inicial. O jogo valida e guarda uma cópia em sua pasta de dados (%LOCALAPPDATA%\\Goemon64Recompiled no Windows ou ~/.config/Goemon64Recompiled no Linux; ou na pasta do jogo, se existir um arquivo portable.txt). Os saves ficam na subpasta saves."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["general.json", "{localAppData}/Goemon64Recompiled/general.json"],
+        "linux": ["general.json", "{home}/.config/Goemon64Recompiled/general.json"]
+      },
+      "format": "json",
+      "label": "Geral (general.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["graphics.json", "{localAppData}/Goemon64Recompiled/graphics.json"],
+        "linux": ["graphics.json", "{home}/.config/Goemon64Recompiled/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{localAppData}/Goemon64Recompiled/controls.json"],
+        "linux": ["controls.json", "{home}/.config/Goemon64Recompiled/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["sound.json", "{localAppData}/Goemon64Recompiled/sound.json"],
+        "linux": ["sound.json", "{home}/.config/Goemon64Recompiled/sound.json"]
+      },
+      "format": "json",
+      "label": "Som (sound.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "klorfmorf/Goemon64Recomp",
+    "assetPatterns": {
+      "win32": "Goemon64Recompiled-Windows-*.zip",
+      "linux": "Goemon64Recompiled-Linux-X64-*.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["portable.txt", "saves/**", "mods/**", "mod_config/**", "mods.json", "general.json", "graphics.json", "controls.json", "sound.json", "*.z64"],
+    "_todo": "Os padrões não pegam o zip de PDB, os zips de AppImage (X64/ARM64), Linux ARM64, Flatpak nem macOS. O zip Linux-X64 contém um único Goemon64Recompiled.tar.gz (artefato do CI), que o instalador extrai em seguida. Os nomes dos assets não têm versão."
+  },
+  "_todo": [
+    "As releases têm sufixo -dev (v0.2.0-dev, 31/01/2026, marcada como Latest e não como pre-release); versões antigas eram pre-release.",
+    "Conteúdo dos pacotes conferido em .github/workflows/validate.yml: Windows = Goemon64Recompiled.exe, dxcompiler.dll, dxil.dll, SDL2.dll, assets/ (interface; a arte do launcher é de Jingleboy, Goemon International) e recompcontrollerdb.txt; Linux = tar.gz com Goemon64Recompiled, assets/ e recompcontrollerdb.txt. Não baixei os zips (download do GitHub bloqueado aqui).",
+    "Como no Zelda64Recomp, o CI copia arquivos de um repositório privado (secret G64RS_REPO_WITH_PAT) para recompilar; o executável contém o código do jogo recompilado e a release não traz ROM nem assets do jogo.",
+    "O TODO.txt do repositório lista sobretudo falhas de interpolação/widescreen e dois crashes (seção Impact Bomber Runner ao atirar com Z; créditos após a seção Impact Bomber); por isso compatibility=ingame. Goemon's Great Adventure ainda não é suportado.",
+    "O Quiver cria um portable.txt ao lado do executável; o app não cria arquivos, então sem ele os dados ficam na pasta do usuário."
+  ],
+  "_sources": [
+    "https://github.com/klorfmorf/Goemon64Recomp",
+    "https://github.com/klorfmorf/Goemon64Recomp/releases",
+    "https://github.com/klorfmorf/Goemon64Recomp/releases/expanded_assets/v0.2.0-dev",
+    "https://github.com/klorfmorf/Goemon64Recomp/blob/HEAD/README.md",
+    "https://github.com/klorfmorf/Goemon64Recomp/blob/HEAD/TODO.txt",
+    "https://github.com/klorfmorf/Goemon64Recomp/blob/HEAD/.github/workflows/validate.yml",
+    "https://github.com/klorfmorf/Goemon64Recomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/klorfmorf/Goemon64Recomp/blob/HEAD/src/game/config.cpp",
+    "https://github.com/klorfmorf/Goemon64Recomp/blob/HEAD/include/goemon_config.h",
+    "https://raw.githubusercontent.com/N64Recomp/N64ModernRuntime/HEAD/librecomp/src/recomp.cpp"
+  ]
+}

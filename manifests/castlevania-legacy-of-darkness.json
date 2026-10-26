@@ -1,0 +1,91 @@
+{
+  "id": "castlevania-legacy-of-darkness",
+  "name": "LodRecomp",
+  "originalGame": "Castlevania: Legacy of Darkness (Nintendo 64)",
+  "description": "Recompilação estática de Castlevania: Legacy of Darkness para PC (N64Recomp + RT64), ainda em desenvolvimento. Precisa da sua própria ROM do N64.",
+  "category": "nintendo",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/fliperama86/cvlod_recomp",
+  "accentColor": "#8b1e2d",
+  "executables": {
+    "win32": ["LodRecomp.exe"],
+    "linux": ["LodRecomp"]
+  },
+  "detectFiles": ["LodRecomp.exe", "LodRecomp", "assets/lod_config.rml"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de Castlevania: Legacy of Darkness (N64)",
+      "optional": true,
+      "extensions": ["z64"],
+      "copyToGameDir": true,
+      "helpText": "Opcional: o app pode copiar a ROM do seu cartucho para a pasta do jogo, mas o jogo só a encontra ali se ela se chamar rom.z64 (renomeie a cópia). O projeto não documenta região nem hash; o CI usa uma ROM .z64 de 16 MB sem modificações."
+    },
+    {
+      "id": "select-rom",
+      "type": "firstRun",
+      "label": "Colocar a ROM como rom.z64 ou escolhê-la no jogo",
+      "doneWhen": ["rom.z64", "{appData}/LodRecomp/rom_path.txt", "{home}/.lodrecomp/rom_path.txt"],
+      "helpText": "O jogo procura rom.z64 na própria pasta. Se não achar, abre uma tela \"ROM Setup\" com seletor de arquivo e guarda o caminho escolhido em rom_path.txt, na pasta de dados (%APPDATA%\\LodRecomp no Windows ou ~/.lodrecomp no Linux; ou na pasta do jogo, se existir um portable.txt)."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": {
+        "win32": ["graphics.json", "{appData}/LodRecomp/graphics.json"],
+        "linux": ["graphics.json", "{home}/.lodrecomp/graphics.json"]
+      },
+      "format": "json",
+      "label": "Gráficos (graphics.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["audio.json", "{appData}/LodRecomp/audio.json"],
+        "linux": ["audio.json", "{home}/.lodrecomp/audio.json"]
+      },
+      "format": "json",
+      "label": "Áudio (audio.json)",
+      "editable": true
+    },
+    {
+      "path": {
+        "win32": ["controls.json", "{appData}/LodRecomp/controls.json"],
+        "linux": ["controls.json", "{home}/.lodrecomp/controls.json"]
+      },
+      "format": "json",
+      "label": "Controles (controls.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "fliperama86/cvlod_recomp",
+    "assetPatterns": {
+      "win32": "LodRecomp-*-windows-x64.zip",
+      "linux": "LodRecomp-*-linux-x64.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["rom.z64", "portable.txt", "rom_path.txt", "graphics.json", "audio.json", "controls.json", "saves/**", "*.bin"],
+    "_todo": "Os padrões não pegam os .sha256 nem o zip do macOS. Cada pacote tem uma pasta raiz LodRecomp-vX.Y.Z-<plataforma>/ (vira a raiz da instalação)."
+  },
+  "_todo": [
+    "Pacotes feitos pelo CI (.github/workflows/build.yml; a ROM vem de um repositório privado por secret e só serve para regenerar o código): Windows = LodRecomp.exe, DLLs do build/vcpkg, assets/ (só interface: .rml/.rcss/fontes/SVG/ícone, tools/copy_release_assets.py) e README.txt; Linux = LodRecomp, assets/, README.txt, LodRecomp.desktop, lodrecomp.png e share/. Não conferi os arquivos baixados.",
+    "O repositório versiona 17 dos ~241 arquivos gerados pelo N64Recomp (RecompiledFuncs/*.c, ~5,7 MB, os que têm correções manuais); o resto é gerado a partir da ROM. Não é o código do jogo inteiro, mas é código do jogo traduzido.",
+    "Status do README: projeto \"in-progress recompilation/recovery\", com o objetivo de estabilizar a jogabilidade e diagnosticar travamentos; o modo de alta resolução do Expansion Pak fica desligado. Nome dos saves (castlevania2.n64.us.bin) e de cheats não conferidos para o preserve.",
+    "O exe do Windows não é assinado (aviso do SmartScreen)."
+  ],
+  "_sources": [
+    "https://github.com/fliperama86/cvlod_recomp",
+    "https://github.com/fliperama86/cvlod_recomp/releases",
+    "https://github.com/fliperama86/cvlod_recomp/releases/expanded_assets/v0.2.29",
+    "https://github.com/fliperama86/cvlod_recomp/blob/HEAD/.github/workflows/build.yml",
+    "https://github.com/fliperama86/cvlod_recomp/blob/HEAD/.github/release/README-windows.txt",
+    "https://github.com/fliperama86/cvlod_recomp/blob/HEAD/.github/release/README-linux.txt",
+    "https://github.com/fliperama86/cvlod_recomp/blob/HEAD/tools/copy_release_assets.py",
+    "https://github.com/fliperama86/cvlod_recomp/blob/HEAD/src/main/main.cpp",
+    "https://github.com/fliperama86/cvlod_recomp/blob/HEAD/docs/RECOVERY_TO_GAMEPLAY.md"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "id": "the-legend-of-zelda-the-minish-cap",
+  "name": "Project Picori",
+  "originalGame": "The Legend of Zelda: The Minish Cap (Game Boy Advance)",
+  "description": "Port nativo para PC de The Minish Cap feito a partir da decompilação zeldaret/tmc (em desenvolvimento), com widescreen, renderizador por GPU e randomizador. Precisa da sua própria ROM do jogo (EUA, Europa ou Japão).",
+  "category": "nintendo",
+  "compatibility": "ingame",
+  "repoUrl": "https://github.com/999sian/tmc",
+  "accentColor": "#3a9d5d",
+  "executables": {
+    "win32": ["tmc_pc.exe"],
+    "linux": ["tmc_pc"]
+  },
+  "detectFiles": ["tmc_pc.exe", "tmc_pc", "voxel_shapes.json", "assets/rando/default.logic"],
+  "requirements": [
+    {
+      "id": "rom",
+      "type": "userFile",
+      "label": "Sua ROM de The Minish Cap (GBA)",
+      "optional": true,
+      "extensions": ["gba"],
+      "validation": {
+        "sha1": [
+          { "sha1": "b4bd50e4131b027c334547b4524e2dbbd4227130", "label": "EUA (baserom.gba)" },
+          { "sha1": "cff199b36ff173fb6faf152653d1bccf87c26fb7", "label": "Europa (baserom_eu.gba)" },
+          { "sha1": "6c5404a1effb17f481f352181d0f1c61a2765c5d", "label": "Japão (baserom_jp.gba)" }
+        ]
+      },
+      "copyToGameDir": true,
+      "helpText": "Opcional: confere a versão e pode copiar a ROM para a pasta do jogo. O jogo só procura os nomes baserom.gba (EUA), baserom_eu.gba (Europa) ou baserom_jp.gba (Japão) ao lado do executável: renomeie o arquivo copiado se preciso."
+    },
+    {
+      "id": "rom-in-folder",
+      "type": "file",
+      "label": "ROM na pasta do jogo (baserom.gba, baserom_eu.gba ou baserom_jp.gba)",
+      "patterns": ["baserom.gba", "baserom_eu.gba", "baserom_jp.gba"],
+      "helpText": "Coloque sua ROM com um desses nomes ao lado do executável. Na primeira abertura o jogo extrai da sua ROM o cache de recursos (pasta assets/<região>, alguns segundos) e depois abre direto."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "config.json",
+      "format": "json",
+      "label": "Configurações (config.json)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "999sian/tmc",
+    "assetPatterns": {
+      "win32": "tmc-multi-windows-x86_64-*.tar.gz",
+      "linux": "tmc-multi-linux-x86_64-*.tar.gz"
+    },
+    "includePrereleases": false,
+    "preserve": ["baserom.gba", "baserom_eu.gba", "baserom_jp.gba", "*.sav", "*.sav.bak", "config.json"],
+    "_todo": "Os padrões não casam com as builds ARM64, macOS nem Android. O cache assets/<região> não fica no preserve: ele é refeito da ROM na primeira abertura de cada versão, e assets/rando/default.logic vem no pacote."
+  },
+  "_todo": [
+    "O repositório é um fork de MatheoVignaud/tmc (port de PC em andamento, release 0.1.2) que por sua vez é fork de zeldaret/tmc; o 999sian/tmc tem cerca de 700 commits próprios, marca própria (Project Picori) e releases próprias desde a v0.9.5. O mesmo autor mantém o melee-pc do catálogo.",
+    "Os tarballs são feitos no CI (.github/workflows/_build.yaml, passos \"Prepare artifact payload\"/\"Create archive\") com build.py --slim: só tmc_pc(.exe), voxel_shapes.json e assets/rando/default.logic, sem pasta raiz; tools/release_payload_regression_test.py garante que ROMs e caches não entram. O README ainda descreve um conteúdo antigo (sounds.json, assets/, assets_src/).",
+    "O CI tem acesso a ROMs num repositório privado só para testes de boot; o binário publicado é compilado sem dados da ROM (--slim) e extrai o cache na máquina do usuário.",
+    "Saves em tmc.sav na pasta de trabalho (compatível com mGBA/VBA-M); configuração em config.json (port/port_runtime_config.cpp).",
+    "Notas da v0.9.6: visão 3D experimental; sem teste completo de todas as regiões."
+  ],
+  "_sources": [
+    "https://github.com/999sian/tmc",
+    "https://github.com/999sian/tmc/blob/HEAD/README.md",
+    "https://github.com/999sian/tmc/blob/HEAD/INSTALL.md",
+    "https://github.com/999sian/tmc/blob/HEAD/.github/workflows/_build.yaml",
+    "https://github.com/999sian/tmc/blob/HEAD/tools/release_payload_regression_test.py",
+    "https://github.com/999sian/tmc/blob/HEAD/port/port_runtime_config.cpp",
+    "https://github.com/999sian/tmc/releases",
+    "https://github.com/999sian/tmc/releases/expanded_assets/v0.9.6",
+    "https://github.com/MatheoVignaud/tmc"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "killzone-recomp",
+  "name": "KillzoneRecomp",
+  "originalGame": "Killzone (PS2)",
+  "description": "Port nativo para Windows de Killzone, feito por recompilação estática do código do jogo de PS2 (PS2Recomp). Fases, modelos, texturas, som e vídeos são lidos da ISO do seu próprio disco.",
+  "category": "playstation",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/drakolordx7/KillzoneRecomp",
+  "accentColor": "#c4342d",
+  "executables": {
+    "win32": ["killzone.exe"]
+  },
+  "detectFiles": ["killzone.exe", "resources/shaders/kzgs/SMAA.hlsl"],
+  "requirements": [
+    {
+      "id": "select-iso",
+      "type": "firstRun",
+      "label": "Escolher a ISO do seu disco de Killzone no launcher do jogo",
+      "doneWhen": ["disc/SCUS_974.02", "disc_pal/SCES_528.93"],
+      "helpText": "Abra o jogo: o launcher dele aparece. Procure a ISO que você criou do seu próprio disco de Killzone (EUA SCUS-97402 ou Europa SCES-52893; outras versões não funcionam). O launcher confere a versão; ao apertar Play, alguns arquivos de boot são copiados da ISO para a pasta disc (ou disc_pal) e o resto é lido direto da ISO, então não mova nem apague a ISO depois. Precisa de Windows 10/11 64 bits, CPU com SSE4.1 e GPU com Direct3D 11, Direct3D 12 ou Vulkan."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "killzone.ini",
+      "format": "ini",
+      "label": "Configurações (killzone.ini)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "drakolordx7/KillzoneRecomp",
+    "assetPatterns": {
+      "win32": "Killzone-PC-*.zip"
+    },
+    "includePrereleases": true,
+    "preserve": ["killzone.ini", "disc/**", "disc_pal/**"],
+    "_todo": "O projeto só publica pré-releases (v0.1.0-alpha a v0.1.5-alpha), por isso includePrereleases é true. O cache de shaders (citado em tools/scripts/make_release.ps1 como dado do jogador) não teve o local confirmado."
+  },
+  "_todo": [
+    "Revisto na rodada 2 (26/10/2026): a última release continua sendo a v0.1.5-alpha (25/10/2026, prerelease), com Killzone-PC-v0.1.5-alpha.zip (55,1 MB), a mesma da rodada 1. A v0.1.5 baixou o requisito de AVX2 para SSE4.1. Ainda há um travamento conhecido na fase 2, depois das ondas de inimigos, que aparece em todas as versões, além de quedas de quadros em batalhas grandes.",
+    "O exe aceita --iso <caminho>, mas launchArgs são fixos; por isso a ISO é escolhida no launcher do próprio jogo (o caminho fica em killzone.ini, [Paths] ISO=).",
+    "As builds são feitas na máquina do autor (tools/scripts/make_release.ps1), sem CI; o conteúdo do zip bate com esse script (killzone.exe, DLLs, resources/, README.txt), mas não dá para provar que o binário vem exatamente deste código.",
+    "Repositório novo (commits e releases de outubro de 2026); alpha com travamento conhecido na fase 2.",
+    "Não há build para Linux."
+  ],
+  "_sources": [
+    "https://github.com/drakolordx7/KillzoneRecomp",
+    "https://github.com/drakolordx7/KillzoneRecomp/releases",
+    "https://github.com/drakolordx7/KillzoneRecomp/releases/expanded_assets/v0.1.5-alpha",
+    "https://github.com/drakolordx7/KillzoneRecomp/releases/download/v0.1.5-alpha/Killzone-PC-v0.1.5-alpha.zip",
+    "https://github.com/drakolordx7/KillzoneRecomp/commits/master",
+    "https://github.com/drakolordx7",
+    "https://raw.githubusercontent.com/drakolordx7/KillzoneRecomp/HEAD/README.md",
+    "https://raw.githubusercontent.com/drakolordx7/KillzoneRecomp/HEAD/tools/release/README.txt",
+    "https://raw.githubusercontent.com/drakolordx7/KillzoneRecomp/HEAD/tools/scripts/make_release.ps1",
+    "https://raw.githubusercontent.com/drakolordx7/KillzoneRecomp/HEAD/.gitmodules",
+    "https://raw.githubusercontent.com/drakolordx7/KillzoneRecomp/HEAD/src/kz_main.cpp",
+    "https://raw.githubusercontent.com/drakolordx7/KillzoneRecomp/HEAD/src/kz_iso.cpp",
+    "https://raw.githubusercontent.com/drakolordx7/KillzoneRecomp/HEAD/src/kz_region.cpp",
+    "https://raw.githubusercontent.com/drakolordx7/KillzoneRecomp/HEAD/src/kz_config.cpp",
+    "https://github.com/drakolordx7/KillzoneRecomp/releases/expanded_assets/v0.1.5-alpha"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "destroy-all-humans-path-of-the-furon",
+  "name": "ReDahm",
+  "originalGame": "Destroy All Humans! Path of the Furon (Xbox 360)",
+  "description": "Recompilação não oficial de Destroy All Humans! Path of the Furon feita com o ReXGlue SDK, com 60 FPS. Usa os arquivos extraídos da ISO do seu próprio disco de Xbox 360.",
+  "category": "xbox",
+  "compatibility": "experimental",
+  "repoUrl": "https://github.com/masterspike52/redahm",
+  "accentColor": "#4caf50",
+  "executables": {
+    "win32": ["redahm.exe"]
+  },
+  "detectFiles": ["redahm.exe"],
+  "requirements": [
+    {
+      "id": "paths",
+      "type": "firstRun",
+      "label": "Indicar a pasta do seu jogo no assistente \"Game Path Setup\"",
+      "doneWhen": ["redahm.cfg"],
+      "helpText": "Antes, extraia a ISO do seu disco de Destroy All Humans! Path of the Furon (Xbox 360) para uma pasta, com um extrator de XISO (por exemplo o extract-xiso). Na primeira vez que o jogo abre aparece a janela \"Game Path Setup\": em Game Data Root escolha a pasta com os arquivos extraídos e em User Data Root uma pasta para saves (Update Data Root é opcional). As escolhas ficam gravadas em redahm.cfg ao lado do exe; para trocar de pasta depois, apague esse arquivo."
+    }
+  ],
+  "configFiles": [
+    {
+      "path": "redahm.cfg",
+      "format": "text",
+      "label": "Pastas do jogo (redahm.cfg)",
+      "editable": true
+    }
+  ],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "masterspike52/redahm",
+    "assetPatterns": {
+      "win32": "redahm-win-x64.zip"
+    },
+    "includePrereleases": false,
+    "preserve": ["redahm.cfg", "redahm.toml", "logs/**"]
+  },
+  "_todo": [
+    "Release \"new update\" (tag new, 2026-08-24, Latest) tem redahm-win-x64.zip (33,3 MB) e um redahm.toml solto de 98 bytes. O download do GitHub está bloqueado aqui e não há script de empacotamento nem CI (binários compilados localmente): o nome redahm.exe vem do README e do CMakeLists (add_executable(redahm)), a estrutura do zip (pasta raiz ou não, rexruntime.dll e o plugin rexgpu-xenos do SDK 0.9) não foi conferida.",
+    "O redahm.toml separado (98 bytes) não é baixado pelo app (só o primeiro asset que casa com o padrão); o conteúdo e se ele é necessário não foram conferidos.",
+    "Só a release anterior \"jank\" (2026-07-19) tinha AppImage para Linux; a atual é só Windows, e path_config_store.h usa GetModuleFileNameW (código só de Windows).",
+    "O README manda baixar um extrator de ISO de um anexo do fórum digiex.net; o app não repete esse link. Qualquer extrator de XISO serve.",
+    "src/redahm_engine/dlc_unlock.cpp força a checagem de licença de DLC a responder \"licenciado\" (porque não há Xbox Live); as DLCs ainda precisam ser do usuário. Releases anteriores relatavam áudio ruim; o autor é o mesmo do reNut (já no catálogo). Repositório sem licença declarada, 33 commits."
+  ],
+  "_sources": [
+    "https://github.com/masterspike52/redahm",
+    "https://github.com/masterspike52/redahm/releases",
+    "https://github.com/masterspike52/redahm/releases/tag/new",
+    "https://github.com/masterspike52/redahm/releases/expanded_assets/new",
+    "https://github.com/masterspike52/redahm/releases/expanded_assets/jank",
+    "https://raw.githubusercontent.com/masterspike52/redahm/HEAD/README.md",
+    "git: CMakeLists.txt, src/redahm_app.h, src/redahm_engine/path_config_store.h, src/redahm_engine/path_setup_wizard.h, src/redahm_engine/dlc_unlock.cpp"
+  ]
+}

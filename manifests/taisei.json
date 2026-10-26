@@ -1,0 +1,46 @@
+{
+  "id": "taisei",
+  "name": "Taisei",
+  "originalGame": "Taisei (PC)",
+  "description": "Jogo de tiro bullet hell gratuito e de código aberto, feito por fãs no universo de Touhou Project. É um jogo completo e original: o pacote já traz tudo e não precisa de arquivos de outro jogo.",
+  "category": "pc",
+  "compatibility": "playable",
+  "repoUrl": "https://github.com/taisei-project/taisei",
+  "website": "https://taisei-project.org/",
+  "accentColor": "#7b4bb3",
+  "executables": {
+    "win32": ["taisei.exe"],
+    "linux": ["taisei"]
+  },
+  "detectFiles": ["taisei.exe", "taisei"],
+  "requirements": [],
+  "launchArgs": [],
+  "updates": {
+    "source": "github-releases",
+    "repo": "taisei-project/taisei",
+    "assetPatterns": {
+      "win32": "Taisei-*-windows-x86_64.zip",
+      "linux": "Taisei-*-linux-x86_64.tar.xz"
+    },
+    "includePrereleases": false,
+    "preserve": [],
+    "_todo": "Ignorados: instalador Taisei-*-setup-x86_64.exe, pacotes de símbolos (*-debugsyms.tar.xz), assinaturas (.sig/.sha256sum), builds de macOS, Switch e Emscripten, e o código-fonte taisei-*.tar.xz."
+  },
+  "_todo": [
+    "Layout dos pacotes conferido no código de empacotamento (scripts/meson.build, scripts/gen-dist.py, meson.build com install_relocatable): o zip de Windows não tem prefixo (taisei.exe e a pasta data/ na raiz) e o tar.xz de Linux tem uma pasta Taisei-<versão>-linux-x86_64/ com o executável taisei e data/. O workflow release.yml constrói tudo no CI e envia com gh release upload, com assinatura GPG. Os pacotes não foram listados porque o download do GitHub está bloqueado aqui.",
+    "Licença: código MIT; trilha sonora (Tuck V) e retratos (afensorm) em CC-BY 4.0, fotos de fundo em domínio público ou CC0 (COPYING.txt). É um jogo de fã baseado em Touhou Project, de ZUN, sem conteúdo dos jogos originais.",
+    "Saves, replays e configurações ficam na pasta de dados do usuário (TAISEI_STORAGE_PATH ou a pasta padrão do sistema, src/vfs/setup_generic.c), fora da pasta do jogo; o caminho exato não foi conferido.",
+    "A 1.4.6 usa Vulkan por padrão no Windows e mostra um diálogo de escolha de renderizador na inicialização."
+  ],
+  "_sources": [
+    "https://github.com/taisei-project/taisei",
+    "https://github.com/taisei-project/taisei/releases",
+    "https://github.com/taisei-project/taisei/releases/expanded_assets/v1.4.6",
+    "https://github.com/taisei-project/taisei/blob/master/COPYING.txt",
+    "https://github.com/taisei-project/taisei/blob/master/.github/workflows/release.yml",
+    "https://github.com/taisei-project/taisei/blob/master/scripts/meson.build",
+    "https://github.com/taisei-project/taisei/blob/master/scripts/gen-dist.py",
+    "https://raw.githubusercontent.com/taisei-project/taisei/HEAD/meson.build",
+    "https://raw.githubusercontent.com/taisei-project/taisei/HEAD/src/vfs/setup_generic.c"
+  ]
+}
