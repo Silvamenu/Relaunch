@@ -8,8 +8,10 @@ export const ptBR = {
   'nav.faq': 'Dúvidas frequentes',
   'nav.games': 'Jogos',
 
-  'appUpdate.available': 'Atualização disponível — v{version}',
-  'appUpdate.ready': 'Clique para reiniciar e instalar a v{version}',
+  'appUpdate.downloading': 'Baixando a v{version}…',
+  'appUpdate.ready': 'Atualizar para a v{version}',
+  'appUpdate.readyHint': 'Instala a versão nova: o app fecha e abre de novo sozinho.',
+  'appUpdate.action': 'Atualizar',
 
   'status.ready': 'Pronto',
   'status.needsSetup': 'Falta configurar',
@@ -92,6 +94,9 @@ export const ptBR = {
   'faq.saves.q': 'Meus saves se perdem quando o jogo atualiza?',
   'faq.saves.a':
     'Não. Antes de atualizar, o Relaunch faz backup dos arquivos que vão ser trocados e nunca sobrescreve saves, configurações, mods e arquivos gerados da sua ROM. Se algo der errado, a versão anterior volta sozinha, e você também pode voltar a ela pela aba "{updatesTab}".',
+  'faq.update.q': 'Como o Relaunch se atualiza?',
+  'faq.update.a':
+    'O Relaunch procura uma versão nova dele mesmo ao abrir e a cada 3 horas, e baixa em segundo plano. Quando o download termina, aparece uma barra azul acima do seu perfil, na barra lateral: clique em "{updateApp}" para instalar. O app fecha, instala na mesma pasta, sem telas de instalação, e abre de novo sozinho.\nSe você não clicar, nada é instalado, nem quando você fecha o app: a barra continua lá até você decidir. Para procurar uma versão nova na hora, vá em "{settings}" > "{checkNow}".',
   'faq.wontStart.q': 'O jogo não abre. O que eu faço?',
   'faq.wontStart.a':
     'Confira a aba "{setupTab}": os itens obrigatórios precisam estar com ✓. Se a pasta do jogo mudou de lugar, use "{locate}".\nNa primeira vez, o port pode levar alguns minutos gerando os assets. Se o problema continuar, a aba "{aboutTab}" tem o link do projeto, onde fica o suporte de cada port.',
@@ -357,11 +362,11 @@ export const ptBR = {
   'settings.version': 'Versão {version}',
   'settings.whatsNew': 'Ver novidades',
   'settings.checkApp': 'Procurar atualização do launcher',
-  'settings.appUpdate.disabled': 'Atualização automática disponível apenas na versão instalada.',
+  'settings.appUpdate.disabled': 'A busca por atualizações só funciona na versão instalada.',
   'settings.appUpdate.checking': 'Procurando atualizações…',
   'settings.appUpdate.none': 'O launcher está atualizado.',
   'settings.appUpdate.available': 'Baixando a versão {version}…',
-  'settings.appUpdate.ready': 'Versão {version} pronta — use o botão azul na barra lateral para instalar.',
+  'settings.appUpdate.ready': 'Versão {version} pronta. Para instalar, clique em "Atualizar" na barra azul da barra lateral; até lá nada é instalado.',
   'settings.appUpdate.error': 'Não foi possível verificar: {error}',
 
   'devlog.title': 'Novidades da v{version}',

@@ -21,6 +21,7 @@ const QUESTIONS: Question[] = [
   { q: 'faq.repo.q', a: 'faq.repo.a' },
   { q: 'faq.art.q', a: 'faq.art.a' },
   { q: 'faq.saves.q', a: 'faq.saves.a' },
+  { q: 'faq.update.q', a: 'faq.update.a' },
   { q: 'faq.wontStart.q', a: 'faq.wontStart.a' },
   { q: 'faq.warning.q', a: 'faq.warning.a' },
   { q: 'faq.data.q', a: 'faq.data.a' },
@@ -61,7 +62,9 @@ export function FaqPage() {
     experimental: t('compat.experimental'),
     repoTitle: t('repo.title'),
     repoCheck: t('repo.check'),
-    pickExecutable: t('req.pickExecutable')
+    pickExecutable: t('req.pickExecutable'),
+    updateApp: t('appUpdate.action'),
+    checkNow: t('settings.checkNow')
   }
 
   return (

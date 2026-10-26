@@ -136,29 +136,6 @@ export function ProgressBar({ value, className = '' }: { value?: number; classNa
   )
 }
 
-/** Anel de progresso circular (em volta do botão de atualização do launcher). */
-export function ProgressRing({ size, stroke, percent, className = '' }: { size: number; stroke: number; percent: number; className?: string }) {
-  const r = (size - stroke) / 2
-  const c = 2 * Math.PI * r
-  return (
-    <svg width={size} height={size} className={`-rotate-90 ${className}`} aria-hidden>
-      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="currentColor" strokeOpacity={0.2} strokeWidth={stroke} />
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeDasharray={c}
-        strokeDashoffset={c * (1 - Math.max(0, Math.min(100, percent)) / 100)}
-        className="transition-[stroke-dashoffset] duration-500"
-      />
-    </svg>
-  )
-}
-
 export function Modal({
   onClose,
   children,

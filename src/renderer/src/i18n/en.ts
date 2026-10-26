@@ -9,8 +9,10 @@ export const en: Record<TranslationKey, string> = {
   'nav.faq': 'FAQ',
   'nav.games': 'Games',
 
-  'appUpdate.available': 'Update available — v{version}',
-  'appUpdate.ready': 'Click to restart and install v{version}',
+  'appUpdate.downloading': 'Downloading v{version}…',
+  'appUpdate.ready': 'Update to v{version}',
+  'appUpdate.readyHint': 'Installs the new version: the app closes and opens again by itself.',
+  'appUpdate.action': 'Update',
 
   'status.ready': 'Ready',
   'status.needsSetup': 'Needs setup',
@@ -94,6 +96,9 @@ export const en: Record<TranslationKey, string> = {
   'faq.saves.q': 'Do I lose my saves when the game updates?',
   'faq.saves.a':
     'No. Before updating, Relaunch backs up the files that will be replaced and never overwrites saves, settings, mods or files generated from your ROM. If something goes wrong, the previous version comes back on its own, and you can also roll back from the "{updatesTab}" tab.',
+  'faq.update.q': 'How does Relaunch update itself?',
+  'faq.update.a':
+    'Relaunch checks for a new version of itself when it opens and every 3 hours, and downloads it in the background. When the download finishes, a blue bar appears above your profile in the sidebar: click "{updateApp}" to install it. The app closes, installs in the same folder without any installer screens, and opens again by itself.\nIf you don\'t click, nothing is installed, not even when you close the app: the bar stays there until you decide. To check for a new version right away, go to "{settings}" > "{checkNow}".',
   'faq.wontStart.q': "The game won't open. What should I do?",
   'faq.wontStart.a':
     'Check the "{setupTab}" tab: required items need a ✓. If the game folder moved, use "{locate}".\nThe first time, the port may take a few minutes generating the assets. If the problem persists, the "{aboutTab}" tab has the project\'s link, where each port provides support.',
@@ -359,11 +364,11 @@ export const en: Record<TranslationKey, string> = {
   'settings.version': 'Version {version}',
   'settings.whatsNew': "See what's new",
   'settings.checkApp': 'Check for launcher updates',
-  'settings.appUpdate.disabled': 'Automatic updates are only available in the installed version.',
+  'settings.appUpdate.disabled': 'Checking for updates only works in the installed version.',
   'settings.appUpdate.checking': 'Checking for updates…',
   'settings.appUpdate.none': 'The launcher is up to date.',
   'settings.appUpdate.available': 'Downloading version {version}…',
-  'settings.appUpdate.ready': 'Version {version} is ready — use the blue button in the sidebar to install.',
+  'settings.appUpdate.ready': 'Version {version} is ready. To install it, click "Update" on the blue bar in the sidebar; nothing is installed until then.',
   'settings.appUpdate.error': 'Could not check: {error}',
 
   'devlog.title': "What's new in v{version}",

@@ -30,9 +30,15 @@ function notesOf(info: UpdateInfo): string {
   return /<\/?[a-z][^>]*>/i.test(text) ? htmlToMarkdown(text) : text
 }
 
+/** electron-updater carregado só quando preciso: custa ~50 ms se carregado na abertura do app. */
+function requireUpdater(): Updater {
+  // require, não import(): o autoUpdater (CJS) é um getter que o import() não expõe como export nomeado.
+  return (createRequire(import.meta.url)('electron-updater') as { autoUpdater: Updater }).autoUpdater
+}
+
 /**
  * Atualização do próprio launcher via electron-updater + GitHub Releases do repositório do launcher.
- * Baixa em segundo plano; instala ao clicar no botão da sidebar ou ao fechar o app.
+ * Baixa em segundo plano, mas só instala quando o usuário clica em "Atualizar" (nunca ao fechar o app).
  */
 export class AppUpdater {
   private readonly fake = !app.isPackaged && process.env.RELAUNCH_FAKE_UPDATE === '1'
@@ -41,7 +47,10 @@ export class AppUpdater {
   private timer: NodeJS.Timeout | null = null
   private updater: Updater | null = null
 
-  constructor(private readonly ctx: AppContext) {}
+  constructor(
+    private readonly ctx: AppContext,
+    private readonly loadUpdater: () => Updater = requireUpdater
+  ) {}
 
   getState(): AppUpdateState {
     return this.state
@@ -52,13 +61,12 @@ export class AppUpdater {
     this.ctx.emit('appUpdate:state', next)
   }
 
-  /** Carregado só quando preciso: o electron-updater custa ~50 ms se carregado na abertura do app. */
   private load(): Updater {
     if (this.updater) return this.updater
-    // require, não import(): o autoUpdater (CJS) é um getter que o import() não expõe como export nomeado.
-    const { autoUpdater } = createRequire(import.meta.url)('electron-updater') as { autoUpdater: Updater }
+    const autoUpdater = this.loadUpdater()
     autoUpdater.autoDownload = true
-    autoUpdater.autoInstallOnAppQuit = true
+    // Fechar o app não instala nada: a versão baixada espera o clique em "Atualizar".
+    autoUpdater.autoInstallOnAppQuit = false
     autoUpdater.logger = { info: console.log, warn: console.warn, error: console.error, debug: () => undefined }
 
     autoUpdater.on('checking-for-update', () => {
