@@ -1,6 +1,6 @@
-import { Check, ChevronDown, Download, FolderGit2, FolderOpen, LoaderCircle, Plus, Search, ShieldCheck } from 'lucide-react'
+import { Award, Check, ChevronDown, Download, FolderGit2, FolderOpen, LoaderCircle, Plus, Search, ShieldCheck } from 'lucide-react'
 import { useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { groupCatalog, type Category, type Compatibility } from '../../../shared/catalog'
+import { groupCatalog, isMostComplete, type Category, type Compatibility } from '../../../shared/catalog'
 import type { Manifest } from '../../../shared/manifest'
 import { installableOn } from '../../../shared/manifestUtils'
 import type { DetectionCandidate, LibraryItem, RepoInspection } from '../../../shared/types'
@@ -38,7 +38,9 @@ function ManifestRow({
   action?: ReactNode
 }) {
   const { t } = useI18n()
+  const { manifests } = useAppState()
   const runnerName = useRunnerName(manifest)
+  const mostComplete = isMostComplete(manifest, manifests.manifests)
   const Tag = onSelect ? 'button' : 'div'
   const details = [
     manifest.originalGame,
@@ -63,6 +65,15 @@ function ManifestRow({
           {manifest.compatibility && (
             <span className={`shrink-0 rounded-md border px-1.5 text-[10.5px] ${COMPAT_TONE[manifest.compatibility]}`}>
               {t(`compat.${manifest.compatibility}`)}
+            </span>
+          )}
+          {mostComplete && (
+            <span
+              title={t('compat.mostCompleteHint')}
+              className="flex shrink-0 items-center gap-1 rounded-md border border-[#3B82F6]/50 px-1.5 text-[10.5px] text-accent-fg"
+            >
+              <Award size={11} aria-hidden />
+              {t('compat.mostComplete')}
             </span>
           )}
         </span>

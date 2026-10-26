@@ -104,13 +104,25 @@ export const configFileSchema = z.object({
   _todo: todoSchema
 })
 
-const githubUpdates = z.object({
-  source: z.literal('github-releases'),
-  repo: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, 'use o formato "dono/repositorio"'),
+/** O que vale igual para releases do GitHub e do GitLab. */
+const releaseFields = {
   assetPatterns: perPlatform(z.union([nonEmpty, stringList.min(1)])),
   includePrereleases: z.boolean().default(false),
   preserve: relativePathList.default([]),
   _todo: todoSchema
+}
+
+const githubUpdates = z.object({
+  source: z.literal('github-releases'),
+  repo: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, 'use o formato "dono/repositorio"'),
+  ...releaseFields
+})
+
+/** Projeto no gitlab.com: "grupo/projeto" (subgrupos permitidos). */
+const gitlabUpdates = z.object({
+  source: z.literal('gitlab-releases'),
+  repo: z.string().regex(/^[A-Za-z0-9_.-]+(\/[A-Za-z0-9_.-]+)+$/, 'use o caminho do projeto no gitlab.com, ex.: "grupo/projeto"'),
+  ...releaseFields
 })
 
 const noUpdates = z.object({
@@ -140,6 +152,10 @@ export const manifestSchema = z.object({
   /** Lista do catálogo (plataforma original do jogo); manifestos do usuário sem ela vão para "custom". */
   category: z.enum(CATEGORIES).default('custom'),
   compatibility: z.enum(COMPATIBILITY).optional(),
+  /** Projetos do mesmo jogo compartilham esta chave; entre eles, o catálogo destaca o `recommended`. */
+  gameKey: manifestId.optional(),
+  /** O projeto mais completo entre os que têm a mesma `gameKey`. */
+  recommended: z.boolean().optional(),
   runner: runnerSchema.optional(),
   repoUrl: httpsUrl,
   website: httpsUrl.optional(),
@@ -154,7 +170,7 @@ export const manifestSchema = z.object({
   launchArgs: argList.default([]),
   /** Variáveis de ambiente extras ao iniciar (aceitam as mesmas variáveis de caminho, ex.: {gameDir}). */
   launchEnv: perPlatform(z.record(z.string(), z.string())).default({}),
-  updates: z.discriminatedUnion('source', [githubUpdates, noUpdates]).default({ source: 'none' }),
+  updates: z.discriminatedUnion('source', [githubUpdates, gitlabUpdates, noUpdates]).default({ source: 'none' }),
   _todo: todoSchema
 })
 
@@ -166,6 +182,8 @@ export type Requirement = ParsedRequirement & { id: string }
 export type UserFileRequirement = Extract<Requirement, { type: 'userFile' }>
 export type ConfigFileSpec = z.output<typeof configFileSchema>
 export type GithubUpdates = z.output<typeof githubUpdates>
+/** Jogo atualizado por releases (GitHub ou gitlab.com). */
+export type ReleaseUpdates = GithubUpdates | z.output<typeof gitlabUpdates>
 export type Runner = z.output<typeof runnerSchema>
 
 export interface Manifest extends Omit<ParsedManifest, 'requirements'> {

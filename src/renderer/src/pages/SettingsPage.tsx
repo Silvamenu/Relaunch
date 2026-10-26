@@ -300,10 +300,10 @@ export function SettingsPage() {
                 <Toggle
                   key={item.entry.id}
                   checked={item.entry.autoUpdate}
-                  disabled={item.manifest?.updates.source !== 'github-releases'}
+                  disabled={!item.manifest || item.manifest.updates.source === 'none'}
                   onChange={(v) => void save(() => window.api.library.update(item.entry.id, { autoUpdate: v }))}
                   label={item.name}
-                  hint={item.manifest?.updates.source !== 'github-releases' ? t('upd.noBinaries.title') : undefined}
+                  hint={!item.manifest || item.manifest.updates.source === 'none' ? t('upd.noBinaries.title') : undefined}
                 />
               ))}
           </div>

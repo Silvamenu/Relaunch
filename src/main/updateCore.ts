@@ -1,17 +1,19 @@
 import { createWriteStream, promises as fs } from 'node:fs'
 import path from 'node:path'
 import { AppError } from '../shared/errors'
-import type { GithubUpdates, Platform } from '../shared/manifest'
+import type { Platform, ReleaseUpdates } from '../shared/manifest'
 import { assetPatternsFor } from '../shared/manifestUtils'
 import {
   checksumCandidates,
   createPreserveMatcher,
-  isAllowedAssetUrl,
+  fileNameFromDisposition,
   isAllowedRedirectHost,
+  isAllowedReleaseAssetUrl,
   parseChecksumFile,
   parseDigest,
   pickAsset,
-  shouldSkipFile
+  shouldSkipFile,
+  type ReleaseSource
 } from '../shared/patterns'
 import type { BackupInfo, ReleaseAsset, ReleaseInfo, UpdateStage } from '../shared/types'
 import { archiveKindOf, createZipFromDir, ensureSafeTarget, extractPackage, extractZip, listZip } from './archive'
@@ -35,9 +37,12 @@ export interface DownloadOptions {
   expectedSize?: number
   signal?: AbortSignal
   onProgress?: (received: number, total: number) => void
+  /** Onde o arquivo está hospedado: define os redirecionamentos aceitos (padrão: GitHub). */
+  source?: ReleaseSource['source']
 }
 
-export async function downloadFile(opts: DownloadOptions): Promise<void> {
+/** Baixa o arquivo; devolve o nome informado pelo servidor (Content-Disposition), se houver. */
+export async function downloadFile(opts: DownloadOptions): Promise<string | null> {
   if (!opts.url.startsWith('https://')) throw new AppError('UNTRUSTED_URL', opts.url)
   let response: Response
   try {
@@ -50,7 +55,7 @@ export async function downloadFile(opts: DownloadOptions): Promise<void> {
     if (opts.signal?.aborted) throw new AppError('CANCELLED')
     throw new AppError('NETWORK', (err as Error).message)
   }
-  if (response.url && !isAllowedRedirectHost(response.url)) {
+  if (response.url && !isAllowedRedirectHost(response.url, opts.source)) {
     throw new AppError('UNTRUSTED_URL', `Redirecionamento inesperado para ${new URL(response.url).host}`)
   }
   if (!response.ok || !response.body) {
@@ -90,6 +95,7 @@ export async function downloadFile(opts: DownloadOptions): Promise<void> {
       received
     })
   }
+  return fileNameFromDisposition(response.headers.get('content-disposition'))
 }
 
 export async function verifySha256(file: string, expected: string): Promise<void> {
@@ -103,14 +109,14 @@ export async function verifySha256(file: string, expected: string): Promise<void
 export async function resolveExpectedSha256(
   asset: ReleaseAsset,
   release: ReleaseInfo,
-  repo: string,
+  from: ReleaseSource,
   fetchImpl: typeof fetch,
   signal?: AbortSignal
 ): Promise<string | null> {
   const fromDigest = parseDigest(asset.digest)
   if (fromDigest) return fromDigest
   for (const candidate of checksumCandidates(release.assets, asset.name)) {
-    if (!isAllowedAssetUrl(candidate.url, repo)) continue
+    if (!isAllowedReleaseAssetUrl(candidate.url, from)) continue
     try {
       const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS)
       const res = await fetchImpl(candidate.url, {
@@ -118,7 +124,7 @@ export async function resolveExpectedSha256(
         signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
         headers: { 'User-Agent': USER_AGENT }
       })
-      if (!res.ok || (res.url && !isAllowedRedirectHost(res.url))) continue
+      if (!res.ok || (res.url && !isAllowedRedirectHost(res.url, from.source))) continue
       const hash = parseChecksumFile(await res.text(), asset.name)
       if (hash) return hash
     } catch {
@@ -330,7 +336,7 @@ export async function rollbackFromBackup(gameDir: string, backup: StoredBackup, 
 export interface UpdateFlowParams {
   entryId: string
   manifestId: string
-  updates: GithubUpdates
+  updates: ReleaseUpdates
   gameDir: string
   installedVersion: string | null
   release: ReleaseInfo
@@ -380,26 +386,37 @@ export async function runUpdateFlow(params: UpdateFlowParams, deps: UpdateFlowDe
       version: release.tag
     })
   }
-  if (!isAllowedAssetUrl(asset.url, updates.repo)) throw new AppError('UNTRUSTED_URL', asset.url)
-  if (!archiveKindOf(asset.name)) throw new AppError('UNSUPPORTED_ARCHIVE', asset.name, { file: asset.name })
+  if (!isAllowedReleaseAssetUrl(asset.url, updates)) throw new AppError('UNTRUSTED_URL', asset.url)
+  // Links do GitLab podem vir sem extensão no nome: aí o tipo vem do nome do arquivo baixado.
+  const knownKind = !!archiveKindOf(asset.name)
+  if (!knownKind && updates.source !== 'gitlab-releases') throw new AppError('UNSUPPORTED_ARCHIVE', asset.name, { file: asset.name })
   if (await deps.isGameRunning()) throw new AppError('GAME_RUNNING')
 
   const work = await fs.mkdtemp(path.join(deps.tmpRoot, `relaunch-${params.manifestId}-`))
   try {
     // 2. Download + validação
-    const downloaded = path.join(work, sanitizeFileName(asset.name))
+    let downloaded = path.join(work, sanitizeFileName(asset.name))
     deps.onStage('downloading', { progress: 0, receivedBytes: 0, totalBytes: asset.size })
-    await downloadFile({
+    const servedName = await downloadFile({
       url: asset.url,
       dest: downloaded,
       fetchImpl: deps.fetchImpl,
       expectedSize: asset.size,
       signal: deps.signal,
+      source: updates.source,
       onProgress: (received, total) =>
         deps.onStage('downloading', { progress: total ? received / total : undefined, receivedBytes: received, totalBytes: total })
     })
+    if (!knownKind) {
+      if (!servedName || !archiveKindOf(servedName)) {
+        throw new AppError('UNSUPPORTED_ARCHIVE', servedName ?? asset.name, { file: servedName ?? asset.name })
+      }
+      const renamed = path.join(work, sanitizeFileName(servedName))
+      await fs.rename(downloaded, renamed)
+      downloaded = renamed
+    }
     deps.onStage('verifying')
-    const sha256 = await resolveExpectedSha256(asset, release, updates.repo, deps.fetchImpl, deps.signal)
+    const sha256 = await resolveExpectedSha256(asset, release, updates, deps.fetchImpl, deps.signal)
     if (sha256) await verifySha256(downloaded, sha256)
 
     // Extrai antes do backup: se o pacote estiver corrompido, nada é tocado.
